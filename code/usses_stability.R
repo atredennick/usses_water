@@ -28,6 +28,7 @@ library(RColorBrewer)
 library(lme4)
 library(codyn)
 library(vegan)
+library(gridExtra)
 
 
 
@@ -172,24 +173,54 @@ cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv
   ungroup()
 
 mycol <- RColorBrewer::brewer.pal(3,"Set2")
-png(paste0(figure_path,"sppcomp_nmds.png"), width=6, height = 4, units = "in", res = 120)
-par(mfrow=c(2,3))
+# 
+# par(mfrow=c(2,3))
+nmds_df <- {}
 for(doyr in unique(cover_community_matrix$year)){
   tmp <- filter(cover_community_matrix, year == doyr) %>% select(-year)
   torm <- as.numeric(which(colSums(tmp[3:ncol(tmp)], na.rm = T) == 0)) # find spp with NA in each treatment
   tmp <- tmp[,-(torm+2)] # add 2 because we lopped off two columns above
   tmp_rda <- metaMDS(tmp[3:ncol(tmp)], "bray")
-  tmp_dist <- vegdist(tmp[3:ncol(tmp)], method = "bray")
-  tmp_clust <- hclust(tmp_dist, method = "average")
-  mds.fig <- ordiplot(tmp_rda, type = "none", main = doyr)
-  # plot just the samples, colour by habitat, pch=19 means plot a circle
-  ordicluster(tmp_rda, tmp_clust, col = "gray")
-  points(mds.fig, "sites", pch = 19, col = mycol[1], select = tmp$Treatment == "Control")
-  points(mds.fig, "sites", pch = 19, col = mycol[2], select = tmp$Treatment == "Irrigation")
-  points(mds.fig, "sites", pch = 19, col = mycol[3], select = tmp$Treatment == "Drought")
-  points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Control")
-  points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Irrigation")
-  points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Drought")
+  ## Try to plot in ggplot
+  nmds_points <- as.data.frame(tmp_rda$points)
+  nmds_points$Treatment <- tmp$Treatment
+  nmds_points$Year <- doyr
+  nmds_df <- rbind(nmds_df, nmds_points)
+}
+
+ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
+  geom_point()+
+  geom_point(color="grey35",shape=1)+
+  scale_color_brewer(palette = "Set2")+
+  scale_y_continuous(limits=c(-2,2))+
+  scale_x_continuous(limits=c(-2,2))+
+  ylab("NMDS 2")+
+  xlab("NMDS 1")+
+  facet_wrap("Year")+
+  theme_few()
+ggsave(paste0(figure_path,"sppcomp_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
+
+ 
+
+
+
+
+
+
+
+
+
+ # tmp_dist <- vegdist(tmp[3:ncol(tmp)], method = "bray")
+  # tmp_clust <- hclust(tmp_dist, method = "average")
+  # mds.fig <- ordiplot(tmp_rda, type = "none", main = doyr)
+  # # plot just the samples, colour by habitat, pch=19 means plot a circle
+  # ordicluster(tmp_rda, tmp_clust, col = "gray")
+  # points(mds.fig, "sites", pch = 19, col = mycol[1], select = tmp$Treatment == "Control")
+  # points(mds.fig, "sites", pch = 19, col = mycol[2], select = tmp$Treatment == "Irrigation")
+  # points(mds.fig, "sites", pch = 19, col = mycol[3], select = tmp$Treatment == "Drought")
+  # points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Control")
+  # points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Irrigation")
+  # points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Drought")
   # pca_scores <- scores(tmp_rda)
   # plot(pca_scores[,1],
   #      pca_scores[,2],
@@ -197,5 +228,4 @@ for(doyr in unique(cover_community_matrix$year)){
   #      bg=as.numeric(tmp$Treatment),
   #      ylab="PCA1", xlab=("PCA2"),
   #      main = doyr)
-}
-dev.off()
+
