@@ -30,6 +30,7 @@ out_path       <- "../data/estimated_biomass/"
 library(tidyverse) # all sorts of data wrangling
 library(dplyr)     # data summarizing/wrangling tools
 library(broom)     # tidys up model output
+library(stringr)
 library(ggthemes)
 
 
@@ -303,6 +304,7 @@ ggsave("../figures/estimated_biomass.png", width = 6, height = 4, units = "in", 
 
 
 biomass_yr_trt_summ <- permanent_quad_biomass %>%
+  filter(!str_detect(quadname, 'P1|P7')) %>%
   group_by(Treatment,year) %>%
   summarise(mean_biomass = mean(biomass_grams_est),
             sd_biomass = sd(biomass_grams_est)) %>%
@@ -324,4 +326,8 @@ ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
 ggsave("../figures/anpp_trt_trend.png", width = 4, height = 3, units = "in", dpi = 120)
 
 
-
+# Get sample sizes
+samp_size <- permanent_quad_biomass %>%
+  filter(!str_detect(quadname, 'P1|P7')) %>%
+  group_by(Treatment,year) %>%
+  summarise(num_plots = length(biomass_grams_est))

@@ -40,11 +40,12 @@ urlcolor: black
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-\normalsize{Andrew T. Tredennick\textsuperscript{1}, Peter B. Adler\textsuperscript{1}, and ...\textsuperscript{2}}
+\normalsize{Andrew T. Tredennick\textsuperscript{1}, Peter B. Adler\textsuperscript{1}, and Andrew R. Kleinhesselink\textsuperscript{2}}
 
 \bigskip{}
 
-\textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}} 
+\textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}}
+\textit{\small{\textsuperscript{2}Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California xxxxx}}
 
 \end{centering}
 
@@ -77,8 +78,6 @@ opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
 
 ```
 
-\newpage{}
-
 \begin{abstract}
 Summarize it here
 \vspace{2em}
@@ -90,6 +89,51 @@ Summarize it here
 Introduction
 ------------
 Start it here
+
+Methods
+-------
+### Study Area
+We conducted our precipitation manipulation experiment at the United States Sheep Experimental Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
+The vegetation is typical of high elevation sagebrush steppe.
+The plant community is dominated by the shrub *Artemesia tripartita* and three perennial bunchgrasses, *Pseudoroegneria spicata*, *Poa secunda*, and *Hesperostipa comata*.
+During the period of our experiment, average mean annual precipitation was xxx mm and mean monthly temperature ranged from -x$^{\circ}$C in January to x$^{\circ}$C in July.
+
+### Precipitation Experiment
+Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
+In 2007, we (well, one of us [P. Adler]) relocated 14 of the original quadrats, six of which were inside a large, permanent livestock exclosure.
+We use these six plots as control plots that have recieved no treatment, just ambient precipitation.
+In spring 2011, we (well, two of us [A. Kleinhesselink and P. Adler]) established 16 new 1 m$^2$ plots.
+We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs *Purshia tridentata* and/or *Amelanchier utahensis*.
+We established the new plots in pairs and randomly assigned each plot in a pair to receive a "drought" or "irrigation" treatment.
+
+Drought and irrigation treatments were designed to decrease and increase the amount of ambient precipitation by 50\%, respectively.
+To achieve this, we used a system of rain-out shelters and automatic irrigation [@Gherardi2013].
+The rain-out shelters consisted of transparent acrylic shingles 1-1.5 m above the ground that covered an area of 2.5 by 2 m.
+The shingles intercepted approximately 50\% of incoming rainfall, which was channeled into 75 liter containers.
+Captured rainfall was then pumped out of the containers and sprayed on to the adjacent irrigation plot via two suspended sprinklers.
+Pumping was triggered by float switches once water levels reached about 20 liters.
+We disconnected the irrigation pumps each fall and reconnected them, often with difficulty, each spring.
+The rain-out shelters remained in place throughout the year.
+
+To make sure the treatments were having the desired effects, we monitored soil moisture in four of the drought-irrigation pairs using Decagon Devices (Pulman, Washington) 5TM and EC-5 soil moisture sensors.
+We installed four sensors in each plot, two at 5 cm soil depth and two at 25 cm soil depth.
+We also installed four sensors in areas nearby the four selected plot pairs to measure ambient soil moisture at the same depths.
+Soil moisture measurements were automatically logged every four hours.
+We coupled this temporally intensive soil moisture sampling with spatially extensive readings taken at six points within all 16 plots and associated ambient measurement areas.
+These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
+
+### Data Collection
+#### Aboveground Net Primary Productivity
+We estimated aboveground net primary productivity (ANPP) using a radiometer to related ground reflectance to plant biomass [see @Byrne2011 for a review].
+
+Acknowledgments
+---------------
+This work was funded by the National Science Foundation through grants DEB-1353078 and DEB-1054040 to PBA, a Graduate Research Fellowship to ARK, and a Postdoctoral Resaerch Fellowship in Biology to ATT (DBI-1400370). 
+Additional support came from the Utah Agricultural Experiment Station (journal paper xxxx).
+We thank the many summer research technicians who collected the data reported in this paper.
+
+\singlespace
+\setlength{\parindent}{0ex}
 
 References
 ----------
