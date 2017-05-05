@@ -300,7 +300,28 @@ ggplot()+
   theme_few()+
   theme(legend.position=c(.1,.82))
 ggsave("../figures/estimated_biomass.png", width = 6, height = 4, units = "in", dpi = 120)
-  
+
+
+biomass_yr_trt_summ <- permanent_quad_biomass %>%
+  group_by(Treatment,year) %>%
+  summarise(mean_biomass = mean(biomass_grams_est),
+            sd_biomass = sd(biomass_grams_est)) %>%
+  filter(year > 2011)
+
+ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
+  geom_line()+
+  geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
+  geom_point(color="white", size=3)+
+  geom_point()+
+  geom_point(color="grey35", shape=1)+
+  scale_color_brewer(palette = "Set2", name=NULL)+
+  scale_x_continuous(breaks=c(2011:2016))+
+  scale_y_continuous(breaks=seq(50,350,50))+
+  ylab(expression(paste("Estimated ANPP (g ", m^-2,")")))+
+  xlab("Year")+
+  theme_few()+
+  theme(legend.position=c(.2,.75))
+ggsave("../figures/anpp_trt_trend.png", width = 4, height = 3, units = "in", dpi = 120)
 
 
 

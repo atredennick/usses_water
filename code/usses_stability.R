@@ -1,6 +1,6 @@
 ##  usses_stability.R: R script to analyze the temporal stability of plots at
 ##    USSES in Idaho. Plots received irrigation/drought treatments starting
-##    in 2012.
+##    in 2011.
 ##
 ##  Author:       Andrew Tredennick
 ##  Date created: April 24, 2017
