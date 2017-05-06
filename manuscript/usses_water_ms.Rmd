@@ -124,7 +124,32 @@ These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/
 
 ### Data Collection
 #### Aboveground Net Primary Productivity
-We estimated aboveground net primary productivity (ANPP) using a radiometer to related ground reflectance to plant biomass [see @Byrne2011 for a review].
+We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [see @Byrne2011 for a review].
+We recorded ground reflectance at four wavelengths, two associated with red reflectance (xxx and xxx) and two associated with near-infrared reflectance (xxx and xxx).
+At each plot in each year, we took four readings of ground reflectances at the above wavelengths.
+We also took readings in ten calibration plots adjacent to the experimental site, in which we harvested all aboveground biomass, dried it to a constant weight at 60$^{\circ}$C, and weighed it to estimate ANPP.
+
+For each plot and year, we averaged the four readings for each wavelength and then calculated NDVI using the MODIS and AVHRR algorithms.
+To convert NDVI to ANPP we regressed NDVI against the dry biomass weight from the ten calibration plots.
+We fit regressions to MODIS-based NDVI and AVHRR-based NDVI for each year and retained the regression with the better fit.
+Using the best regression equation for each year, we predicted ANPP.
+
+#### Species Composition
+Species composition data came from annual census maps for each plot made using a pantograph [@Hill1920].
+The maps record the spatial location and size of each individual plant.
+Using those annual maps, we aggregated over individuals to calculate total basal cover for each species in each plot.
+
+### Data Analysis
+####  ANPP and Ecosystem Stability
+
+####  Species Synchrony and Species Composition
+
+Results
+-------
+
+Discussion
+----------
+
 
 Acknowledgments
 ---------------

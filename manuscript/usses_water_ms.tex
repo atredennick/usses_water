@@ -200,8 +200,43 @@ a handheld EC-5 sensor.
 Productivity}\label{aboveground-net-primary-productivity}
 
 We estimated aboveground net primary productivity (ANPP) using a
-radiometer to related ground reflectance to plant biomass (see Byrne et
-al. 2011 for a review).
+radiometer to relate ground reflectance to plant biomass (see Byrne et
+al. 2011 for a review). We recorded ground reflectance at four
+wavelengths, two associated with red reflectance (xxx and xxx) and two
+associated with near-infrared reflectance (xxx and xxx). At each plot in
+each year, we took four readings of ground reflectances at the above
+wavelengths. We also took readings in ten calibration plots adjacent to
+the experimental site, in which we harvested all aboveground biomass,
+dried it to a constant weight at 60\(^{\circ}\)C, and weighed it to
+estimate ANPP.
+
+For each plot and year, we averaged the four readings for each
+wavelength and then calculated NDVI using the MODIS and AVHRR
+algorithms. To convert NDVI to ANPP we regressed NDVI against the dry
+biomass weight from the ten calibration plots. We fit regressions to
+MODIS-based NDVI and AVHRR-based NDVI for each year and retained the
+regression with the better fit. Using the best regression equation for
+each year, we predicted ANPP.
+
+\paragraph{Species Composition}\label{species-composition}
+
+Species composition data came from annual census maps for each plot made
+using a pantograph (Hill 1920). The maps record the spatial location and
+size of each individual plant. Using those annual maps, we aggregated
+over individuals to calculate total basal cover for each species in each
+plot.
+
+\subsubsection{Data Analysis}\label{data-analysis}
+
+\paragraph{ANPP and Ecosystem
+Stability}\label{anpp-and-ecosystem-stability}
+
+\paragraph{Species Synchrony and Species
+Composition}\label{species-synchrony-and-species-composition}
+
+\subsection{Results}\label{results}
+
+\subsection{Discussion}\label{discussion}
 
 \subsection{Acknowledgments}\label{acknowledgments}
 
@@ -229,6 +264,10 @@ Management}, 64, 498--505.
 Gherardi, L.A. \& Sala, O.E. (2013). Automated rainfall manipulation
 system: a reliable and inexpensive tool for ecologists.
 \emph{Ecosphere}, 4, 1--10.
+
+\hypertarget{ref-Hill1920}{}
+Hill, R.R. (1920). Charting Quadrats with a Pantograph. \emph{Ecology},
+1, 270--273.
 
 
 \end{document}
