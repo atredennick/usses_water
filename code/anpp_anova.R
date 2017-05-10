@@ -5,16 +5,12 @@ permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Co
 biomass_yr_trt_summ <- permanent_quad_biomass %>%
   filter(!str_detect(quadname, 'P1|P7')) %>%
   group_by(Treatment,year) %>%
-  filter(year > 2011)
+  filter(year > 2011) #%>%
+  #spread(Treatment,Treatment)
 
 
-library(nlme)
 
-model = lm(log(biomass_grams_est) ~ Treatment, 
-            data=filter(biomass_yr_trt_summ, year==2015))
-summary(model)
-
-library(car)
-
-Anova(model)
+all_years_model <-  lm(log(biomass_grams_est) ~ Treatment*year, data=biomass_yr_trt_summ)
+summary(all_years_model)
+anova(all_years_model)
 
