@@ -145,7 +145,20 @@ We used ANOVA with treatment, year, and treatment$\times$year terms to test the 
 To test for within-year differences of ANPP among treatments, we fit ANOVAs independently for each year with treatment terms only.
 We used the \texttt{lm()} function in \texttt{R} [v3.3.2, @R2016] to fit the models, and the \texttt{anova()} function to extract sums-of-squares tables.
 
+We calculated ecosystem stability as the temporal mean of ANPP divided by its temporal standarad deviation $\left( \overline{\text{ANPP}} / \sigma(\text{ANPP}) \right)$.
+Ecosystem stability was calculated for each plot.
+We compared ecosystem stability among treatments using ANOVA (same \texttt{R} functions as above).
+
 ####  Species Synchrony and Species Composition
+We calculated the synchrony of species fluctuations through time using basal area cover data and individual density data.
+For both data types we calculated the synchrony metric described by @Loreau2008a, which ranges from 0 (perfect ascynchrony) to 1 (perfect synchrony).
+Before calculating synchrony, we averaged cover and density over plots within treatments for each species.
+We used the \texttt{synchrony()} function in the \texttt{R} package \texttt{codyn} [@Hallett2016] to calculate species synchrony.
+
+To see if community composition differed among treatments through time, we used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis distances.
+For each year of the experiment, we first calculated Bray-Curtis distances among all plots, and then extracted those distances for use in the NMDS.
+We plotted the first two axes of NMDS scores to see if community composition overlapped, or not, among treatments in each year.
+We used functions in the \texttt{R} package \texttt{vegan} [@Oksanen2016] to calculate Bray-Curtis distances and the run the NMDS analysis.
 
 Results
 -------
