@@ -152,7 +152,7 @@ Using those annual maps, we aggregated over individuals to calculate total basal
 ####  ANPP and Ecosystem Stability
 We used ANOVA with treatment, year, and treatment$\times$year terms to test the effects of the treatments on ANPP over the course of the five year experiment.
 To test for within-year differences of ANPP among treatments, we fit ANOVAs independently for each year with treatment terms only.
-We used the \texttt{lm()} function in \texttt{R} [v3.3.2, @R2016] to fit the models, and the \texttt{anova()} function to extract sums-of-squares tables.
+We used the \texttt{lm()} function in \texttt{R} [v3.3.2, @R2016] to fit the models, and the \texttt{Anova()} function from the \texttt{car} package [@Fox2011] to extract sums-of-squares tables with Type II tests.
 
 We calculated ecosystem stability as the temporal mean of ANPP divided by its temporal standarad deviation $\left( \overline{\text{ANPP}} / \sigma(\text{ANPP}) \right)$.
 Ecosystem stability was calculated for each plot.
@@ -196,12 +196,12 @@ library(xtable)
 inyear_anova <- readRDS("../results/within_year_anova_table.RDS")
 
 inyear_caption <- "ANOVA for treatment effects on ANPP for each year of the experiment."
-print(xtable(inyear_anova, caption = inyear_caption),
+print(xtable(inyear_anova, caption = inyear_caption, digits = 2),
       caption.placement="top",
       include.rownames = F, 
       sanitize.colnames.function = identity,
-      comment=FALSE,
-      size="normalsize")
+      comment = FALSE,
+      size = "normalsize")
 ```
 
 \newpage{}
