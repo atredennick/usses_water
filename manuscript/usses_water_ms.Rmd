@@ -8,7 +8,6 @@ header-includes:
   - \doublespacing
   - \usepackage{rotating}
   - \usepackage{color, soul}
-  - \usepackage[font={normalsize},labelfont={bf},labelsep=quad]{caption}
   - \usepackage{sectsty}
   - \usepackage{bm,mathrsfs}
   - \usepackage{mathptmx} 
@@ -185,6 +184,27 @@ We thank the many summer research technicians who collected the data reported in
 
 \singlespace
 \setlength{\parindent}{0ex}
+
+\newpage{}
+
+TABLES
+------
+
+```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
+library(xtable)
+# Read in within-year ANOVA results table
+inyear_anova <- readRDS("../results/within_year_anova_table.RDS")
+
+inyear_caption <- "ANOVA for treatment effects on ANPP for each year of the experiment."
+print(xtable(inyear_anova, caption = inyear_caption),
+      caption.placement="top",
+      include.rownames = F, 
+      sanitize.colnames.function = identity,
+      comment=FALSE,
+      size="normalsize")
+```
+
+\newpage{}
 
 References
 ----------
