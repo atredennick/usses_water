@@ -20,7 +20,8 @@ library(tidyverse) # Data munging
 library(dplyr)     # Data summarizing
 library(broom)     # Working with model output
 library(stringr)   # Working with strings
-library(car)
+library(car)       # Type II ANOVA function
+library(xtable)    # LaTeX tables
 
 
 
@@ -80,4 +81,31 @@ capture.output(
                  cat("\n\n\n\n")
                },
                file = "../results/within_year_anovas.txt")
+
+
+##  Run again for LaTeX table
+stats_out <- {}
+for(doyear in years){
+  tmpd <- filter(anpp_data, year==doyear)
+  drought_mod <- lm(log(biomass_grams_est) ~ Treatment, 
+                    data=filter(tmpd, Treatment!="Irrigation"))
+  irrigat_mod <- lm(log(biomass_grams_est) ~ Treatment, 
+                    data=filter(tmpd, Treatment!="Drought"))
+  
+  drt <- broom::tidy(car::Anova(drought_mod))
+  irr <- broom::tidy(car::Anova(irrigat_mod))
+  
+  irr$Effect <- "Irrigation"
+  drt$Effect <- "Drought"
+  tmpout <- rbind(irr,drt)
+  tmpout <- filter(tmpout, term=="Treatment")
+  tmpout$df <- paste0(as.character(tmpout$df),", 12")
+  tmpout$Year <- doyear
+  tmpout <- select(tmpout, -c(term,sumsq))
+  tmpout <- tmpout[,c("Year","Effect","df","statistic","p.value")]
+  colnames(tmpout) <- c("Year","Effect","df","F","P")
+  stats_out <- rbind(stats_out, tmpout)
+}
+
+
 
