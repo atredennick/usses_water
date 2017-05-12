@@ -21,7 +21,6 @@ library(dplyr)     # Data summarizing
 library(broom)     # Working with model output
 library(stringr)   # Working with strings
 library(car)       # Type II ANOVA function
-library(xtable)    # LaTeX tables
 
 
 
@@ -107,5 +106,7 @@ for(doyear in years){
   stats_out <- rbind(stats_out, tmpout)
 }
 
+# Save output dataframe for LaTeX table making in R Markdown
+saveRDS(object = stats_out, "../results/within_year_anova_table.RDS")
 
 
