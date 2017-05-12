@@ -1,16 +1,83 @@
-permanent_quad_biomass <- readRDS("../data/estimated_biomass/permanent_plots_estimated_biomass.RDS")
+##  anpp_anova.R: Script to run ANOVA analysis to test for treatment effects
+##  on ANPP. Runs ANOVA for entirety of experiment and independent tests
+##  within years.
+##
+##  Author: Andrew Tredennick
+##  Date created: May 12, 2017
 
-permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
+##  Clear everything
+rm(list=ls(all.names = T))
 
-biomass_yr_trt_summ <- permanent_quad_biomass %>%
+##  Set working directory to source file location
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
+
+
+
+####
+####  LOAD LIBRARIES ----
+####
+library(tidyverse) # Data munging
+library(dplyr)     # Data summarizing
+library(broom)     # Working with model output
+library(stringr)   # Working with strings
+library(car)
+
+
+
+####
+####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ----
+####
+data_path <- "../data/estimated_biomass/"
+fname <- "permanent_plots_estimated_biomass.RDS"
+permanent_quad_biomass <- readRDS(paste0(data_path,fname))
+
+anpp_data <- permanent_quad_biomass %>% 
+  filter(Treatment %in% c("Control","Drought","Irrigation")) %>%
   filter(!str_detect(quadname, 'P1|P7')) %>%
   group_by(Treatment,year) %>%
-  filter(year > 2011) #%>%
-  #spread(Treatment,Treatment)
+  filter(year > 2011)
 
 
 
-all_years_model <-  lm(log(biomass_grams_est) ~ Treatment*year, data=biomass_yr_trt_summ)
-summary(all_years_model)
-anova(all_years_model)
+####
+####  FIT ALL YEAR ANOVAS ----
+####
+# Irrigation
+all_drt_model <-  lm(log(biomass_grams_est) ~ year*Treatment, 
+                     data=filter(anpp_data, Treatment!="Irrigation"))
+summary(all_drt_model)
+
+# Drought
+all_irr_model <- lm(log(biomass_grams_est) ~ year*Treatment, 
+                    data=filter(anpp_data, Treatment!="Drought"))
+summary(all_irr_model)
+
+
+
+####
+####  FIT YEAR-INDEPENDENT ANOVAS ----
+####
+years <- unique(anpp_data$year)
+capture.output(
+               for(doyear in years){
+                 tmpd <- filter(anpp_data, year==doyear)
+                 drought_mod <- lm(log(biomass_grams_est) ~ Treatment, 
+                                   data=filter(tmpd, Treatment!="Irrigation"))
+                 irrigat_mod <- lm(log(biomass_grams_est) ~ Treatment, 
+                                   data=filter(tmpd, Treatment!="Drought"))
+                 
+                 print(doyear)
+                 print("******************************************************")
+                 print("DROUGHT")
+                 print(car::Anova(drought_mod))
+                 
+                 cat("\n\n")
+                 
+                 print("IRRIGATION")
+                 print(car::Anova(irrigat_mod))
+                 
+                 print("******************************************************")
+                 cat("\n\n\n\n")
+               },
+               file = "../results/within_year_anovas.txt")
 
