@@ -160,13 +160,14 @@ ggsave(paste0(figure_path,"synchrony_treatment.png"), height = 2, width = 3.5, u
 
 
 ####
-####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS ----
+####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS -- COVER ----
 ####
 cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
   group_by(quad, year, species) %>%
   summarise(total_area = sum(area)) %>%
   left_join(plot_info) %>%
   filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+  filter(!str_detect(QuadName, 'P1|P7')) %>%
   filter(year > 2010 & is.na(species)==F) %>%
   spread(species,total_area, fill = 0) %>%
   select(-QuadName,-Grazing,-paddock,-Group) %>%
@@ -202,30 +203,46 @@ ggsave(paste0(figure_path,"sppcomp_nmds.png"), width=6, height = 4, units = "in"
 
  
 
+####
+####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS -- DENSITY ----
+####
+density_community_matrix <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
+  mutate(ind_num = 1) %>%
+  group_by(year, quad, species) %>%
+  summarise(total_inds = sum(ind_num)) %>%
+  left_join(plot_info) %>%
+  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+  filter(!str_detect(QuadName, 'P1|P7')) %>%
+  filter(year > 2010 & is.na(species)==F) %>%
+  spread(species,total_inds, fill = 0) %>%
+  select(-QuadName,-Grazing,-paddock,-Group) %>%
+  ungroup()
+
+mycol <- RColorBrewer::brewer.pal(3,"Set2")
+nmds_df <- {}
+for(doyr in unique(density_community_matrix$year)){
+  tmp <- filter(density_community_matrix, year == doyr) %>% select(-year)
+  torm <- as.numeric(which(colSums(tmp[3:ncol(tmp)], na.rm = T) == 0)) # find spp with NA in each treatment
+  tmp <- tmp[,-(torm+2)] # add 2 because we lopped off two columns above
+  tmp_rda <- metaMDS(tmp[3:ncol(tmp)], "bray")
+  ## Try to plot in ggplot
+  nmds_points <- as.data.frame(tmp_rda$points)
+  nmds_points$Treatment <- tmp$Treatment
+  nmds_points$Year <- doyr
+  nmds_df <- rbind(nmds_df, nmds_points)
+}
+
+ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
+  geom_point()+
+  geom_point(color="grey35",shape=1)+
+  scale_color_brewer(palette = "Set2")+
+  scale_y_continuous(limits=c(-2,2))+
+  scale_x_continuous(limits=c(-2,2))+
+  ylab("NMDS 2")+
+  xlab("NMDS 1")+
+  facet_wrap("Year")+
+  theme_few()
+ggsave(paste0(figure_path,"sppcomp_density_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
 
 
-
-
-
-
-
-
- # tmp_dist <- vegdist(tmp[3:ncol(tmp)], method = "bray")
-  # tmp_clust <- hclust(tmp_dist, method = "average")
-  # mds.fig <- ordiplot(tmp_rda, type = "none", main = doyr)
-  # # plot just the samples, colour by habitat, pch=19 means plot a circle
-  # ordicluster(tmp_rda, tmp_clust, col = "gray")
-  # points(mds.fig, "sites", pch = 19, col = mycol[1], select = tmp$Treatment == "Control")
-  # points(mds.fig, "sites", pch = 19, col = mycol[2], select = tmp$Treatment == "Irrigation")
-  # points(mds.fig, "sites", pch = 19, col = mycol[3], select = tmp$Treatment == "Drought")
-  # points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Control")
-  # points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Irrigation")
-  # points(mds.fig, "sites", pch = 1, col = "grey35", select = tmp$Treatment == "Drought")
-  # pca_scores <- scores(tmp_rda)
-  # plot(pca_scores[,1],
-  #      pca_scores[,2],
-  #      pch=21,
-  #      bg=as.numeric(tmp$Treatment),
-  #      ylab="PCA1", xlab=("PCA2"),
-  #      main = doyr)
 
