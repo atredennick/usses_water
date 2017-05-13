@@ -47,7 +47,9 @@ g1 <- ggplot(weather, aes(x=ppt1))+
   xlab("Growing Season Precipitation (mm)")+
   ggtitle("A")+
   theme_few()+
-  theme(legend.position = c(0.8, 0.6),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
+  theme(legend.position = c(0.8, 0.6),
+        legend.key.size = unit(1,"pt"),
+        legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))+
   guides(fill = guide_legend(override.aes = list(color = brewer.pal(5,"Set1"),size=1)),
@@ -85,9 +87,10 @@ g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
   geom_point(color="white", size=3)+
   geom_point()+
   geom_point(color="grey35", shape=1)+
+ # annotate("text",x=2015,y=250,label="*")+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
-  scale_y_continuous(breaks=seq(50,350,50))+
+  scale_y_continuous(expand=c(0,0),limits=c(10,400),breaks=seq(50,350,50))+
   ylab(expression(paste("Estimated ANPP (g ", m^-2,")")))+
   xlab("Year")+
   ggtitle("B")+

@@ -187,7 +187,7 @@ We thank the many summer research technicians who collected the data reported in
 
 \newpage{}
 
-TABLES
+Tables
 ------
 
 ```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
@@ -203,6 +203,18 @@ print(xtable(inyear_anova, caption = inyear_caption, digits = 2),
       comment = FALSE,
       size = "normalsize")
 ```
+
+\newpage{}
+
+Figures
+-------
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=6in]{../figures/histppt_and_anpptrend.png}
+  \caption{(A) Histogram of historical precipitation from 1926-2016, with the years of the experiment overlaid as colored points. ``Drought'' treatments (squares) are shown as a 50\% reduction from the observed precipitation. ``Irrigation'' treatment precipitation levels are not shown. (B) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment.}
+\end{figure}
+
 
 \newpage{}
 
