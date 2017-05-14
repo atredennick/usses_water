@@ -29,6 +29,7 @@ library(lme4)
 library(codyn)
 library(vegan)
 library(gridExtra)
+library(car)
 
 
 
@@ -98,14 +99,27 @@ ggplot(stability_richness, aes(x=avg_richness, y=stability, color=Treatment))+
   theme_few()
 ggsave(paste0(figure_path,"stability_richness.png"), height = 3, width = 4.5, units = "in", dpi = 120)
 
-ggplot(stability_richness, aes(y = stability, x = Treatment, color=Treatment))+
-  geom_jitter(width=0.1)+
-  geom_boxplot(fill=NA,outlier.color = NA, width=0.25)+
+ggplot(stability_richness, aes(y = stability, x = Treatment, fill=Treatment))+
+  geom_boxplot(outlier.color = NA, width=0.2, color="grey24",alpha=0.5)+
+  geom_jitter(width=0.1,shape=21,color="grey35")+
   scale_color_brewer(palette = "Set2")+
+  scale_fill_brewer(palette = "Set2")+
+  scale_y_continuous(breaks=seq(1.4,2.6,0.2))+
   ylab(expression(paste("Stability of ANPP (", mu/sigma,")")))+
-  guides(color=F)+
+  guides(fill=F)+
   theme_few()
 ggsave(paste0(figure_path,"stability_treatment.png"), height = 3, width = 3, units = "in", dpi = 120)
+
+
+
+####
+####  ANOVA FOR STABILITY ----
+####
+stability_mod <- lm(stability ~ Treatment, data=stability_richness)
+capture.output(
+  print(car::Anova(stability_mod)),
+  file = "../results/stability_anova.txt"
+)
 
 
 
