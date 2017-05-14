@@ -218,5 +218,14 @@ Figures
 
 \newpage{}
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{../figures/nmds_comp_combined.png}
+  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment. (A) NMDS results using basal cover data; (B) NMDS results using individual density data.}
+\end{figure}
+
+
+\newpage{}
+
 References
 ----------
