@@ -221,7 +221,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/nmds_comp_combined.png}
-  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment. (A) NMDS results using basal cover data; (B) NMDS results using individual density data.}
+  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment. (A) NMDS results using basal cover data; (B) NMDS results using individual density data. 2011 is a pre-treatment year.}
 \end{figure}
 
 
