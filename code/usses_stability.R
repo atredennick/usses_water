@@ -203,7 +203,7 @@ for(doyr in unique(cover_community_matrix$year)){
   nmds_df <- rbind(nmds_df, nmds_points)
 }
 
-ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
+comp1 <- ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
   geom_point()+
   geom_point(color="grey35",shape=1)+
   scale_color_brewer(palette = "Set2")+
@@ -212,6 +212,7 @@ ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
   ylab("NMDS 2")+
   xlab("NMDS 1")+
   facet_wrap("Year")+
+  ggtitle("A. Cover data")+
   theme_few()
 ggsave(paste0(figure_path,"sppcomp_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
 
@@ -246,7 +247,7 @@ for(doyr in unique(density_community_matrix$year)){
   nmds_df <- rbind(nmds_df, nmds_points)
 }
 
-ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
+comp2 <- ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
   geom_point()+
   geom_point(color="grey35",shape=1)+
   scale_color_brewer(palette = "Set2")+
@@ -255,8 +256,10 @@ ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
   ylab("NMDS 2")+
   xlab("NMDS 1")+
   facet_wrap("Year")+
+  ggtitle("B. Density data")+
   theme_few()
 ggsave(paste0(figure_path,"sppcomp_density_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
 
-
+gout <- grid.arrange(comp1,comp2,nrow=2)
+ggsave("../figures/nmds_comp_combined.png", plot = gout, width = 6, height = 8, units="in", dpi=120)
 
