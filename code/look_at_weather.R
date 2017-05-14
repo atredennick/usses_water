@@ -90,7 +90,7 @@ g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
  # annotate("text",x=2015,y=250,label="*")+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
-  scale_y_continuous(expand=c(0,0),limits=c(10,400),breaks=seq(50,350,50))+
+  scale_y_continuous(breaks=seq(50,350,50))+
   ylab(expression(paste("Estimated ANPP (g ", m^-2,")")))+
   xlab("Year")+
   ggtitle("B")+
