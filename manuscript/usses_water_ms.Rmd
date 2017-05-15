@@ -33,7 +33,7 @@ urlcolor: black
 
 \begin{centering}
 
-\Large{\textbf{Ecosystem and community resistance to five years of drought and deluge in the Sagebrush Steppe}}
+\Large{\textbf{Ecosystem and community resistance to five years of drought and deluge in a sagebrush tteppe}}
 
 \bigskip{} \bigskip{}
 
@@ -89,7 +89,7 @@ At least in the short-term, this sagebrush steppe ecosystem is resistant to incr
 
 \vspace{2em}
 
-\emph{Key words: drought, aboveground net primary productivity, ecosystem stability, climate change, species synchrony}
+\emph{Key words: drought, aboveground net primary productivity, ecosystem stability, climate change, species synchrony, sagebrush steppe}
 \end{abstract}
 
 
@@ -97,7 +97,24 @@ At least in the short-term, this sagebrush steppe ecosystem is resistant to incr
 
 Introduction
 ------------
-Start it here
+Chronic alterations to resource availability should cause community composition to shift over time.
+Species' relative abundances are expected to re-order and, eventually, some species will be lost from the local community and new species will be gained [@Smith2009; @Avolio2015].
+Ecosystem functioning, such as productivity and stability, may remain relatively constant (CITATION) or shift to a new mean state (CITATION) depending on the trait-space of the new community.
+
+Different ecosystems are sensitive to different global changes.
+For example, @Flombaum2017 found aboveground net primary productivity (ANPP) in a Patagonian steppe was less sensitive to drought than a North American tallgrass prairie, relative to other global changes.
+Taken together with other results, @Flombaum2017 conclude that ecosystem sensitivity to a resource alteration is inversly related to the natural variation of the resource.
+In the above example, precipitation is much more variable in the Patagonian steppe than the North American tallgrass prairie.
+
+This leaves us with the following qualitative understanding.
+Chronic resource alteration should induce shifts in community composition and, maybe, ecosystem functioning, but only if the focal ecosystem is predisposed to be sensitive to the particular resource that is altered.
+While a crude understanding, this does allow us to make testable predictions when confronted with an ecosystem--resource pairing.
+
+
+
+
+
+
 
 Methods
 -------
