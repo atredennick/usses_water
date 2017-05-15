@@ -1,0 +1,53 @@
+# git ignore for andys files add in this directory
+
+# History files
+*.Rhistory
+*.Rapp.history
+
+# Session Data files
+.RData
+
+# Example code in package build process
+*-Ex.R
+
+# RStudio files
+*.Rproj.user/
+*.Rproj.user
+*.Ruserdata
+
+
+
+# images
+*.pdf
+*.jpg
+*.png
+
+# documents
+*.doc
+*.docx
+*.ods
+*.ppt
+*.xls
+*.xlsx
+*.odt
+
+# data
+*.RDS
+*.rds
+*.dat
+*.sqlite
+*.rda
+*.RDA
+*.aux
+*.blg
+*.dvi
+*.idx
+*.log
+*.toc
+*.synctex.gz
+
+
+# folders
+data/processed_data/* 
+figures/*
+

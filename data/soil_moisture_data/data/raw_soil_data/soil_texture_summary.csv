@@ -1,0 +1,11 @@
+# summary of soil texture data from Andrew Kulmatiski,,,
+# values from ~/Documents/precip_experiment/data/soil_moit_data/Kulmatiski_soiltexture.xlsx,,,
+# based on three soil pits and two replicate soil samples per depth in each pit ,,,
+# hydrometer method of soil texture,,,
+# 40 g soil per sample ,,,
+"# percent clay, silt, sand",,,
+depth_cm,clay,silt,sand
+0-20,14.953182338,36.1376115814,48.9092060806
+20-40,19.4984878455,29.7379760557,50.7635360988
+40-60,26.5365581483,26.3939111113,47.0695307405
+60-80,24.2241997109,25.2611998768,50.5146004123

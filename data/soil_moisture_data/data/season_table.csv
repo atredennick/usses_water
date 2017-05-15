@@ -1,0 +1,13 @@
+"month","season","season_label","precip_seasons","lag_year"
+1,"winter","winter","cool",0
+2,"winter","winter","cool",0
+3,"spring","spring","cool",0
+4,"spring","spring","cool",0
+5,"spring","spring","cool",0
+6,"summer","summer","warm",0
+7,"summer","summer","warm",0
+8,"summer","summer","warm",0
+9,"fall","fall","warm",0
+10,"fall","fall","warm",0
+11,"fall","fall","cool",1
+12,"winter","winter","cool",1
