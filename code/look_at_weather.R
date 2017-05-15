@@ -81,13 +81,17 @@ biomass_yr_trt_summ <- permanent_quad_biomass %>%
             sd_biomass = sd(biomass_grams_est)) %>%
   filter(year > 2011)
 
+stats_lab <- expression(paste("year*treatment  ", italic("P"), " = 0.67"))
 g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
   geom_line()+
   geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
   geom_point(color="white", size=3)+
   geom_point()+
   geom_point(color="grey35", shape=1)+
- # annotate("text",x=2015,y=250,label="*")+
+  annotate("text",x=2015.1,y=190,label="a",size=3)+
+  annotate("text",x=2015.1,y=210,label="a",size=3)+
+  annotate("text",x=2015.1,y=148,label="b",size=3)+
+  annotate("text",x=2015.2,y=50,label="year%*%treatment~phantom(0)~italic('P')==0.67", parse=T, size=3)+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
   scale_y_continuous(breaks=seq(50,350,50))+
@@ -99,8 +103,6 @@ g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
   theme(legend.position = c(0.2, 0.8),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))
-
-
 
 ####
 ####  COMBINE PLOTS AND SAVE ----

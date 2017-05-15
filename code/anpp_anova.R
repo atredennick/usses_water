@@ -42,6 +42,9 @@ anpp_data <- permanent_quad_biomass %>%
 ####
 ####  FIT ALL YEAR ANOVAS ----
 ####
+all_model <- lm(log(biomass_grams_est) ~ year*Treatment, 
+                data=anpp_data)
+car::Anova(all_model)
 # Irrigation
 all_drt_model <-  lm(log(biomass_grams_est) ~ year*Treatment, 
                      data=filter(anpp_data, Treatment!="Irrigation"))
