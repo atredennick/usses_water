@@ -1,0 +1,71 @@
+QuadName,quad,Grazing,paddock,Group,Treatment,PrecipGroup
+E1 Q1,Q1,UG,NA,E1,Control,
+E1 Q2,Q2,UG,NA,E1,Control,
+E1 Q3,Q3,UG,NA,E1,Control,
+E1 Q4,Q4,UG,NA,E1,Control,
+E1 Q5,Q5,UG,NA,E1,Control,
+E1 Q6,Q6,UG,NA,E1,Control,
+P1 E1 Q1,Q7,UG,NA,P1E1,Control,
+P1 E1 Q2,Q8,UG,NA,P1E1,Control,
+P1 E1 Q3,Q9,UG,NA,P1E1,Control,
+P1 E1 Q4,Q10,UG,NA,P1E1,Control,
+P1 Q1,Q11,G,2,P1,Control,
+P1 Q2,Q12,G,3,P1,Control,
+P1 Q3,Q13,G,2,P1,Control,
+P1 Q4,Q14,G,1,P1,Control,
+P2 Q1,Q15,G,5,P2,Control,
+P2 Q2,Q16,G,4,P2,Control,
+P2 Q3,Q17,G,4,P2,Control,
+P2 Q4,Q18,G,5,P2,Control,
+P7 E1 Q1,Q19,UG,NA,P7E1,Control,
+P7 E1 Q2,Q20,UG,NA,P7E1,Control,
+P7 E1 Q3,Q21,UG,NA,P7E1,Control,
+P7 E1 Q4,Q22,UG,NA,P7E1,Control,
+P10 E1 Q1,Q23,UG,NA,P10E1,Control,
+P10 E1 Q2,Q24,UG,NA,P10E1,Control,
+P10 E1 Q3,Q25,UG,NA,P10E1,Control,
+P10 E1 Q4,Q26,UG,NA,P10E1,Control,
+X1,Q27,UG,NA,E1,Irrigation,1
+X2,Q28,UG,NA,E1,Drought,1
+X3,Q29,UG,NA,E1,NA,
+X4,Q30,UG,NA,E1,NA,
+X5,Q31,UG,NA,E1,Drought,2
+X6,Q32,UG,NA,E1,Irrigation,2
+X7,Q33,UG,NA,E1,Irrigation,3
+X8,Q34,UG,NA,E1,Drought,3
+X9,Q35,UG,NA,E1,NA,
+X10,Q36,UG,NA,E1,NA,
+X11,Q37,UG,NA,E1,Drought,4
+X12,Q38,UG,NA,E1,Irrigation,4
+X13,Q39,UG,NA,E1,Drought,5
+X14,Q40,UG,NA,E1,Irrigation,5
+X15,Q41,UG,NA,E1,Drought,6
+X16,Q42,UG,NA,E1,Irrigation,6
+X17,Q43,UG,NA,E1,Drought,7
+X18,Q44,UG,NA,E1,Irrigation,7
+X19,Q45,UG,NA,E1,Irrigation,8
+X20,Q46,UG,NA,E1,Drought,8
+X21,Q47,UG,NA,E1,No_shrub,
+X22,Q48,UG,NA,E1,No_grass,
+X23,Q49,UG,NA,E1,No_grass,
+X24,Q50,UG,NA,E1,No_shrub,
+X25,Q51,UG,NA,E1,No_grass,
+X26,Q52,UG,NA,E1,No_shrub,
+X27,Q53,UG,NA,E1,No_shrub,
+X28,Q54,UG,NA,E1,No_shrub,
+X29,Q55,UG,NA,E1,No_grass,
+X30,Q56,UG,NA,E1,No_shrub,
+X31,Q57,UG,NA,E1,No_grass,
+X32,Q58,UG,NA,E1,No_grass,
+X33,Q59,UG,NA,E1,No_shrub,
+X34,Q60,UG,NA,E1,No_grass,
+X35,Q61,UG,NA,E1,No_shrub,
+X36,Q62,UG,NA,E1,No_grass,
+X1_2_C,,UG,NA,E1,Control,1
+X5_6_C,,UG,NA,E1,Control,2
+X7_8_C,,UG,NA,E1,Control,3
+X11_12_C,,UG,NA,E1,Control,4
+X13_14_C,,UG,NA,E1,Control,5
+X15_16_C,,UG,NA,E1,Control,6
+X17_18_C,,UG,NA,E1,Control,7
+X19_20_C,,UG,NA,E1,Control,8

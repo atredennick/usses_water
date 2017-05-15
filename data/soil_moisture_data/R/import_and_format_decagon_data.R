@@ -70,7 +70,7 @@ gather_ports <- function ( test ) {
 } 
 
 
-q_info <- read.csv('../quad_info.csv') 
+q_info <- read.csv('data/quad_info.csv') 
 
 folders <- dir('data/raw_soil_data', pattern = '20[0-9]{2}_[1-2]$', full.names = TRUE)
 

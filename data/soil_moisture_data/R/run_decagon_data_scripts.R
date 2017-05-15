@@ -5,8 +5,9 @@
 ###############################################################################
 
 
-home <- '~'
-setwd( file.path(home, 'driversdata', 'data', 'idaho_modern', 'soil_moisture_data'))
+##  Set working directory to source file location
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
+setwd("../")
 
 if(!dir.exists('data/processed_data/')){ dir.create('data/processed_data/')}
 

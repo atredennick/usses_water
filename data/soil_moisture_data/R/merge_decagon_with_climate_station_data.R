@@ -7,7 +7,7 @@ library(lme4)
 library(zoo)
 
 df <- readRDS(file = 'data/processed_data/decagon_data_corrected_values.RDS')
-station_dat <- read.csv('../climateData/USSES_climate.csv')
+station_dat <- read.csv('../weather/USSES_climate.csv')
 
 # ---------------------------------------------------------------------------------------
 station_dat$date <-  as.POSIXct( strptime( station_dat$DATE, '%Y%m%d', tz = 'MST')  ) 
