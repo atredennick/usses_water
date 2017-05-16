@@ -16,11 +16,13 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 ####
 ####  LOAD LIBRARIES ----
 ####
-library(tidyverse) # Data munging
-library(dplyr)     # Data summarizing
-library(broom)     # Working with model output
-library(stringr)   # Working with strings
-library(car)       # Type II ANOVA function
+library(tidyverse)    # Data munging
+library(dplyr)        # Data summarizing
+library(broom)        # Working with model output
+library(stringr)      # Working with strings
+library(car)          # Type II ANOVA function
+library(lsmeans)      # Post-hoc pairwise comparisons
+library(multcompView) # Just for viewing pairwise results
 
 
 
@@ -45,15 +47,17 @@ anpp_data <- permanent_quad_biomass %>%
 all_model <- lm(log(biomass_grams_est) ~ year*Treatment, 
                 data=anpp_data)
 car::Anova(all_model)
+cld(lsmeans(all_model,"Treatment",adjust="Tukey"), alpha=0.05, Letters=letters)
+
 # Irrigation
 all_drt_model <-  lm(log(biomass_grams_est) ~ year*Treatment, 
                      data=filter(anpp_data, Treatment!="Irrigation"))
-summary(all_drt_model)
+car::Anova(all_drt_model)
 
 # Drought
 all_irr_model <- lm(log(biomass_grams_est) ~ year*Treatment, 
                     data=filter(anpp_data, Treatment!="Drought"))
-summary(all_irr_model)
+car::Anova(all_irr_model)
 
 
 
