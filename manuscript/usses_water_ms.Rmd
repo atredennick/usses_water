@@ -110,9 +110,25 @@ This leaves us with the following qualitative understanding.
 Chronic resource alteration should induce shifts in community composition and, maybe, ecosystem functioning, but only if the focal ecosystem is predisposed to be sensitive to the particular resource that is altered.
 While a crude understanding, this does allow us to make testable predictions when confronted with an ecosystem--resource pairing.
 
+In many areas of the western United States, precipitation is likely to become more variable.
+This will result in swings back-and-forth between multiyear periods of above and above average precipitation.
+An obvious question is, how will semiarid ecosystems respond to periods of drought and deluge?
+A naive expectation is that alterations in precipitation, and subsequently available soil moisture, should cause changes in plant community composition and increase or decrease ANPP dependending on the direction of precipitation change.
+But our emerging qualitative understanding suggests an alternative expectation: altering soil moisture may have little to no effect on plant community composition and ecosystem functioning.
+This expectation stems from the fact that precipitation is already a variable resource in semiarid systems, meaning the plant community is not sensitive to realistic increases/decreases in precipitation.
 
+Here we test our qualitative understanding of how altering precipitation will impact a sagebrush steppe ecosystem by imposing drought and irrigation for five years.
+In particular, we test the following competing predictions:
 
+\begin{description}
+\item [P1.] Altering precipitation will favor certain species over others, resulting in a shift in the plant community composition. ANPP will increase (irrigation) or decrease (drought), and the treatment effects will get stronger over time (a treatment$\times$year interaction).
 
+\item[P2.] Altering precipitation will not favor certain species and plant community composition will not change. ANPP will increase (irrigation) or decrease (drought), and the treatment effects will get stronger over time.
+\end{description}
+
+\noindent{}Note that both predictions assume ANPP will respond to precipitation alteration.
+Under **P1**, ANPP response stems directly from plant community shifts to species able to take advantage of the new precipitation regime.
+Under **P2**, ANPP response stems from all species responding similarly to changes in precipitation.
 
 
 
