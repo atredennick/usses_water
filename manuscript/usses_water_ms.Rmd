@@ -260,5 +260,14 @@ Figures
 
 \newpage{}
 
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{../figures/rank_clocks_cover.png}
+  \caption{Rank clocks for cover by treatment. (A) All species. (B) Dominant species.}
+\end{figure}
+
+
+\newpage{}
+
 References
 ----------
