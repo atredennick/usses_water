@@ -117,3 +117,18 @@ for(doyear in years){
 saveRDS(object = stats_out, "../results/within_year_anova_table.RDS")
 
 
+
+####
+####  MORE COMPLEX MODEL WITH PPT ----
+####
+weather <- read.csv("../data/weather/ClimateIPM.csv")
+anpp_data <- anpp_data %>%
+  left_join(weather)
+
+ggplot(anpp_data, aes(x=ppt1, y=biomass_grams_est, color=as.factor(year), shape=Treatment))+
+  geom_point()+
+  facet_wrap(~Treatment)
+
+mod <- lm(biomass_grams_est ~ ppt1*Treatment + Treatment*year, data=filter(anpp_data, Treatment!="Irrigation"))
+summary(mod)
+car::Anova(mod)
