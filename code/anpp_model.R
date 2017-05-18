@@ -1,0 +1,121 @@
+##  anpp_anova.R: Script to run ANOVA analysis to test for treatment effects
+##  on ANPP. Runs ANOVA for entirety of experiment and independent tests
+##  within years.
+##
+##  Author: Andrew Tredennick
+##  Date created: May 12, 2017
+
+##  Clear everything
+rm(list=ls(all.names = T))
+
+##  Set working directory to source file location
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
+
+
+
+####
+####  LOAD LIBRARIES ----
+####
+library(tidyverse)    # Data munging
+library(dplyr)        # Data summarizing
+library(broom)        # Working with model output
+library(stringr)      # Working with strings
+library(rjags)        # For MCMC
+library(coda)         # For summarizing MCMC output
+
+
+
+####
+####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ----
+####
+data_path <- "../data/estimated_biomass/"
+anpp_fname <- "permanent_plots_estimated_biomass.RDS"
+permanent_quad_biomass <- readRDS(paste0(data_path,anpp_fname))
+
+weather <- read.csv("../data/weather/ClimateIPM.csv") %>%
+  select(-pptLag,-ppt2,-TmeanSpr1,-TmeanSpr2)
+
+anpp_data <- permanent_quad_biomass %>% 
+  filter(Treatment %in% c("Control","Drought","Irrigation")) %>%
+  filter(!str_detect(quadname, 'P1|P7')) %>%
+  filter(year > 2011) %>%
+  rename(anpp = biomass_grams_est) %>%
+  left_join(weather, by = "year") %>%
+  select(-QuadName,-quad,-Grazing,-paddock,-ndvi) %>%
+  mutate(ppt1_scaled = as.numeric(scale(ppt1)))
+
+drought_data <- anpp_data %>%
+  filter(Treatment != "Irrigation") %>%
+  mutate(trt_id = as.numeric(as.factor(Treatment)) - 1)
+
+irrigate_data <- anpp_data %>%
+  filter(Treatment != "Drought") %>%
+  mutate(trt_id = as.numeric(as.factor(Treatment)) - 1)
+
+
+
+####
+####  WRITE JAGS MODEL FOR ANPP MODEL ----
+####
+model_string <- "
+model{
+  ### PRIOR MODELS
+  intercept ~ dnorm(0,0.001)
+  Bppt ~ dnorm(0,0.001)
+  Btrt ~ dnorm(0,0.001)
+  Byr ~ dnorm(0,0.001)
+  Bppttrt ~ dnorm(0,0.001)
+  Btrtyr ~ dnorm(0,0.001)
+  sigma ~ dgamma(0.001,0.001)
+  
+  ### PROCESS MODEL
+  for(i in 1:nobs){
+    mu[i] = intercept + Bppt*xrain[i] + Btrt*xtrt[i] + Byr*xyr[i] + Bppttrt*xrain[i]*xtrt[i] + Btrtyr*xtrt[i]*xyr[i]
+  }
+  
+  ### LIKELIHOOD MODEL
+  for(i in 1:nobs){
+    y[i] ~ dnorm(mu[i], sigma)
+  }
+}
+"
+
+
+
+####
+####  FIT MODELS ----
+####
+fit_model <- function(df,rain_var="ppt1_scaled",iters=1000,chains=3,thin=1){
+  jags_data <- list(xrain = df[,rain_var],
+                    xtrt = df[,"trt_id"],
+                    xyr = df[,"year"] - 2011,
+                    y = log(df[,"anpp"]),
+                    nobs = nrow(df))
+  vars_to_track <- c("intercept","Bppt","Btrt","Byr","Bppttrt","Btrtyr")
+  jm <- jags.model(textConnection(model_string),
+                   data = jags_data,
+                   n.chains = chains,
+                   n.adapt = 1000)
+  update(jm, n.iter = iters)
+  out <- coda.samples(jm, 
+                      variable.names = vars_to_track,
+                      n.iter = iters, 
+                      n.thin = thin)
+  out_stat <- summary(out,quantiles=c(0.025,0.5,0.975))
+  out_stat <- cbind(out_stat$statistics,out_stat$quantiles)
+  if(chains > 1){
+    rhat <- gelman.diag(out,multivariate=F,autoburnin=F)
+    if(sum(rhat$psrf[,1]>1.1)>0) stop("check convergence")
+  }
+  ret_list <- list(out_mcmc = out,
+                   out_stat = out_stat)
+}
+
+drought_model <- fit_model(drought_data,chains=3,iters=10000,thin=10)
+irrigate_model <- fit_model(irrigate_data,chains=3,iters=10000,thin=10)
+
+
+
+
+
+

@@ -129,6 +129,13 @@ ggplot(anpp_data, aes(x=ppt1, y=biomass_grams_est, color=as.factor(year), shape=
   geom_point()+
   facet_wrap(~Treatment)
 
-mod <- lm(biomass_grams_est ~ ppt1*Treatment + Treatment*year, data=filter(anpp_data, Treatment!="Irrigation"))
-summary(mod)
-car::Anova(mod)
+drought_mod <- lm(log(biomass_grams_est) ~ ppt1*Treatment + Treatment*year, 
+                  data=filter(anpp_data, Treatment!="Irrigation"),
+                  contrasts=list(topic=contr.sum, sys=contr.sum))
+summary(drought_mod)
+car::Anova(drought_mod, type=2)
+
+irrigate_mod <- lm(biomass_grams_est ~ ppt1*Treatment + Treatment*year, 
+                  data=filter(anpp_data, Treatment!="Drought"))
+summary(irrigate_mod)
+car::Anova(irrigate_mod)
