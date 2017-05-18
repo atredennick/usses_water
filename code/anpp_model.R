@@ -18,7 +18,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 ####
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
-library(broom)        # Working with model output
+library(ggthemes)
 library(stringr)      # Working with strings
 library(rjags)        # For MCMC
 library(coda)         # For summarizing MCMC output
@@ -42,7 +42,8 @@ anpp_data <- permanent_quad_biomass %>%
   rename(anpp = biomass_grams_est) %>%
   left_join(weather, by = "year") %>%
   select(-QuadName,-quad,-Grazing,-paddock,-ndvi) %>%
-  mutate(ppt1_scaled = as.numeric(scale(ppt1)))
+  mutate(ppt1_scaled = as.numeric(scale(ppt1)),
+         year_id = year - 2011)
 
 drought_data <- anpp_data %>%
   filter(Treatment != "Irrigation") %>%
@@ -88,7 +89,7 @@ model{
 fit_model <- function(df,rain_var="ppt1_scaled",iters=1000,chains=3,thin=1){
   jags_data <- list(xrain = df[,rain_var],
                     xtrt = df[,"trt_id"],
-                    xyr = df[,"year"] - 2011,
+                    xyr = df[,"year_id"],
                     y = log(df[,"anpp"]),
                     nobs = nrow(df))
   vars_to_track <- c("intercept","Bppt","Btrt","Byr","Bppttrt","Btrtyr")
@@ -116,6 +117,33 @@ irrigate_model <- fit_model(irrigate_data,chains=3,iters=10000,thin=10)
 
 
 
+####
+####  PLOT PARAMETER ESTIMATES ----
+####
+drought_params <- as.data.frame(drought_model[[2]])
+drought_params$effect <- rownames(drought_params)
+colnames(drought_params) <- c("mean","sdev","serr","ts_serr","lowerquant","median","upperquant","effect")
+drought_params$treatment <- "Drought"
 
+irrigate_params <- as.data.frame(irrigate_model[[2]])
+irrigate_params$effect <- rownames(irrigate_params)
+colnames(irrigate_params) <- c("mean","sdev","serr","ts_serr","lowerquant","median","upperquant","effect")
+irrigate_params$treatment <- "Irrigation"
 
+all_params <- rbind(drought_params,irrigate_params)
+all_params <- filter(all_params, effect!="intercept")
+tick_labels <- rev(c("Year","Treatment x Year","Treatment","Precip. x Treatment","Precip."))
+
+ggplot(all_params, aes(x=effect,y=median))+
+  geom_hline(aes(yintercept=0),color="grey35",size=0.2)+
+  geom_errorbar(aes(ymin=lowerquant,ymax=upperquant), width=0.1, size=0.3)+
+  geom_point(size=2,color="white")+
+  geom_point(size=1)+
+  scale_x_discrete(labels=tick_labels)+
+  coord_flip()+
+  ylab("Posterior Estimate")+
+  xlab("")+
+  facet_wrap(~treatment)+
+  theme_few()
+ggsave("../figures/anpp_posterior_quants.png",width = 4, height = 3, units = "in", dpi = 200)
 
