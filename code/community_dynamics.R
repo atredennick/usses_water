@@ -96,7 +96,7 @@ ggsave(paste0(figure_path,"synchrony_treatment.png"), height = 2, width = 3.5, u
 
 
 ####
-####  RANK ABUNDANCE CURVES ----
+####  RANK CLOCKS ----
 ####
 domspp <- c("Artemisia tripartita", "Poa secunda", "Pseudoroegneria spicata", "Hesperostipa comata")
 cover_ts <- cover_species %>%
@@ -117,6 +117,7 @@ g1 <- ggplot(cover_ts, aes(year, log(avg_area), color = species)) +
   theme(legend.position="bottom", 
         legend.text=element_text(face = "italic")) +
   geom_segment(aes(x = 2011, y = 0, xend = 2011, yend = 0.4), color = "grey70")+
+  scale_x_continuous(breaks=c(2011,2012,2013,2014,2015))+
   ggtitle("A. All species")+
   theme(axis.title.y=element_blank(),
         axis.text.y=element_blank(),
@@ -140,6 +141,7 @@ g2 <- ggplot(cover_ts, aes(year, log(avg_area), color = species)) +
   theme(legend.position="bottom", 
         legend.text=element_text(face = "italic")) +
   geom_segment(aes(x = 2011, y = 0, xend = 2011, yend = 0.4), color = "grey70")+
+  scale_x_continuous(breaks=c(2011,2012,2013,2014,2015))+
   guides(color=FALSE)+
   ggtitle("B. Dominant species")+
   theme(axis.title.y=element_blank(),
