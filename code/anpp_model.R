@@ -149,8 +149,8 @@ ggplot(all_params, aes(x=effect,y=median))+
         axis.text = element_text(size=7))
 ggsave("../figures/anpp_posterior_quants.png",width = 4, height = 2, units = "in", dpi = 120)
 
-ggplot(anpp_data, aes(x=ppt1,y=anpp,color=Treatment))+
-  geom_jitter(size = 2,width = 2, alpha=0.5, shape=21, color="grey35",aes(fill=Treatment))+
+ggplot(anpp_data, aes(x=ppt1,y=log(anpp),color=Treatment))+
+  geom_point(size = 2, alpha=0.5, shape=21, color="grey35", aes(fill=Treatment))+
   stat_smooth(method = "lm", se=F)+
   scale_color_brewer(palette = "Set2")+
   scale_fill_brewer(palette = "Set2")+

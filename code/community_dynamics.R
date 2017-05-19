@@ -96,7 +96,7 @@ ggsave(paste0(figure_path,"synchrony_treatment.png"), height = 2, width = 3.5, u
 
 
 ####
-####  RANK CLOCKS ----
+####  RANK CLOCKS (COVER) ----
 ####
 domspp <- c("Artemisia tripartita", "Poa secunda", "Pseudoroegneria spicata", "Hesperostipa comata")
 cover_ts <- cover_species %>%
@@ -154,8 +154,88 @@ ggsave("../figures/rank_clocks_cover.png", plot = gout, width = 8, height = 7, u
 
 
 ####
-####  COMPARE SYNCHRONY OF DOMINANT SPECIES ----
+####  RANK CLOCKS (DENSITY) ----
 ####
+density_species <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
+  mutate(ind_num = 1) %>%
+  group_by(year, quad, species) %>%
+  summarise(total_inds = sum(ind_num)) %>%
+  left_join(plot_info) %>%
+  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+  filter(!str_detect(QuadName, 'P1|P7')) %>%
+  group_by(year, species, Treatment) %>%
+  summarise(avg_dens = mean(total_inds)) %>%
+  ungroup()
+
+domspp <- c("Artemisia tripartita", "Poa secunda", "Pseudoroegneria spicata", "Hesperostipa comata")
+density_ts <- density_species %>%
+  filter(year > 2010) 
+
+## Create the graph
+g1 <- ggplot(density_ts, aes(year, log(avg_dens), color = species)) + 
+  geom_line(size = 1) + 
+  facet_wrap(~Treatment) +
+  coord_polar()+
+  labs(x=NULL, y=NULL) + 
+  guides(color=FALSE)+
+  theme_bw() +
+  theme(text = element_text(size = 14), 
+        strip.text.x = element_text(size = 14), 
+        strip.background = element_blank(),
+        panel.grid.major = element_line(size = 1)) + 
+  theme(legend.position="bottom", 
+        legend.text=element_text(face = "italic")) +
+  geom_segment(aes(x = 2011, y = 0, xend = 2011, yend = 0.4), color = "grey70")+
+  scale_x_continuous(breaks=c(2011,2012,2013,2014,2015))+
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+ggsave("../figures/rank_clocks_density.png", plot = g1, width = 8, height = 3.5, units="in", dpi=120)
+
+
+
+# density_ts <- density_species %>%
+#   filter(year > 2010, species %in% domspp) 
+
+## Create the graph
+# g2 <- ggplot(density_ts, aes(year, log(avg_dens), color = species)) + 
+#   geom_line(size = 1) + 
+#   facet_wrap(~Treatment) +
+#   coord_polar()+
+#   labs(x=NULL, y=NULL, color="Species") + 
+#   theme_bw() +
+#   theme(text = element_text(size = 14), 
+#         strip.text.x = element_text(size = 14), 
+#         strip.background = element_blank(),
+#         panel.grid.major = element_line(size = 1)) + 
+#   theme(legend.position="bottom", 
+#         legend.text=element_text(face = "italic")) +
+#   geom_segment(aes(x = 2011, y = 0, xend = 2011, yend = 0.4), color = "grey70")+
+#   scale_x_continuous(breaks=c(2011,2012,2013,2014,2015))+
+#   guides(color=FALSE)+
+#   ggtitle("B. Dominant species")+
+#   theme(axis.title.y=element_blank(),
+#         axis.text.y=element_blank(),
+#         axis.ticks.y=element_blank())
+# 
+# gout <- grid.arrange(g1,g2,nrow=2)
+
+
+
+
+####
+####  MEAN RANK SHIFTS ----
+####
+rank_shifts <- codyn::rank_shift(df = density_ts,
+                                 time.var = "year", 
+                                 species.var = "species", 
+                                 replicate.var = "Treatment", 
+                                 abundance.var = "avg_dens")
+
+ggplot(rank_shifts, aes(x=year_pair,y=MRS,color=Treatment,group=Treatment))+
+  geom_line()+
+  scale_color_brewer(palette = "Set2")+
+  theme_few()
 
 
 
