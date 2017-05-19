@@ -18,10 +18,10 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 ####
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
-library(ggthemes)
+library(ggthemes)     # Pleasing ggplot themes
 library(stringr)      # Working with strings
 library(rjags)        # For MCMC
-library(coda)         # For summarizing MCMC output
+library(coda)         # For collecting/summarizing MCMC output
 
 
 
@@ -144,8 +144,10 @@ ggplot(all_params, aes(x=effect,y=median))+
   ylab("Posterior Estimate")+
   xlab("")+
   facet_wrap(~treatment)+
-  theme_few()
-ggsave("../figures/anpp_posterior_quants.png",width = 4, height = 3, units = "in", dpi = 200)
+  theme_few()+
+  theme(axis.title = element_text(size=9),
+        axis.text = element_text(size=7))
+ggsave("../figures/anpp_posterior_quants.png",width = 4, height = 2, units = "in", dpi = 120)
 
 ggplot(anpp_data, aes(x=ppt1,y=anpp,color=Treatment))+
   geom_jitter(size = 2,width = 2, alpha=0.5, shape=21, color="grey35",aes(fill=Treatment))+
