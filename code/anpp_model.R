@@ -65,13 +65,13 @@ model{
   Bppt ~ dnorm(0,0.001)
   Btrt ~ dnorm(0,0.001)
   Byr ~ dnorm(0,0.001)
-  Bppttrt ~ dnorm(0,0.001)
+  # Bppttrt ~ dnorm(0,0.001)
   Btrtyr ~ dnorm(0,0.001)
   sigma ~ dgamma(0.001,0.001)
   
   ### PROCESS MODEL
   for(i in 1:nobs){
-    mu[i] = intercept + Bppt*xrain[i] + Btrt*xtrt[i] + Byr*xyr[i] + Bppttrt*xrain[i]*xtrt[i] + Btrtyr*xtrt[i]*xyr[i]
+    mu[i] = intercept + Bppt*xrain[i] + Btrt*xtrt[i] + Byr*xyr[i] + Btrtyr*xtrt[i]*xyr[i]
   }
   
   ### LIKELIHOOD MODEL
@@ -92,7 +92,7 @@ fit_model <- function(df,rain_var="ppt1_scaled",iters=1000,chains=3,thin=1){
                     xyr = df[,"year_id"],
                     y = log(df[,"anpp"]),
                     nobs = nrow(df))
-  vars_to_track <- c("intercept","Bppt","Btrt","Byr","Bppttrt","Btrtyr")
+  vars_to_track <- c("intercept","Bppt","Btrt","Byr","Btrtyr")
   jm <- jags.model(textConnection(model_string),
                    data = jags_data,
                    n.chains = chains,
@@ -132,7 +132,7 @@ irrigate_params$treatment <- "Irrigation"
 
 all_params <- rbind(drought_params,irrigate_params)
 all_params <- filter(all_params, effect!="intercept")
-tick_labels <- rev(c("Year","Treatment x Year","Treatment","Precip. x Treatment","Precip."))
+tick_labels <- rev(c("Year","Treatment x Year","Treatment","Precip."))
 
 ggplot(all_params, aes(x=effect,y=median))+
   geom_hline(aes(yintercept=0),color="grey35",size=0.2)+
@@ -147,3 +147,9 @@ ggplot(all_params, aes(x=effect,y=median))+
   theme_few()
 ggsave("../figures/anpp_posterior_quants.png",width = 4, height = 3, units = "in", dpi = 200)
 
+ggplot(anpp_data, aes(x=ppt1,y=anpp,color=Treatment))+
+  geom_jitter(size = 2,width = 2, alpha=0.5, shape=21, color="grey35",aes(fill=Treatment))+
+  stat_smooth(method = "lm", se=F)+
+  scale_color_brewer(palette = "Set2")+
+  scale_fill_brewer(palette = "Set2")+
+  theme_few()
