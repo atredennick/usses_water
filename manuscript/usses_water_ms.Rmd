@@ -58,25 +58,10 @@ Last compile: \today
 ```{r caching, include=FALSE}
 library("methods")
 library("knitr")
-basename <- "manuscript"
-opts_chunk$set(fig.path = paste("components/figure/", basename, "-", sep=""),
-               cache.path = paste("components/cache/", basename, "/", sep=""))
-opts_chunk$set(cache = 2)
 opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE, 
                comment = NA, verbose = TRUE, echo=FALSE)
-
-# PDF-based figures
-opts_chunk$set(dev='pdf')
 ```
 
-
-```{r plot-options, message=FALSE, warning=FALSE, include=FALSE, echo=FALSE}
-cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", 
-               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-opts_chunk$set(dev='pdf', dev.args=c(version="1.3"))
-
-```
 
 \begin{abstract}
 Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common.
@@ -227,12 +212,23 @@ Tables
 ```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 library(xtable)
 # Read in within-year ANOVA results table
-inyear_anova <- readRDS("../results/within_year_anova_table.RDS")
+# inyear_anova <- readRDS("../results/within_year_anova_table.RDS")
+# 
+# inyear_caption <- "ANOVA for treatment effects on ANPP for each year of the experiment."
+# print(xtable(inyear_anova, caption = inyear_caption, digits = 2),
+#       caption.placement="top",
+#       include.rownames = F, 
+#       sanitize.colnames.function = identity,
+#       comment = FALSE,
+#       size = "normalsize")
 
-inyear_caption <- "ANOVA for treatment effects on ANPP for each year of the experiment."
-print(xtable(inyear_anova, caption = inyear_caption, digits = 2),
+coef_probs <- readRDS("../results/coef_probabilities.RDS")
+
+coef_caption <- "Probability that each log(ANPP) coefficient is greater or less than zero for each of the precipitation treatments.
+Probabilities denote max(Pr(coefficient) > 0, Pr(coefficient) < 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the coefficient being important in the model. Bold coefficients denote Pr(coefficient) $\\geq$ 0.95."
+print(xtable(coef_probs, caption = coef_caption, digits = 2),
       caption.placement="top",
-      include.rownames = F, 
+      include.rownames = F,
       sanitize.colnames.function = identity,
       comment = FALSE,
       size = "normalsize")

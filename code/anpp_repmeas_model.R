@@ -138,10 +138,9 @@ for(doparam in unique(irrigate_ref$parameter)){
 
 coef_probs <- (rbind(drought_probs, irrigate_probs)) %>%
   filter(coefficient != "(Intercept)") %>%
-  filter(coefficient != "ppt1_scaled") %>%
   mutate(coefficient = as.character(coefficient)) %>%
   spread(treatment, prob)
-coef_probs$coefficient <- c("Treatment", "Year", "Treatment x Year")
+coef_probs$coefficient <- c("Precipitation","Treatment", "Year", "Treatment x Year")
 colnames(coef_probs) <- c("log(ANPP) Coefficient", "Drought", "Irrigation")
 
 ##  Save coefficient probabilities for LaTeX table in manuscript

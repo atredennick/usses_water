@@ -26,7 +26,6 @@ transformed parameters {
   
   for (i in 1:Nobs)
     yhat[i] = x[i]*beta+ranint[group[i]]+ranslope[group[i]]*timevar[i];
-  
 }
 model {
   beta ~ normal(0, 1);
