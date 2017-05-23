@@ -73,7 +73,7 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
   rt <- stanc("anpp_longitudinal.stan")
   sm <- stan_model(stanc_ret = rt, verbose=FALSE)
   set.seed(123)
-  fit <- sampling(sm, data=anppdat)
+  fit <- sampling(sm, data=anppdat, iter=10000, chains=4, thin=10)
   
   if(check_diags){
     pnames <- c("sigmaeps", "sigmaint", "sigmaslope","beta[1]",
