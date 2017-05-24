@@ -1,0 +1,15 @@
+---
+title: "Repeated Measures AR(1)"
+output: html_notebook
+---
+
+$$
+\gamma_{it} \sim \text{MVN}\left(0,\textbf{R} \right) \\[0.5em]
+\textbf{R} = \begin{bmatrix}
+       \sigma^2 & \rho\sigma^2 & \rho^2\sigma^2 & \rho^3\sigma^2 & \rho^4\sigma^2  \\[0.2em]
+       & \sigma^2 & \rho\sigma^2 & \rho^2\sigma^2 & \rho^3\sigma^2 \\[0.2em]
+       & &  \sigma^2 & \rho\sigma^2 & \rho^2\sigma^2 \\[0.2em]
+       & & & \sigma^2 & \rho\sigma^2 \\[0.2em]
+       & & & & \sigma^2 \\[0.2em]
+     \end{bmatrix}
+$$
