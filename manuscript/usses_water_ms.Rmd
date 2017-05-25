@@ -39,13 +39,12 @@ urlcolor: black
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-\normalsize{Andrew T. Tredennick\textsuperscript{1}, Andrew R. Kleinhesselink\textsuperscript{2}, Bret Taylor\textsuperscript{3}, and Peter B. Adler\textsuperscript{1}}
+\normalsize{Andrew T. Tredennick\textsuperscript{1}, Andrew R. Kleinhesselink\textsuperscript{2}, and Peter B. Adler\textsuperscript{1}}
 
 \bigskip{}
 
 \textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}} \\
-\textit{\small{\textsuperscript{2}Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California xxxxx}} \\
-\textit{\small{\textsuperscript{3}U.S. Sheep Experiment Station, Range Sheep Production Efficiency Research Unit, USDA-ARS, Dubois, Idaho 83423}}
+\textit{\small{\textsuperscript{2}Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California xxxxx}}
 
 \end{centering}
 
