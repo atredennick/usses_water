@@ -28,30 +28,8 @@ library(rstan)        # For MCMC
 ####
 ####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ----
 ####
-data_path <- "../data/estimated_biomass/"
-anpp_fname <- "permanent_plots_estimated_biomass.RDS"
-permanent_quad_biomass <- readRDS(paste0(data_path,anpp_fname))
+source("read_format_data.R")
 
-weather <- read.csv("../data/weather/ClimateIPM.csv") %>%
-  select(-pptLag,-ppt2,-TmeanSpr1,-TmeanSpr2)
-
-anpp_data <- permanent_quad_biomass %>% 
-  filter(Treatment %in% c("Control","Drought","Irrigation")) %>%
-  filter(!str_detect(quadname, 'P1|P7')) %>%
-  filter(year > 2011) %>%
-  rename(anpp = biomass_grams_est) %>%
-  left_join(weather, by = "year") %>%
-  select(-QuadName,-quad,-Grazing,-paddock,-ndvi) %>%
-  mutate(ppt1_scaled = as.numeric(scale(ppt1)),
-         year_id = year - 2011)
-
-drought_data <- anpp_data %>%
-  filter(Treatment != "Irrigation") %>%
-  mutate(trt_id = as.numeric(as.factor(Treatment)) - 1)
-
-irrigate_data <- anpp_data %>%
-  filter(Treatment != "Drought") %>%
-  mutate(trt_id = as.numeric(as.factor(Treatment)) - 1)
 
 
 ####
@@ -94,65 +72,30 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
 
 drought_fit <- fit_stan_model(drought_data,check_diags = T,treattype = "drought")
 irrigate_fit <- fit_stan_model(irrigate_data,check_diags = T,treattype = "irrigate")
+saveRDS(drought_fit, "../results/repmeas_drought_fit.RDS")
+saveRDS(irrigate_fit, "../results/repmeas_irrigate_fit.RDS")
 
 
 
 ####
-####  CALCULATE MAX(Pr(effect) > 0, Pr(effect) < 0) ----
+####  PLOT RESIDUALS FOR EVIDENCE OF AUTOCORRELATION STUCTURE ----
 ####
-get_one_tailed <- function(values){
-  above <- 1 - ecdf(values)(0)
-  below <- ecdf(values)(0)
-  max(above,below)
-}
+# drought_errors <- reshape2::melt(rstan::extract(drought_fit, pars="resids"))
+# drought_errors_avg <- drought_errors %>%
+#   group_by(Var2) %>%
+#   summarise(mean_resid = mean(value))
+# drought_errors_avg <- cbind(drought_errors_avg, drought_data)
+# 
+# allquads <- unique(drought_errors_avg$quadname)
+# for(doquad in allquads){
+#   tmperror <- filter(drought_errors_avg, quadname == doquad)
+#   tmperrorlag <- tmperror
+#   tmperrorlag$year_id <- tmperrorlag$year_id+1
+#   tmperrorlag$lag_resid <- tmperrorlag$mean_resid
+#   tmperrorlag <- tmperrorlag %>%
+#     select(year_id,lag_resid)
+#   tmperror <- left_join(tmperror, tmperrorlag)
+#   plot(mean_resid~lag_resid,data=tmperror, main=doquad)
+# }
 
-lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, drought_data)
-x <- model.matrix(lmod)
-drought_ref <- reshape2::melt(rstan::extract(drought_fit, pars="beta"))
-colnames(drought_ref)[2:3] <- c("parameter","loganpp")
-drought_ref$parameter <- factor(colnames(x)[drought_ref$parameter])
-drought_probs <- {}
-for(doparam in unique(drought_ref$parameter)){
-  tmp <- filter(drought_ref, parameter == doparam)
-  tmp_prob <- get_one_tailed(tmp$loganpp)
-  out_probs <- data.frame(coefficient = doparam,
-                          prob = tmp_prob,
-                          treatment = "drought")
-  drought_probs <- rbind(drought_probs, out_probs)
-}
-
-lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, irrigate_data)
-x <- model.matrix(lmod)
-irrigate_ref <- reshape2::melt(rstan::extract(irrigate_fit, pars="beta"))
-colnames(irrigate_ref)[2:3] <- c("parameter","loganpp")
-irrigate_ref$parameter <- factor(colnames(x)[irrigate_ref$parameter])
-irrigate_probs <- {}
-for(doparam in unique(irrigate_ref$parameter)){
-  tmp <- filter(irrigate_ref, parameter == doparam)
-  tmp_prob <- get_one_tailed(tmp$loganpp)
-  out_probs <- data.frame(coefficient = doparam,
-                          prob = tmp_prob,
-                          treatment = "irrigate")
-  irrigate_probs <- rbind(irrigate_probs, out_probs)
-}
-
-coef_probs <- (rbind(drought_probs, irrigate_probs)) %>%
-  filter(coefficient != "(Intercept)") %>%
-  mutate(coefficient = as.character(coefficient)) %>%
-  spread(treatment, prob)
-coef_probs$coefficient <- c("Precipitation","Treatment", "Year", "Treatment x Year")
-colnames(coef_probs) <- c("log(ANPP) Coefficient", "Drought", "Irrigation")
-
-##  Save coefficient probabilities for LaTeX table in manuscript
-saveRDS(coef_probs, "../results/coef_probabilities.RDS")
-
-
-
-####
-####  EXTRA PLOTS ----
-####
-# ref <- reshape2::melt(rstan::extract(fit, pars="beta"))
-# colnames(ref)[2:3] <- c("parameter","loganpp")
-# ref$parameter <- factor(colnames(x)[ref$parameter])
-# ggplot(ref, aes(x=loganpp))+geom_line(stat="density")+geom_vline(xintercept=0)+facet_wrap(~parameter,scales="free")
 
