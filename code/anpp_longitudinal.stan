@@ -33,7 +33,3 @@ model {
   etaslope ~ normal(0, 1);
   y ~ normal(yhat, sigmaeps);
 }
-generated quantities {
-  vector[Nobs] resids;
-  resids = y - yhat;
-}
