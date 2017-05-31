@@ -29,7 +29,6 @@ transformed parameters {
         lag = abs(t2-t1);
         tmp_Sigma[t1,t2] = sigma_square[j]*(rho[j]^lag);
       }
-      tmp_Sigma[t1,t1] = sigma_square[j];
     }
     Sigma[j] = tmp_Sigma;
   }

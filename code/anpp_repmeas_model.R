@@ -36,6 +36,7 @@ source("read_format_data.R")
 ####  SET UP AND FIT MODEL IN STAN ----
 ####
 fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
+  model_data[which(model_data$trt_id>0),"trt_id"] <- 1
   lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, model_data)
   x <- model.matrix(lmod)
   anppdat <- list(Nobs = nrow(model_data),
@@ -125,9 +126,9 @@ title(round(cor(anpp_wide$year2015,anpp_wide$year2016),2))
 ####  FIT LONGITUDINAL MODEL WITH AR(1) ERROR COVARIANCE ----
 ####
 fit_error_model <- function(model_data, check_diags=FALSE, treattype){
+  model_data[which(model_data$trt_id>0),"trt_id"] <- 1
   lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, model_data)
   x <- model.matrix(lmod)
-  # x <- x[,2:ncol(x)] # exclude intercept term
   Nplots <- length(unique(model_data$quadname))
   Ntimes <- length(unique(model_data$year_id))
   y_matrix <- matrix(data = NA, ncol=Ntimes, nrow=Nplots)
@@ -168,4 +169,7 @@ fit_error_model <- function(model_data, check_diags=FALSE, treattype){
   }
   return(fit)
 }
+
+
+
 
