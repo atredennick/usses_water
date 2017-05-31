@@ -144,14 +144,15 @@ fit_error_model <- function(model_data, check_diags=FALSE, treattype){
                   Nplots = Nplots,
                   Ntimes = Ntimes,
                   y = y_matrix,
-                  x = x_array)
+                  x = x_array,
+                  xyear = xyear)
   
   rstan_options(auto_write = TRUE)
   options(mc.cores = parallel::detectCores())
   rt <- stanc("anpp_longitudinal_errorcov.stan")
   sm <- stan_model(stanc_ret = rt, verbose=FALSE)
   set.seed(123)
-  fit <- sampling(sm, data=anppdat, iter=5000, chains=4, thin=2, control = list(adapt_delta = 0.99))
+  fit <- sampling(sm, data=anppdat, iter=1500, chains=2, thin=1, control = list(adapt_delta = 0.99))
   plot(fit, pars="betas")
   
   if(check_diags){

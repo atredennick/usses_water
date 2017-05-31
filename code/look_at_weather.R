@@ -19,6 +19,7 @@ library(tidyverse)
 library(dplyr)
 library(stringr)
 library(ggthemes)
+library(ggalt)
 library(gridExtra)
 library(RColorBrewer)
 
@@ -88,10 +89,10 @@ g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
   geom_point(color="white", size=3)+
   geom_point()+
   geom_point(color="grey35", shape=1)+
-  annotate("text",x=2015.1,y=190,label="a",size=3)+
-  annotate("text",x=2015.1,y=210,label="a",size=3)+
-  annotate("text",x=2015.1,y=148,label="b",size=3)+
-  annotate("text",x=2015.2,y=50,label="year%*%treatment~phantom(0)~italic('P')==0.67", parse=T, size=3)+
+  # annotate("text",x=2015.1,y=190,label="a",size=3)+
+  # annotate("text",x=2015.1,y=210,label="a",size=3)+
+  # annotate("text",x=2015.1,y=148,label="b",size=3)+
+  # annotate("text",x=2015.2,y=50,label="year%*%treatment~phantom(0)~italic('P')==0.67", parse=T, size=3)+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
   scale_y_continuous(breaks=seq(50,350,50))+
@@ -104,8 +105,39 @@ g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))
 
+
+
+####
+####  PLOT SOIL WATER BY TREATMENT ----
+####
+soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
+  select(-year) %>%
+  separate(simple_date, c("year","month","day")) %>%
+  group_by(year,month,Treatment,type,year) %>%
+  summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
+  filter(type=="predicted") %>%
+  mutate(month_year = as.factor(paste0(year,"-",month))) %>%
+  ungroup()
+
+g3 <- ggplot(soil_moisture, aes(x=month_year, y=avg_vwc, group=Treatment, color=Treatment))+
+  #geom_line()+
+  geom_xspline(spline_shape=-0.5)+
+  scale_color_brewer(palette = "Set2", name="Treatment")+
+  ylab(expression(paste("Estimated Soil VWC (ml ", ml^-1,")")))+
+  xlab("Date")+
+  ggtitle("C")+
+  scale_x_discrete(breaks = levels(soil_moisture$month_year)[c(T, rep(F, 3))])+
+  scale_y_continuous(breaks=seq(2,16,2))+
+  theme_few()+
+  guides(color =FALSE)+
+  theme(legend.position = c(0.2, 0.8),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
+        legend.text = element_text(size = 8),
+        legend.key.height = unit(0.8,"line"),
+        axis.text.x = element_text(angle = 90, hjust = 1))
+
+
 ####
 ####  COMBINE PLOTS AND SAVE ----
 ####
-gout <- grid.arrange(g1,g2,ncol=2)
-ggsave("../figures/histppt_and_anpptrend.png", gout, width=8, height=3.5, units="in", dpi=120)
+gout <- grid.arrange(g1,g2,g3,ncol=1,nrow=3)
+ggsave("../figures/histppt_and_anpptrend.png", gout, width=3.5, height=10, units="in", dpi=120)

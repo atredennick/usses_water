@@ -1,16 +1,16 @@
 ---
-layout: 12pt
+layout: 11pt
 header-includes:
   - \usepackage{lineno}
   - \linenumbers
   - \usepackage{setspace}
   - \usepackage{todonotes}
-  - \doublespacing
+  - \linespread{1.25}
   - \usepackage{rotating}
   - \usepackage{color, soul}
   - \usepackage{sectsty}
   - \usepackage{bm,mathrsfs}
-  - \usepackage{mathptmx} 
+  - \usepackage[sc]{mathpazo}
 bibliography: ~/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
@@ -19,7 +19,7 @@ output:
   pdf_document:
     fig_caption: true
     keep_tex: false
-fontsize: 12pt
+fontsize: 11pt
 geometry: margin=1in
 linkcolor: black
 urlcolor: black
@@ -39,12 +39,12 @@ urlcolor: black
 
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-\normalsize{Andrew T. Tredennick\textsuperscript{1}, Andrew R. Kleinhesselink\textsuperscript{2}, and Peter B. Adler\textsuperscript{1}}
+\normalsize{Andrew T. Tredennick$^{1,}$\footnote{Corresponding author; e-mail: atredenn@gmail.com}, Andrew R. Kleinhesselink$^{2}$, and Peter B. Adler$^{1}$}
 
 \bigskip{}
 
-\textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322}} \\
-\textit{\small{\textsuperscript{2}Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California xxxxx}}
+\textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah}} \\
+\textit{\small{\textsuperscript{2}Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California}}
 
 \end{centering}
 
@@ -67,9 +67,8 @@ Precipitation is predicted to become more variable in the western U.S., meaning 
 Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning.
 We used drought and irrigation treatments (50\% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes.
 The ecosystem was suprisingly resistant to both drought and irrigation.
-Aboveground net primary productivity (ANPP) and its temporal stability did no differ among treatments.
-The similarity of ecosystem functioning was not due to shifts at the plant community level, where species compositions and species synchrony, an important driver of ecosystem stability, among treatments were similar.
-However, ANPP does appear to be diverging among treatments with time, even though the effect is not significant.
+Aboveground net primary productivity (ANPP) responded positively to ambient growing season precipitation, but the response did not vary across treatments.
+The similarity of ecosystem functioning was not due to shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years.
 At least in the short-term, this sagebrush steppe ecosystem is resistant to increases and decreases in annual precipitation.
 
 \vspace{2em}
@@ -117,8 +116,8 @@ Under **P2**, ANPP response stems from all species responding similarly to chang
 
 
 
-Methods
--------
+Materials and Methods
+---------------------
 ### Study Area
 We conducted our precipitation manipulation experiment at the United States Sheep Experimental Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
 The vegetation is typical of high elevation sagebrush steppe.
@@ -150,7 +149,6 @@ We coupled this temporally intensive soil moisture sampling with spatially exten
 These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
 
 ### Data Collection
-#### Aboveground Net Primary Productivity
 We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [see @Byrne2011 for a review].
 We recorded ground reflectance at four wavelengths, two associated with red reflectance (xxx and xxx) and two associated with near-infrared reflectance (xxx and xxx).
 At each plot in each year, we took four readings of ground reflectances at the above wavelengths.
@@ -159,33 +157,42 @@ We also took readings in ten calibration plots adjacent to the experimental site
 For each plot and year, we averaged the four readings for each wavelength and then calculated NDVI using the MODIS and AVHRR algorithms.
 To convert NDVI to ANPP we regressed NDVI against the dry biomass weight from the ten calibration plots.
 We fit regressions to MODIS-based NDVI and AVHRR-based NDVI for each year and retained the regression with the better fit.
-Using the best regression equation for each year, we predicted ANPP.
+Using the best regression equation for each year, we predicted ANPP (Appendix 1).
 
-#### Species Composition
 Species composition data came from annual census maps for each plot made using a pantograph [@Hill1920].
 The maps record the spatial location and size of each individual plant.
 Using those annual maps, we aggregated over individuals to calculate total basal cover for each species in each plot.
 
 ### Data Analysis
-####  ANPP and Ecosystem Stability
-We used ANOVA with treatment, year, and treatment$\times$year terms to test the effects of the treatments on ANPP over the course of the five year experiment.
-To test for within-year differences of ANPP among treatments, we fit ANOVAs independently for each year with treatment terms only.
-We used the \texttt{lm()} function in \texttt{R} [v3.3.2, @R2016] to fit the models, and the \texttt{Anova()} function from the \texttt{car} package [@Fox2011] to extract sums-of-squares tables with Type II tests.
+We fit generalized linear mixed-effects models (GLMMs) with precipitation, treatment, year, and treatment$\times$year main effects and a random effect for plot.
+To account for temporal dependency in the data (i.e., ANPP in 2012 is likely more correlated with ANPP in 2013 than in 2016), we also include an autoregressive error structure [AR(1)].
+Thus, our GLMMs account for the fact that each plot is sampled repeatedly over time.
+Our models take the form:
 
-We calculated ecosystem stability as the temporal mean of ANPP divided by its temporal standarad deviation $\left( \overline{\text{ANPP}} / \sigma(\text{ANPP}) \right)$.
-Ecosystem stability was calculated for each plot.
-We compared ecosystem stability among treatments using ANOVA (same \texttt{R} functions as above).
+\begin{align}
+\mu_{i,t} = \textbf{x}_{i,t}\boldsymbol{\beta} + \gamma_i \\
+\textbf{y}_{i} \sim \text{MVN}\left(\boldsymbol{\mu}_{i}, \boldsymbol{\Sigma}_i \right) \\
+\boldsymbol{\Sigma}_i = \begin{bmatrix}
+       \sigma_i^2 & \rho_i\sigma_i^2 & \rho_i^2\sigma_i^2 & \rho_i^3\sigma_i^2 & \rho_i^4\sigma_i^2  \\[0.2em]
+       & \sigma_i^2 & \rho_i\sigma_i^2 & \rho_i^2\sigma_i^2 & \rho_i^3\sigma_i^2 \\[0.2em]
+       & &  \sigma_i^2 & \rho_i\sigma_i^2 & \rho_i^2\sigma_i^2 \\[0.2em]
+       & & & \sigma_i^2 & \rho_i\sigma_i^2 \\[0.2em]
+       & & & & \sigma_i^2 \\[0.2em]
+     \end{bmatrix}
+\end{align}
 
-####  Species Synchrony and Species Composition
-We calculated the synchrony of species fluctuations through time using basal area cover data and individual density data.
-For both data types we calculated the synchrony metric described by @Loreau2008a, which ranges from 0 (perfect ascynchrony) to 1 (perfect synchrony).
-Before calculating synchrony, we averaged cover and density over plots within treatments for each species.
-We used the \texttt{synchrony()} function in the \texttt{R} package \texttt{codyn} [@Hallett2016] to calculate species synchrony.
+\noindent{}where $\mu_{i,t}$ is the predicted value of log(ANPP) in plot *i* and year *t*, $\textbf{x}_{i,t}$ is the vector of covariates (including the intercept) associated with plot and year, $\boldsymbol{\beta}$ is the vector of fixed effects associated with each term in $\textbf{x}_{i,t}$, and $\gamma_i$ is the random effect for plot.
+We sample the vector of yearly observed log(ANPP) values in each plot ($\textbf{y}_{i}$) from a multivariate normal likelihood with the means from the regression equation (e.g., $\boldsymbol{\mu}_{i}$) and a variance-covariance matrix ($\Sigma_i$) with an AR(1) structure that is unique for each plot.
+We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
+We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
+We used the R package 'rstan' [@rstan2016] to link R to Stan.
 
 To see if community composition differed among treatments through time, we used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis distances.
 For each year of the experiment, we first calculated Bray-Curtis distances among all plots, and then extracted those distances for use in the NMDS.
 We plotted the first two axes of NMDS scores to see if community composition overlapped, or not, among treatments in each year.
-We used functions in the \texttt{R} package \texttt{vegan} [@Oksanen2016] to calculate Bray-Curtis distances and the run the NMDS analysis.
+We used functions in the R package 'vegan' [@Oksanen2016] to calculate Bray-Curtis distances and then to run the NMDS analysis.
+Lastly, we examined rank clocks of species' abundances through time to assess the stability of community composition over the course of the experiment [@Collins2008].
+Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from @Hallett2016.
 
 Results
 -------
@@ -240,8 +247,17 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=6in]{../figures/histppt_and_anpptrend.png}
-  \caption{(A) Histogram of historical precipitation from 1926-2016, with the years of the experiment overlaid as colored points. ``Drought'' treatments (squares) are shown as a 50\% reduction from the observed precipitation. ``Irrigation'' treatment precipitation levels are not shown. (B) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment.}
+      \includegraphics[height=7in]{../figures/histppt_and_anpptrend.png}
+  \caption{(A) Histogram of historical precipitation from 1926-2016, with the years of the experiment overlaid as colored points. ``Drought'' treatments (squares) are shown as a 50\% reduction from the observed precipitation. ``Irrigation'' treatment precipitation levels are not shown. (B) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (C) Monthly average estimated soil volumetric water content (VWC) from SOILWAT model fit using soil moisture data from experimental plots.}
+\end{figure}
+
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=6in]{../figures/data_and_posterior_estimates.png}
+  \caption{(A) Relationship between ANPP and growing season precipitation over the course of the experiment. Regression lines are indpendent linear fits for each treatment for visual clarity of the mean trends. (B) Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of effects from the fitted repeated measures generalized linear mixed-effects model for each treatment-control comparison. BCI refers to 'Bayesian Credible Interval', which is the upper and lower quantiles of the posterior distribution at the specified level.}
 \end{figure}
 
 
@@ -259,7 +275,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/rank_clocks_cover.png}
-  \caption{Rank clocks for cover by treatment. (A) All species. (B) Dominant species.}
+  \caption{Rank clocks of average species' basal cover by treatment. (A) All species. (B) Dominant species. Cover is log-transformed to improve visualization of species with low cover.}
 \end{figure}
 
 

@@ -39,8 +39,7 @@ transformed parameters {
 
 model {
   ####  PRIORS
-  for(j in 1:Nplots)
-		plot_offset[j] ~ normal(0, sd_plots);
+  plot_offset ~ normal(0, sd_plots);
 	betas ~ normal(0,1);	          # priors on overall effects
 	sigma ~ weibull(2,1);
 	sd_plots ~ weibull(2,1);
