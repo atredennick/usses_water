@@ -2,7 +2,6 @@
 layout: 11pt
 header-includes:
   - \usepackage{lineno}
-  - \linenumbers
   - \usepackage{setspace}
   - \usepackage{todonotes}
   - \linespread{1.25}
@@ -46,11 +45,13 @@ urlcolor: black
 \textit{\small{\textsuperscript{1}Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah}} \\
 \textit{\small{\textsuperscript{2}Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California}}
 
+\bigskip{}
+
+Last compile: \today
+
 \end{centering}
 
 \vspace{3em}
-
-Last compile: \today
 
 \end{singlespace}
 
@@ -73,11 +74,13 @@ At least in the short-term, this sagebrush steppe ecosystem is resistant to incr
 
 \vspace{2em}
 
-\emph{Key words: drought, aboveground net primary productivity, ecosystem stability, climate change, species synchrony, sagebrush steppe}
+\emph{Key words: drought, aboveground net primary productivity, ecosystem resistance, climate change, species composition, sagebrush steppe}
 \end{abstract}
 
 
 \setlength{\parindent}{5ex}
+
+\linenumbers
 
 Introduction
 ------------
@@ -166,26 +169,26 @@ Using those annual maps, we aggregated over individuals to calculate total basal
 ### Data Analysis
 We fit generalized linear mixed-effects models (GLMMs) with precipitation, treatment, year, and treatment$\times$year main effects and a random effect for plot.
 To account for temporal dependency in the data (i.e., ANPP in 2012 is likely more correlated with ANPP in 2013 than in 2016), we also include an autoregressive error structure [AR(1)].
-Thus, our GLMMs account for the fact that each plot is sampled repeatedly over time.
+Thus, our GLMMs account for the fact that each plot is sampled repeatedly over time, and that those yearly samples are not independent.
 Our models take the form:
 
 \begin{align}
-\mu_{i,t} = \textbf{x}_{i,t}\boldsymbol{\beta} + \gamma_i \\
-\textbf{y}_{i} \sim \text{MVN}\left(\boldsymbol{\mu}_{i}, \boldsymbol{\Sigma}_i \right) \\
-\boldsymbol{\Sigma}_i = \begin{bmatrix}
-       \sigma_i^2 & \rho_i\sigma_i^2 & \rho_i^2\sigma_i^2 & \rho_i^3\sigma_i^2 & \rho_i^4\sigma_i^2  \\[0.2em]
-       & \sigma_i^2 & \rho_i\sigma_i^2 & \rho_i^2\sigma_i^2 & \rho_i^3\sigma_i^2 \\[0.2em]
-       & &  \sigma_i^2 & \rho_i\sigma_i^2 & \rho_i^2\sigma_i^2 \\[0.2em]
-       & & & \sigma_i^2 & \rho_i\sigma_i^2 \\[0.2em]
-       & & & & \sigma_i^2 \\[0.2em]
-     \end{bmatrix}
+\mu_{i,t} &= \textbf{x}_{i,t}\boldsymbol{\beta} + \gamma_i \\
+\textbf{y}_{i} &\sim \text{MVN}\left(\boldsymbol{\mu}_{i}, \boldsymbol{\Sigma}_i \right) \\
+\boldsymbol{\Sigma}_i &= \begin{bmatrix}
+       1 & \rho_i & \rho_i^2 & \rho_i^3 & \rho_i^4  \\[0.2em]
+       & 1 & \rho_i & \rho_i^2 & \rho_i^3 \\[0.2em]
+       & &  1 & \rho_i & \rho_i^2 \\[0.2em]
+       & & & 1 & \rho_i \\[0.2em]
+       & & & & 1 \\[0.2em]
+     \end{bmatrix} \sigma_i^2
 \end{align}
 
 \noindent{}where $\mu_{i,t}$ is the predicted value of log(ANPP) in plot *i* and year *t*, $\textbf{x}_{i,t}$ is the vector of covariates (including the intercept) associated with plot and year, $\boldsymbol{\beta}$ is the vector of fixed effects associated with each term in $\textbf{x}_{i,t}$, and $\gamma_i$ is the random effect for plot.
 We sample the vector of yearly observed log(ANPP) values in each plot ($\textbf{y}_{i}$) from a multivariate normal likelihood with the means from the regression equation (e.g., $\boldsymbol{\mu}_{i}$) and a variance-covariance matrix ($\Sigma_i$) with an AR(1) structure that is unique for each plot.
 We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
-We used the R package 'rstan' [@rstan2016] to link R to Stan.
+We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
 
 To see if community composition differed among treatments through time, we used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis distances.
 For each year of the experiment, we first calculated Bray-Curtis distances among all plots, and then extracted those distances for use in the NMDS.
@@ -194,8 +197,22 @@ We used functions in the R package 'vegan' [@Oksanen2016] to calculate Bray-Curt
 Lastly, we examined rank clocks of species' abundances through time to assess the stability of community composition over the course of the experiment [@Collins2008].
 Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from @Hallett2016.
 
+All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
+We also include annotated Stan code in our model description in Appendix 1.
+
 Results
 -------
+Three of our five treatment years fell in years of below average rainfall (Fig. 1A).
+Thus, those three years represent a lower magnitude of absolute change in precipitation experienced by the treatments.
+Averaged across treatments, ANPP varied from a minimum of xxx g m$^{-2}$ in 2014 to a maximum of xxx g m$^{-2}$ in 2016 (Fig. 1B).
+ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 1B), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 1C).
+Such differences in soil VWC indicate our treatment infrastructure was successful.
+
+Growing season precipitation had a positive effect on ANPP (Fig. 2 and Table 1), but ANPP over the entirety of the experiment was not different from control plots for either drought (Pr(Drought < Control) $\leq$ 0.95) or irrigation (Pr(Irrigation > Control) $\leq$ 0.95) treatments (Fig. 2 and Table 1).
+There was also no evidence that the treatment effects became more important over time (Pr(Treatment $\times$ Year) $\leq$ 0.95; Fig. 2B and Table 1).
+
+Community composition was similar among treatments, whether looking at basal cover or density (Fig. 3).
+Likewise, community composition was remarkably stable over time, with no evidence of rank shifts or species' declines or gains (Fig. 4).
 
 Discussion
 ----------
