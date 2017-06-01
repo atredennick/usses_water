@@ -66,11 +66,12 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 \begin{abstract}
 Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common.
 Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning.
-We used drought and irrigation treatments (50\% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes.
+Here we report the results of a five-year experiment where we used drought and irrigation treatments (50\% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes.
 The ecosystem was suprisingly resistant to both drought and irrigation.
 Aboveground net primary productivity (ANPP) responded positively to ambient growing season precipitation, but the response did not vary across treatments.
+There was also no evidence that treatment effects grew over time.
 The similarity of ecosystem functioning was not due to shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years.
-At least in the short-term, this sagebrush steppe ecosystem is resistant to increases and decreases in annual precipitation.
+At least in the short-term, ecosystem functioning and community composition in this sagebrush steppe system is resistant to increases and decreases in growing season precipitation.
 
 \vspace{2em}
 
@@ -151,6 +152,8 @@ Soil moisture measurements were automatically logged every four hours.
 We coupled this temporally intensive soil moisture sampling with spatially extensive readings taken at six points within all 16 plots and associated ambient measurement areas.
 These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
 
+\textcolor{red}{[ANDY: paragraph here on SOILWAT. Is this the right thing to show/do? See Fig. 1C.]}
+
 ### Data Collection
 We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [see @Byrne2011 for a review].
 We recorded ground reflectance at four wavelengths, two associated with red reflectance (xxx and xxx) and two associated with near-infrared reflectance (xxx and xxx).
@@ -186,6 +189,10 @@ Our models take the form:
 
 \noindent{}where $\mu_{i,t}$ is the predicted value of log(ANPP) in plot *i* and year *t*, $\textbf{x}_{i,t}$ is the vector of covariates (including the intercept) associated with plot and year, $\boldsymbol{\beta}$ is the vector of fixed effects associated with each term in $\textbf{x}_{i,t}$, and $\gamma_i$ is the random effect for plot.
 We sample the vector of yearly observed log(ANPP) values in each plot ($\textbf{y}_{i}$) from a multivariate normal likelihood with the means from the regression equation (e.g., $\boldsymbol{\mu}_{i}$) and a variance-covariance matrix ($\Sigma_i$) with an AR(1) structure that is unique for each plot.
+Our model assumes the variance term ($\sigma^2$) is unique for each plot, but consistent across years in a plot.
+The correlation term ($\rho$) in the covariance matrix determines the correlation of measurements across years.
+The superscripts (e.g., $\rho^2$) correspond to the lag time between two measurements, and ensure that the correlation decays as the lag increases.
+
 We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
@@ -212,17 +219,20 @@ Growing season precipitation had a positive effect on ANPP (Fig. 2 and Table 1),
 There was also no evidence that the treatment effects became more important over time (Pr(Treatment $\times$ Year) $\leq$ 0.95; Fig. 2B and Table 1).
 
 Community composition was similar among treatments, whether looking at basal cover or density (Fig. 3).
-Likewise, community composition was remarkably stable over time, with no evidence of rank shifts or species' declines or gains (Fig. 4).
+Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Fig. 3).
+Species' abundances and ranks showed no deviation over the five-year experiment, regardless of treatment (Fig. 4).
 
 Discussion
 ----------
 
 
+
 Acknowledgments
 ---------------
-This work was funded by the National Science Foundation through grants DEB-1353078 and DEB-1054040 to PBA, a Graduate Research Fellowship to ARK, and a Postdoctoral Resaerch Fellowship in Biology to ATT (DBI-1400370). 
+This work was funded by the National Science Foundation through a Postdoctoral Resaerch Fellowship in Biology to ATT (DBI-1400370), a Graduate Research Fellowship to ARK, and grants DEB-1353078 and DEB-1054040 to PBA. 
 Additional support came from the Utah Agricultural Experiment Station (journal paper xxxx).
-We thank the many summer research technicians who collected the data reported in this paper.
+We thank the many summer research technicians who collected the data reported in this paper and the US Experimental Sheep Station for facilitating work on their property.
+We also thank Susan Durham for clarifying our thinking on longitudinal analyses.
 
 \singlespace
 \setlength{\parindent}{0ex}
