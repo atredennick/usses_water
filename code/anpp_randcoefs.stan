@@ -3,11 +3,13 @@ data {
   int<lower=0> Nplots;        # number of plots
   int<lower=0> Ntreats;       # number of treatments
   int<lower=0> Nobs;          # number of observations
+  int<lower=0> Nppts;         # Number of precip levels to predict
   vector[Nobs] y;             # vector of observations
   row_vector[Npreds] x[Nobs];	# design matrix
+  matrix[Nppts,Npreds] newx; # design matrix for predictions 
   matrix[Npreds,Npreds] R;	  # priors for covariance matrix
-  int[Nobs] plot_id;          # vector of plot ids
-  int[Nobs] treat_id;         # vector of treatment ids
+  int plot_id[Nobs];          # vector of plot ids
+  int treat_id[Nobs];         # vector of treatment ids
 }
 
 parameters {
@@ -36,7 +38,7 @@ model {
 	}
 	
 	beta_mu ~ normal(0,1);	                # priors on overall effects
-	Sigma_treat ~ inv_wishart(Npreds+1, R);	# priors on covariance of effects at treatment-level
+	Sigma ~ inv_wishart(Npreds+1, R);	# priors on covariance of effects at treatment-level
 	sd_y ~ weibull(2,1);                    # priors on observation std. dev. for each treatment
 
 	####  LIKELIHOOD
@@ -45,5 +47,9 @@ model {
 }
 
 generated quantities {
-  # add mean regressions by treatment and calc differences
+  vector[Nppts] ypreds[Ntreats];
+  vector[Nppts] ydiffs;
+  for(i in 1:Ntreats)
+    ypreds[i] = newx*beta_treat[i]; # mean predictions for each treatment
+  ydiffs = ypreds[1] - ypreds[2]; # difference between mean predictions
 }
