@@ -48,8 +48,10 @@ model {
 
 generated quantities {
   vector[Nppts] ypreds[Ntreats];
-  vector[Nppts] ydiffs;
+  vector[Nppts] ydiff_control_drought;
+  vector[Nppts] ydiff_control_irrigate;
   for(i in 1:Ntreats)
     ypreds[i] = newx*beta_treat[i]; # mean predictions for each treatment
-  ydiffs = ypreds[1] - ypreds[2]; # difference between mean predictions
+  ydiff_control_drought = ypreds[1] - ypreds[2]; # difference between mean predictions
+  ydiff_control_irrigate = ypreds[1] - ypreds[3]; # difference between mean predictions
 }

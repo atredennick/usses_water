@@ -1,6 +1,0 @@
-Anova Table (Type II tests)
-
-Response: stability
-           Sum Sq Df F value Pr(>F)
-Treatment 0.03448  2  0.1433 0.8674
-Residuals 2.28620 19               

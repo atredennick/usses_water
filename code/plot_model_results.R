@@ -1,4 +1,4 @@
-##  Script to plot results from statistical model.
+##  Script to plot results from the GLMM Stan object.
 ##
 ##  Author: Andrew Tredennick
 ##  Date created: May 25, 2017
@@ -19,7 +19,7 @@ library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes
 library(stringr)      # Working with strings
 library(rstan)        # For MCMC and Stan objects
-library(gridExtra)
+library(gridExtra)    # For combining ggplot objects
 
 
 
@@ -27,13 +27,12 @@ library(gridExtra)
 ####  LOAD DATA AND MODEL RESULTS ----
 ####
 source("read_format_data.R") # load data
-drought_fit <- readRDS("../results/repmeas_drought_fit.RDS")
-irrigate_fit <- readRDS("../results/repmeas_irrigate_fit.RDS")
+all_fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
 
 
 
 ####
-####  CALCULATE MAX(Pr(effect) > 0, Pr(effect) < 0) ----
+####  CALCULATE MAX(Pr(effect) > 0, Pr(effect) < 0) FUNCTION ----
 ####
 get_one_tailed <- function(values){
   above <- 1 - ecdf(values)(0)
@@ -41,105 +40,63 @@ get_one_tailed <- function(values){
   max(above,below)
 }
 
-lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, drought_data)
-x <- model.matrix(lmod)
-drought_ref <- reshape2::melt(rstan::extract(drought_fit, pars="beta"))
-colnames(drought_ref)[2:3] <- c("parameter","loganpp")
-drought_ref$parameter <- factor(colnames(x)[drought_ref$parameter])
-drought_probs <- {}
-for(doparam in unique(drought_ref$parameter)){
-  tmp <- filter(drought_ref, parameter == doparam)
-  tmp_prob <- get_one_tailed(tmp$loganpp)
-  out_probs <- data.frame(coefficient = doparam,
-                          prob = tmp_prob,
-                          treatment = "drought")
-  drought_probs <- rbind(drought_probs, out_probs)
-}
-
-lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, irrigate_data)
-x <- model.matrix(lmod)
-irrigate_ref <- reshape2::melt(rstan::extract(irrigate_fit, pars="beta"))
-colnames(irrigate_ref)[2:3] <- c("parameter","loganpp")
-irrigate_ref$parameter <- factor(colnames(x)[irrigate_ref$parameter])
-irrigate_probs <- {}
-for(doparam in unique(irrigate_ref$parameter)){
-  tmp <- filter(irrigate_ref, parameter == doparam)
-  tmp_prob <- get_one_tailed(tmp$loganpp)
-  out_probs <- data.frame(coefficient = doparam,
-                          prob = tmp_prob,
-                          treatment = "irrigate")
-  irrigate_probs <- rbind(irrigate_probs, out_probs)
-}
-
-coef_probs <- (rbind(drought_probs, irrigate_probs)) %>%
-  filter(coefficient != "(Intercept)") %>%
-  mutate(coefficient = as.character(coefficient)) %>%
-  spread(treatment, prob)
-coef_probs$coefficient <- c("Precipitation","Treatment", "Year", "Treatment x Year")
-colnames(coef_probs) <- c("log(ANPP) Coefficient", "Drought", "Irrigation")
-
-##  Save coefficient probabilities for LaTeX table in manuscript
-saveRDS(coef_probs, "../results/coef_probabilities.RDS")
-
 
 
 ####
-####  PLOT POSTERIOR MEDIANS AND CIS ----
+####  PLOT TREATMENT-LEVEL POSTERIOR DISTRIBUTIONS ----
 ####
-lmod <- lm(log(anpp) ~ year_id*trt_id + ppt1_scaled, drought_data)
-x <- model.matrix(lmod)
-beta_names <- colnames(x)
+param_id_names <- data.frame(param_id = c(1,2),
+                             param_name = c("Intercept", "Precipitation"))
+treat_id_names <- data.frame(treat_id = c(1,2,3),
+                             treatment = c("Control","Drought","Irrigation"))
+betas <- reshape2::melt(rstan::extract(all_fit, pars="beta_treat")) %>%
+  rename(iteration = iterations, treat_id = Var2, param_id = Var3, estimate = value, stan_name = L1) %>%
+  left_join(param_id_names, by="param_id") %>%
+  left_join(treat_id_names, by="treat_id")
 
-drought_summary <- as.data.frame(summary(drought_fit, pars = c("beta"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary)
-irrigate_summary <- as.data.frame(summary(irrigate_fit, pars = c("beta"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary)
-drought_summary$effect <- beta_names
-drought_summary$treatment <- "Drought"
-irrigate_summary$effect <- beta_names
-irrigate_summary$treatment <- "Irrigation"
-model_summary <- rbind(drought_summary, irrigate_summary) %>%
-  filter(effect != "(Intercept)")
-
-model_plot <- ggplot(model_summary, aes(y=`50%`, x=effect))+
-  geom_hline(aes(yintercept=0), linetype=2)+
-  geom_errorbar(aes(ymin = `2.5%`, ymax=`97.5%`), width=0, color="grey45")+
-  geom_errorbar(aes(ymin=`10%`, ymax=`90%`), size=1.2, width=0)+
-  geom_point(size=2.1,shape=21,fill="white")+
-  facet_wrap(~treatment)+
-  coord_flip()+
-  xlab(NULL)+
-  ylab("Posterior Estimate")+
-  ggtitle("B")+
-  scale_x_discrete(labels = rev(c("Year x Treatment", "Year", "Treatment", "Precipitation")))+
-  theme_few()
-
-
-
-####
-####  PLOT DATA ----
-####
-data_plot <- ggplot(anpp_data, aes(x=ppt1,y=anpp))+
-  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.7)+
-  scale_fill_brewer(palette = "Set2")+
-  scale_color_brewer(palette = "Set2")+
-  scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
-  scale_y_continuous(limits=c(40,360),breaks=seq(50,350,50))+
-  xlab("Growing Season Precipitation")+
-  ylab(expression(paste("ANPP (g ",m^2,")")))+
-  ggtitle("A")+
+g1 <- ggplot(betas, aes(x=estimate))+
+  geom_hline(aes(yintercept=0), color="grey45", size=0.1)+
+  geom_line(stat="density",aes(color=treatment),adjust=5,size=1)+
+  scale_color_brewer(palette = "Set2",name="Treatment")+
+  scale_x_continuous(breaks=seq(-1,2,0.5))+
+  scale_y_continuous(breaks=seq(0,2,0.25))+
+  facet_wrap(~param_name)+
+  xlab("Parameter Value")+
+  ylab("Probability Density")+
   theme_few()+
-  theme(legend.position = c(0.2,0.8),
-        legend.key.size = unit(1,"pt"),
+  theme(legend.position = c(0.4,0.8),
+        legend.key.size = unit(6,"pt"),
         legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))
+ggsave("../figures/glmm_treatment_posteriors.png",plot = g1, width = 6, height = 3, units = "in", dpi =120)
+
+
 
 ####
-####  COMBINE PLOTS AND SAVE ----
+####  PLOT TREATMENT DIFFERENCES BY YEAR POSTERIORS ----
 ####
-lay <- rbind(c(1,1,2,2,2))
-combo_plot <- grid.arrange(data_plot, model_plot, layout_matrix = lay)
-ggsave("../figures/data_and_posterior_estimates.png", plot = combo_plot, height = 3, width = 8, units = "in", dpi=120)
+ydiffs_drought_summary <- as.data.frame(summary(all_fit, pars = c("ydiff_control_drought"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary) %>%
+  mutate(pptyear = 1:5, Treatment = "Drought")
+ydiffs_irrigate_summary <- as.data.frame(summary(all_fit, pars = c("ydiff_control_irrigate"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary) %>%
+  mutate(pptyear = 1:5, Treatment = "Irrigation")
+ydiffs <- rbind(ydiffs_drought_summary, ydiffs_irrigate_summary)
 
+dodge <- position_dodge(width=0.3)
+g2 <- ggplot(ydiffs, aes(y=`50%`, x=pptyear, color=Treatment))+
+  geom_hline(aes(yintercept=0), linetype=2, size=0.2)+
+  geom_errorbar(aes(ymin = `2.5%`, ymax=`97.5%`), width=0, position = dodge)+
+  geom_errorbar(aes(ymin=`10%`, ymax=`90%`), size=1.2, width=0, position = dodge)+
+  geom_point(size=2.5,shape=21,fill="white", position = dodge)+
+  scale_color_manual(values = RColorBrewer::brewer.pal(3,name = "Set2")[2:3])+
+  xlab("Year of Experiment")+
+  ylab("Difference Between\nControl and Treatment")+
+  theme_few()+
+  theme(legend.position = c(0.15,0.85),
+        legend.key.size = unit(6,"pt"),
+        legend.title = element_text(size=10),
+        legend.text = element_text(size = 8),
+        legend.key.height = unit(0.8,"line"))
+ggsave("../figures/glmm_yeardiffs.png",plot = g2, width = 4, height = 3.5, units = "in", dpi = 120)
 
 

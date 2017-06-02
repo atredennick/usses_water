@@ -1,9 +1,12 @@
-##  anpp_anova.R: Script to run ANOVA analysis to test for treatment effects
-##  on ANPP. Runs ANOVA for entirety of experiment and independent tests
-##  within years.
+##  anpp_randcoefs_model.R: Script to run GLMM analysis to test for treatment 
+##  effects on the relationship between precipitation and ANPP.
+##
+##  NOTE: Stan will issue a couple warnings after running the MCMC that, as
+##  the messages state, can be safely ignored. Just rejects a couple proposals
+##  that result in ill-formed covariance matrices.
 ##
 ##  Author: Andrew Tredennick
-##  Date created: May 23, 2017
+##  Date created: June 2, 2017
 
 ##  Clear everything
 rm(list=ls(all.names = T))
@@ -43,7 +46,7 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
                   Npreds = ncol(x),
                   Nplots = length(unique(model_data$quadname)),
                   Ntreats = length(unique(model_data$Treatment)),
-                  Nppts = nrow(xnew),
+                  Nppts = nrow(newx),
                   y = as.numeric(scale(log(model_data$anpp))),
                   x = x,
                   newx = newx,
@@ -56,7 +59,7 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
   rt <- stanc("anpp_randcoefs.stan")
   sm <- stan_model(stanc_ret = rt, verbose=FALSE)
   set.seed(123)
-  fit <- sampling(sm, data=anppdat, iter=2000, chains=3, thin=2)
+  fit <- sampling(sm, data=anppdat, iter=10000, chains=4, thin=10,  control = list(adapt_delta = 0.99))
   
   if(check_diags){
     pnames <- c("sigmaeps", "sigmaint", "sigmaslope","beta[1]",
@@ -75,8 +78,11 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
   return(fit)
 }
 
-drought_fit <- fit_stan_model(drought_data,check_diags = T,treattype = "drought")
-irrigate_fit <- fit_stan_model(irrigate_data,check_diags = T,treattype = "irrigate")
-saveRDS(drought_fit, "../results/randcoefs_drought_fit.RDS")
-saveRDS(irrigate_fit, "../results/randcoefs_irrigate_fit.RDS")
+all_fit <- fit_stan_model(anpp_data,check_diags = FALSE, treattype = "all")
+saveRDS(all_fit, "../results/randcoefs_alltreatments_fit.RDS")
+
+# drought_fit <- fit_stan_model(drought_data,check_diags = T,treattype = "drought")
+# irrigate_fit <- fit_stan_model(irrigate_data,check_diags = T,treattype = "irrigate")
+# saveRDS(drought_fit, "../results/randcoefs_drought_fit.RDS")
+# saveRDS(irrigate_fit, "../results/randcoefs_irrigate_fit.RDS")
 
