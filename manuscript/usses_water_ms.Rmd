@@ -70,7 +70,7 @@ Here we report the results of a five-year experiment where we used drought and i
 The ecosystem was suprisingly resistant to both drought and irrigation.
 Aboveground net primary productivity (ANPP) responded positively to ambient growing season precipitation, but the response did not vary across treatments.
 There was also no evidence that treatment effects grew over time.
-The similarity of ecosystem functioning was not due to shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years.
+The similarity of ecosystem functioning was not due to compensatory shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years.
 At least in the short-term, ecosystem functioning and community composition in this sagebrush steppe system is resistant to increases and decreases in growing season precipitation.
 
 \vspace{2em}
@@ -170,28 +170,39 @@ The maps record the spatial location and size of each individual plant.
 Using those annual maps, we aggregated over individuals to calculate total basal cover for each species in each plot.
 
 ### Data Analysis
-We fit generalized linear mixed-effects models (GLMMs) with precipitation, treatment, year, and treatment$\times$year main effects and a random effect for plot.
-To account for temporal dependency in the data (i.e., ANPP in 2012 is likely more correlated with ANPP in 2013 than in 2016), we also include an autoregressive error structure [AR(1)].
-Thus, our GLMMs account for the fact that each plot is sampled repeatedly over time, and that those yearly samples are not independent.
-Our models take the form:
+Our goal was to test whether the relationship between ANPP and growing season precipitation (hereafter, precipiation) differed among the drought, control, and irrigation treatments.
+To achieve this goal, we fit a multi-level random intercept and random slope regression with log(ANPP) as the response variabile and precipitation as the sole predictor.
+We fit the model under a Bayesian framework, allowing us to test for treatment differences by comparing the posterior distributions of the treatment-level coefficients [e.g., @Tredennick2013].
+Both log(ANPP) and precipitation were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
+
+Our multi-level model has three grouping levels for coefficients, representin the nested structure of the data: (i) overall coefficients, (ii) treatment coefficients, and (iii) plot coefficients.
+Each subsequent level is drawn from the distribution of coefficients at the previous level.
+Formally, our model is defined as follows:
+
+\vspace{-3em}
 
 \begin{align}
-\mu_{i,t} &= \textbf{x}_{i,t}\boldsymbol{\beta} + \gamma_i \\
-\textbf{y}_{i} &\sim \text{MVN}\left(\boldsymbol{\mu}_{i}, \boldsymbol{\Sigma}_i \right) \\
-\boldsymbol{\Sigma}_i &= \begin{bmatrix}
-       1 & \rho_i & \rho_i^2 & \rho_i^3 & \rho_i^4  \\[0.2em]
-       & 1 & \rho_i & \rho_i^2 & \rho_i^3 \\[0.2em]
-       & &  1 & \rho_i & \rho_i^2 \\[0.2em]
-       & & & 1 & \rho_i \\[0.2em]
-       & & & & 1 \\[0.2em]
-     \end{bmatrix} \sigma_i^2
+\mu_{i(j(k))} &= \beta_{0,j(k)} + \beta_{1,j(k)}x_i, \\
+y_{i(j(k))} &\sim \mathcal{N} \left(\mu_{i(j(k))}, \sigma^2_{k} \right),
 \end{align}
 
-\noindent{}where $\mu_{i,t}$ is the predicted value of log(ANPP) in plot *i* and year *t*, $\textbf{x}_{i,t}$ is the vector of covariates (including the intercept) associated with plot and year, $\boldsymbol{\beta}$ is the vector of fixed effects associated with each term in $\textbf{x}_{i,t}$, and $\gamma_i$ is the random effect for plot.
-We sample the vector of yearly observed log(ANPP) values in each plot ($\textbf{y}_{i}$) from a multivariate normal likelihood with the means from the regression equation (e.g., $\boldsymbol{\mu}_{i}$) and a variance-covariance matrix ($\Sigma_i$) with an AR(1) structure that is unique for each plot.
-Our model assumes the variance term ($\sigma^2$) is unique for each plot, but consistent across years in a plot.
-The correlation term ($\rho$) in the covariance matrix determines the correlation of measurements across years.
-The superscripts (e.g., $\rho^2$) correspond to the lag time between two measurements, and ensure that the correlation decays as the lag increases.
+\noindent{} where $\mu_{i(j(k))}$ is the deterministic prediction from the regression model for observation *i* for plot *j* associated with treatment *k*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of precipitation for plot *j* associated with treatment *k*, and $\sigma^2_k$ is the process variance for treatment *k*.
+Data include the standardized log(ANPP) observations ($y_{i(j(k))}$) and precipitation ($x_i$).
+Although we include observation subscript *i* on the *x*s, observations within a year all share the same precipitation values.
+
+The intercept and slope terms are modeled hierarchichally to account for the non-independence of observations across years within plots and to allow us to test the hypothesis that our treatments alter the ANPP-precipitation relationship.
+As noted above, plot-level coefficients are drawn from treatment-level coeffecients, which are drawn from overall coefficients.
+We also include a covariance structure among the intercept and slope at each level.
+Formally, our hierarhical structure is as follows.
+Note that we drop the intercept (0) and slope (1) subscripts and instead refer to a vector of coefficients, $\boldsymbol{\beta}$.
+
+\vspace{-2em}
+
+\begin{align}
+\boldsymbol{\beta}_{j(k)} &\sim \mathcal{N} \left( \boldsymbol{\beta}_k, \Sigma(k) \right), \\
+\boldsymbol{\beta}_{k} &\sim \mathcal{N} \left( \boldsymbol{\beta}, \Sigma  \right), \\
+\boldsymbol{\beta} &\sim \mathcal{N} \left( 0, 1 \right).
+\end{align}
 
 We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
@@ -255,16 +266,16 @@ library(xtable)
 #       comment = FALSE,
 #       size = "normalsize")
 
-coef_probs <- readRDS("../results/coef_probabilities.RDS")
-
-coef_caption <- "Probability that each log(ANPP) coefficient is greater or less than zero for each of the precipitation treatments.
-Probabilities denote max(Pr(coefficient) > 0, Pr(coefficient) < 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the coefficient being important in the model. Bold coefficients denote Pr(coefficient) $\\geq$ 0.95."
-print(xtable(coef_probs, caption = coef_caption, digits = 2),
-      caption.placement="top",
-      include.rownames = F,
-      sanitize.colnames.function = identity,
-      comment = FALSE,
-      size = "normalsize")
+# coef_probs <- readRDS("../results/coef_probabilities.RDS")
+# 
+# coef_caption <- "Probability that each log(ANPP) coefficient is greater or less than zero for each of the precipitation treatments.
+# Probabilities denote max(Pr(coefficient) > 0, Pr(coefficient) < 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the coefficient being important in the model. Bold coefficients denote Pr(coefficient) $\\geq$ 0.95."
+# print(xtable(coef_probs, caption = coef_caption, digits = 2),
+#       caption.placement="top",
+#       include.rownames = F,
+#       sanitize.colnames.function = identity,
+#       comment = FALSE,
+#       size = "normalsize")
 ```
 
 \newpage{}
@@ -283,8 +294,17 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=6in]{../figures/data_and_posterior_estimates.png}
+      \includegraphics[width=6in]{../figures/glmm_treatment_posteriors.png}
   \caption{(A) Relationship between ANPP and growing season precipitation over the course of the experiment. Regression lines are indpendent linear fits for each treatment for visual clarity of the mean trends. (B) Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of effects from the fitted repeated measures generalized linear mixed-effects model for each treatment-control comparison. BCI refers to 'Bayesian Credible Interval', which is the upper and lower quantiles of the posterior distribution at the specified level.}
+\end{figure}
+
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=4in]{../figures/glmm_yeardiffs.png}
+  \caption{Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of the difference between log(ANPP) in control and treatment plots over time. BCI refers to 'Bayesian Credible Interval', which is the upper and lower quantiles of the posterior distribution at the specified level.}
 \end{figure}
 
 
