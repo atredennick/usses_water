@@ -240,10 +240,15 @@ Discussion
 
 Acknowledgments
 ---------------
-This work was funded by the National Science Foundation through a Postdoctoral Resaerch Fellowship in Biology to ATT (DBI-1400370), a Graduate Research Fellowship to ARK, and grants DEB-1353078 and DEB-1054040 to PBA. 
-Additional support came from the Utah Agricultural Experiment Station (journal paper xxxx).
+We gratefully acknowledge the support of the Utah Agricultural Experiment Station (journal paper xxxx).
 We thank the many summer research technicians who collected the data reported in this paper and the US Experimental Sheep Station for facilitating work on their property.
 We also thank Susan Durham for clarifying our thinking on longitudinal analyses.
+
+Funding
+-------
+NSF DBI-1400370 to Andrew Tredennick.  
+NSF Graduate Research Fellowship to Andrew Kleinhesselink.  
+NSF DEB-1353078 and DEB-1054040 to Peter Adler. 
 
 \singlespace
 \setlength{\parindent}{0ex}
