@@ -26,7 +26,9 @@ urlcolor: black
 
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 \definecolor{blue}{rgb}{0,0,0.7} 
-\newcommand{\new}{\textcolor{blue}}
+\definecolor{red}{rgb}{0.7,0,0}
+\newcommand{\pba}{\textcolor{blue}}
+\newcommand{\ark}{\textcolor{red}}
 
 \begin{singlespace}
 
