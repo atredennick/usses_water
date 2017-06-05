@@ -87,18 +87,30 @@ At least in the short-term, ecosystem functioning and community composition in t
 
 Introduction
 ------------
-Chronic alterations to resource availability should cause community composition to shift over time.
+As the rate of climate change accelerates, ecologists are being pressed to forecast its impacts on ecosystem functions and services.
+Making such forecasts faces two challenges.
+First, future conditions are likely to be outside the historical range of variability [@Smith2011], meaning we cannot simply look to the past to predict the future.
+Second, ecosystems will likely exhibit unique responses to climate change induced resource alterations [e.g., @Byrne2017], meaning we cannot simply look across space to predict the future.
+These two challenges motivate the use of *in situ* experimental manipulations of resource availability [@Avolio2015].
+
+Manipulating potentially limiting resources offers a route to understanding how ecosystems will respond to resource levels that fall outside the historical range of variability [@Knapp2017].
+Chronic alterations to resource availability should cause community composition to shift over time, the focal ecosystem is sensitive to the manipulated resource.
 Species' relative abundances are expected to re-order and, eventually, some species will be lost from the local community and new species will be gained [@Smith2009; @Avolio2015].
-Ecosystem functioning, such as productivity and stability, may remain relatively constant (CITATION) or shift to a new mean state (CITATION) depending on the trait-space of the new community.
+On the heels of changes in community composition, subsequent changes in the level of ecosystem functioning may occur.
 
-Different ecosystems are sensitive to different global changes.
-For example, @Flombaum2017 found aboveground net primary productivity (ANPP) in a Patagonian steppe was less sensitive to drought than a North American tallgrass prairie, relative to other global changes.
-Taken together with other results, @Flombaum2017 conclude that ecosystem sensitivity to a resource alteration is inversly related to the natural variation of the resource.
-In the above example, precipitation is much more variable in the Patagonian steppe than the North American tallgrass prairie.
+@Smith2009 introduced the 'Hierarchical Response Framework' for understanding the interplay of community composition and ecosystem functioning in response to resource manipulations over time.
+In the near term, ecosystem functioning such as annual net primary productivity (ANPP) will reflect the physiological responses of individual species to the manipulated resource level.
+For example, ANPP may decline under simulated drought because the initial community consisted of drought-intolerant species.
+Over longer time spans, ecosystem functioning may recover as new species, better suited to take advantage of the new resource regime, colonize local communities.
+For example, ANPP may initially decline, but eventually rise back to pre-treatment levels once drought-tolerant species colonize.
+It is also possible that ecosystem functioning shifts to a new mean state, reflective of the suite of species in the new community.
 
-This leaves us with the following qualitative understanding.
-Chronic resource alteration should induce shifts in community composition and, maybe, ecosystem functioning, but only if the focal ecosystem is predisposed to be sensitive to the particular resource that is altered.
-While a crude understanding, this does allow us to make testable predictions when confronted with an ecosystem--resource pairing.
+Much of the research on ecosystem and community responses to global climate change has focused on grassland systems, where water is typically a limiting resource.
+The sensitivity of ANPP to water availability in grasslands has been characterized spatially (across sites) and temporally (within sites).
+Spatially, there is a strong positive relationship between the amount of precipitation at a given site and mean ANPP (Knapp citation).
+Temporally, however, the response of ANPP to interannual precipitation variability is much weaker (Hsu and Adler).
+
+
 
 In many areas of the western United States, precipitation is likely to become more variable.
 This will result in swings back-and-forth between multiyear periods of above and above average precipitation.
