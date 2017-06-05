@@ -140,7 +140,7 @@ Materials and Methods
 We conducted our precipitation manipulation experiment at the United States Sheep Experimental Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
 The vegetation is typical of high elevation sagebrush steppe.
 The plant community is dominated by the shrub *Artemesia tripartita* and three perennial bunchgrasses, *Pseudoroegneria spicata*, *Poa secunda*, and *Hesperostipa comata*.
-During the period of our experiment, average mean annual precipitation was xxx mm and mean monthly temperature ranged from -x$^{\circ}$C in January to x$^{\circ}$C in July.
+During the period of our experiment (2011 -- 2015), average mean annual precipitation was 265 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 
 ### Precipitation Experiment
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
@@ -221,6 +221,9 @@ Note that we drop the intercept (0) and slope (1) subscripts and instead refer t
 We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
+We obtained samples from the posterior distribution for all model parameters from four parallel MCMC chains run for 10,000 iterations, saving every $10^{\text{th}}$ sample.
+Traceplots of all parameters were visually inspected to ensure well-mixed chains and convergence.
+We also made sure all scale reduction factors ($\hat{R}$) were less than 1.1.
 
 To see if community composition differed among treatments through time, we used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis distances.
 For each year of the experiment, we first calculated Bray-Curtis distances among all plots, and then extracted those distances for use in the NMDS.
@@ -240,12 +243,16 @@ Averaged across treatments, ANPP varied from a minimum of xxx g m$^{-2}$ in 2014
 ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 1B), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 1C).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
-Growing season precipitation had a positive effect on ANPP (Fig. 2 and Table 1), but ANPP over the entirety of the experiment was not different from control plots for either drought (Pr(Drought < Control) $\leq$ 0.95) or irrigation (Pr(Irrigation > Control) $\leq$ 0.95) treatments (Fig. 2 and Table 1).
-There was also no evidence that the treatment effects became more important over time (Pr(Treatment $\times$ Year) $\leq$ 0.95; Fig. 2B and Table 1).
 
-Community composition was similar among treatments, whether looking at basal cover or density (Fig. 3).
-Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Fig. 3).
-Species' abundances and ranks showed no deviation over the five-year experiment, regardless of treatment (Fig. 4).
+Growing season precipitation had a positive effect on ANPP (mean of $\beta_{1}$ = 0.67; 80\% BCI = 0.24, 1.10; 95\% BCI = -0.11, 1.34).
+Average ANPP was similar among treatments (similar intercepts, Fig. 2A), as was the effect of precipitation (similar slopes, Fig. 2B).
+In an average precipitation year (i.e., $x$ = 0 in Eq. 1), the probability that ANPP in a drought plot is less than ANPP in a control plot was 0.58, and the probability that ANPP in an irrigation plot is higher than in a control plot was 0.57.
+In other words, the posterior values of $\beta_0(\text{control}) - \beta_0(\text{drought})$ and $\beta_0(\text{control}) - \beta_0(\text{drought})$ broadly overlapped zero.
+There was also no evidence that the treatment effects became more important over time because differences between average treatment and control plots were centered on zero regardless of year of the experiment (Fig. 3).
+
+Community composition was similar among treatments, whether looking at basal cover or density (Fig. 4).
+Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Fig. 4).
+Species' abundances and ranks showed little deviation over the five-year experiment, regardless of treatment (Fig. 5).
 
 Discussion
 ----------
@@ -256,7 +263,7 @@ Acknowledgments
 ---------------
 We gratefully acknowledge the support of the Utah Agricultural Experiment Station (journal paper xxxx).
 We thank the many summer research technicians who collected the data reported in this paper and the US Experimental Sheep Station for facilitating work on their property.
-We also thank Susan Durham for clarifying our thinking on longitudinal analyses.
+We also thank Susan Durham for clarifying our thinking on the statistical analyses.
 
 Funding
 -------
@@ -304,8 +311,8 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[height=7in]{../figures/histppt_and_anpptrend.png}
-  \caption{(A) Histogram of historical precipitation from 1926-2016, with the years of the experiment overlaid as colored points. ``Drought'' treatments (squares) are shown as a 50\% reduction from the observed precipitation. ``Irrigation'' treatment precipitation levels are not shown. (B) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (C) Monthly average estimated soil volumetric water content (VWC) from SOILWAT model fit using soil moisture data from experimental plots.}
+      \includegraphics[height=7in]{../figures/Figure1.png}
+  \caption{(A) Histogram of historical precipitation from 1926-2016, with the years of the experiment overlaid as colored points. ``Drought'' treatments (squares) are shown as a 50\% reduction from the observed precipitation. ``Irrigation'' treatment precipitation levels are not shown. (B) Monthly average estimated soil volumetric water content (VWC) from SOILWAT model fit using soil moisture data from experimental plots. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation.}
 \end{figure}
 
 
@@ -323,7 +330,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=4in]{../figures/glmm_yeardiffs.png}
-  \caption{Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of the difference between log(ANPP) in control and treatment plots over time. BCI refers to 'Bayesian Credible Interval', which is the upper and lower quantiles of the posterior distribution at the specified level.}
+  \caption{Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of the difference between log(ANPP) in control and treatment plots over time. BCI refers to 'Bayesian Credible Interval', which are the upper and lower quantiles of the posterior distribution at the specified level.}
 \end{figure}
 
 

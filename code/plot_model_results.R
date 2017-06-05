@@ -100,3 +100,21 @@ g2 <- ggplot(ydiffs, aes(y=`50%`, x=pptyear, color=Treatment))+
 ggsave("../figures/glmm_yeardiffs.png",plot = g2, width = 4, height = 3.5, units = "in", dpi = 120)
 
 
+
+####
+####  EXTRACT AND SAVE ALL COEFFICIENT SUMMARIES ----
+####
+all_betas <- as.data.frame(summary(all_fit, pars = c("beta_treat","beta_mu"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary)
+write.csv(all_betas, "../results/beta_summaries.csv")
+
+
+
+####
+####  CALCULATE PROBABILITY OF DIFFERENCE BASED ON INTERCEPTS ----
+####
+intercept_diffs <- reshape2::melt(rstan::extract(all_fit, pars="inter_diffs")) %>%
+  rename(iteration = iterations, treat_id = Var2, estimate = value, stan_name = L1)
+Pr_control_above_drought <- 1 - ecdf(filter(intercept_diffs,treat_id == 1)[,"estimate"])(0)
+Pr_control_below_irrigation <- ecdf(filter(intercept_diffs,treat_id == 2)[,"estimate"])(0)
+mean_pptyear_probs <- data.frame(Pr_control_above_drought,Pr_control_below_irrigation)
+write.csv(mean_pptyear_probs, "../results/mean_pptyear_probs.csv")

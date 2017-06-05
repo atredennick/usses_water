@@ -37,7 +37,7 @@ trt_data <- rbind(trt_data, data.frame(year = trt_data$year,
                                        ppt1 = trt_data$ppt1*0.5,
                                        Treatment = "Drought"))
 
-g1 <- ggplot(weather, aes(x=ppt1))+
+ppt_histogram <- ggplot(weather, aes(x=ppt1))+
   geom_histogram(bins=20,color="white",fill="grey35")+
   geom_point(data=trt_data, aes(x=ppt1, y=rep(seq(0.3,1,length.out = 5),2),shape=Treatment, fill=as.factor(year)), size=2)+
   scale_x_continuous(expand=c(0,0), limits=c(0,620), breaks=seq(0,600,100))+
@@ -48,14 +48,14 @@ g1 <- ggplot(weather, aes(x=ppt1))+
   xlab("Growing Season Precipitation (mm)")+
   ggtitle("A")+
   theme_few()+
-  theme(legend.position = c(0.8, 0.6),
+  theme(legend.position = c(0.8, 0.5),
         legend.key.size = unit(1,"pt"),
         legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))+
   guides(fill = guide_legend(override.aes = list(color = brewer.pal(5,"Set1"),size=1)),
          shape = guide_legend(override.aes = list(size=1)))
-ggsave(plot = g1,"../figures/historical_precip_trts.png", width = 4, height = 3.5, units="in", dpi=120)
+#ggsave(plot = g1,"../figures/historical_precip_trts.png", width = 4, height = 3.5, units="in", dpi=120)
 
 
 
@@ -83,7 +83,7 @@ biomass_yr_trt_summ <- permanent_quad_biomass %>%
   filter(year > 2011)
 
 stats_lab <- expression(paste("year*treatment  ", italic("P"), " = 0.67"))
-g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
+anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
   geom_line()+
   geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
   geom_point(color="white", size=3)+
@@ -96,9 +96,9 @@ g2 <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
   scale_y_continuous(breaks=seq(50,350,50))+
-  ylab(expression(paste("Estimated ANPP (g ", m^-2,")")))+
+  ylab(expression(paste("ANPP (g ", m^-2,")")))+
   xlab("Year")+
-  ggtitle("B")+
+  ggtitle("C")+
   theme_few()+
   guides(color = guide_legend(override.aes = list(size=1)))+
   theme(legend.position = c(0.2, 0.8),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
@@ -119,13 +119,13 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   mutate(month_year = as.factor(paste0(year,"-",month))) %>%
   ungroup()
 
-g3 <- ggplot(soil_moisture, aes(x=month_year, y=avg_vwc, group=Treatment, color=Treatment))+
+soil_vwc <- ggplot(soil_moisture, aes(x=month_year, y=avg_vwc, group=Treatment, color=Treatment))+
   #geom_line()+
   geom_xspline(spline_shape=-0.5)+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   ylab(expression(paste("Estimated Soil VWC (ml ", ml^-1,")")))+
   xlab("Date")+
-  ggtitle("C")+
+  ggtitle("B")+
   scale_x_discrete(breaks = levels(soil_moisture$month_year)[c(T, rep(F, 3))])+
   scale_y_continuous(breaks=seq(2,16,2))+
   theme_few()+
@@ -136,8 +136,59 @@ g3 <- ggplot(soil_moisture, aes(x=month_year, y=avg_vwc, group=Treatment, color=
         axis.text.x = element_text(angle = 90, hjust = 1))
 
 
+
+####
+####  MAKE SCATTERPLOT OF ANPP vs. PRECIP ----
+####
+source("read_format_data.R") # load data
+data_plot <- ggplot(anpp_data, aes(x=ppt1,y=anpp))+
+  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
+  #stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.7)+
+  scale_fill_brewer(palette = "Set2")+
+  scale_color_brewer(palette = "Set2")+
+  scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
+  scale_y_continuous(limits=c(40,360),breaks=seq(50,350,50))+
+  xlab("Growing Season Precipitation")+
+  ylab(expression(paste("ANPP (g ",m^2,")")))+
+  ggtitle("D")+
+  guides(fill=FALSE)+
+  theme_few()+
+  theme(legend.position = c(0.2,0.8),
+        legend.key.size = unit(1,"pt"),
+        legend.title = element_text(size=10),
+        legend.text = element_text(size = 8),
+        legend.key.height = unit(0.8,"line"))
+
+
+
 ####
 ####  COMBINE PLOTS AND SAVE ----
 ####
-gout <- grid.arrange(g1,g2,g3,ncol=1,nrow=3)
-ggsave("../figures/histppt_and_anpptrend.png", gout, width=3.5, height=10, units="in", dpi=120)
+gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,data_plot,ncol=2,nrow=2)
+ggsave("../figures/Figure1.png", gout, width=7, height=6, units="in", dpi=120)
+
+
+
+####
+####  GET MEAN PPT AND TEMPERATURES FROM 2011-2015 ----
+####
+weather <- read.csv("../data/weather/monthlyClimate.csv") %>%
+  filter(year > 2010 & year < 2016)
+
+mar <- weather %>%
+  group_by(year) %>%
+  summarise(ann_ppt = sum(PRCP, na.rm=T))
+avg_mar <- mean(mar$ann_ppt)
+
+temperature <- weather %>%
+  group_by(month) %>%
+  summarise(avg_temp = mean(TMEAN))
+
+weather_table <- data.frame(avg_ann_precip = avg_mar,
+                            min_avg_monthly_temp = min(temperature$avg_temp),
+                            max_avg_monthly_temp = max(temperature$avg_temp),
+                            month_for_min = as.numeric(temperature[which(temperature$avg_temp==min(temperature$avg_temp)), "month"]),
+                            month_for_max = as.numeric(temperature[which(temperature$avg_temp==max(temperature$avg_temp)), "month"]))
+
+write.csv(x = weather_table, file = "../results/weather_summary.csv")
+
