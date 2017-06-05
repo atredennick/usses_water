@@ -6,7 +6,7 @@ data {
   int<lower=0> Nppts;         # Number of precip levels to predict
   vector[Nobs] y;             # vector of observations
   row_vector[Npreds] x[Nobs];	# design matrix
-  matrix[Nppts,Npreds] newx; # design matrix for predictions 
+  matrix[Nppts,Npreds] newx;  # design matrix for predictions 
   matrix[Npreds,Npreds] R;	  # priors for covariance matrix
   int plot_id[Nobs];          # vector of plot ids
   int treat_id[Nobs];         # vector of treatment ids
@@ -55,6 +55,6 @@ generated quantities {
     ypreds[i] = newx*beta_treat[i]; # mean predictions for each treatment
   ydiff_control_drought = ypreds[1] - ypreds[2]; # difference between mean predictions
   ydiff_control_irrigate = ypreds[1] - ypreds[3]; # difference between mean predictions
-  inter_diffs[1] = beta_treat[1][1] - beta_treat[2][1];
-  inter_diffs[2] = beta_treat[1][1] - beta_treat[3][1];
+  inter_diffs[1] = beta_treat[1][1] - beta_treat[2][1]; # difference between control and drought in avg ppt year
+  inter_diffs[2] = beta_treat[1][1] - beta_treat[3][1]; # difference between control and drought in avg ppt year
 }

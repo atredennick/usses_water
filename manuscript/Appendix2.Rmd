@@ -1,0 +1,44 @@
+---
+layout: 11pt
+header-includes:
+  - \usepackage{lineno}
+  - \linenumbers
+  - \usepackage{setspace}
+  - \usepackage{todonotes}
+  - \onehalfspacing
+  - \usepackage{rotating}
+  - \usepackage{color, soul}
+  - \usepackage[font={small},labelfont={bf},labelsep=quad]{caption}
+  - \usepackage{tikz}
+  - \usepackage{bm,mathrsfs}
+  - \usepackage[sc]{mathpazo}
+bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
+csl: components/ecology_letters.csl
+
+## rmarkdown render options
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: false
+    number_sections: true
+fontsize: 11pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+---
+
+\newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+\renewcommand\thefigure{A2-\arabic{figure}}  
+\renewcommand\thetable{A2-\arabic{table}}  
+\renewcommand\thesection{Section A2.\arabic{section}}
+
+\begin{center}
+\textbf{\Large{Appendix 2}} \\
+A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
+``Ecosystem and community resistance...'' \\
+\emph{PeerJ}
+\end{center}
+
+\section{Hierarchical Bayesian Model}
+

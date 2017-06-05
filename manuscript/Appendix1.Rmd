@@ -11,7 +11,7 @@ header-includes:
   - \usepackage[font={small},labelfont={bf},labelsep=quad]{caption}
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
-  - \usepackage{mathptmx} 
+  - \usepackage[sc]{mathpazo}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology_letters.csl
 
@@ -19,7 +19,7 @@ csl: components/ecology_letters.csl
 output:
   pdf_document:
     fig_caption: true
-    keep_tex: true
+    keep_tex: false
     number_sections: true
 fontsize: 11pt
 geometry: margin=1in
@@ -29,14 +29,15 @@ urlcolor: black
 
 \newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
-\renewcommand\thefigure{SI-\arabic{figure}}  
-\renewcommand\thetable{SI-\arabic{table}}  
-\renewcommand\thesection{Section SI.\arabic{section}}
+\renewcommand\thefigure{A1-\arabic{figure}}  
+\renewcommand\thetable{A1-\arabic{table}}  
+\renewcommand\thesection{Section A1.\arabic{section}}
 
 \begin{center}
-\textbf{\Large{Supporting Information}} \\
-A.T. Tredennick, P.B. Adler, ..., ``Title'' \\
-\emph{Journal}
+\textbf{\Large{Appendix 1}} \\
+A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
+``Ecosystem and community resistance...'' \\
+\emph{PeerJ}
 \end{center}
 
-\section{Section 1}
+\section{Estimating ANPP}

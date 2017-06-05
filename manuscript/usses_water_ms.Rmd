@@ -197,7 +197,7 @@ Formally, our model is defined as follows:
 
 \begin{align}
 \mu_{i(j(k))} &= \beta_{0,j(k)} + \beta_{1,j(k)}x_i, \\
-y_{i(j(k))} &\sim \mathcal{N} \left(\mu_{i(j(k))}, \sigma^2_{k} \right),
+y_{i(j(k))} &\sim \text{Normal} \left(\mu_{i(j(k))}, \sigma^2_{k} \right),
 \end{align}
 
 \noindent{} where $\mu_{i(j(k))}$ is the deterministic prediction from the regression model for observation *i* for plot *j* associated with treatment *k*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of precipitation for plot *j* associated with treatment *k*, and $\sigma^2_k$ is the process variance for treatment *k*.
@@ -207,16 +207,21 @@ Although we include observation subscript *i* on the *x*s, observations within a
 The intercept and slope terms are modeled hierarchichally to account for the non-independence of observations across years within plots and to allow us to test the hypothesis that our treatments alter the ANPP-precipitation relationship.
 As noted above, plot-level coefficients are drawn from treatment-level coeffecients, which are drawn from overall coefficients.
 We also include a covariance structure among the intercept and slope at each level.
-Formally, our hierarhical structure is as follows.
-Note that we drop the intercept (0) and slope (1) subscripts and instead refer to a vector of coefficients, $\boldsymbol{\beta}$.
+Formally, our hierarhical structure is as follows, where we drop the intercept (0) and slope (1) subscripts and instead refer to a vector of coefficients, $\boldsymbol{\beta}$:
 
 \vspace{-2em}
 
 \begin{align}
-\boldsymbol{\beta}_{j(k)} &\sim \mathcal{N} \left( \boldsymbol{\beta}_k, \Sigma(k) \right), \\
-\boldsymbol{\beta}_{k} &\sim \mathcal{N} \left( \boldsymbol{\beta}, \Sigma  \right), \\
-\boldsymbol{\beta} &\sim \mathcal{N} \left( 0, 1 \right).
+\boldsymbol{\beta}_{j(k)} &\sim \text{MVN} \left( \boldsymbol{\beta}_k, \Sigma(k) \right), \\
+\boldsymbol{\beta}_{k} &\sim \text{MVN} \left( \boldsymbol{\beta}, \Sigma  \right), \\
+\boldsymbol{\beta} &\sim \text{Normal} \left( 0, 1 \right),
 \end{align}
+
+\noindent{} where $\boldsymbol{\beta}_{j(k)}$ is the vector of regression coefficients (intercept and slope) for plot *j* associated with treatment *k*, $\boldsymbol{\beta}_{k}$ is the vector of coefficients for each treatment, and $\boldsymbol{\beta}$ is the vector of overall coefficients.
+The plot- and treatment-level coefficients are drawn from multivariate normal distributions with covariance matrix $\Sigma$.
+For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\Sigma(k)$).
+The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
+A full description of model is in Appendix 2.
 
 We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
@@ -233,21 +238,20 @@ Lastly, we examined rank clocks of species' abundances through time to assess th
 Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from @Hallett2016.
 
 All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
-We also include annotated Stan code in our model description in Appendix 1.
+We also include annotated Stan code in our model description in Appendix 2.
 
 Results
 -------
 Three of our five treatment years fell in years of below average rainfall (Fig. 1A).
 Thus, those three years represent a lower magnitude of absolute change in precipitation experienced by the treatments.
-Averaged across treatments, ANPP varied from a minimum of xxx g m$^{-2}$ in 2014 to a maximum of xxx g m$^{-2}$ in 2016 (Fig. 1B).
-ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 1B), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 1C).
+Averaged across treatments, ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 (Fig. 1C).
+ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 1C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 1B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
-
-Growing season precipitation had a positive effect on ANPP (mean of $\beta_{1}$ = 0.67; 80\% BCI = 0.24, 1.10; 95\% BCI = -0.11, 1.34).
+Growing season precipitation had a positive effect on ANPP (mean of $\beta_{1}$ = 0.67; 80\% BCI = 0.24, 1.10; 95\% BCI = -0.11, 1.34) (Fig. 1D).
 Average ANPP was similar among treatments (similar intercepts, Fig. 2A), as was the effect of precipitation (similar slopes, Fig. 2B).
 In an average precipitation year (i.e., $x$ = 0 in Eq. 1), the probability that ANPP in a drought plot is less than ANPP in a control plot was 0.58, and the probability that ANPP in an irrigation plot is higher than in a control plot was 0.57.
-In other words, the posterior values of $\beta_0(\text{control}) - \beta_0(\text{drought})$ and $\beta_0(\text{control}) - \beta_0(\text{drought})$ broadly overlapped zero.
+In other words, the posterior distributions of $\beta_0(\text{control}) - \beta_0(\text{drought})$ and $\beta_0(\text{control}) - \beta_0(\text{drought})$ broadly overlapped zero.
 There was also no evidence that the treatment effects became more important over time because differences between average treatment and control plots were centered on zero regardless of year of the experiment (Fig. 3).
 
 Community composition was similar among treatments, whether looking at basal cover or density (Fig. 4).
@@ -256,7 +260,9 @@ Species' abundances and ranks showed little deviation over the five-year experim
 
 Discussion
 ----------
-
+We manipulated growing season precipitation for five years in a sagebrush steppe to reach the extremes of the historical distribution of precipitation (Fig. 1A).
+In so doing, we aimed to understand how this ecosystem might respond to periods of relatively novel precipitation regimes.
+Our results suggest that ecosystem functioning, as measured by annual net primary productivity, and community composition are not sensitive to the precipitation manipulations we imposed.
 
 
 Acknowledgments
@@ -276,6 +282,7 @@ NSF DEB-1353078 and DEB-1054040 to Peter Adler.
 
 \newpage{}
 
+<!---
 Tables
 ------
 
@@ -305,6 +312,8 @@ library(xtable)
 ```
 
 \newpage{}
+
+--->
 
 Figures
 -------

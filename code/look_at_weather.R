@@ -192,3 +192,13 @@ weather_table <- data.frame(avg_ann_precip = avg_mar,
 
 write.csv(x = weather_table, file = "../results/weather_summary.csv")
 
+
+
+####
+####  GET MIN AND MAX ANPP VALUES, AVERAGED OVER TREATMENT ----
+####
+source("read_format_data.R") # load data
+anpp_summary <- anpp_data %>%
+  group_by(year) %>%
+  summarise(mean_anpp = mean(anpp))
+write.csv(anpp_summary, "../results/avg_anpp_by_year.csv")
