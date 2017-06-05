@@ -177,7 +177,7 @@ To achieve this goal, we fit a multi-level random intercept and random slope reg
 We fit the model under a Bayesian framework, allowing us to test for treatment differences by comparing the posterior distributions of the treatment-level coefficients [e.g., @Tredennick2013].
 Both log(ANPP) and precipitation were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
 
-Our multi-level model has three grouping levels for coefficients, representin the nested structure of the data: (i) overall coefficients, (ii) treatment coefficients, and (iii) plot coefficients.
+Our multi-level model has three grouping levels for coefficients, representing the nested structure of the data: (i) overall coefficients, (ii) treatment coefficients, and (iii) plot coefficients.
 Each subsequent level is drawn from the distribution of coefficients at the previous level.
 Formally, our model is defined as follows:
 
