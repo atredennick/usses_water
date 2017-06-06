@@ -228,6 +228,7 @@ Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from @Hallett201
 All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
 We also include annotated Stan code in our model description in Appendix 2.
 
+
 Results
 -------
 Three of our five treatment years fell in years of below average rainfall (Fig. 1A).
@@ -245,6 +246,7 @@ There was also no evidence that the treatment effects became more important over
 Community composition was similar among treatments, whether looking at basal cover or density (Fig. 4).
 Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Fig. 4).
 Species' abundances and ranks showed little deviation over the five-year experiment, regardless of treatment (Fig. 5).
+
 
 Discussion
 ----------
