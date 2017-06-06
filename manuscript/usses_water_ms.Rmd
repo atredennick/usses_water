@@ -67,7 +67,7 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 
 \begin{abstract}
 Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common.
-Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning.
+Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning in water limited grasslands.
 Here we report the results of a five-year experiment where we used drought and irrigation treatments (50\% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes.
 The ecosystem was suprisingly resistant to both drought and irrigation.
 Aboveground net primary productivity (ANPP) responded positively to ambient growing season precipitation, but the response did not vary across treatments.
@@ -77,7 +77,7 @@ At least in the short-term, ecosystem functioning and community composition in t
 
 \vspace{2em}
 
-\emph{Key words: drought, aboveground net primary productivity, ecosystem resistance, climate change, species composition, sagebrush steppe}
+\emph{Key words: aboveground net primary productivity, climate change, community dynamics, drought, ecosystem resistance, sagebrush steppe}
 \end{abstract}
 
 
@@ -100,38 +100,27 @@ On the heels of changes in community composition, subsequent changes in the leve
 
 @Smith2009 introduced the 'Hierarchical Response Framework' for understanding the interplay of community composition and ecosystem functioning in response to resource manipulations over time.
 In the near term, ecosystem functioning such as annual net primary productivity (ANPP) will reflect the physiological responses of individual species to the manipulated resource level.
-For example, ANPP may decline under simulated drought because the initial community consisted of drought-intolerant species.
-Over longer time spans, ecosystem functioning may recover as new species, better suited to take advantage of the new resource regime, colonize local communities.
-For example, ANPP may initially decline, but eventually rise back to pre-treatment levels once drought-tolerant species colonize.
-It is also possible that ecosystem functioning shifts to a new mean state, reflective of the suite of species in the new community.
+For example, ANPP may decline under simulated drought because the initial community consisted of drought-intolerant species [@Hoover2014].
+Over longer time spans, ecosystem functioning may recover as new species colonize or initial species reorder in relative abundance.
+For example, ANPP may initially decline, but eventually rise back to pre-treatment levels once drought-tolerant species become more abundant and compensate for drought-intolerant species [@Hoover2014].
+It is also possible that ecosystem functioning shifts to a new mean state, reflective of the suite of species in the new community [@Knapp2012].
 
-Much of the research on ecosystem and community responses to global climate change has focused on grassland systems, where water is typically a limiting resource.
+Much of the research on ecosystem and community responses to global climate change has focused on grassland systems, where soil water is typically a limiting resource.
 The sensitivity of ANPP to water availability in grasslands has been characterized spatially (across sites) and temporally (within sites).
-Spatially, there is a strong positive relationship between the amount of precipitation at a given site and mean ANPP (Knapp citation).
-Temporally, however, the response of ANPP to interannual precipitation variability is much weaker (Hsu and Adler).
+Across sites, there is a strong positive relationship between the amount of precipitation at a given site and mean ANPP [@Sala1988; @Huxman2004].
+Within sites, however, the response of ANPP to annual precipitation amount is much weaker [@Huxman2004; @Hsu2012].
+Furthermore, it is becoming clear that grassland ecosystem response to altered water availability is likely to be idiosyncratic, conforming to neither cross-site nor within-site ANPP-precipitation relationships [@Wilcox2016].
+This is because within-site relationships do not account for species reordering under chronic resource alterations, while cross-site relationships may overestimate the ability of species compensation.
+Thus, discovering which ecosystems are most sensitive to chronic alterations of water availability, and the time scales at which ecosystem and community responses occur, is critical to avoid surprises in the face of climate change.
 
+Here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
+We imposed drought and irrigation treatments (50\% decrease/increase) and measured ecosystem (ANPP) and community (species composition) responses.
+We focus on how the drought and irrigation treatments affect the linear relationship between ANPP and growing season precipitation, and if community dynamics underly the ecosystem responses.
+In particular, we sought to answer the following questions:
 
-
-In many areas of the western United States, precipitation is likely to become more variable.
-This will result in swings back-and-forth between multiyear periods of above and above average precipitation.
-An obvious question is, how will semiarid ecosystems respond to periods of drought and deluge?
-A naive expectation is that alterations in precipitation, and subsequently available soil moisture, should cause changes in plant community composition and increase or decrease ANPP dependending on the direction of precipitation change.
-But our emerging qualitative understanding suggests an alternative expectation: altering soil moisture may have little to no effect on plant community composition and ecosystem functioning.
-This expectation stems from the fact that precipitation is already a variable resource in semiarid systems, meaning the plant community is not sensitive to realistic increases/decreases in precipitation.
-
-Here we test our qualitative understanding of how altering precipitation will impact a sagebrush steppe ecosystem by imposing drought and irrigation for five years.
-In particular, we test the following competing predictions:
-
-\begin{description}
-\item [P1.] Altering precipitation will favor certain species over others, resulting in a shift in the plant community composition. ANPP will increase (irrigation) or decrease (drought), and the treatment effects will get stronger over time (a treatment$\times$year interaction).
-
-\item[P2.] Altering precipitation will not favor certain species and plant community composition will not change. ANPP will increase (irrigation) or decrease (drought), and the treatment effects will get stronger over time.
-\end{description}
-
-\noindent{}Note that both predictions assume ANPP will respond to precipitation alteration.
-Under **P1**, ANPP response stems directly from plant community shifts to species able to take advantage of the new precipitation regime.
-Under **P2**, ANPP response stems from all species responding similarly to changes in precipitation.
-
+1. Does drought or irrigation impact mean ANPP (i.e., different intercepts)?
+2. Does drought or irrigation impact the effect of ambient precipitation on ANPP (i.e., different slopes)?
+3. Is the resistance or sensitivity of ANPP to altered precipitation related to underlying community dynamics?
 
 
 Materials and Methods
