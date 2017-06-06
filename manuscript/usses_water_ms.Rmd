@@ -212,18 +212,17 @@ Formally, our hierarhical structure is as follows, where we drop the intercept (
 \vspace{-2em}
 
 \begin{align}
-\boldsymbol{\beta}_{j(k)} &\sim \text{MVN} \left( \boldsymbol{\beta}_k, \Sigma(k) \right), \\
-\boldsymbol{\beta}_{k} &\sim \text{MVN} \left( \boldsymbol{\beta}, \Sigma  \right), \\
+\boldsymbol{\beta}_{j(k)} &\sim \text{MVN} \left( \boldsymbol{\beta}_k, \boldsymbol{\Sigma}(k) \right), \\
+\boldsymbol{\beta}_{k} &\sim \text{MVN} \left( \boldsymbol{\beta}, \boldsymbol{\Sigma}  \right), \\
 \boldsymbol{\beta} &\sim \text{Normal} \left( 0, 1 \right),
 \end{align}
 
 \noindent{} where $\boldsymbol{\beta}_{j(k)}$ is the vector of regression coefficients (intercept and slope) for plot *j* associated with treatment *k*, $\boldsymbol{\beta}_{k}$ is the vector of coefficients for each treatment, and $\boldsymbol{\beta}$ is the vector of overall coefficients.
-The plot- and treatment-level coefficients are drawn from multivariate normal distributions with covariance matrix $\Sigma$.
-For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\Sigma(k)$).
+The plot- and treatment-level coefficients are drawn from multivariate normal distributions with covariance matrix $\boldsymbol{\Sigma}$.
+For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\boldsymbol{\Sigma}(k)$).
 The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
 A full description of model is in Appendix 2.
 
-We fit the above model for the drought and irrigation treatments independently because we are only interested in comparing each treatment to the control, not to eachother.
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
 We obtained samples from the posterior distribution for all model parameters from four parallel MCMC chains run for 10,000 iterations, saving every $10^{\text{th}}$ sample.
