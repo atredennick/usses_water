@@ -2,10 +2,9 @@
 layout: 11pt
 header-includes:
   - \usepackage{lineno}
-  - \linenumbers
   - \usepackage{setspace}
   - \usepackage{todonotes}
-  - \onehalfspacing
+  - \linespread{1.25}
   - \usepackage{rotating}
   - \usepackage{color, soul}
   - \usepackage[font={small},labelfont={bf},labelsep=quad]{caption}
@@ -27,7 +26,6 @@ linkcolor: black
 urlcolor: black
 ---
 
-\newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
 \renewcommand\thefigure{A1-\arabic{figure}}  
 \renewcommand\thetable{A1-\arabic{table}}  
@@ -40,4 +38,14 @@ A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
 \emph{PeerJ}
 \end{center}
 
+\linenumbers
+
 \section{Estimating ANPP}
+We used a radiometer to nondestructively estimate aboveground net primary productivity.
+Our approach relies on relating greenness in a plot to aboveground biomass.
+
+\section{Additional Figures}
+
+
+
+
