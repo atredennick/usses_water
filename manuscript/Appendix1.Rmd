@@ -45,7 +45,7 @@ A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
 We used a radiometer to nondestructively estimate aboveground net primary productivity.
 Our approach relies on relating greenness in a plot to aboveground biomass.
 In each year we recorded ground reflectances at four bands, two associated with the red spectrum and two associated with the near-infrared spectrum (Table A1-1).
-We took four readings per plot that were averaged.
+We took four readings per plot that were averaged for each band.
 Bands 1 and 3 correspond to wavelengths collected by the MODIS satellite and bands 2 and 4 correspond to wavelengths collected by the AVHRR satellite.
 
 | Band number | Spectrum name | Spectrum wavelengths | Corresponding satellite |
