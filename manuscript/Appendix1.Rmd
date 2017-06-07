@@ -11,6 +11,7 @@ header-includes:
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
+  - \usepackage{mathtools}
 bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
 csl: components/ecology_letters.csl
 
@@ -43,8 +44,53 @@ A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
 \section{Estimating ANPP}
 We used a radiometer to nondestructively estimate aboveground net primary productivity.
 Our approach relies on relating greenness in a plot to aboveground biomass.
+In each year we recorded ground reflectances at four bands, two associated with the red spectrum and two associated with the near-infrared spectrum (Table A1-1).
+We took four readings per plot that were averaged.
+Bands 1 and 3 correspond to wavelengths collected by the MODIS satellite and bands 2 and 4 correspond to wavelengths collected by the AVHRR satellite.
 
-\section{Additional Figures}
+| Band number | Spectrum name | Spectrum wavelengths | Corresponding satellite |
+| ----------- | ------------- | -------------------- | ----------------------- |
+| 1 | red | xx-xx $\mu$m | AVHRR |
+| 2 | red | xx-xx $\mu$m | MODIS |
+| 3 | near-infrared | xx-xx $\mu$m | AVHRR |
+| 4 | near-infrared | xx-xx $\mu$m | MODIS |
+
+Table: Radiometer specifications.
+
+Using the RED and NIR reflectance values, we calculate the normalized difference vegetation index (NDVI) for each plot based on both AVHRR- and MODIS-based wavelengths.
+We calculated NDVI as:
+
+\begin{align}
+\text{NDVI}_{\text{AVHRR}} &= \frac{b_3\delta_{1(\text{AVHRR})} - b_1\delta_{2(\text{AVHRR})}}{b_3\delta_{1(\text{AVHRR})} + b_1\delta_{2(\text{AVHRR})}} \\[10pt]
+\text{NDVI}_{\text{MODIS}} &= \frac{b_4\delta_{1(\text{MODIS})} - b_2\delta_{2(\text{MODIS})}}{b_4\delta_{1(\text{MODIS})} + b_2\delta_{2(\text{MODIS})}}
+\end{align}
+
+\noindent{} where $b_x$ refers to band *x* (*x* = 1,2,3,4) in Table A1-1 and $\delta$s are scaling factors unique to each band.
+The values for the scaling factors come from \textcolor{red}{(PETER?)} and are as follows: $\delta_{1(AVHRR)} = 0.77$, $\delta_{2(AVHRR)} = 1$, $\delta_{1(MODIS)} = 0.95$, $\delta_{2(MODIS)} = 0.96$.
+
+To convert plot NDVI to biomass, we regressed known biomass values from calibration plots against NDVI calculate for those plots.
+Calibration plots were located near our experiment plots, and each year we located a new set of 10 plots in which we clipped all aboveground biomass, dried it to a constant weight at 60$^\circ$ C, and the weighed.
+We used these biomass values to estimate regression parameters for both AVHRR- and MODIS-based NDVI.
+We assessed model fit using $R^2$ and, for each year, we used the regression parameters associated with the best fit model to estimate biomass in the experimental plots based on their NDVI values (Table A1-2).
+R code for this procedure is in the file "calibrate_radiometer_by_year.R" in the supplemental code set.
+
+```{r ndvi_table, include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
+library(xtable)
+library(tidyverse)
+library(dplyr)
+tab_dat <- read.csv("../data/estimated_biomass/ndvi_biomass_regression_parameters.csv", row.names = 1) %>%
+  filter(year > 2011)
+colnames(tab_dat) <- c("Year", "Intercept", "NDVI Slope", "$R^2$", "Min(biomass)", "Max(biomass)", "Algorithm")
+
+my_caption <- "Details of regression models used to estimate biomass each year."
+print(xtable(tab_dat, caption = my_caption, digits = 2),
+      caption.placement="top",
+      include.rownames = F,
+      sanitize.colnames.function = identity,
+      comment = FALSE,
+      size = "normalsize")
+```
+
 
 
 
