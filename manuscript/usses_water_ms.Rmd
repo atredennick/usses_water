@@ -173,8 +173,8 @@ The maps record the spatial location and size of each individual plant.
 Using those annual maps, we aggregated over individuals to calculate total basal cover for each species in each plot.
 
 ### Data Analysis
-Our goal was to test whether the relationship between ANPP and growing season precipitation (hereafter, precipiation) differed among the drought, control, and irrigation treatments.
-To achieve this goal, we fit a multi-level random intercept and random slope regression with log(ANPP) as the response variabile and precipitation as the sole predictor.
+Our main goal was to test whether the relationship between ANPP and growing season precipitation (hereafter, precipiation) differed among the drought, control, and irrigation treatments.
+To achieve this goal, we fit a multi-level random intercept and random slope regression with log(ANPP) as the response variabile and precipitation as the sole predictor (hereafter, 'ANPP-Precipitation' model).
 We fit the model under a Bayesian framework, allowing us to test for treatment differences by comparing the posterior distributions of the treatment-level coefficients [e.g., @Tredennick2013].
 Both log(ANPP) and precipitation were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
 
@@ -212,7 +212,14 @@ For the plot-level coefficients, each treatment has its own variance-covariance 
 The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
 A full description of model is in Appendix 2.
 
-We fit the model using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
+Unfortunately, we cannot detect whether treatments grow stronger over time in the ANPP-Precipitation model described above because year and precipitation are perfectly colinear.
+Therefore, we fit simpler model with log(ANPP) as the response and treatment effects for drought and irrigation (hereafter, 'ANPP-Treatment' model). 
+We again use a hierarchical structure, where the treatment effects were allowed to vary by year (i.e., year random effects).
+This allowed us to test whether treatment effects got stronger over time.
+We also included a plot random effect to account for non-independence of observations through time in a plot.
+This model is also fully described in Appendix 2.
+
+We fit both models using a Bayesian approach, obtaining posterior estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
 We obtained samples from the posterior distribution for all model parameters from four parallel MCMC chains run for 10,000 iterations, saving every $10^{\text{th}}$ sample.
 Traceplots of all parameters were visually inspected to ensure well-mixed chains and convergence.
@@ -241,7 +248,7 @@ Growing season precipitation had a positive effect on ANPP (mean of $\beta_{1}$ 
 Average ANPP was similar among treatments (similar intercepts, Fig. 2A), as was the effect of precipitation (similar slopes, Fig. 2B).
 In an average precipitation year (i.e., $x$ = 0 in Eq. 1), the probability that ANPP in a drought plot is less than ANPP in a control plot was 0.58, and the probability that ANPP in an irrigation plot is higher than in a control plot was 0.57.
 In other words, the posterior distributions of $\beta_0(\text{control}) - \beta_0(\text{drought})$ and $\beta_0(\text{control}) - \beta_0(\text{drought})$ broadly overlapped zero.
-There was also no evidence that the treatment effects became more important over time because differences between average treatment and control plots were centered on zero regardless of year of the experiment (Fig. 3).
+There was also no evidence that the treatment effects became more important over time because there was no directional trend in the yearly treatment effects estimated from the ANPP-Treatment model (Fig. 3).
 
 Community composition was similar among treatments, whether looking at basal cover or density (Fig. 4).
 Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Fig. 4).
@@ -320,7 +327,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{../figures/glmm_treatment_posteriors.png}
-  \caption{(A) Relationship between ANPP and growing season precipitation over the course of the experiment. Regression lines are indpendent linear fits for each treatment for visual clarity of the mean trends. (B) Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of effects from the fitted repeated measures generalized linear mixed-effects model for each treatment-control comparison. BCI refers to 'Bayesian Credible Interval', which is the upper and lower quantiles of the posterior distribution at the specified level.}
+  \caption{Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Precipitation') from the ANPP-Precipitation model.}
 \end{figure}
 
 
@@ -329,7 +336,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{../figures/glmm_yeardiffs.png}
-  \caption{Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of the difference between log(ANPP) in control and treatment plots over time. BCI refers to 'Bayesian Credible Interval', which are the upper and lower quantiles of the posterior distribution at the specified level.}
+  \caption{Posterior distributions of yearly treatment effects from the ANPP-Treatment model.}
 \end{figure}
 
 

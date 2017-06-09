@@ -98,8 +98,8 @@ ggplot(filter(betas, param_name!="Control"), aes(x=estimate))+
   xlab("Parameter Value")+
   ylab("Probability Density")+
   theme_few()+
-  theme(legend.position = c(0.4,0.8),
-        legend.key.size = unit(6,"pt"),
+  theme(legend.position = c(0.4,0.7),
+        legend.key.size = unit(10,"pt"),
         legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))
