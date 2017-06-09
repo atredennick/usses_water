@@ -20,6 +20,7 @@ library(ggthemes)     # Pleasing ggplot themes
 library(stringr)      # Working with strings
 library(rstan)        # For MCMC and Stan objects
 library(gridExtra)    # For combining ggplot objects
+library(viridis)
 
 
 
@@ -28,6 +29,7 @@ library(gridExtra)    # For combining ggplot objects
 ####
 source("read_format_data.R") # load data
 all_fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
+year_fit <- readRDS("../results/randyears_alltreatments_fit.RDS")
 
 
 
@@ -76,28 +78,49 @@ ggsave("../figures/glmm_treatment_posteriors.png",plot = g1, width = 6, height =
 ####
 ####  PLOT TREATMENT DIFFERENCES BY YEAR POSTERIORS ----
 ####
-ydiffs_drought_summary <- as.data.frame(summary(all_fit, pars = c("ydiff_control_drought"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary) %>%
-  mutate(pptyear = 1:5, Treatment = "Drought")
-ydiffs_irrigate_summary <- as.data.frame(summary(all_fit, pars = c("ydiff_control_irrigate"), probs = c(0.025,0.1,0.5,0.9,0.975))$summary) %>%
-  mutate(pptyear = 1:5, Treatment = "Irrigation")
-ydiffs <- rbind(ydiffs_drought_summary, ydiffs_irrigate_summary)
+param_id_names <- data.frame(param_id = c(1:3),
+                             param_name = c("Control", "Drought", "Irrigation"))
+year_id_names <- data.frame(year_id = c(1:5),
+                            year_name = c(1:5))
+betas <- reshape2::melt(rstan::extract(year_fit, pars="beta")) %>%
+  rename(iteration = iterations, year_id = Var2, param_id = Var3, estimate = value, stan_name = L1) %>%
+  left_join(param_id_names, by="param_id") %>%
+  left_join(year_id_names, by="year_id")
 
-dodge <- position_dodge(width=0.3)
-g2 <- ggplot(ydiffs, aes(y=`50%`, x=pptyear, color=Treatment))+
-  geom_hline(aes(yintercept=0), linetype=2, size=0.2)+
-  geom_errorbar(aes(ymin = `2.5%`, ymax=`97.5%`), width=0, position = dodge)+
-  geom_errorbar(aes(ymin=`10%`, ymax=`90%`), size=1.2, width=0, position = dodge)+
-  geom_point(size=2.5,shape=21,fill="white", position = dodge)+
-  scale_color_manual(values = RColorBrewer::brewer.pal(3,name = "Set2")[2:3])+
-  xlab("Year of Experiment")+
-  ylab("Difference Between\nControl and Treatment")+
+ggplot(filter(betas, param_name!="Control"), aes(x=estimate))+
+  geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
+  geom_line(stat="density",aes(color=as.character(year_id)),adjust=5,size=1)+
+  # scale_color_brewer(palette = "Set1",name="Year")+
+  scale_color_viridis(end=0.8,discrete=T,name="Year")+
+  scale_x_continuous(breaks=seq(-3,3,0.5), limits=c(-2,2))+
+  scale_y_continuous(breaks=seq(0,1.25,0.25))+
+  facet_wrap(~param_name)+
+  xlab("Parameter Value")+
+  ylab("Probability Density")+
   theme_few()+
-  theme(legend.position = c(0.15,0.85),
+  theme(legend.position = c(0.4,0.8),
         legend.key.size = unit(6,"pt"),
         legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"))
-ggsave("../figures/glmm_yeardiffs.png",plot = g2, width = 4, height = 3.5, units = "in", dpi = 120)
+ggsave("../figures/glmm_yeardiffs.png", width = 6, height = 3, units = "in", dpi =120)
+
+
+# g2 <- ggplot(ydiffs, aes(y=`50%`, x=pptyear, color=Treatment))+
+#   geom_hline(aes(yintercept=0), linetype=2, size=0.2)+
+#   geom_errorbar(aes(ymin = `2.5%`, ymax=`97.5%`), width=0, position = dodge)+
+#   geom_errorbar(aes(ymin=`10%`, ymax=`90%`), size=1.2, width=0, position = dodge)+
+#   geom_point(size=2.5,shape=21,fill="white", position = dodge)+
+#   scale_color_manual(values = RColorBrewer::brewer.pal(3,name = "Set2")[2:3])+
+#   xlab("Year of Experiment")+
+#   ylab("Difference Between\nControl and Treatment")+
+#   theme_few()+
+#   theme(legend.position = c(0.15,0.85),
+#         legend.key.size = unit(6,"pt"),
+#         legend.title = element_text(size=10),
+#         legend.text = element_text(size = 8),
+#         legend.key.height = unit(0.8,"line"))
+# ggsave("../figures/glmm_yeardiffs.png",plot = g2, width = 4, height = 3.5, units = "in", dpi = 120)
 
 
 

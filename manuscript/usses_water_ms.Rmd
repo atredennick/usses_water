@@ -328,7 +328,7 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=4in]{../figures/glmm_yeardiffs.png}
+      \includegraphics[width=6in]{../figures/glmm_yeardiffs.png}
   \caption{Posterior medians (points), 80\% BCIs (heavy lines), and 95\% BCIs (light lines) of the difference between log(ANPP) in control and treatment plots over time. BCI refers to 'Bayesian Credible Interval', which are the upper and lower quantiles of the posterior distribution at the specified level.}
 \end{figure}
 
