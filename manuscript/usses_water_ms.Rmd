@@ -257,9 +257,37 @@ Species' abundances and ranks showed little deviation over the five-year experim
 
 Discussion
 ----------
-We manipulated growing season precipitation for five years in a sagebrush steppe to reach the extremes of the historical distribution of precipitation (Fig. 1A).
-In so doing, we aimed to understand how this ecosystem might respond to periods of relatively novel precipitation regimes.
-Our results suggest that ecosystem functioning, as measured by annual net primary productivity, and community composition are not sensitive to the precipitation manipulations we imposed.
+Ecosystem response to chronic resource alteration is expected to follow a temporal trend.
+Initially, ecosystem response will be modest and reflect the physiological responses of constituent species.
+Over longer time periods, species reordering will cause greater responses as species better able to take advantage of, or cope with, new resource levels become more abundant.
+This temporal trend is formalized by the 'Hierarchical Response Framework' [HRF, @Smith2009], and has been empirically supported [@Knapp2012; @Wilcox2016].
+A lingering question is not whether the HRF is a reasonable model of ecosystem dynamics, but rather how the time scales of ecosystem response and community change differ among ecosystems.
+Indeed, previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
+To add to this growing body of knowledge, we performed a precipitation manipulation experiment in a sagebrush steppe ecosystem.
+
+Surprisingly, ANPP was not sensitive to either drought or irrigation treatments, whether in the context of growing season precipitation (Fig. 2) or in the context of year since the experiment began (Fig. 3).
+This is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
+Thus, our expectation was that ANPP would be tightly linked to soil water availability.
+ANPP was slightly lower in drought plots and slightly higher in irrigation plots, but these differences were not statistically important.
+
+In the absence of community composition data, an obvious hypothesis to explain the lack of ANPP response is that species reordered rapidly.
+In so doing, newly abundant species could compensate for the loss of ecosystem functioning of previously abundant species.
+We did not find this to be the case, as specie composition was remarkably stable over the course of the experiment (Fig. 3).
+
+In combination, the lack of ecosystem and community response to drought or irrigation shows that this sagebrush steppe ecosystem is resistant to chronic alterations in water availability.
+There are three possible explanations for the resistance we found.
+First, it could be that our experiment simply was not long enough to induce responses.
+This may be true for community responses, which can take decades [@Wilcox2016], but the response of grassland ANPP to water manipulations is typically immediate [e.g., @Hoover2014].
+
+Second, it could be that our manipulations were not large enough to induce a response.
+That is, maybe a 50\% decrease/increase in any given year is not abnormal give our sites historical range of variability [@Knapp2017].
+We cannot definitively rule out this possibility, but we have reason to believe our manipulations *should* have been large enough.
+Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation neccesary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site.
+The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 3).
+Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 1A).
+The irrigation treatment may have been too small, however.
+
+Third, the ecosystem and community resistance to drought and deluge we observed could be a real phenomenon in this system.
 
 
 Acknowledgments

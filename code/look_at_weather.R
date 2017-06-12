@@ -202,3 +202,30 @@ anpp_summary <- anpp_data %>%
   group_by(year) %>%
   summarise(mean_anpp = mean(anpp))
 write.csv(anpp_summary, "../results/avg_anpp_by_year.csv")
+
+
+
+####
+####  CHARACTERIZE HRV OF PRECIP ----
+####
+weather <- read.csv("../data/weather/ClimateIPM.csv")
+mean_ppt <- mean(weather$ppt1)
+quants_ppt <- quantile(weather$ppt1,probs = c(0.01,0.99))
+quants_ppt[1]/mean_ppt*100
+quants_ppt[2]/mean_ppt*100
+
+ggplot(weather, aes(x=ppt1))+
+  geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
+  geom_line(stat="density", color="blue")+
+  geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
+  geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
+  ylab("Density")+
+  xlab("Growing Season Precipitation (mm)")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+
+
+
+
+
+
