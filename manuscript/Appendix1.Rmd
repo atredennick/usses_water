@@ -48,12 +48,12 @@ In each year we recorded ground reflectances at four bands, two associated with 
 We took four readings per plot that were averaged for each band.
 Bands 1 and 3 correspond to wavelengths collected by the MODIS satellite and bands 2 and 4 correspond to wavelengths collected by the AVHRR satellite.
 
-| Band number | Spectrum name | Spectrum wavelengths | Corresponding satellite |
-| ----------- | ------------- | -------------------- | ----------------------- |
-| 1 | red | xx-xx $\mu$m | AVHRR |
-| 2 | red | xx-xx $\mu$m | MODIS |
-| 3 | near-infrared | xx-xx $\mu$m | AVHRR |
-| 4 | near-infrared | xx-xx $\mu$m | MODIS |
+| Band number | Spectrum name | Center wavelength | Corresponding satellite |
+| ----------- | ------------- | ----------------- | ----------------------- |
+| 1 | red | 626 nm | AVHRR |
+| 2 | red | 652 nm | MODIS |
+| 3 | near-infrared | 875 nm | AVHRR |
+| 4 | near-infrared | 859 nm | MODIS |
 
 Table: Radiometer specifications.
 
