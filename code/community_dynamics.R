@@ -222,6 +222,59 @@ ggplot(rank_shifts, aes(x=year_pair,y=MRS,color=Treatment,group=Treatment))+
 
 
 
+####
+####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS ----
+####  USING STANDARDIZED ABUNDANCES FROM COVER AND DENSITY
+####
+cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
+  group_by(quad, year, species) %>%
+  summarise(total_area = sum(area)) %>%
+  left_join(plot_info) %>%
+  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+  filter(!str_detect(QuadName, 'P1|P7')) %>%
+  filter(year > 2010 & is.na(species)==F) %>%
+  spread(species,total_area, fill = 0) %>%
+  select(-QuadName,-Grazing,-paddock,-Group) %>%
+  ungroup()
+
+density_community_matrix <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
+  mutate(ind_num = 1) %>%
+  group_by(year, quad, species) %>%
+  summarise(total_inds = sum(ind_num)) %>%
+  left_join(plot_info) %>%
+  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+  filter(!str_detect(QuadName, 'P1|P7')) %>%
+  filter(year > 2010 & is.na(species)==F) %>%
+  spread(species,total_inds, fill = 0) %>%
+  select(-QuadName,-Grazing,-paddock,-Group) %>%
+  ungroup()
+
+density_spp <- colnames(density_community_matrix[4:ncol(density_community_matrix)])
+cover_spp <- colnames(cover_community_matrix[4:ncol(cover_community_matrix)])
+overlap_spp <- density_spp[which(density_spp %in% cover_spp)]
+rmids <- which(colnames(density_community_matrix) %in% overlap_spp)
+density_community_matrix <- density_community_matrix[,-rmids]
+
+annual_community_matrix <- read.csv("../data/vital_rates/idaho_annuals.csv") %>%
+  select(-Notes) %>%
+  gather(species,abundance,-c(1:3)) %>%
+  left_join(plot_info, by="quad") %>%
+  select(-QuadName.y) %>%
+  rename(QuadName = QuadName.x) %>%
+  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+  filter(!str_detect(QuadName, 'P1|P7')) %>%
+  filter(year > 2010 & is.na(species)==F) %>%
+  separate(species,c("genus","species1")) %>%
+  unite(species,genus,species1,sep = " ") %>%
+  spread(species,abundance, fill = 0)%>%
+  select(-QuadName,-Grazing,-paddock,-Group) %>%
+  ungroup()
+
+full_community_matrix <- cover_community_matrix %>%
+  left_join(density_community_matrix) %>%
+  left_join(annual_community_matrix)
+
+
 
 ####
 ####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS -- COVER ----
