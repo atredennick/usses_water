@@ -267,12 +267,48 @@ annual_community_matrix <- read.csv("../data/vital_rates/idaho_annuals.csv") %>%
   separate(species,c("genus","species1")) %>%
   unite(species,genus,species1,sep = " ") %>%
   spread(species,abundance, fill = 0)%>%
-  select(-QuadName,-Grazing,-paddock,-Group) %>%
+  select(-QuadName,-Grazing,-paddock,-Group,-`Lappula occidentalis`,-`Tragopogon dubius`) %>%
   ungroup()
 
 full_community_matrix <- cover_community_matrix %>%
   left_join(density_community_matrix) %>%
   left_join(annual_community_matrix)
+
+# set missing species abundances as 0, which == absent
+full_community_matrix[is.na(full_community_matrix)] <- 0 
+
+full_community_matrix_scaled <- cbind(full_community_matrix[,1:3,drop=F], 
+                                      scale(full_community_matrix[,4:ncol(full_community_matrix)]))
+
+spp_to_remove <- names(which(is.nan(colMeans(full_community_matrix_scaled[4:ncol(full_community_matrix_scaled)]))))
+ids_to_remove <- which(colnames(full_community_matrix_scaled) %in% spp_to_remove)
+full_community_matrix_scaled <- full_community_matrix_scaled %>%
+  select(-ids_to_remove)
+
+
+nmds_df <- {}
+pdf("../figures/rda_raw.pdf",onefile = TRUE)
+for(doyr in unique(full_community_matrix_scaled$year)){
+  tmp <- filter(full_community_matrix_scaled, year == doyr) %>% select(-year)
+  tmp_rda <- rda(tmp[3:ncol(tmp)])
+  nmds_points <- as.data.frame(summary(tmp_rda)$sites[,1:2])
+  nmds_points$Treatment <- tmp$Treatment
+  nmds_points$Year <- doyr
+  nmds_df <- rbind(nmds_df, nmds_points)
+  plot(tmp_rda, main=doyr)
+}
+dev.off()
+
+ggplot(nmds_df, aes(x=PC1, y=PC2, color=Treatment))+
+  geom_point()+
+  geom_point(color="grey35",shape=1)+
+  scale_color_brewer(palette = "Set2")+
+  ylab("PCA 2")+
+  xlab("PCA 1")+
+  facet_wrap("Year")+
+  theme_few()
+ggsave(paste0(figure_path,"sppcomp_rda.png"), width=6, height = 4, units = "in", dpi = 120)
+
 
 
 
