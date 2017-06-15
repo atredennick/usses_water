@@ -283,31 +283,49 @@ full_community_matrix_scaled <- cbind(full_community_matrix[,1:3,drop=F],
 spp_to_remove <- names(which(is.nan(colMeans(full_community_matrix_scaled[4:ncol(full_community_matrix_scaled)]))))
 ids_to_remove <- which(colnames(full_community_matrix_scaled) %in% spp_to_remove)
 full_community_matrix_scaled <- full_community_matrix_scaled %>%
-  select(-ids_to_remove)
+  select(-ids_to_remove,-`Agropyron cristatum`,-`Antennaria rosea`,-`Linanthus pungens`)
 
 
 nmds_df <- {}
+out_stats <- {}
 pdf("../figures/rda_raw.pdf",onefile = TRUE)
 for(doyr in unique(full_community_matrix_scaled$year)){
   tmp <- filter(full_community_matrix_scaled, year == doyr) %>% select(-year)
-  tmp_rda <- rda(tmp[3:ncol(tmp)])
-  nmds_points <- as.data.frame(summary(tmp_rda)$sites[,1:2])
+  # tmp_rda <- vegan::rda(tmp[3:ncol(tmp)]~tmp$Treatment)
+  tmp_rda <- metaMDS(tmp[3:ncol(tmp)]+2, "bray", trymax = 999)
+  # nmds_points <- as.data.frame(summary(tmp_rda)$sites[,1:2])
+  # nmds_points$Treatment <- tmp$Treatment
+  # nmds_points$Year <- doyr
+  # nmds_df <- rbind(nmds_df, nmds_points)
+  nmds_points <- as.data.frame(tmp_rda$points)
   nmds_points$Treatment <- tmp$Treatment
   nmds_points$Year <- doyr
   nmds_df <- rbind(nmds_df, nmds_points)
   plot(tmp_rda, main=doyr)
+  adonis_stats <- as.data.frame(vegan::adonis(tmp[3:ncol(tmp)]+2~tmp$Treatment)$aov.tab)[1,]
+  betadisper_stats <- anova(vegan::betadisper(vegan::vegdist(tmp[3:ncol(tmp)]+2),tmp$Treatment))[1,]
+  tmp_out <- rbind(adonis_stats[,-which(colnames(adonis_stats)=="R2")],
+                   as.numeric(betadisper_stats))
+  row.names(tmp_out) <- c()
+  out_stats <- rbind(out_stats, data.frame(year = doyr,
+                                           test = c("adonis","betadisper"),
+                                           n = nrow(tmp),
+                                           tmp_out))
 }
 dev.off()
 
-ggplot(nmds_df, aes(x=PC1, y=PC2, color=Treatment))+
+ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
   geom_point()+
   geom_point(color="grey35",shape=1)+
   scale_color_brewer(palette = "Set2")+
-  ylab("PCA 2")+
-  xlab("PCA 1")+
+  ylab("NMDS 2")+
+  xlab("NMDS 1")+
   facet_wrap("Year")+
-  theme_few()
-ggsave(paste0(figure_path,"sppcomp_rda.png"), width=6, height = 4, units = "in", dpi = 120)
+  scale_y_continuous(limits=c(-0.15,0.15))+
+  scale_x_continuous(limits=c(-0.18,0.18))+
+  theme_few()+
+  theme(panel.grid.major = element_line(color="grey90"))
+ggsave(paste0(figure_path,"sppcomp_bray_all.png"), width=6, height = 4, units = "in", dpi = 120)
 
 
 
@@ -315,92 +333,92 @@ ggsave(paste0(figure_path,"sppcomp_rda.png"), width=6, height = 4, units = "in",
 ####
 ####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS -- COVER ----
 ####
-cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
-  group_by(quad, year, species) %>%
-  summarise(total_area = sum(area)) %>%
-  left_join(plot_info) %>%
-  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-  filter(!str_detect(QuadName, 'P1|P7')) %>%
-  filter(year > 2010 & is.na(species)==F) %>%
-  spread(species,total_area, fill = 0) %>%
-  select(-QuadName,-Grazing,-paddock,-Group) %>%
-  ungroup()
-
-mycol <- RColorBrewer::brewer.pal(3,"Set2")
+# cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
+#   group_by(quad, year, species) %>%
+#   summarise(total_area = sum(area)) %>%
+#   left_join(plot_info) %>%
+#   filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+#   filter(!str_detect(QuadName, 'P1|P7')) %>%
+#   filter(year > 2010 & is.na(species)==F) %>%
+#   spread(species,total_area, fill = 0) %>%
+#   select(-QuadName,-Grazing,-paddock,-Group) %>%
+#   ungroup()
 # 
-# par(mfrow=c(2,3))
-nmds_df <- {}
-for(doyr in unique(cover_community_matrix$year)){
-  tmp <- filter(cover_community_matrix, year == doyr) %>% select(-year)
-  torm <- as.numeric(which(colSums(tmp[3:ncol(tmp)], na.rm = T) == 0)) # find spp with NA in each treatment
-  tmp <- tmp[,-(torm+2)] # add 2 because we lopped off two columns above
-  tmp_rda <- metaMDS(tmp[3:ncol(tmp)], "bray")
-  ## Try to plot in ggplot
-  nmds_points <- as.data.frame(tmp_rda$points)
-  nmds_points$Treatment <- tmp$Treatment
-  nmds_points$Year <- doyr
-  nmds_df <- rbind(nmds_df, nmds_points)
-}
-
-comp1 <- ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
-  geom_point()+
-  geom_point(color="grey35",shape=1)+
-  scale_color_brewer(palette = "Set2")+
-  scale_y_continuous(limits=c(-2,2))+
-  scale_x_continuous(limits=c(-2,2))+
-  ylab("NMDS 2")+
-  xlab("NMDS 1")+
-  facet_wrap("Year")+
-  ggtitle("A. Cover data")+
-  theme_few()
-ggsave(paste0(figure_path,"sppcomp_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
-
- 
-
-####
-####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS -- DENSITY ----
-####
-density_community_matrix <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
-  mutate(ind_num = 1) %>%
-  group_by(year, quad, species) %>%
-  summarise(total_inds = sum(ind_num)) %>%
-  left_join(plot_info) %>%
-  filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-  filter(!str_detect(QuadName, 'P1|P7')) %>%
-  filter(year > 2010 & is.na(species)==F) %>%
-  spread(species,total_inds, fill = 0) %>%
-  select(-QuadName,-Grazing,-paddock,-Group) %>%
-  ungroup()
-
-mycol <- RColorBrewer::brewer.pal(3,"Set2")
-nmds_df <- {}
-for(doyr in unique(density_community_matrix$year)){
-  tmp <- filter(density_community_matrix, year == doyr) %>% select(-year)
-  torm <- as.numeric(which(colSums(tmp[3:ncol(tmp)], na.rm = T) == 0)) # find spp with NA in each treatment
-  tmp <- tmp[,-(torm+2)] # add 2 because we lopped off two columns above
-  tmp_rda <- metaMDS(tmp[3:ncol(tmp)], "bray")
-  ## Try to plot in ggplot
-  nmds_points <- as.data.frame(tmp_rda$points)
-  nmds_points$Treatment <- tmp$Treatment
-  nmds_points$Year <- doyr
-  nmds_df <- rbind(nmds_df, nmds_points)
-}
-
-comp2 <- ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
-  geom_point()+
-  geom_point(color="grey35",shape=1)+
-  scale_color_brewer(palette = "Set2")+
-  scale_y_continuous(limits=c(-2,2))+
-  scale_x_continuous(limits=c(-2,2))+
-  ylab("NMDS 2")+
-  xlab("NMDS 1")+
-  facet_wrap("Year")+
-  ggtitle("B. Density data")+
-  theme_few()
-ggsave(paste0(figure_path,"sppcomp_density_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
-
-gout <- grid.arrange(comp1,comp2,nrow=2)
-ggsave("../figures/nmds_comp_combined.png", plot = gout, width = 6, height = 8, units="in", dpi=120)
+# mycol <- RColorBrewer::brewer.pal(3,"Set2")
+# # 
+# # par(mfrow=c(2,3))
+# nmds_df <- {}
+# for(doyr in unique(cover_community_matrix$year)){
+#   tmp <- filter(cover_community_matrix, year == doyr) %>% select(-year)
+#   torm <- as.numeric(which(colSums(tmp[3:ncol(tmp)], na.rm = T) == 0)) # find spp with NA in each treatment
+#   tmp <- tmp[,-(torm+2)] # add 2 because we lopped off two columns above
+#   tmp_rda <- metaMDS(tmp[3:ncol(tmp)], "bray")
+#   ## Try to plot in ggplot
+#   nmds_points <- as.data.frame(tmp_rda$points)
+#   nmds_points$Treatment <- tmp$Treatment
+#   nmds_points$Year <- doyr
+#   nmds_df <- rbind(nmds_df, nmds_points)
+# }
+# 
+# comp1 <- ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
+#   geom_point()+
+#   geom_point(color="grey35",shape=1)+
+#   scale_color_brewer(palette = "Set2")+
+#   scale_y_continuous(limits=c(-2,2))+
+#   scale_x_continuous(limits=c(-2,2))+
+#   ylab("NMDS 2")+
+#   xlab("NMDS 1")+
+#   facet_wrap("Year")+
+#   ggtitle("A. Cover data")+
+#   theme_few()
+# ggsave(paste0(figure_path,"sppcomp_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
+# 
+#  
+# 
+# ####
+# ####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS -- DENSITY ----
+# ####
+# density_community_matrix <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
+#   mutate(ind_num = 1) %>%
+#   group_by(year, quad, species) %>%
+#   summarise(total_inds = sum(ind_num)) %>%
+#   left_join(plot_info) %>%
+#   filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
+#   filter(!str_detect(QuadName, 'P1|P7')) %>%
+#   filter(year > 2010 & is.na(species)==F) %>%
+#   spread(species,total_inds, fill = 0) %>%
+#   select(-QuadName,-Grazing,-paddock,-Group) %>%
+#   ungroup()
+# 
+# mycol <- RColorBrewer::brewer.pal(3,"Set2")
+# nmds_df <- {}
+# for(doyr in unique(density_community_matrix$year)){
+#   tmp <- filter(density_community_matrix, year == doyr) %>% select(-year)
+#   torm <- as.numeric(which(colSums(tmp[3:ncol(tmp)], na.rm = T) == 0)) # find spp with NA in each treatment
+#   tmp <- tmp[,-(torm+2)] # add 2 because we lopped off two columns above
+#   tmp_rda <- metaMDS(tmp[3:ncol(tmp)], "bray")
+#   ## Try to plot in ggplot
+#   nmds_points <- as.data.frame(tmp_rda$points)
+#   nmds_points$Treatment <- tmp$Treatment
+#   nmds_points$Year <- doyr
+#   nmds_df <- rbind(nmds_df, nmds_points)
+# }
+# 
+# comp2 <- ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
+#   geom_point()+
+#   geom_point(color="grey35",shape=1)+
+#   scale_color_brewer(palette = "Set2")+
+#   scale_y_continuous(limits=c(-2,2))+
+#   scale_x_continuous(limits=c(-2,2))+
+#   ylab("NMDS 2")+
+#   xlab("NMDS 1")+
+#   facet_wrap("Year")+
+#   ggtitle("B. Density data")+
+#   theme_few()
+# ggsave(paste0(figure_path,"sppcomp_density_nmds.png"), width=6, height = 4, units = "in", dpi = 120)
+# 
+# gout <- grid.arrange(comp1,comp2,nrow=2)
+# ggsave("../figures/nmds_comp_combined.png", plot = gout, width = 6, height = 8, units="in", dpi=120)
 
 
 

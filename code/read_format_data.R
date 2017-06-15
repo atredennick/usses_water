@@ -32,12 +32,11 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
   filter(type=="predicted") %>%
   mutate(month_year = as.factor(paste0(year,"-",month))) %>%
-  filter(month %in% c("04","05","06")) %>%
+  filter(month %in% c("03","04","05","06")) %>%
   group_by(year,Treatment) %>%
-  summarise(total_seasonal_vwc = sum(avg_vwc)) %>%
+  summarise(total_seasonal_vwc = sum(avg_vwc, na.rm = T)) %>%
   ungroup() %>%
   mutate(year = as.numeric(year))
-
 
 anpp_data <- permanent_quad_biomass %>% 
   filter(Treatment %in% c("Control","Drought","Irrigation")) %>%
@@ -58,10 +57,11 @@ irrigate_data <- anpp_data %>%
   filter(Treatment != "Drought") %>%
   mutate(trt_id = as.numeric(as.factor(Treatment)) - 1)
 
-# ggplot(anpp_data, aes(total_seasonal_vwc, log(anpp), color=Treatment))+
+# ggplot(anpp_data, aes(total_seasonal_vwc, anpp, color=Treatment))+
 #   geom_point()+
 #   stat_smooth(se=F,method="lm")+
-#   stat_smooth(se=F,color="black",method="lm")
+#   stat_smooth(se=F,color="black",method="lm")+
+#   scale_color_brewer(palette = "Set2")
 
 
 
