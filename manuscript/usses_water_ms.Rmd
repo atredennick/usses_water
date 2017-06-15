@@ -372,8 +372,8 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=5in]{../figures/nmds_comp_combined.png}
-  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment. (A) NMDS results using basal cover data; (B) NMDS results using individual density data. 2011 is a pre-treatment year.}
+      \includegraphics[width=5in]{../figures/sppcomp_bray_all.png}
+  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
 \end{figure}
 
 
@@ -381,8 +381,8 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=5in]{../figures/rank_clocks_cover.png}
-  \caption{Rank clocks of average species' basal cover by treatment. (A) All species. (B) Dominant species. Cover is log-transformed to improve visualization of species with low cover.}
+      \includegraphics[width=5in]{../figures/rank_clocks_scaled_abundance.png}
+  \caption{Rank clocks of average species' scaled abundance by treatment. (A) All species. (B) Dominant species.}
 \end{figure}
 
 

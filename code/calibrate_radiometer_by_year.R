@@ -37,6 +37,9 @@ library(stringr)   # tidy tools for strings
 ####
 ####  FUNCTIONS TO FIT AND OUTPUT CALIBRATION REGRESSSION ----
 ####
+# NDVI calculations include "sens_*" scaling factors because we did not
+# use the diffuser on the radiometer. These scaling factors are based on the
+# factory calibration tests and specifications.
 calculate_ndvi <- function(radiometer_data, col_starts = "ch", 
                            red_num = 2, nir_num = 4, 
                            sens_red = 0.96, sens_nir = 0.95, digits = 2){
