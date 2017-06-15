@@ -16,19 +16,22 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio, 
 
 
 ####  1. LOAD NECESSARY PACKAGES ----
-# needed_libraries <- c(
-#   "tidyverse",
-#   "dplyr",
-#   "ggthemes",
-#   "stringr",
-#   "rstan"
-# )
-# install.packages(needed_libraries)
-library(tidyverse)
-library(dplyr)
-library(ggthemes)
-library(stringr)
-library(rstan)
+packages <- c(
+  "tidyverse",
+  "dplyr",
+  "ggthemes",
+  "ggalt",
+  "gridExtra",
+  "stringr",
+  "rstan",
+  "vegan",
+  "viridis"
+)
+
+for(pack in 1:length(packages)){
+  if(packages[pack] %in% rownames(installed.packages())==FALSE)
+  {stop(paste("You need to install the", packages[pack]), " package from CRAN.")}
+}
 
 ####  2. FIT ANPP-NDVI REGRESSIONS ----
 source("calibrate_radiometer_by_year.R")
@@ -39,10 +42,10 @@ source("look_at_weather.R")
 ####  4. FIT ANPP-PRECIP MODEL ----
 source("anpp_randcoefs_model.R")
 
-####  5. PLOT MODEL RESULTS ----
+####  5. PLOT MODEL RESULTS (Figs. 2 and 3) ----
 source("plot_model_results.R")
 
-####  6. RUN NMDS ANALYSIS AND PLOTS ----
+####  6. RUN NMDS ANALYSIS AND PLOTS (Figs. 4 and 5, Table 1) ----
 source("community_dynamics.R")
 
 

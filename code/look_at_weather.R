@@ -21,7 +21,6 @@ library(stringr)
 library(ggthemes)
 library(ggalt)
 library(gridExtra)
-library(RColorBrewer)
 
 
 
@@ -33,31 +32,21 @@ trt_data <- weather %>%
   filter(year>2011) %>%
   select(year, ppt1)
 trt_data$Treatment <- "Control"
-trt_data <- rbind(trt_data, data.frame(year = trt_data$year,
-                                       ppt1 = trt_data$ppt1*0.5,
-                                       Treatment = "Drought"))
+trt_data[which(trt_data$year==2015),"ppt1"] <- trt_data[which(trt_data$year==2015),"ppt1"]+10
+trt_data[which(trt_data$year==2012),"ppt1"] <- trt_data[which(trt_data$year==2012),"ppt1"]-5
 
 ppt_histogram <- ggplot(weather, aes(x=ppt1))+
-  geom_histogram(bins=20,color="white",fill="grey35")+
-  geom_point(data=trt_data, aes(x=ppt1, y=rep(seq(0.3,1,length.out = 5),2),shape=Treatment, fill=as.factor(year)), size=2)+
+  geom_histogram(bins=20,color="lightblue",fill="lightblue", aes(y=..density..), alpha = 0.5, size=0.00001)+
+  geom_line(stat="density", color="blue")+
+  geom_segment(data=trt_data, aes(x=ppt1,xend=ppt1,y=0.00045,yend=0), arrow = arrow(length = unit(0.02, "npc")))+
+  geom_text(data=trt_data, aes(x=ppt1, y=0.0009, label=year), angle=90, size=2.5)+
   scale_x_continuous(expand=c(0,0), limits=c(0,620), breaks=seq(0,600,100))+
-  scale_y_continuous(expand=c(0,0), breaks = seq(0,25,5),limits = c(0,28))+
-  scale_shape_manual(values=c(21,22))+
-  scale_fill_brewer(palette ="Set1", name="Year")+
-  ylab("Frequency")+
+  scale_y_continuous(expand=c(0,0), limits=c(0,0.0085))+
+  ylab("Density")+
   xlab("Growing Season Precipitation (mm)")+
-  ggtitle("A")+
-  theme_few()+
-  theme(legend.position = c(0.8, 0.5),
-        legend.key.size = unit(1,"pt"),
-        legend.title = element_text(size=10),
-        legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"))+
-  guides(fill = guide_legend(override.aes = list(color = brewer.pal(5,"Set1"),size=1)),
-         shape = guide_legend(override.aes = list(size=1)))
-#ggsave(plot = g1,"../figures/historical_precip_trts.png", width = 4, height = 3.5, units="in", dpi=120)
-
-
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  ggtitle("A")
 
 ####
 ####  READ IN ANPP DATA AND PLOT TREND ----
@@ -89,21 +78,19 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
   geom_point(color="white", size=3)+
   geom_point()+
   geom_point(color="grey35", shape=1)+
-  # annotate("text",x=2015.1,y=190,label="a",size=3)+
-  # annotate("text",x=2015.1,y=210,label="a",size=3)+
-  # annotate("text",x=2015.1,y=148,label="b",size=3)+
-  # annotate("text",x=2015.2,y=50,label="year%*%treatment~phantom(0)~italic('P')==0.67", parse=T, size=3)+
   scale_color_brewer(palette = "Set2", name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
   scale_y_continuous(breaks=seq(50,350,50))+
   ylab(expression(paste("ANPP (g ", m^-2,")")))+
   xlab("Year")+
   ggtitle("C")+
-  theme_few()+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
   guides(color = guide_legend(override.aes = list(size=1)))+
   theme(legend.position = c(0.2, 0.8),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"))
+        legend.key.height = unit(0.8,"line"),
+        legend.box.background = element_rect())
 
 
 
@@ -113,27 +100,24 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
   select(-year) %>%
   separate(simple_date, c("year","month","day")) %>%
-  group_by(year,month,Treatment,type,year) %>%
-  summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
-  filter(type=="predicted") %>%
-  mutate(month_year = as.factor(paste0(year,"-",month))) %>%
+  # group_by(year,month,Treatment,type,year) %>%
+  # summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
+  filter(type=="observed") %>%
+  #mutate(month_year = as.factor(paste0(year,"-",month))) %>%
   ungroup()
 
-soil_vwc <- ggplot(soil_moisture, aes(x=month_year, y=avg_vwc, group=Treatment, color=Treatment))+
-  #geom_line()+
-  geom_xspline(spline_shape=-0.5)+
+soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
+  geom_line(size=0.5)+
+  #geom_xspline(spline_shape=-0.5)+
   scale_color_brewer(palette = "Set2", name="Treatment")+
-  ylab(expression(paste("Estimated Soil VWC (ml ", ml^-1,")")))+
-  xlab("Date")+
+  ylab(expression(paste("Mean Soil VWC (ml ", ml^-1,")")))+
+  xlab("Julian Day")+
   ggtitle("B")+
-  scale_x_discrete(breaks = levels(soil_moisture$month_year)[c(T, rep(F, 3))])+
-  scale_y_continuous(breaks=seq(2,16,2))+
-  theme_few()+
-  guides(color =FALSE)+
-  theme(legend.position = c(0.2, 0.8),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
-        legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"),
-        axis.text.x = element_text(angle = 90, hjust = 1))
+  scale_y_continuous(breaks=seq(0,24,8))+
+  facet_grid(year~.)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank(),strip.background = element_blank(), strip.text = element_text(size=6))+
+  guides(color=FALSE)
 
 
 
@@ -141,24 +125,20 @@ soil_vwc <- ggplot(soil_moisture, aes(x=month_year, y=avg_vwc, group=Treatment, 
 ####  MAKE SCATTERPLOT OF ANPP vs. PRECIP ----
 ####
 source("read_format_data.R") # load data
-data_plot <- ggplot(anpp_data, aes(x=ppt1,y=anpp))+
+data_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
   geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  #stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.7)+
+  stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.5)+
+  stat_smooth(method="lm", color="black", se=FALSE, size=0.7)+
   scale_fill_brewer(palette = "Set2")+
   scale_color_brewer(palette = "Set2")+
-  scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
-  scale_y_continuous(limits=c(40,360),breaks=seq(50,350,50))+
-  xlab("Growing Season Precipitation")+
+  #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
+  scale_y_continuous(breaks=seq(50,350,50))+
+  xlab("March-June Cumulative VWC")+
   ylab(expression(paste("ANPP (g ",m^2,")")))+
   ggtitle("D")+
-  guides(fill=FALSE)+
-  theme_few()+
-  theme(legend.position = c(0.2,0.8),
-        legend.key.size = unit(1,"pt"),
-        legend.title = element_text(size=10),
-        legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"))
-
+  guides(fill=FALSE,color=FALSE)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 
 
 ####
