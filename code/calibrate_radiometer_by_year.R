@@ -9,9 +9,9 @@
 rm(list=ls(all.names = TRUE))
 
 ##  Set path to source file location
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only works in RStudio
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 
-#### STILL CHECKING ON YEARS HERE!!! ###########################################
+#### SCALING FACTORS ###########################################################
 # recent years (2014 and beyond), biomass in 0.5m^2 plots (est biomass * 2)
 # earlier years (2013 and earlier), biomass in 0.25m^2 (est biomass * 4)
 
@@ -30,8 +30,7 @@ out_path       <- "../data/estimated_biomass/"
 library(tidyverse) # all sorts of data wrangling
 library(dplyr)     # data summarizing/wrangling tools
 library(broom)     # tidys up model output
-library(stringr)
-library(ggthemes)
+library(stringr)   # tidy tools for strings
 
 
 
@@ -283,51 +282,51 @@ saveRDS(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_bioma
 ####
 ####  INITIAL PLOTS ----
 ####
-permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
-biomass_year_treatment <- permanent_quad_biomass %>%
-  group_by(Treatment,year) %>%
-  summarise(mean_biomass = mean(biomass_grams_est))
-
-
-ggplot()+
-  geom_line(data=permanent_quad_biomass, aes(x=year, y=biomass_grams_est, color=Treatment, group=quad),alpha=0.3,size=0.5, na.rm = T)+
-  geom_line(data=biomass_year_treatment, aes(x=year, y=mean_biomass, color=Treatment),size=1, na.rm = T)+
-  geom_point(data=biomass_year_treatment, aes(x=year, y=mean_biomass, color=Treatment),size=3, na.rm = T)+
-  geom_point(data=biomass_year_treatment, aes(x=year, y=mean_biomass),color="grey35",shape=1,size=3, na.rm = T)+
-  scale_color_brewer(palette = "Set2")+
-  scale_x_continuous(breaks=c(2008:2016))+
-  ylab(expression(paste("Estimated Biomass (g ", m^-2,")")))+
-  xlab("Year")+
-  theme_few()+
-  theme(legend.position=c(.1,.82))
-ggsave("../figures/estimated_biomass.png", width = 6, height = 4, units = "in", dpi = 120)
-
-
-biomass_yr_trt_summ <- permanent_quad_biomass %>%
-  filter(!str_detect(quadname, 'P1|P7')) %>%
-  group_by(Treatment,year) %>%
-  summarise(mean_biomass = mean(biomass_grams_est),
-            sd_biomass = sd(biomass_grams_est)) %>%
-  filter(year > 2011)
-
-ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
-  geom_line()+
-  geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
-  geom_point(color="white", size=3)+
-  geom_point()+
-  geom_point(color="grey35", shape=1)+
-  scale_color_brewer(palette = "Set2", name=NULL)+
-  scale_x_continuous(breaks=c(2011:2016))+
-  scale_y_continuous(breaks=seq(50,350,50))+
-  ylab(expression(paste("Estimated ANPP (g ", m^-2,")")))+
-  xlab("Year")+
-  theme_few()+
-  theme(legend.position=c(.2,.75))
-ggsave("../figures/anpp_trt_trend.png", width = 4, height = 3, units = "in", dpi = 120)
-
-
-# Get sample sizes
-samp_size <- permanent_quad_biomass %>%
-  filter(!str_detect(quadname, 'P1|P7')) %>%
-  group_by(Treatment,year) %>%
-  summarise(num_plots = length(biomass_grams_est))
+# permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
+# biomass_year_treatment <- permanent_quad_biomass %>%
+#   group_by(Treatment,year) %>%
+#   summarise(mean_biomass = mean(biomass_grams_est))
+# 
+# 
+# ggplot()+
+#   geom_line(data=permanent_quad_biomass, aes(x=year, y=biomass_grams_est, color=Treatment, group=quad),alpha=0.3,size=0.5, na.rm = T)+
+#   geom_line(data=biomass_year_treatment, aes(x=year, y=mean_biomass, color=Treatment),size=1, na.rm = T)+
+#   geom_point(data=biomass_year_treatment, aes(x=year, y=mean_biomass, color=Treatment),size=3, na.rm = T)+
+#   geom_point(data=biomass_year_treatment, aes(x=year, y=mean_biomass),color="grey35",shape=1,size=3, na.rm = T)+
+#   scale_color_brewer(palette = "Set2")+
+#   scale_x_continuous(breaks=c(2008:2016))+
+#   ylab(expression(paste("Estimated Biomass (g ", m^-2,")")))+
+#   xlab("Year")+
+#   theme_few()+
+#   theme(legend.position=c(.1,.82))
+# ggsave("../figures/estimated_biomass.png", width = 6, height = 4, units = "in", dpi = 120)
+# 
+# 
+# biomass_yr_trt_summ <- permanent_quad_biomass %>%
+#   filter(!str_detect(quadname, 'P1|P7')) %>%
+#   group_by(Treatment,year) %>%
+#   summarise(mean_biomass = mean(biomass_grams_est),
+#             sd_biomass = sd(biomass_grams_est)) %>%
+#   filter(year > 2011)
+# 
+# ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
+#   geom_line()+
+#   geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
+#   geom_point(color="white", size=3)+
+#   geom_point()+
+#   geom_point(color="grey35", shape=1)+
+#   scale_color_brewer(palette = "Set2", name=NULL)+
+#   scale_x_continuous(breaks=c(2011:2016))+
+#   scale_y_continuous(breaks=seq(50,350,50))+
+#   ylab(expression(paste("Estimated ANPP (g ", m^-2,")")))+
+#   xlab("Year")+
+#   theme_few()+
+#   theme(legend.position=c(.2,.75))
+# ggsave("../figures/anpp_trt_trend.png", width = 4, height = 3, units = "in", dpi = 120)
+# 
+# 
+# # Get sample sizes
+# samp_size <- permanent_quad_biomass %>%
+#   filter(!str_detect(quadname, 'P1|P7')) %>%
+#   group_by(Treatment,year) %>%
+#   summarise(num_plots = length(biomass_grams_est))
