@@ -38,16 +38,20 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   ungroup() %>%
   mutate(year = as.numeric(year))
 
-anpp_data <- permanent_quad_biomass %>% 
-  filter(Treatment %in% c("Control","Drought","Irrigation")) %>%
-  filter(!str_detect(quadname, 'P1|P7')) %>%
-  filter(year > 2011) %>%
-  rename(anpp = biomass_grams_est) %>%
-  left_join(weather, by = "year") %>%
-  left_join(soil_moisture, by = c("year","Treatment")) %>%
-  select(-QuadName,-quad,-Grazing,-paddock,-ndvi) %>%
-  mutate(ppt1_scaled = as.numeric(scale(ppt1)),
-         year_id = year - 2011)
+suppressWarnings( # suppress factors to characters warning
+  anpp_data <- permanent_quad_biomass %>% 
+    filter(Treatment %in% c("Control","Drought","Irrigation")) %>%
+    filter(!str_detect(quadname, 'P1|P7')) %>%
+    filter(year > 2011) %>%
+    rename(anpp = biomass_grams_est) %>%
+    left_join(weather, by = "year") %>%
+    left_join(soil_moisture, by = c("year","Treatment")) %>%
+    select(-QuadName,-quad,-Grazing,-paddock,-ndvi) %>%
+    mutate(ppt1_scaled = as.numeric(scale(ppt1)),
+           vwc_scaled = as.numeric(scale(total_seasonal_vwc)),
+           year_id = year - 2011)
+)
+
 
 drought_data <- anpp_data %>%
   filter(Treatment != "Irrigation") %>%

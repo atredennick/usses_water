@@ -39,7 +39,7 @@ source("read_format_data.R")
 ####  SET UP AND FIT MODEL IN STAN ----
 ####
 fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
-  lmod <- lm(log(anpp) ~ ppt1_scaled, model_data)
+  lmod <- lm(log(anpp) ~ vwc_scaled, model_data)
   x <- model.matrix(lmod)
   newx <- unique(x)
   anppdat <- list(Nobs = nrow(model_data),
@@ -59,7 +59,7 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
   rt <- stanc("anpp_randcoefs.stan")
   sm <- stan_model(stanc_ret = rt, verbose=FALSE)
   set.seed(123)
-  fit <- sampling(sm, data=anppdat, iter=10000, chains=4, thin=10,  control = list(adapt_delta = 0.99))
+  fit <- sampling(sm, data=anppdat, iter=2000, chains=4, thin=2,  control = list(adapt_delta = 0.99))
   
   if(check_diags){
     pnames <- c("sigmaeps", "sigmaint", "sigmaslope","beta[1]",
