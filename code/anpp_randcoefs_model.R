@@ -47,11 +47,13 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
                   Nplots = length(unique(model_data$quadname)),
                   Ntreats = length(unique(model_data$Treatment)),
                   Nppts = nrow(newx),
+                  Nyears = length(unique(model_data$year)),
                   y = as.numeric(scale(log(model_data$anpp))),
                   x = x,
                   newx = newx,
                   plot_id = as.numeric(as.factor(model_data$quadname)),
                   treat_id = as.numeric(as.factor(as.character(model_data$Treatment))),
+                  year_id = as.numeric(as.factor(model_data$year)),
                   R = diag(1,ncol(x)))
   
   rstan_options(auto_write = TRUE)
