@@ -29,7 +29,7 @@ library(viridis)
 ####
 source("read_format_data.R") # load data
 all_fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
-year_fit <- readRDS("../results/randyears_alltreatments_fit.RDS")
+# year_fit <- readRDS("../results/randyears_alltreatments_fit.RDS")
 
 
 
@@ -48,7 +48,7 @@ get_one_tailed <- function(values){
 ####  PLOT TREATMENT-LEVEL POSTERIOR DISTRIBUTIONS ----
 ####
 param_id_names <- data.frame(param_id = c(1,2),
-                             param_name = c("Intercept", "Precipitation"))
+                             param_name = c("Intercept", "Soil Moisture"))
 treat_id_names <- data.frame(treat_id = c(1,2,3),
                              treatment = c("Control","Drought","Irrigation"))
 betas <- reshape2::melt(rstan::extract(all_fit, pars="beta_treat")) %>%
@@ -60,17 +60,21 @@ g1 <- ggplot(betas, aes(x=estimate))+
   geom_hline(aes(yintercept=0), color="grey45", size=0.1)+
   geom_line(stat="density",aes(color=treatment),adjust=5,size=1)+
   scale_color_brewer(palette = "Set2",name="Treatment")+
-  scale_x_continuous(breaks=seq(-1,2,0.5))+
+  scale_x_continuous(breaks=seq(-1.5,2,0.5))+
   scale_y_continuous(breaks=seq(0,2,0.25))+
   facet_wrap(~param_name)+
   xlab("Parameter Value")+
   ylab("Probability Density")+
-  theme_few()+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
   theme(legend.position = c(0.4,0.8),
         legend.key.size = unit(6,"pt"),
         legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"))
+        legend.key.height = unit(0.8,"line"),
+        legend.box.background = element_rect(),
+        strip.background = element_blank(), 
+        strip.text = element_text(size=10))
 ggsave("../figures/glmm_treatment_posteriors.png",plot = g1, width = 6, height = 3, units = "in", dpi =120)
 
 

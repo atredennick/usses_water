@@ -355,17 +355,18 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{../figures/glmm_treatment_posteriors.png}
-  \caption{Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Precipitation') from the ANPP-Precipitation model.}
+  \caption{Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Soil Moisture'). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
 \end{figure}
 
-
+<!---
 \newpage{}
 
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{../figures/glmm_yeardiffs.png}
   \caption{Posterior distributions of yearly treatment effects from the ANPP-Treatment model.}
-\end{figure}
+\end{figure}\
+--->
 
 
 \newpage{}

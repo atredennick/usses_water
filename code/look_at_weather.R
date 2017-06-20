@@ -116,7 +116,9 @@ soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, col
   scale_y_continuous(breaks=seq(0,24,8))+
   facet_grid(year~.)+
   theme_bw()+
-  theme(panel.grid.minor = element_blank(),strip.background = element_blank(), strip.text = element_text(size=6))+
+  theme(panel.grid.minor = element_blank(),
+        strip.background = element_blank(), 
+        strip.text = element_text(size=6))+
   guides(color=FALSE)
 
 
