@@ -82,32 +82,32 @@ ggsave("../figures/glmm_treatment_posteriors.png",plot = g1, width = 6, height =
 ####
 ####  PLOT TREATMENT DIFFERENCES BY YEAR POSTERIORS ----
 ####
-param_id_names <- data.frame(param_id = c(1:3),
-                             param_name = c("Control", "Drought", "Irrigation"))
-year_id_names <- data.frame(year_id = c(1:5),
-                            year_name = c(1:5))
-betas <- reshape2::melt(rstan::extract(year_fit, pars="beta")) %>%
-  rename(iteration = iterations, year_id = Var2, param_id = Var3, estimate = value, stan_name = L1) %>%
-  left_join(param_id_names, by="param_id") %>%
-  left_join(year_id_names, by="year_id")
-
-ggplot(filter(betas, param_name!="Control"), aes(x=estimate))+
-  geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
-  geom_line(stat="density",aes(color=as.character(year_id)),adjust=5,size=1)+
-  # scale_color_brewer(palette = "Set1",name="Year")+
-  scale_color_viridis(end=0.8,discrete=T,name="Year")+
-  scale_x_continuous(breaks=seq(-3,3,0.5), limits=c(-2,2))+
-  scale_y_continuous(breaks=seq(0,1.25,0.25))+
-  facet_wrap(~param_name)+
-  xlab("Parameter Value")+
-  ylab("Probability Density")+
-  theme_few()+
-  theme(legend.position = c(0.4,0.7),
-        legend.key.size = unit(10,"pt"),
-        legend.title = element_text(size=10),
-        legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"))
-ggsave("../figures/glmm_yeardiffs.png", width = 6, height = 3, units = "in", dpi =120)
+# param_id_names <- data.frame(param_id = c(1:3),
+#                              param_name = c("Control", "Drought", "Irrigation"))
+# year_id_names <- data.frame(year_id = c(1:5),
+#                             year_name = c(1:5))
+# betas <- reshape2::melt(rstan::extract(year_fit, pars="beta")) %>%
+#   rename(iteration = iterations, year_id = Var2, param_id = Var3, estimate = value, stan_name = L1) %>%
+#   left_join(param_id_names, by="param_id") %>%
+#   left_join(year_id_names, by="year_id")
+# 
+# ggplot(filter(betas, param_name!="Control"), aes(x=estimate))+
+#   geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
+#   geom_line(stat="density",aes(color=as.character(year_id)),adjust=5,size=1)+
+#   # scale_color_brewer(palette = "Set1",name="Year")+
+#   scale_color_viridis(end=0.8,discrete=T,name="Year")+
+#   scale_x_continuous(breaks=seq(-3,3,0.5), limits=c(-2,2))+
+#   scale_y_continuous(breaks=seq(0,1.25,0.25))+
+#   facet_wrap(~param_name)+
+#   xlab("Parameter Value")+
+#   ylab("Probability Density")+
+#   theme_few()+
+#   theme(legend.position = c(0.4,0.7),
+#         legend.key.size = unit(10,"pt"),
+#         legend.title = element_text(size=10),
+#         legend.text = element_text(size = 8),
+#         legend.key.height = unit(0.8,"line"))
+# ggsave("../figures/glmm_yeardiffs.png", width = 6, height = 3, units = "in", dpi =120)
 
 
 # g2 <- ggplot(ydiffs, aes(y=`50%`, x=pptyear, color=Treatment))+

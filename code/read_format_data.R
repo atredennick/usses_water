@@ -5,12 +5,12 @@
 ##  Date created: May 25, 2017
 
 
-####
-####  LOAD LIBRARIES ----
-####
-library(tidyverse)    # Data munging
-library(dplyr)        # Data summarizing
-library(stringr)      # Working with strings
+# ####
+# ####  LOAD LIBRARIES ----
+# ####
+# library(tidyverse)    # Data munging
+# library(dplyr)        # Data summarizing
+# library(stringr)      # Working with strings
 
 
 
