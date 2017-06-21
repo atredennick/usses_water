@@ -45,8 +45,8 @@ A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
 \subsection{Model Description}
 Our hierarchical Bayesian model with random intercepts and random slopes allowed us to test for differences among treatments in the relationship between ANPP and growing season precipitation, and allowed us to account for the non-independence of observations through time within a plot.
 The random effects structure mirrors the nested structure of the data: plot-level parameters are nested within treatment-level parameters, which are nested within overall parameters.
-In what follows, $\textbf{X}$ is the design matrix including a column of 1s for intercepts and a column of precipitation values for each observation, $\textbf{y}$ is a row vector of log(ANPP) values for each observation, *i* references observations, *j* references plots, and *k* references treatment.
-The notation *i(j(k))* reads as 'observation *i* associated with plot *j* associated with treatment *k*'.
+In what follows, $\textbf{X}$ is the design matrix including a column of 1s for intercepts and a column of precipitation values for each observation, $\textbf{y}$ is a row vector of log(ANPP) values for each observation, *i* references observations, *j* references plots, *k* references treatment, and *t* references year.
+The notation *i(j(k(t)))* reads as 'observation *i* associated with plot *j* associated with treatment *k* within year *t*'.
 Recall we have three treatments: drought (~50\% decrease in precipitation), control (ambient precipitation), and irrigation (~50\% increase in precipitation).
 
 We assume the observations are conditionally Gaussian,
@@ -54,18 +54,18 @@ We assume the observations are conditionally Gaussian,
 \vspace{-2em}
 
 \begin{align}
-y_{i(j(k))} \sim \text{Normal}\left(\mu_{i(j(k))}, \sigma^2_k \right),
+y_{i(j(k(t)))} \sim \text{Normal}\left(\mu_{i(j(k(t)))}, \sigma^2_k \right),
 \end{align}
 
-\noindent{}where $\mu_{i(j(k))}$ is the determinstic expectation from the regression model,
+\noindent{}where $\mu_{i(j(k(t)))}$ is the determinstic expectation from the regression model,
 
 \vspace{-2em}
 
 \begin{align}
-\mu_{i(j(k))} = \textbf{x}_i'\boldsymbol{\beta_{j(k)}}.
+\mu_{i(j(k(t)))} = \textbf{x}_i'\boldsymbol{\beta_{j(k)} + \gamma_{t}}.
 \end{align}
 
-Regression parameters (the intercept and slope in the parameter vector $\boldsymbol{\beta}$) were modeled hierarchically,
+The intercept and slope in the parameter vector $\boldsymbol{\beta}$ were modeled hierarchically,
 
 \vspace{-2em}
 
@@ -80,6 +80,14 @@ The plot- and treatment-level coefficients are drawn from multivariate normal di
 For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\boldsymbol{\Sigma}(k)$).
 The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
 
+The random year effects ($\boldsymbol{\gamma}$) are modeled as intercept offsets centered on zero with a shared variance ($\sigma_{yr}$),
+
+\vspace{-2em}
+
+\begin{align}
+\boldsymbol{\gamma} \sim \text{Normal} \left( 0, \sigma_{yr}  \right).
+\end{align}
+
 We fit the model using MCMC as implemented in the software Stan [@stan2016].
 Our Stan code is below.
 All code necessary to reproduce our results is in the supplementary code set (Appendix 3).
@@ -92,28 +100,32 @@ data {
   int<lower=0> Ntreats;       # number of treatments
   int<lower=0> Nobs;          # number of observations
   int<lower=0> Nppts;         # Number of precip levels to predict
+  int<lower=0> Nyears;        # Number of years
   vector[Nobs] y;             # vector of observations
   row_vector[Npreds] x[Nobs]; # design matrix
   matrix[Nppts,Npreds] newx;  # design matrix for predictions 
   matrix[Npreds,Npreds] R;	  # priors for covariance matrix
   int plot_id[Nobs];          # vector of plot ids
   int treat_id[Nobs];         # vector of treatment ids
+  int year_id[Nobs];          # vector of year ids
 }
 
 parameters {
   vector[Npreds] beta_plot[Nplots]; # a unique vector matrix for each plot
   vector[Npreds] beta_treat[Ntreats]; # a unique vector matrix for each treatment
 	vector[Npreds] beta_mu; # overall coefficients
+	vector[Nyears] year_off; # vector of year effects
 	cov_matrix[Npreds] Sigma; # covariance matrix for treatment-level coefficients
-	cov_matrix[Npreds] Sigma_plot[Ntreats]; # unique covariance matrix for plot-level coefs by treatment
+	cov_matrix[Npreds] Sigma_plot[Ntreats]; # unique covariance matrix for plot-level coefficients for each treatment
 	vector<lower=0>[Ntreats] sd_y; # treatment-level observation std. dev.
+	vector<lower=0>[Nyears] sigma_year; # year std. dev. hyperprior
 }
 
 transformed parameters {
   vector[Nobs] yhat; # vector of expected values (predictions)
   for (i in 1:Nobs)
     # regression model for expected values (one for each plot-year)
-    yhat[i] = x[i]*beta_plot[plot_id[i]]; 
+    yhat[i] = x[i]*beta_plot[plot_id[i]] + year_off[year_id[i]];
 }
 
 model {
@@ -124,20 +136,20 @@ model {
 	
 	for(i in 1:Ntreats){
 	  # treatment-level coefficients vary normally around overall coefficients
-	  beta_treat[i] ~ multi_normal(beta_mu, Sigma); 
-	  
-	  # priors on covariance of effects at plot-level
-	  Sigma_plot[i] ~ inv_wishart(Npreds+1, R);
+	  beta_treat[i] ~ multi_normal(beta_mu, Sigma);
+	  Sigma_plot[i] ~ inv_wishart(Npreds+1, R); # priors on covariance of effects at plot-level
 	}
 	
 	beta_mu ~ normal(0,1); # priors on overall effects
+	year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
 	Sigma ~ inv_wishart(Npreds+1, R); # priors on covariance of effects at treatment-level
 	sd_y ~ weibull(2,1); # priors on observation std. dev. for each treatment
+	sigma_year ~ weibull(2,1); # hyperprior on year std. dev.
 
 	####  LIKELIHOOD
-	for(i in 1:Nobs)
-	  # observations vary normally around expected values
-	  y[i] ~ normal(yhat[i], sd_y[treat_id[i]]);
+  for(i in 1:Nobs)
+    # observations vary normally around expected values
+    y[i] ~ normal(yhat[i], sd_y[treat_id[i]]); 
 }
 
 generated quantities {
