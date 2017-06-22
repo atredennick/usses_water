@@ -302,7 +302,7 @@ Acknowledgments
 ---------------
 We gratefully acknowledge the support of the Utah Agricultural Experiment Station (journal paper xxxx).
 We thank the many summer research technicians who collected the data reported in this paper and the US Experimental Sheep Station for facilitating work on their property.
-We also thank Susan Durham for clarifying our thinking on the statistical analyses.
+We also thank Susan Durham for clarifying our thinking on the statistical analyses and Kevin Wilcox for helpful discussions on analyzing community composition data.
 
 Funding
 -------
@@ -354,7 +354,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/Figure1.png}
-  \caption{(A) Histogram of historical precipitation from 1926-2016, with the years of the experiment overlaid as colored points. ``Drought'' treatments (squares) are shown as a 50\% reduction from the observed precipitation. ``Irrigation'' treatment precipitation levels are not shown. (B) Monthly average estimated soil volumetric water content (VWC) from SOILWAT model fit using soil moisture data from experimental plots. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation. Colored regression lines are independently-fit linear models for each treatment with no random effects structure; dark black regression line is a linear regression through all the point with no random effects structure. Our analysis seeks to find if the data supports a model with different intercepts and/or slopes for each treatment, while also accounting for nonindependence of samples within plots across years.}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the *x*-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation. Colored regression lines are independently-fit linear models for each treatment with no random effects structure; dark black regression line is a linear regression through all the point with no random effects structure. Our analysis seeks to find if the data supports a model with different intercepts and/or slopes for each treatment, while also accounting for nonindependence of samples within plots across years. Color mapping for panels B-D is shown in the legend for panel C.}
 \end{figure}
 
 
@@ -366,15 +366,14 @@ Figures
   \caption{Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Soil Moisture'). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
 \end{figure}
 
-<!---
+
 \newpage{}
 
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{../figures/glmm_yeardiffs.png}
-  \caption{Posterior distributions of yearly treatment effects from the ANPP-Treatment model.}
-\end{figure}\
---->
+  \caption{Posterior distributions of random year effects (intercept offsets).}
+\end{figure}
 
 
 \newpage{}
