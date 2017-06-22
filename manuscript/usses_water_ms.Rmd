@@ -153,9 +153,7 @@ We installed four sensors in each plot, two at 5 cm soil depth and two at 25 cm 
 We also installed four sensors in areas nearby the four selected plot pairs to measure ambient soil moisture at the same depths.
 Soil moisture measurements were automatically logged every four hours.
 We coupled this temporally intensive soil moisture sampling with spatially extensive readings taken at six points within all 16 plots and associated ambient measurement areas.
-These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
-
-\textcolor{red}{[ANDY: paragraph here on SOILWAT. Is this the right thing to show/do? See Fig. 1C.]}
+These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.\todo{ANDY: add paragraph on VWC model}
 
 ### Data Collection
 We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [see @Byrne2011 for a review].
@@ -168,15 +166,19 @@ To convert NDVI to ANPP we regressed NDVI against the dry biomass weight from th
 We fit regressions to MODIS-based NDVI and AVHRR-based NDVI for each year and retained the regression with the better fit.
 Using the best regression equation for each year, we predicted ANPP (Appendix 1).
 
-Species composition data came from annual census maps for each plot made using a pantograph [@Hill1920].
-The maps record the spatial location and size of each individual plant.
+\todo{PETER: check this section}Species composition data came from two sources: yearly census maps for each plot made using a pantograph [@Hill1920] and yearly counts of annual species in each plot.
+The maps record the spatial location of all individuals in the plot and the basal cover of each individual with cover greater than 1 cm.
 Using those annual maps, we aggregated over individuals to calculate total basal cover for each species in each plot.
+We made a large plot-treatment-year by species matrix, where columns were filled with either basal cover or density, depending on the measurement made for the particular species.
+So we could analyze the different types of data together, we standardized the values in each column.
+This puts all abundance values on the same scale, but comes with the limitation that all species are weighted equally.
+Nonetheless, this scaling approach allows a comprehensive view of community composition dynamics through time.
 
 ### Data Analysis
 Our main goal was to test whether the relationship between ANPP and growing season precipitation (hereafter, precipiation) differed among the drought, control, and irrigation treatments.
-To achieve this goal, we fit a multi-level random intercept and random slope regression with log(ANPP) as the response variabile and precipitation as the sole predictor (hereafter, 'ANPP-Precipitation' model).
+To achieve this goal, we fit a multi-level random intercept and random slope regression with log(ANPP) as the response variabile and soil moisture (volumetric water content) as the sole predictor.
 We fit the model under a Bayesian framework, allowing us to test for treatment differences by comparing the posterior distributions of the treatment-level coefficients [e.g., @Tredennick2013].
-Both log(ANPP) and precipitation were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
+Both log(ANPP) and soil moisture were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
 
 Our multi-level model has three grouping levels for coefficients, representing the nested structure of the data: (i) overall coefficients, (ii) treatment coefficients, and (iii) plot coefficients.
 Each subsequent level is drawn from the distribution of coefficients at the previous level.
@@ -189,12 +191,12 @@ Formally, our model is defined as follows:
 y_{i(j(k(t)))} &\sim \text{Normal} \left(\mu_{i(j(k(t)))}, \sigma^2_{k} \right),
 \end{align}
 
-\noindent{} where $\mu_{i(j(k))}$ is the deterministic prediction from the regression model for observation *i* for plot *j* associated with treatment *k* in year *t*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of precipitation for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
-Data include the standardized log(ANPP) observations ($y_{i(j(k(t)))}$) and precipitation ($x_i$).
-Although we include observation subscript *i* on the *x*s, observations within a year all share the same precipitation values.
+\noindent{} where $\mu_{i(j(k))}$ is the deterministic prediction from the regression model for observation *i* for plot *j* associated with treatment *k* in year *t*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of soil moisture for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
+Data include the standardized log(ANPP) observations $\left( y_{i(j(k(t)))} \right)$ and soil moisture ($x_i$).
+Although we include observation subscript *i* on the *x*s, observations within a treatment-year all share the same soil moisture values.
 
-The intercept and slope terms are modeled hierarchichally to account for the non-independence of observations across years within plots and to allow us to test the hypothesis that our treatments alter the ANPP-precipitation relationship.
-As noted above, plot-level coefficients are drawn from treatment-level coeffecients, which are drawn from overall coefficients.
+The intercept and slope terms are modeled hierarchichally to account for the non-independence of observations across years within plots and to allow us to test the hypothesis that our treatments alter the ANPP-soil moisture relationship.
+As noted above, plot-level coefficients are drawn from treatment-level coefficients, which are drawn from overall coefficients.
 We also include a covariance structure among the intercept and slope at each level.
 Formally, our hierarhical structure is as follows, where we drop the intercept (0) and slope (1) subscripts and instead refer to a vector of coefficients, $\boldsymbol{\beta}$:
 
@@ -210,6 +212,7 @@ Formally, our hierarhical structure is as follows, where we drop the intercept (
 The plot- and treatment-level coefficients are drawn from multivariate normal distributions with covariance matrix $\boldsymbol{\Sigma}$.
 For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\boldsymbol{\Sigma}(k)$).
 The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
+The random year effects ($\boldsymbol{\gamma}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a weibull distribution.
 A full description of model is in Appendix 2.
 
 <!---
@@ -229,10 +232,12 @@ We also made sure all scale reduction factors ($\hat{R}$) were less than 1.1.
 
 To see if community composition differed among treatments through time, we used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis distances.
 For each year of the experiment, we first calculated Bray-Curtis distances among all plots, and then extracted those distances for use in the NMDS.
+Because we standardized species' abundances, some values were negative, which is not allowed for calculating Bray-Curtis distances.
+We simply added '2' to each abundance value to ensure all values were greater than zero.
 We plotted the first two axes of NMDS scores to see if community composition overlapped, or not, among treatments in each year.
-We used functions in the R package 'vegan' [@Oksanen2016] to calculate Bray-Curtis distances and then to run the NMDS analysis.
+We used the 'metaMDS()' function in the R package 'vegan' [@Oksanen2016] to calculate Bray-Curtis distances and then to run the NMDS analysis.
 Lastly, we examined rank clocks of species' abundances through time to assess the stability of community composition over the course of the experiment [@Collins2008].
-Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from @Hallett2016.
+Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from the 'codyn' package [@Hallett2016].
 
 All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
 We also include annotated Stan code in our model description in Appendix 2.
