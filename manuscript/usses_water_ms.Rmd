@@ -236,6 +236,8 @@ Because we standardized species' abundances, some values were negative, which is
 We simply added '2' to each abundance value to ensure all values were greater than zero.
 We plotted the first two axes of NMDS scores to see if community composition overlapped, or not, among treatments in each year.
 We used the 'metaMDS()' function in the R package 'vegan' [@Oksanen2016] to calculate Bray-Curtis distances and then to run the NMDS analysis.
+We used the 'vegan::adonis()' function [@Oksanen2016] to perform permutational multivariate analysis of variance to test whether treatment plots formed distinct groupings.
+To test whether treatment plots were equally dispersed, or not, we used the 'vegan::betadisper' function [@Oksanen2016].
 Lastly, we examined rank clocks of species' abundances through time to assess the stability of community composition over the course of the experiment [@Collins2008].
 Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from the 'codyn' package [@Hallett2016].
 
@@ -258,8 +260,8 @@ In other words, the posterior distributions of $\beta_0(\text{control}) - \beta_
 There was also no evidence that the treatment effects became more important over time because there was no directional trend in the yearly treatment effects estimated from the ANPP-Treatment model (Fig. 3).
 
 Community composition was similar among treatments.
-In no year did community composition among treatments not overlap, and they were equally dispersed in all years (Fig. 4).
-Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Fig. 4).
+In no year did community composition among treatments not overlap, and they were equally dispersed in all years (Table 1; Fig. 4).
+Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Table 1; Fig. 4).
 Species' abundances and ranks showed little deviation over the five-year experiment, regardless of treatment (Fig. 5).
 
 
@@ -300,7 +302,7 @@ Third, the ecosystem and community resistance to drought and deluge we observed 
 
 Acknowledgments
 ---------------
-We gratefully acknowledge the support of the Utah Agricultural Experiment Station (journal paper xxxx).
+We gratefully acknowledge the support of the Utah Agricultural Experiment Station (journal paper xxxx\todo{get paper number}).
 We thank the many summer research technicians who collected the data reported in this paper and the US Experimental Sheep Station for facilitating work on their property.
 We also thank Susan Durham for clarifying our thinking on the statistical analyses and Kevin Wilcox for helpful discussions on analyzing community composition data.
 
@@ -315,25 +317,28 @@ NSF DEB-1353078 and DEB-1054040 to Peter Adler.
 
 \newpage{}
 
-<!---
+
 Tables
 ------
 
 ```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 library(xtable)
-# Read in within-year ANOVA results table
-# inyear_anova <- readRDS("../results/within_year_anova_table.RDS")
-# 
-# inyear_caption <- "ANOVA for treatment effects on ANPP for each year of the experiment."
-# print(xtable(inyear_anova, caption = inyear_caption, digits = 2),
-#       caption.placement="top",
-#       include.rownames = F, 
-#       sanitize.colnames.function = identity,
-#       comment = FALSE,
-#       size = "normalsize")
+# Read in species composition stats
+sppcomp_stats <- readRDS("../results/sppcomp_stats.RDS")
+colnames(sppcomp_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{F}", "\\emph{P}")
+sppcomp_stats$d.f. <- as.integer(sppcomp_stats$d.f.)
+
+# Make the table
+inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis` tests whether treatments form unique clusters in multidimensial space; `betadisper` tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support that the treatments differ."
+print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_caption, digits = 2),
+       caption.placement="top",
+       include.rownames = F,
+       sanitize.colnames.function = identity,
+       comment = FALSE,
+       size = "normalsize")
 
 # coef_probs <- readRDS("../results/coef_probabilities.RDS")
-# 
+#
 # coef_caption <- "Probability that each log(ANPP) coefficient is greater or less than zero for each of the precipitation treatments.
 # Probabilities denote max(Pr(coefficient) > 0, Pr(coefficient) < 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the coefficient being important in the model. Bold coefficients denote Pr(coefficient) $\\geq$ 0.95."
 # print(xtable(coef_probs, caption = coef_caption, digits = 2),
@@ -346,7 +351,6 @@ library(xtable)
 
 \newpage{}
 
---->
 
 Figures
 -------
@@ -354,7 +358,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/Figure1.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the *x*-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation. Colored regression lines are independently-fit linear models for each treatment with no random effects structure; dark black regression line is a linear regression through all the point with no random effects structure. Our analysis seeks to find if the data supports a model with different intercepts and/or slopes for each treatment, while also accounting for nonindependence of samples within plots across years. Color mapping for panels B-D is shown in the legend for panel C.}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation. Colored regression lines are independently-fit linear models for each treatment with no random effects structure; dark black regression line is a linear regression through all the point with no random effects structure. Our analysis seeks to find if the data supports a model with different intercepts and/or slopes for each treatment, while also accounting for nonindependence of samples within plots across years. Color mapping for panels B-D is shown in the legend for panel C.}
 \end{figure}
 
 
@@ -372,7 +376,7 @@ Figures
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=6in]{../figures/glmm_yeardiffs.png}
-  \caption{Posterior distributions of random year effects (intercept offsets).}
+  \caption{Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
 \end{figure}
 
 
@@ -380,7 +384,7 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=5in]{../figures/sppcomp_bray_all.png}
+      \includegraphics[width=6in]{../figures/sppcomp_bray_all.png}
   \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
 \end{figure}
 
@@ -389,7 +393,7 @@ Figures
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=5in]{../figures/rank_clocks_scaled_abundance.png}
+      \includegraphics[width=6in]{../figures/rank_clocks_scaled_abundance.png}
   \caption{Rank clocks of average species' scaled abundance by treatment. (A) All species. (B) Dominant species.}
 \end{figure}
 
