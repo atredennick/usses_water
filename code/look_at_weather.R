@@ -129,8 +129,10 @@ soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, col
 source("read_format_data.R") # load data
 data_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
   geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.5)+
-  stat_smooth(method="lm", color="black", se=FALSE, size=0.7)+
+  #stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.5)+
+  stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),aes(color=Treatment), se=FALSE, size=0.5)+
+  #stat_smooth(method="lm", color="black", se=FALSE, size=0.7)+
+  stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),color="black", se=FALSE, size=0.5)+
   scale_fill_brewer(palette = "Set2")+
   scale_color_brewer(palette = "Set2")+
   #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+

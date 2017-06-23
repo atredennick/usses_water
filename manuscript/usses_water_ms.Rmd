@@ -115,12 +115,11 @@ Thus, discovering which ecosystems are most sensitive to chronic alterations of 
 
 Here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
 We imposed drought and irrigation treatments (50\% decrease/increase) and measured ecosystem (ANPP) and community (species composition) responses.
-We focus on how the drought and irrigation treatments affect the linear relationship between ANPP and growing season precipitation, and if community dynamics underly the ecosystem responses.
-In particular, we sought to answer the following questions:
-
-1. Does drought or irrigation impact mean ANPP (i.e., different intercepts)?
-2. Does drought or irrigation impact the effect of ambient precipitation on ANPP (i.e., different slopes)?
-3. Is the resistance or sensitivity of ANPP to altered precipitation related to underlying community dynamics?
+We focus on how the drought and irrigation treatments affect the linear relationship between ANPP and available soil moisture, and if community dynamics underly the ecosystem responses.
+In particular, we are interested in the consistency of the ANPP-soil moisture relationship among treatments.
+Is the relationship steeper under the drought treatment, at low soil moisture?
+Does the relationship saturate under the irrigation treatment, at high soil moisture?
+To answer these questions we fit a random intercepts, random slopes model to test whether the regressions differed among treatments.
 
 
 Materials and Methods
