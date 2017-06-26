@@ -356,6 +356,15 @@ Figures
 
 \begin{figure}[!ht]
   \centering
+      \includegraphics[width=4in]{../figures/hypothesis_figtable.png}
+  \caption{Possible outcomes of chronic resource alteration.}
+\end{figure}
+
+\newpage{}
+
+
+\begin{figure}[!ht]
+  \centering
       \includegraphics[height=7in]{../figures/Figure1.png}
   \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation. Colored regression lines are independently-fit linear models for each treatment with no random effects structure; dark black regression line is a linear regression through all the point with no random effects structure. Our analysis seeks to find if the data supports a model with different intercepts and/or slopes for each treatment, while also accounting for nonindependence of samples within plots across years. Color mapping for panels B-D is shown in the legend for panel C.}
 \end{figure}
@@ -387,7 +396,7 @@ Figures
   \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
 \end{figure}
 
-
+<!---
 \newpage{}
 
 \begin{figure}[!ht]
@@ -395,7 +404,7 @@ Figures
       \includegraphics[width=6in]{../figures/rank_clocks_scaled_abundance.png}
   \caption{Rank clocks of average species' scaled abundance by treatment. (A) All species. (B) Dominant species.}
 \end{figure}
-
+---->
 
 \newpage{}
 
