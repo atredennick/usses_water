@@ -34,7 +34,7 @@ urlcolor: black
 
 \begin{centering}
 
-\Large{\textbf{Ecosystem and community resistance to five years of drought and deluge in a sagebrush steppe}}
+\Large{\textbf{Consistent ecosystem functional response to soil moisture during five years of drought and deluge in a sagebrush steppe}}
 
 \bigskip{} \bigskip{}
 
