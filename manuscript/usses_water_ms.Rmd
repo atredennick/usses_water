@@ -87,6 +87,38 @@ At least in the short-term, ecosystem functioning and community composition in t
 
 Introduction
 ------------
+Water availability is a strong driver of aboveground net primary productivity (ANPP) in grassland ecosystems.
+Mean annual precipitation (MAP) is strongly correlated with ANPP across sites [@Huxman2004], and, in water-limited ecosystems, interannual variation in MAP is also correlated with interannual variation in ANPP [@Hsu2012].
+These relationships suggest that chronic alterations in levels of precipitation, associated with global climate change, will impact ANPP.
+
+At a given site, the functional response of ANPP to water availability (e.g., soil moisture) can be characterized by fitting a model to historical observations of ANPP and soil moisture.
+However, the fitted functional response may provide an incomplete picture because future conditions are likely to be outside the historical range of variability [@Smith2011].
+For example, historical trends may show a linear soil moisture-ANPP relationship, but that relationship could potentially saturate if soil moisture is pushed far beyond typical levels.
+Saturating relationships are actually common [@Hsu2012], perhaps because other resources, like nitrogen, become more limiting in wet years than dry years.
+Knowing the curvature of the soil moisture-ANPP relationship is critical for understanding how ecosystems will respond to chronic alterations in water availability.
+
+Manipulating potentially limiting resources offers a route to understanding how ecosystems will respond to resource levels that fall outside the historical range of variability [@Knapp2017].
+Chronic alterations to resource availability should cause community composition to shift over time, the focal ecosystem is sensitive to the manipulated resource.
+Species' relative abundances are expected to re-order and, eventually, some species will be lost from the local community and new species will be gained [@Smith2009; @Avolio2015].
+On the heels of changes in community composition, subsequent changes in the level of ecosystem functioning may occur.
+
+@Smith2009 introduced the 'Hierarchical Response Framework' for understanding the interplay of community composition and ecosystem functioning in response to resource manipulations over time.
+In the near term, ecosystem functioning such as annual net primary productivity (ANPP) will reflect the physiological responses of individual species to the manipulated resource level.
+For example, ANPP may decline under simulated drought because the initial community consisted of drought-intolerant species [@Hoover2014].
+Over longer time spans, ecosystem functioning may recover as new species colonize or initial species reorder in relative abundance.
+For example, ANPP may initially decline, but eventually rise back to pre-treatment levels once drought-tolerant species become more abundant and compensate for drought-intolerant species [@Hoover2014].
+It is also possible that ecosystem functioning shifts to a new mean state, reflective of the suite of species in the new community [@Knapp2012].
+
+Here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
+We imposed drought and irrigation treatments (50\% decrease/increase) and measured ecosystem (ANPP) and community (species composition) responses.
+We focus on how the drought and irrigation treatments affect the relationship between ANPP and available soil moisture, and if community dynamics underly the ecosystem responses.
+In particular, we are interested in the consistency of the ANPP-soil moisture relationship among treatments.
+Is the relationship steeper under the drought treatment, at low soil moisture?
+Does the relationship saturate under the irrigation treatment, at high soil moisture?
+To answer these questions we fit a random intercepts, random slopes model to test whether the regressions differed among treatments.
+
+
+<!---
 As the rate of climate change accelerates, ecologists are being pressed to forecast its impacts on ecosystem functions and services.
 Making such forecasts faces two challenges.
 First, future conditions are likely to be outside the historical range of variability [@Smith2011], meaning we cannot simply look to the past to predict the future.
@@ -112,14 +144,7 @@ Within sites, however, the response of ANPP to annual precipitation amount is mu
 Furthermore, it is becoming clear that grassland ecosystem response to altered water availability is likely to be idiosyncratic, conforming to neither cross-site nor within-site ANPP-precipitation relationships [@Wilcox2016].
 This is because within-site relationships do not account for species reordering under chronic resource alterations, while cross-site relationships may overestimate the ability of species compensation.
 Thus, discovering which ecosystems are most sensitive to chronic alterations of water availability, and the time scales at which ecosystem and community responses occur, is critical to avoid surprises in the face of climate change.
-
-Here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
-We imposed drought and irrigation treatments (50\% decrease/increase) and measured ecosystem (ANPP) and community (species composition) responses.
-We focus on how the drought and irrigation treatments affect the linear relationship between ANPP and available soil moisture, and if community dynamics underly the ecosystem responses.
-In particular, we are interested in the consistency of the ANPP-soil moisture relationship among treatments.
-Is the relationship steeper under the drought treatment, at low soil moisture?
-Does the relationship saturate under the irrigation treatment, at high soil moisture?
-To answer these questions we fit a random intercepts, random slopes model to test whether the regressions differed among treatments.
+--->
 
 
 Materials and Methods
