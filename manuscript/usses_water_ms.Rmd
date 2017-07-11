@@ -44,7 +44,7 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 ```
 
 
-# Introduction
+# INTRODUCTION
 
 Water availability is a strong driver of aboveground net primary productivity (ANPP) in grassland ecosystems.
 Mean annual precipitation (MAP) is strongly correlated with ANPP across sites [@Huxman2004], and, in water-limited ecosystems, interannual variation in MAP is also correlated with interannual variation in ANPP [@Hsu2012].
@@ -106,7 +106,7 @@ Thus, discovering which ecosystems are most sensitive to chronic alterations of 
 ---->
 
 
-# Materials and Methods
+# METHODS
 
 ## Study Area
 We conducted our precipitation manipulation experiment at the United States Sheep Experimental Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
@@ -221,7 +221,7 @@ All R code and data necessary to reproduce our analysis has been archived on Fig
 We also include annotated Stan code in our model description in Appendix 2.
 
 
-# Results
+# RESULTS
 
 Three of our five treatment years fell in years of below average rainfall (Fig. 1A).
 Thus, those three years represent a lower magnitude of absolute change in precipitation experienced by the treatments.
@@ -241,7 +241,7 @@ Likewise, community composition was remarkably stable over time, with no evidenc
 Species' abundances and ranks showed little deviation over the five-year experiment, regardless of treatment (Fig. 5).
 
 
-# Discussion
+# DISCUSSION
 
 Ecosystem response to chronic resource alteration is expected to follow a temporal trend.
 Initially, ecosystem response will be modest and reflect the physiological responses of constituent species.
@@ -276,13 +276,13 @@ The irrigation treatment may have been too small, however.
 Third, the ecosystem and community resistance to drought and deluge we observed could be a real phenomenon in this system.
 
 
-# Acknowledgments
+# ACKNOWLEDGEMENTS
 
 We gratefully acknowledge the support of the Utah Agricultural Experiment Station (journal paper xxxx).
 We thank the many summer research technicians who collected the data reported in this paper and the US Experimental Sheep Station for facilitating work on their property.
 We also thank Susan Durham for clarifying our thinking on the statistical analyses and Kevin Wilcox for helpful discussions on analyzing community composition data.
 
-# Funding
+# FUNDING
 
 NSF DBI-1400370 to Andrew Tredennick.  
 NSF Graduate Research Fellowship to Andrew Kleinhesselink.  
@@ -290,7 +290,7 @@ NSF DEB-1353078 and DEB-1054040 to Peter Adler.
 
 \newpage{}
 
-# Tables
+# TABLES
 
 ```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 library(xtable)
@@ -324,7 +324,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \newpage{}
 
 
-# Figures
+# FIGURES
 
 \begin{figure}[!ht]
   \centering
@@ -378,4 +378,4 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 
 \newpage{}
 
-# References
+# REFERENCES
