@@ -14,9 +14,9 @@ affiliation:
   - code: 1
     address: Department of Wildland Resources and the Ecology Center, Utah State University, Logan, Utah 84322
   - code: 2
-    address: Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California xxxxx
+    address: Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California 90095
 abstract: >
-  Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common. Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning in water limited grasslands. Here we report the results of a five-year experiment where we used drought and irrigation treatments (50% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes. The ecosystem was suprisingly resistant to both drought and irrigation. Aboveground net primary productivity (ANPP) responded positively to ambient growing season precipitation, but the response did not vary across treatments. There was also no evidence that treatment effects grew over time. The similarity of ecosystem functioning was not due to compensatory shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years. At least in the short-term, ecosystem functioning and community composition in this sagebrush steppe system is resistant to increases and decreases in growing season precipitation.
+  Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common. Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning in water limited grasslands. Here we report the results of a five-year experiment where we used drought and irrigation treatments (50% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes. Ecosystem functional response, defined as the relationship between soil moisture and aboveground net primary productivity, was suprisingly consistent across drought, control, and irrigation treatments. Aboveground net primary productivity (ANPP) responded positively to availabile soil moisture, but the response did not vary across treatments. There was also no evidence that treatment effects grew over time. The similarity of ecosystem functional response across treatment was not due to compensatory shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years. At least in the short-term, ecosystem functional response and community composition in this sagebrush steppe system is resistant to increases and decreases in growing season precipitation.
 header-includes: >
   \usepackage{lipsum}
   \usepackage{setspace}
@@ -160,6 +160,8 @@ Soil moisture measurements were automatically logged every four hours.
 We coupled this temporally intensive soil moisture sampling with spatially extensive readings taken at six points within all 16 plots and associated ambient measurement areas.
 These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
 
+\ark{ANDY: add paragraph on the statistical modeling of soil moisture to produce Figure 2B (same as your Figure 2 in the precip-demography-prediction dissertation chapter).}
+
 ## Data Collection
 We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [see @Byrne2011 for a review].
 We recorded ground reflectance at four wavelengths, two associated with red reflectance (626 nm and 652 nm) and two associated with near-infrared reflectance (875 nm and 859 nm).
@@ -198,7 +200,7 @@ y_{i(j(k(t)))} &\sim \text{Normal} \left(\mu_{i(j(k(t)))}, \sigma^2_{k} \right),
 
 
 
-\noindent{} where $\mu_{i(j(k))}$ is the deterministic prediction from the regression model for observation *i* for plot *j* associated with treatment *k* in year *t*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of soil moisture for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
+\noindent{}where $\mu_{i(j(k))}$ is the deterministic prediction from the regression model for observation *i* for plot *j* associated with treatment *k* in year *t*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of soil moisture for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
 Data include the standardized log(ANPP) observations $\left( y_{i(j(k(t)))} \right)$ and soil moisture ($x_i$).
 Although we include observation subscript *i* on the *x*s, observations within a treatment-year all share the same soil moisture values.
 
@@ -207,7 +209,7 @@ As noted above, plot-level coefficients are drawn from treatment-level coefficie
 We also include a covariance structure among the intercept and slope at each level.
 Formally, our hierarhical structure is as follows, where we drop the intercept (0) and slope (1) subscripts and instead refer to a vector of coefficients, $\boldsymbol{\beta}$:
 
-\vspace{-2em}
+\vspace{-1em}
 
 \begin{align}
 \boldsymbol{\beta}_{j(k)} &\sim \text{MVN} \left( \boldsymbol{\beta}_k, \boldsymbol{\Sigma}(k) \right), \\
@@ -215,7 +217,7 @@ Formally, our hierarhical structure is as follows, where we drop the intercept (
 \boldsymbol{\beta} &\sim \text{Normal} \left( 0, 1 \right),
 \end{align}
 
-\noindent{} where $\boldsymbol{\beta}_{j(k)}$ is the vector of regression coefficients (intercept and slope) for plot *j* associated with treatment *k*, $\boldsymbol{\beta}_{k}$ is the vector of coefficients for each treatment, and $\boldsymbol{\beta}$ is the vector of overall coefficients.
+\noindent{}where $\boldsymbol{\beta}_{j(k)}$ is the vector of regression coefficients (intercept and slope) for plot *j* associated with treatment *k*, $\boldsymbol{\beta}_{k}$ is the vector of coefficients for each treatment, and $\boldsymbol{\beta}$ is the vector of overall coefficients.
 The plot- and treatment-level coefficients are drawn from multivariate normal distributions with covariance matrix $\boldsymbol{\Sigma}$.
 For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\boldsymbol{\Sigma}(k)$).
 The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
@@ -243,22 +245,19 @@ We also include annotated Stan code in our model description in Appendix 2.
 
 # RESULTS
 
-Three of our five treatment years fell in years of below average rainfall (Fig. 1A).
+Three of our five treatment years fell in years of below average rainfall (Fig. 2A).
 Thus, those three years represent a lower magnitude of absolute change in precipitation experienced by the treatments.
-Averaged across treatments, ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 (Fig. 1C).
-ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 1C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 1B).
+Averaged across treatments, ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 (Fig. 2C).
+ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
-Cumulative growing season soil moisture had a positive effect on ANPP (mean of $\beta_{1}$ = 0.43; 80\% BCI = -0.05, 0.88; 95\% BCI = -0.36, 1.15) (Fig. 1D).
-Average ANPP was similar among treatments (similar intercepts, Fig. 2A), as was the effect of precipitation (similar slopes, Fig. 2B).
-In an average precipitation year (i.e., $x$ = 0 in Eq. 1), the probability that ANPP in a conrol plot is greater than ANPP in a drought plot was 0.71, and the probability that ANPP in a control plot is lower than in an irrigation plot was 0.41.
-In other words, the posterior distributions of $\beta_0(\text{control}) - \beta_0(\text{drought})$ and $\beta_0(\text{control}) - \beta_0(\text{drought})$ broadly overlapped zero.
-There was also no evidence that the treatment effects became more important over time because there was no directional trend in the yearly treatment effects estimated from the ANPP-Treatment model (Fig. 3).
+Cumulative growing season soil moisture had a positive effect on ANPP (mean of $\beta_{1}$ = 0.43; 80\% BCI = -0.05, 0.88; 95\% BCI = -0.36, 1.15) (Fig. 2D).
+Ecosystem functional response was similar among treatments, with treatment level regressions between soil moisture and log(ANPP) having similar intercepts (Fig. 3A) and slopes (Fig. 3B).
+There was also no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. 4).
 
 Community composition was similar among treatments.
-In no year did community composition among treatments not overlap, and they were equally dispersed in all years (Table 1; Fig. 4).
-Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Table 1; Fig. 4).
-Species' abundances and ranks showed little deviation over the five-year experiment, regardless of treatment (Fig. 5).
+In no year did community composition among treatments not overlap, and they were equally dispersed in all years (Table 1; Fig. 5).
+Likewise, community composition was remarkably stable over time, with no evidence of divergence among treatments (Table 1; Fig. 5).
 
 
 # DISCUSSION
@@ -271,30 +270,40 @@ A lingering question is not whether the HRF is a reasonable model of ecosystem d
 Indeed, previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
 To add to this growing body of knowledge, we performed a precipitation manipulation experiment in a sagebrush steppe ecosystem.
 
-Surprisingly, ANPP was not sensitive to either drought or irrigation treatments, whether in the context of growing season precipitation (Fig. 2) or in the context of year since the experiment began (Fig. 3).
-This is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
-Thus, our expectation was that ANPP would be tightly linked to soil water availability.
-ANPP was slightly lower in drought plots and slightly higher in irrigation plots, but these differences were not statistically important.
+Ecosystem functional response (i.e., the relationship between soil moisture and ANPP) and community composition in this sagebrush steppe ecosystem was consistent across drought, control, and irrigation treatments (Fig. 2D, Fig. 3).
+In other words, functional responses estimated from any precipitation level sampled apply to any other level of precipitation, and the consistent functional response was not due to species reordering and compensation.
+Thus, our results conform to the first of our four predictions: neither ecosystem functional response nor community composition changed with chronic alteration in water availability (Fig. 1, top left).
 
-In the absence of community composition data, an obvious hypothesis to explain the lack of ANPP response is that species reordered rapidly.
+This is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
+Thus, our naive expecatations were that either (i) ecosystem functional response would differ among treatments as species reach physiological thresholds and resource limitations (Fig. 1, top right), or (ii) ecosystem functional response stays the same due to species reordering and compensation (Fig. 1, bottom left).
+
+In the absence of community composition data, an obvious hypothesis to explain the consistent ecosystem functional response is that species reordered rapidly.
 In so doing, newly abundant species could compensate for the loss of ecosystem functioning of previously abundant species.
-We did not find this to be the case, as specie composition was remarkably stable over the course of the experiment (Fig. 3).
+We did not find this to be the case, as species composition was remarkably stable over the course of the experiment (Fig. 5).
 
 In combination, the lack of ecosystem and community response to drought or irrigation shows that this sagebrush steppe ecosystem is resistant to chronic alterations in water availability.
 There are three possible explanations for the resistance we found.
 First, it could be that our experiment simply was not long enough to induce responses.
-This may be true for community responses, which can take decades [@Wilcox2016], but the response of grassland ANPP to water manipulations is typically immediate [e.g., @Hoover2014].
+This may be true for community responses, which can take decades [@Wilcox2016].
 
 Second, it could be that our manipulations were not large enough to induce a response.
 That is, maybe a 50\% decrease/increase in any given year is not abnormal give our sites historical range of variability [@Knapp2017].
 We cannot definitively rule out this possibility, but we have reason to believe our manipulations *should* have been large enough.
 Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation neccesary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site.
 The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 3).
-Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 1A).
+Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
 The irrigation treatment may have been too small, however.
 
-Third, the ecosystem and community resistance to drought and deluge we observed could be a real phenomenon in this system.
+Third, the ecosystem and community resistance to drought and deluge we observed could be a real phenomenon in this system, at least over the five year time span we observed.
+The perennial plants in this cold desert ecosystem are tolerant to drought conditions [@Bazzaz1979; @Franks2011, A.R. Kleinhesselink, unpublished data], meaning a consistent ecosystem functional response at low soil moisture is perfectly reasonable.
+For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season (A.R. Kleinhesselink, personal observation).
+Likewise, the dominant shrub in our focal ecosystem, *Artemisia tripartita*, has access to water deep in the soil profile thanks to a deep root system [@Germino2014].
+As for the irrigation treatments, the lack of a saturating response (e.g., a lower regression slope) suggests water availability remained a limiting factor at the levels of precipitation we were able to manipulate.
 
+In conclusion, our results suggest that five years of $\pm$ 50\% ambient precipitation is not enough to induce a shift in ecosystem functional response in a sagebrush steppe.
+This is likely because component species are tolerant to drought conditions and water remains co-limiting at higher precipitation levels.
+Longer time series of chronic precipitation alteration may reveal plant community shifts that we did not observe [e.g., @Wilcox2016].
+Our results suggest compositional shifts would have the largest impact at high rainfall because the current community maintained consistent ecosystem functional response at very low water availability.
 
 # ACKNOWLEDGEMENTS
 
