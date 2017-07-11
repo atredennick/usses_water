@@ -13,24 +13,18 @@ Byrne, K.~M., Lauenroth, W.~K., Adler, P.~B., and Byrne, C.~M. (2011).
   Comparison of Nondestructive Methods}}.
 \newblock {\em Rangeland Ecology and Management}, 64(5):498--505.
 
-\bibitem[Collins et~al., 2008]{Collins2008}
-Collins, S.~L., Suding, K.~N., Cleland, E.~E., Batty, M., Pennings, S.~C.,
-  Gross, K.~L., Grace, J.~B., Gough, L., Fargione, J.~E., and Clark, C.~M.
-  (2008).
-\newblock {Rank clocks and plant community dynamics}.
-\newblock {\em Ecology}, 89(12):3534--3541.
-
 \bibitem[Gherardi and Sala, 2013]{Gherardi2013}
 Gherardi, L.~A. and Sala, O.~E. (2013).
 \newblock {Automated rainfall manipulation system: a reliable and inexpensive
   tool for ecologists}.
 \newblock {\em Ecosphere}, 4(2):1--10.
 
-\bibitem[Hallett et~al., 2016]{Hallett2016}
-Hallett, L.~M., Jones, S.~K., MacDonald, A. A.~M., Jones, M.~B., Flynn, D.
-  F.~B., Ripplinger, J., Slaughter, P., Gries, C., and Collins, S.~L. (2016).
-\newblock {codyn: An r package of community dynamics metrics}.
-\newblock {\em Methods in Ecology and Evolution}, 7(10):1146--1151.
+\bibitem[Gherardi and Sala, 2015]{Gherardi2015}
+Gherardi, L.~A. and Sala, O.~E. (2015).
+\newblock {Enhanced interannual precipitation variability increases plant
+  functional diversity that in turn ameliorates negative impact on
+  productivity}.
+\newblock {\em Ecology Letters}, 18(12):1293--1300.
 
 \bibitem[Hill, 1920]{Hill1920}
 Hill, R.~R. (1920).
@@ -112,11 +106,6 @@ Tredennick, A.~T., Bentley, L.~P., and Hanan, N.~P. (2013).
 \newblock {Allometric convergence in savanna trees and implications for the use
   of plant scaling models in variable ecosystems.}
 \newblock {\em PLoS One}, 8(3):e58241.
-
-\bibitem[Wickham, 2009]{Wickham2009}
-Wickham, H. (2009).
-\newblock {\em {{ggplot2: Elegant Graphics for Data Analysis}}}.
-\newblock Springer-Verlag, New York, NY.
 
 \bibitem[Wilcox et~al., 2016]{Wilcox2016}
 Wilcox, K.~R., Blair, J.~M., Smith, M.~D., and Knapp, A.~K. (2016).

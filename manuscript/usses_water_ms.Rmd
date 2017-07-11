@@ -1,6 +1,6 @@
 ---
 title: Consistent ecosystem functional response during five years of drought and deluge in a sagebrush steppe
-preprint: true
+preprint: false
 author: 
   - name: Andrew T. Tredennick
     affiliation: 1
@@ -56,28 +56,50 @@ For example, historical trends may show a linear soil moisture-ANPP relationship
 Saturating relationships are actually common [@Hsu2012], perhaps because other resources, like nitrogen, become more limiting in wet years than dry years.
 Knowing the curvature of the soil moisture-ANPP relationship is critical for understanding how ecosystems will respond to chronic alterations in water availability.
 
-Manipulating potentially limiting resources offers a route to understanding how ecosystems will respond to resource levels that fall outside the historical range of variability [@Knapp2017].
-Chronic alterations to resource availability should cause community composition to shift over time, the focal ecosystem is sensitive to the manipulated resource.
-Species' relative abundances are expected to re-order and, eventually, some species will be lost from the local community and new species will be gained [@Smith2009; @Avolio2015].
-On the heels of changes in community composition, subsequent changes in the level of ecosystem functioning may occur.
-
-@Smith2009 introduced the 'Hierarchical Response Framework' for understanding the interplay of community composition and ecosystem functioning in response to resource manipulations over time.
+Another problem with relying on historical ecoystem functional responses is that they are not static.
+Changes in species identities and abundances can alter an ecosystem's functional response to water availability because different species have different physiological thresholds for producting biomass.
+@Smith2009 introduced the 'Hierarchical Response Framework' (HRF) for understanding the interplay of community composition and ecosystem functioning in response to resource manipulations over time.
 In the near term, ecosystem functioning such as annual net primary productivity (ANPP) will reflect the physiological responses of individual species to the manipulated resource level.
 For example, ANPP may decline under simulated drought because the initial community consisted of drought-intolerant species [@Hoover2014].
 Over longer time spans, ecosystem functioning may recover as new species colonize or initial species reorder in relative abundance.
 For example, ANPP may initially decline, but eventually rise back to pre-treatment levels once drought-tolerant species become more abundant and compensate for drought-intolerant species [@Hoover2014].
-It is also possible that ecosystem functioning shifts to a new mean state, reflective of the suite of species in the new community [@Knapp2012].
+It is also possible that ecosystem functioning shifts to a new mean state, reflecting the suite of species in the new community [@Knapp2012].
 
-Here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
+Manipulating potentially limiting resources offers a route to understanding how ecosystems will respond to resource levels that fall outside the historical range of variability [@Avolio2015; @Gherardi2015; @Knapp2017].
+Altering the amount of precipitation over many years should provide insight into the time scales at which water-limited ecosystems respond to chronic resource alteration.
+Following the HRF, we propose four alternative predictions for the effect of precipitation manipulation on the ecosystem functional response to soil moisture, that is, the soil moisture-ANPP relationship (Figure 1).
+The four predictions are based on possible outcomes at the community (e.g., community composition) and ecosystem (e.g., soil moisture-ANPP regression) levels.
+
+First, altered precipitation changes neither ecosystem functional response nor community composition (Fig. 1, top left).
+In this case, changes in ANPP simply follow the soil moisture-ANPP relationship under ambient conditions.
+This corresponds to the early phases of the HRF, where ecosystem response is due to the physiological responses of individual species.
+Second, the ecosystem functional response changes but community composition remains the same (Fig. 1, top right).
+A saturating soil moisture-ANPP response fits this scenario, where individual species hit physiological thresholds or are limited by some other resource.
+Third, the ecosystem functional response is consistent but underlying community composition changes (Fig. 1, bottom left).
+In this case, changes in species' indentities or abundances occur in response to altered precipitation levels and species more suited to the new conditions compensate for reduced function of initial species.
+Fourth, and last, both ecosystem functional response and community composition change (Fig. 1, bottom right).
+New species, or newly abundant species, with different physiological responses completely reshape the ecosystem functional response.
+
+All four outcomes are possible in any given ecosystem, but the time scales at which the different scenarios play out likely differ [@Smith2009; @Wilcox2016; @Knapp2017].
+Thus, our task is not to test the validity of the HRF, but rather to amass information on how quickly ecosystem functional responses change in different ecosystems.
+Likewise, we need to understand whether changes at the ecosystem level are driven community level changes or individual level responses.
+
+To that end, here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
 We imposed drought and irrigation treatments (50\% decrease/increase) and measured ecosystem (ANPP) and community (species composition) responses.
-We focus on how the drought and irrigation treatments affect the relationship between ANPP and available soil moisture, and if community dynamics underly the ecosystem responses.
-In particular, we are interested in the consistency of the ANPP-soil moisture relationship among treatments.
+We focus on how the drought and irrigation treatments affect the relationship between available soil moisture and ANPP, and if community dynamics underly the ecosystem responses.
+In particular, we are interested in the consistency of the soil moisture-ANPP relationship among treatments.
 Is the relationship steeper under the drought treatment, at low soil moisture?
 Does the relationship saturate under the irrigation treatment, at high soil moisture?
 To answer these questions we fit a random intercepts, random slopes model to test whether the regressions differed among treatments.
+We also analyzed community composition over time, allowing us to place our experimental results within the framework of the HRF and our competing predictions (Fig. 1).
 
 
 <!---
+Chronic alterations to resource availability should cause community composition to shift over time, if the focal ecosystem is sensitive to the manipulated resource.
+Species' relative abundances are expected to re-order and, eventually, some species will be lost from the local community and new species will be gained [@Smith2009; @Avolio2015].
+On the heels of changes in community composition, subsequent changes in the level of ecosystem functioning may occur.
+
+
 As the rate of climate change accelerates, ecologists are being pressed to forecast its impacts on ecosystem functions and services.
 Making such forecasts faces two challenges.
 First, future conditions are likely to be outside the historical range of variability [@Smith2011], meaning we cannot simply look to the past to predict the future.
@@ -214,8 +236,6 @@ We plotted the first two axes of NMDS scores to see if community composition ove
 We used the 'metaMDS()' function in the R package 'vegan' [@Oksanen2016] to calculate Bray-Curtis distances and then to run the NMDS analysis.
 We used the 'vegan::adonis()' function [@Oksanen2016] to perform permutational multivariate analysis of variance to test whether treatment plots formed distinct groupings.
 To test whether treatment plots were equally dispersed, or not, we used the 'vegan::betadisper' function [@Oksanen2016].
-Lastly, we examined rank clocks of species' abundances through time to assess the stability of community composition over the course of the experiment [@Collins2008].
-Rank clocks were made using 'ggplot2' [@Wickham2009] and R code from the 'codyn' package [@Hallett2016].
 
 All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
 We also include annotated Stan code in our model description in Appendix 2.
