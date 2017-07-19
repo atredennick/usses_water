@@ -266,6 +266,14 @@ Likewise, community composition was remarkably stable over time, with no evidenc
 
 # DISCUSSION
 
+<!---
+NOTES FROM MEETING WITH PETER
+1. Bet hedgers -- dominant species here deal well with low water and interannual variability; they live in dry and variable in environment, which has selected for tratis (not hitting physiological thresholds which only becom apparaent when species really go for it). Bet hedging = do the same things every year.
+2. Statistical explanation -- either (1) above explains our weak and variable relationship, or we just looked at the wrong thing; lots of other things beyond VWC that are influencing ANPP.
+3. Limitation -- snow, we don't know what happens. Its blowing around, who knows how big of an impact this has.
+4. Show Fig 2D with real model fits and move to results figure 3.
+---->
+
 Ecosystem response to chronic resource alteration is expected to follow a temporal trend.
 Initially, ecosystem response will be modest and reflect the physiological responses of constituent species.
 Over longer time periods, species reordering will cause greater responses as species better able to take advantage of, or cope with, new resource levels become more abundant.
