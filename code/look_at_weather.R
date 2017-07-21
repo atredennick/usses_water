@@ -87,7 +87,7 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
   theme_bw()+
   theme(panel.grid.minor = element_blank())+
   guides(color = guide_legend(override.aes = list(size=1)))+
-  theme(legend.position = c(0.2, 0.8),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
+  theme(legend.position = c(0.2, 0.75),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
         legend.text = element_text(size = 8),
         legend.key.height = unit(0.8,"line"),
         legend.box.background = element_rect())
@@ -127,29 +127,38 @@ soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, col
 ####  MAKE SCATTERPLOT OF ANPP vs. PRECIP ----
 ####
 source("read_format_data.R") # load data
-data_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
-  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  #stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.5)+
-  stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),aes(color=Treatment), se=FALSE, size=0.5)+
-  #stat_smooth(method="lm", color="black", se=FALSE, size=0.7)+
-  stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),color="black", se=FALSE, size=0.5)+
-  scale_fill_brewer(palette = "Set2")+
-  scale_color_brewer(palette = "Set2")+
-  #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
-  scale_y_continuous(breaks=seq(50,350,50))+
-  xlab("March-June Cumulative VWC")+
-  ylab(expression(paste("ANPP (g ",m^2,")")))+
-  ggtitle("D")+
-  guides(fill=FALSE,color=FALSE)+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank())
+mod <- lm(log(anpp)~total_seasonal_vwc, data = dplyr::filter(anpp_data, Treatment == "Control"))
+hist(resid(mod))
+
+library(lme4)
+library(lmerTest)
+mod1 <- lmer(anpp~total_seasonal_vwc + (1|Treatment), data = anpp_data)
+mod2 <- lmer(log(anpp)~total_seasonal_vwc + (1|Treatment), data = anpp_data)
+lmerTest::anova(mod1,mod2)
+
+# data_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
+#   geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
+#   #stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.5)+
+#   stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),aes(color=Treatment), se=FALSE, size=0.5)+
+#   #stat_smooth(method="lm", color="black", se=FALSE, size=0.7)+
+#   stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),color="black", se=FALSE, size=0.5)+
+#   scale_fill_brewer(palette = "Set2")+
+#   scale_color_brewer(palette = "Set2")+
+#   #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
+#   scale_y_continuous(breaks=seq(50,350,50))+
+#   xlab("March-June Cumulative VWC")+
+#   ylab(expression(paste("ANPP (g ",m^2,")")))+
+#   ggtitle("D")+
+#   guides(fill=FALSE,color=FALSE)+
+#   theme_bw()+
+#   theme(panel.grid.minor = element_blank())
 
 
 ####
 ####  COMBINE PLOTS AND SAVE ----
 ####
-gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,data_plot,ncol=2,nrow=2)
-ggsave("../figures/Figure1.png", gout, width=7, height=6, units="in", dpi=120)
+gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,ncol=1,nrow=3)
+ggsave("../figures/Figure1.png", gout, width=3.2, height=8, units="in", dpi=120)
 
 
 
