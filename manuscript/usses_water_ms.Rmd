@@ -1,5 +1,5 @@
 ---
-title: Consistent ecosystem functional response during five years of drought and deluge in a sagebrush steppe
+title: Linear ecosystem functional response across precipitation extremes in a sagebrush steppe
 preprint: false
 author: 
   - name: Andrew T. Tredennick
@@ -20,7 +20,7 @@ affiliation:
   - code: 3
     address: USSES, address...
 abstract: >
-  Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common. Such periods of drought and deluge could become major drivers of plant community dynamics and ecosystem functioning in water limited grasslands. Here we report the results of a five-year experiment where we used drought and irrigation treatments (50% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes. Ecosystem functional response, defined as the relationship between soil moisture and aboveground net primary productivity, was suprisingly consistent across drought, control, and irrigation treatments. Aboveground net primary productivity (ANPP) responded positively to availabile soil moisture, but the response did not vary across treatments. There was also no evidence that treatment effects grew over time. The similarity of ecosystem functional response across treatment was not due to compensatory shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years. At least in the short-term, ecosystem functional response and community composition in this sagebrush steppe system is resistant to increases and decreases in growing season precipitation.
+  Precipitation is predicted to become more variable in the western U.S., meaning years of above and below average precipitation will become more common. Such periods of drought and deluge are major drivers of plant community dynamics and ecosystem functioning in water limited grasslands. Here we report the results of a five-year experiment where we used drought and irrigation treatments (50% decrease/increase) to see how a sagebrush steppe plant community in Idaho will respond to future climate changes. Ecosystem functional response, defined as the relationship between soil moisture and aboveground net primary productivity, was suprisingly consistent across drought, control, and irrigation treatments. Aboveground net primary productivity (ANPP) responded positively to availabile soil moisture, but the response did not vary across treatments. There was also no evidence that treatment effects grew over time. The similarity of ecosystem functional response across treatment was not due to compensatory shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years. At least in the short-term, ecosystem functional response and community composition in this sagebrush steppe system is resistant to increases and decreases in growing season precipitation.
 header-includes: >
   \usepackage{lipsum}
   \usepackage{setspace}
