@@ -26,7 +26,7 @@ parameters {
 }
 
 transformed parameters {
-  vector[Nobs] yhat;                      # vector of expected values (predictions)
+  vector[Nobs] yhat; # vector of expected values
   for (i in 1:Nobs)
     yhat[i] = x[i]*beta_plot[plot_id[i]] + year_off[year_id[i]]; # regression model for expected values (one for each plot-year)
 }
@@ -54,11 +54,15 @@ model {
 
 generated quantities {
   vector[Nppts] ypreds[Ntreats];
+  vector[Nppts] ypreds_mu;
   vector[Nppts] ydiff_control_drought;
   vector[Nppts] ydiff_control_irrigate;
+  vector[Nobs] resid;
   vector[2] inter_diffs;
+  resid = y - yhat;
   for(i in 1:Ntreats)
     ypreds[i] = newx*beta_treat[i]; # mean predictions for each treatment-year
+  ypreds_mu = newx*beta_mu;
   ydiff_control_drought = ypreds[1] - ypreds[2]; # difference between mean predictions
   ydiff_control_irrigate = ypreds[1] - ypreds[3]; # difference between mean predictions
   inter_diffs[1] = beta_treat[1][1] - beta_treat[2][1]; # difference between control and drought in avg ppt year

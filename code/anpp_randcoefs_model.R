@@ -84,8 +84,24 @@ fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
 all_fit <- fit_stan_model(anpp_data,check_diags = FALSE, treattype = "all")
 saveRDS(all_fit, "../results/randcoefs_alltreatments_fit.RDS")
 
-# drought_fit <- fit_stan_model(drought_data,check_diags = T,treattype = "drought")
-# irrigate_fit <- fit_stan_model(irrigate_data,check_diags = T,treattype = "irrigate")
-# saveRDS(drought_fit, "../results/randcoefs_drought_fit.RDS")
-# saveRDS(irrigate_fit, "../results/randcoefs_irrigate_fit.RDS")
 
+
+####
+####  PLOT RESIDUALS ----
+####
+# predictions <- reshape2::melt(rstan::extract(all_fit, pars="yhat")) %>%
+#   rename(iteration = iterations, obs_id = Var2, estimate = value, stan_name = L1) %>%
+#   group_by(obs_id) %>%
+#   summarise(mean_estimate = mean(estimate))
+# 
+# resids <- reshape2::melt(rstan::extract(all_fit, pars="resid")) %>%
+#   rename(iteration = iterations, obs_id = Var2, resid = value, stan_name = L1) %>%
+#   left_join(predictions, by="obs_id") %>%
+#   group_by(obs_id) %>%
+#   summarise(mean_resid = mean(resid),
+#             mean_est_anpp = mean(mean_estimate)) %>%
+#   ungroup()
+# 
+# ggplot(resids, aes(x=mean_est_anpp, y=mean_resid))+
+#   geom_hline(aes(yintercept=0))+
+#   geom_point()

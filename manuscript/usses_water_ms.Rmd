@@ -1,5 +1,5 @@
 ---
-title: Linear ecosystem functional response across precipitation extremes in a sagebrush steppe
+title: Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe
 preprint: false
 author: 
   - name: Andrew T. Tredennick
@@ -247,6 +247,11 @@ All R code and data necessary to reproduce our analysis has been archived on Fig
 We also include annotated Stan code in our model description in Appendix 2.
 
 
+```{r get_results, echo=FALSE}
+betas <- read.csv("../results/beta_summaries.csv")
+```
+
+
 # RESULTS
 
 Three of our five treatment years fell in years of below average rainfall (Fig. 2A).
@@ -255,8 +260,8 @@ Averaged across treatments, ANPP varied from a minimum of 74.5 g m$^{-2}$ in 201
 ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
-Cumulative growing season soil moisture had a positive effect on ANPP (mean of $\beta_{1}$ = 0.43; 80\% BCI = -0.05, 0.88; 95\% BCI = -0.36, 1.15) (Fig. 2D).
-Ecosystem functional response was similar among treatments, with treatment level regressions between soil moisture and log(ANPP) having similar intercepts (Fig. 3A) and slopes (Fig. 3B).
+Cumulative growing season soil moisture had a positive effect on ANPP (mean of $\beta_{1}$ = `r round(betas$mean[8],2)`; 80\% BCI = `r round(betas$X10.[8],2)`, `r round(betas$X90.[8],2)`; 95\% BCI = `r round(betas$X2.5.[8],2)`, `r round(betas$X97.5.[8],2)`) (Fig. 3).
+Ecosystem functional response was similar among treatments, with treatment level regressions between soil moisture and log(ANPP) having similar intercepts and slopes (Fig. 3A).
 There was also no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. 4).
 
 Community composition was similar among treatments.
@@ -329,6 +334,16 @@ NSF DBI-1400370 to Andrew Tredennick.
 NSF Graduate Research Fellowship to Andrew Kleinhesselink.  
 NSF DEB-1353078 and DEB-1054040 to Peter Adler. 
 
+# AUTHOR CONTRIBUTIONS
+\begin{itemize}
+  \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed
+drafts of the paper.
+  \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, reviewed drafts of the paper.
+  \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed
+drafts of the paper.
+\end{itemize} 
+
+
 \newpage{}
 
 # TABLES
@@ -379,7 +394,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=5in]{../figures/Figure1.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. (D) Scatterplot of ANPP versus growing season precipitation. Colored regression lines are independently-fit linear models for each treatment with no random effects structure; dark black regression line is a linear regression through all the point with no random effects structure. Our analysis seeks to find if the data supports a model with different intercepts and/or slopes for each treatment, while also accounting for nonindependence of samples within plots across years. Color mapping for panels B-D is shown in the legend for panel C.}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment.}
 \end{figure}
 
 
@@ -387,8 +402,8 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 
 \begin{figure}[!ht]
   \centering
-      \includegraphics[width=5in]{../figures/glmm_treatment_posteriors.png}
-  \caption{Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Soil Moisture'). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
+      \includegraphics[width=5in]{../figures/glmm_main_results.png}
+  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Soil Moisture'). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines) and the overall mean coefficients (heavy black line). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. S2-1.}
 \end{figure}
 
 

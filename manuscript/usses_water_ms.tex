@@ -1,0 +1,618 @@
+%% Submissions for peer-review must enable line-numbering
+%% using the lineno option in the \documentclass command.
+%%
+%% Preprints and camera-ready submissions do not need
+%% line numbers, and should have this option removed.
+%%
+%% Please note that the line numbering option requires
+%% version 1.1 or newer of the wlpeerj.cls file, and
+%% the corresponding author info requires v1.2
+
+\documentclass[fleqn,10pt,lineno]{wlpeerj} % for journal submissions
+
+% ZNK -- Adding headers for pandoc
+
+\setlength{\emergencystretch}{3em} 
+\providecommand{\tightlist}{
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{lipsum}
+\usepackage[unicode=true]{hyperref}
+\usepackage{longtable}
+
+
+
+\usepackage{lipsum} \usepackage{setspace} \usepackage{todonotes}
+\usepackage{rotating} \usepackage{color, soul} \usepackage{sectsty}
+\usepackage{bm,mathrsfs}
+
+\title{Consistent ecosystem functional response across precipitation extremes
+in a sagebrush steppe}
+
+\author[1]{Andrew T. Tredennick}
+
+\corrauthor[1]{Andrew T. Tredennick}{\href{mailto:atredenn@gmail.com}{\nolinkurl{atredenn@gmail.com}}}
+\author[2]{Andrew R. Kleinhesselink}
+
+\author[3]{Bret Taylor}
+
+\author[1]{Peter B. Adler}
+
+
+\affil[1]{Department of Wildland Resources and the Ecology Center, Utah State
+University, Logan, Utah 84322}
+\affil[2]{Department of Ecology and Evolutionary Biology, University of
+California, Los Angeles, Los Angeles, California 90095}
+\affil[3]{USSES, address\ldots{}}
+
+
+%
+% \author[1]{First Author}
+% \author[2]{Second Author}
+% \affil[1]{Address of first author}
+% \affil[2]{Address of second author}
+% \corrauthor[1]{First Author}{f.author@email.com}
+
+% 
+\begin{abstract}
+Precipitation is predicted to become more variable in the western U.S.,
+meaning years of above and below average precipitation will become more
+common. Such periods of drought and deluge are major drivers of plant
+community dynamics and ecosystem functioning in water limited
+grasslands. Here we report the results of a five-year experiment where
+we used drought and irrigation treatments (50\% decrease/increase) to
+see how a sagebrush steppe plant community in Idaho will respond to
+future climate changes. Ecosystem functional response, defined as the
+relationship between soil moisture and aboveground net primary
+productivity, was suprisingly consistent across drought, control, and
+irrigation treatments. Aboveground net primary productivity (ANPP)
+responded positively to availabile soil moisture, but the response did
+not vary across treatments. There was also no evidence that treatment
+effects grew over time. The similarity of ecosystem functional response
+across treatment was not due to compensatory shifts at the plant
+community level, where species composition among treatments was similar
+and remarkably stable over the five years. At least in the short-term,
+ecosystem functional response and community composition in this
+sagebrush steppe system is resistant to increases and decreases in
+growing season precipitation.
+% Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text.
+\end{abstract}
+
+\begin{document}
+
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+
+\definecolor{blue}{rgb}{0,0,0.7} \definecolor{red}{rgb}{0.7,0,0}
+\newcommand{\pba}{\textcolor{blue}} \newcommand{\ark}{\textcolor{red}}
+
+\section{INTRODUCTION}\label{introduction}
+
+Water availability is a strong driver of aboveground net primary
+productivity (ANPP) in grassland ecosystems. Mean annual precipitation
+(MAP) is strongly correlated with ANPP across sites \citep{Huxman2004},
+and, in water-limited ecosystems, interannual variation in MAP is also
+correlated with interannual variation in ANPP \citep{Hsu2012}. These
+relationships suggest that chronic alterations in levels of
+precipitation, associated with global climate change, will impact ANPP.
+
+At a given site, the functional response of ANPP to water availability
+(e.g., soil moisture) can be characterized by fitting a model to
+historical observations of ANPP and soil moisture. However, the fitted
+functional response may provide an incomplete picture because future
+conditions are likely to be outside the historical range of variability
+\citep{Smith2011}. For example, historical trends may show a linear soil
+moisture-ANPP relationship, but that relationship could potentially
+saturate if soil moisture is pushed far beyond typical levels.
+Saturating relationships are actually common \citep{Hsu2012}, perhaps
+because other resources, like nitrogen, become more limiting in wet
+years than dry years. Knowing the curvature of the soil moisture-ANPP
+relationship is critical for understanding how ecosystems will respond
+to chronic alterations in water availability.
+
+Another problem with relying on historical ecoystem functional responses
+is that they are not static. Changes in species identities and
+abundances can alter an ecosystem's functional response to water
+availability because different species have different physiological
+thresholds for producting biomass. \citet{Smith2009} introduced the
+`Hierarchical Response Framework' (HRF) for understanding the interplay
+of community composition and ecosystem functioning in response to
+resource manipulations over time. In the near term, ecosystem
+functioning such as annual net primary productivity (ANPP) will reflect
+the physiological responses of individual species to the manipulated
+resource level. For example, ANPP may decline under simulated drought
+because the initial community consisted of drought-intolerant species
+\citep{Hoover2014}. Over longer time spans, ecosystem functioning may
+recover as new species colonize or initial species reorder in relative
+abundance. For example, ANPP may initially decline, but eventually rise
+back to pre-treatment levels once drought-tolerant species become more
+abundant and compensate for drought-intolerant species
+\citep{Hoover2014}. It is also possible that ecosystem functioning
+shifts to a new mean state, reflecting the suite of species in the new
+community \citep{Knapp2012}.
+
+Manipulating potentially limiting resources offers a route to
+understanding how ecosystems will respond to resource levels that fall
+outside the historical range of variability
+\citep{Avolio2015, Gherardi2015, Knapp2017}. Altering the amount of
+precipitation over many years should provide insight into the time
+scales at which water-limited ecosystems respond to chronic resource
+alteration. Following the HRF, we propose four alternative predictions
+for the effect of precipitation manipulation on the ecosystem functional
+response to soil moisture, that is, the soil moisture-ANPP relationship
+(Figure 1). The four predictions are based on possible outcomes at the
+community (e.g., community composition) and ecosystem (e.g., soil
+moisture-ANPP regression) levels.
+
+First, altered precipitation changes neither ecosystem functional
+response nor community composition (Fig. 1, top left). In this case,
+changes in ANPP simply follow the soil moisture-ANPP relationship under
+ambient conditions. This corresponds to the early phases of the HRF,
+where ecosystem response is due to the physiological responses of
+individual species. Second, the ecosystem functional response changes
+but community composition remains the same (Fig. 1, top right). A
+saturating soil moisture-ANPP response fits this scenario, where
+individual species hit physiological thresholds or are limited by some
+other resource. Third, the ecosystem functional response is consistent
+but underlying community composition changes (Fig. 1, bottom left). In
+this case, changes in species' indentities or abundances occur in
+response to altered precipitation levels and species more suited to the
+new conditions compensate for reduced function of initial species.
+Fourth, and last, both ecosystem functional response and community
+composition change (Fig. 1, bottom right). New species, or newly
+abundant species, with different physiological responses completely
+reshape the ecosystem functional response.
+
+All four outcomes are possible in any given ecosystem, but the time
+scales at which the different scenarios play out likely differ
+\citep{Smith2009, Wilcox2016, Knapp2017}. Thus, our task is not to test
+the validity of the HRF, but rather to amass information on how quickly
+ecosystem functional responses change in different ecosystems. Likewise,
+we need to understand whether changes at the ecosystem level are driven
+community level changes or individual level responses.
+
+To that end, here we report the results of a five-year precipitation
+manipulation experiment in a sagebrush steppe grassland. We imposed
+drought and irrigation treatments (50\% decrease/increase) and measured
+ecosystem (ANPP) and community (species composition) responses. We focus
+on how the drought and irrigation treatments affect the relationship
+between available soil moisture and ANPP, and if community dynamics
+underly the ecosystem responses. In particular, we are interested in the
+consistency of the soil moisture-ANPP relationship among treatments. Is
+the relationship steeper under the drought treatment, at low soil
+moisture? Does the relationship saturate under the irrigation treatment,
+at high soil moisture? To answer these questions we fit a random
+intercepts, random slopes model to test whether the regressions differed
+among treatments. We also analyzed community composition over time,
+allowing us to place our experimental results within the framework of
+the HRF and our competing predictions (Fig. 1).
+
+\section{METHODS}\label{methods}
+
+\subsection{Study Area}\label{study-area}
+
+We conducted our precipitation manipulation experiment at the United
+States Sheep Experimental Station (USSES) near Dubois, Idaho
+(44.2\(^{\circ}\) N, 112.1\(^{\circ}\) W), 1500 m above sea level. The
+vegetation is typical of high elevation sagebrush steppe. The plant
+community is dominated by the shrub \emph{Artemesia tripartita} and
+three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa
+secunda}, and \emph{Hesperostipa comata}. During the period of our
+experiment (2011 -- 2015), average mean annual precipitation was 265 mm
+year\(\phantom{}^{-1}\) and mean monthly temperature ranged from
+-5.2\(^{\circ}\)C in January to 21.8\(^{\circ}\)C in July.
+
+\subsection{Precipitation Experiment}\label{precipitation-experiment}
+
+Between 1926 and 1932, range scientists at the USSES established 26
+permanent 1 m\(^2\) quadrats to track vegetation change over time. In
+2007, we (well, one of us {[}P. Adler{]}) relocated 14 of the original
+quadrats, six of which were inside a large, permanent livestock
+exclosure. We use these six plots as control plots that have recieved no
+treatment, just ambient precipitation. In spring 2011, we (well, two of
+us {[}A. Kleinhesselink and P. Adler{]}) established 16 new 1 m\(^2\)
+plots. We avoided areas on steep hill slopes, areas with greater than
+20\% cover of bare rock, and areas with greater than 10\% cover of the
+shrubs \emph{Purshia tridentata} and/or \emph{Amelanchier utahensis}. We
+established the new plots in pairs and randomly assigned each plot in a
+pair to receive a ``drought'' or ``irrigation'' treatment.
+
+Drought and irrigation treatments were designed to decrease and increase
+the amount of ambient precipitation by 50\%, respectively. To achieve
+this, we used a system of rain-out shelters and automatic irrigation
+\citep{Gherardi2013}. The rain-out shelters consisted of transparent
+acrylic shingles 1-1.5 m above the ground that covered an area of
+\(2.5\times2\) m. The shingles intercepted approximately 50\% of
+incoming rainfall, which was channeled into 75 liter containers.
+Captured rainfall was then pumped out of the containers and sprayed on
+to the adjacent irrigation plot via two suspended sprinklers. Pumping
+was triggered by float switches once water levels reached about 20
+liters. We disconnected the irrigation pumps each fall and reconnected
+them, often with difficulty, each spring. The rain-out shelters remained
+in place throughout the year.
+
+To make sure the treatments were having the desired effects, we
+monitored soil moisture in four of the drought-irrigation pairs using
+Decagon Devices (Pulman, Washington) 5TM and EC-5 soil moisture sensors.
+We installed four sensors in each plot, two at 5 cm soil depth and two
+at 25 cm soil depth. We also installed four sensors in areas nearby the
+four selected plot pairs to measure ambient soil moisture at the same
+depths. Soil moisture measurements were automatically logged every four
+hours. We coupled this temporally intensive soil moisture sampling with
+spatially extensive readings taken at six points within all 16 plots and
+associated ambient measurement areas. These snapshot data were collected
+on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using
+a handheld EC-5 sensor.
+
+\ark{ANDY: add paragraph on the statistical modeling of soil moisture to produce Figure 2B (same as your Figure 2 in the precip-demography-prediction dissertation chapter).}
+
+\subsection{Data Collection}\label{data-collection}
+
+We estimated aboveground net primary productivity (ANPP) using a
+radiometer to relate ground reflectance to plant biomass \citep[see][
+for a review]{Byrne2011}. We recorded ground reflectance at four
+wavelengths, two associated with red reflectance (626 nm and 652 nm) and
+two associated with near-infrared reflectance (875 nm and 859 nm). At
+each plot in each year, we took four readings of ground reflectances at
+the above wavelengths. We also took readings in ten calibration plots
+adjacent to the experimental site, in which we harvested all aboveground
+biomass, dried it to a constant weight at 60\(^{\circ}\)C, and weighed
+it to estimate ANPP.
+
+For each plot and year, we averaged the four readings for each
+wavelength and then calculated NDVI using the MODIS and AVHRR
+algorithms. To convert NDVI to ANPP we regressed NDVI against the dry
+biomass weight from the ten calibration plots. We fit regressions to
+MODIS-based NDVI and AVHRR-based NDVI for each year and retained the
+regression with the better fit. Using the best regression equation for
+each year, we predicted ANPP (Appendix 1).
+
+Species composition data came from two sources: yearly census maps for
+each plot made using a pantograph \citep{Hill1920} and yearly counts of
+annual species in each plot. The maps record the spatial location of all
+individuals in the plot and the basal cover of each individual with
+cover greater than 1 cm. Using those annual maps, we aggregated over
+individuals to calculate total basal cover for each species in each
+plot. We made a large plot-treatment-year by species matrix, where
+columns were filled with either basal cover or density, depending on the
+measurement made for the particular species. So we could analyze the
+different types of data together, we standardized the values in each
+column. This puts all abundance values on the same scale, but comes with
+the limitation that all species are weighted equally. Nonetheless, this
+scaling approach allows a comprehensive view of community composition
+dynamics through time.
+
+\subsection{Data Analysis}\label{data-analysis}
+
+Our main goal was to test whether the relationship between ANPP and
+growing season precipitation (hereafter, precipiation) differed among
+the drought, control, and irrigation treatments. To achieve this goal,
+we fit a multi-level random intercept and random slope regression with
+log(ANPP) as the response variabile and soil moisture (volumetric water
+content) as the sole predictor. We fit the model under a Bayesian
+framework, allowing us to test for treatment differences by comparing
+the posterior distributions of the treatment-level coefficients
+\citep[e.g.,][]{Tredennick2013}. Both log(ANPP) and soil moisture were
+standardized to have mean 0 and unit variance before fitting the model
+{[}i.e., \((x_i - \bar{x})/\sigma_x\){]}.
+
+Our multi-level model has three grouping levels for coefficients,
+representing the nested structure of the data: (i) overall coefficients,
+(ii) treatment coefficients, and (iii) plot coefficients. Each
+subsequent level is drawn from the distribution of coefficients at the
+previous level. Formally, our model is defined as follows:
+
+\vspace{-2em}
+
+\begin{align}
+\mu_{i(j(k(t)))} &= \beta_{0,j(k)} + \beta_{1,j(k)}x_i + \gamma_t, \\
+y_{i(j(k(t)))} &\sim \text{Normal} \left(\mu_{i(j(k(t)))}, \sigma^2_{k} \right),
+\end{align}
+
+\noindent{}where \(\mu_{i(j(k))}\) is the deterministic prediction from
+the regression model for observation \emph{i} for plot \emph{j}
+associated with treatment \emph{k} in year \emph{t}, \(\beta_{0,j(k)}\)
+is the intercept for plot \emph{j} associated with treatment \emph{k},
+\(\beta_{1,j(k)}\) is the slope term for the effect of soil moisture for
+plot \emph{j} associated with treatment \emph{k}, \(\gamma_t\) is the
+intercept offset for year \emph{t}, and \(\sigma^2_k\) is the process
+variance for treatment \emph{k}. Data include the standardized log(ANPP)
+observations \(\left( y_{i(j(k(t)))} \right)\) and soil moisture
+(\(x_i\)). Although we include observation subscript \emph{i} on the
+\emph{x}s, observations within a treatment-year all share the same soil
+moisture values.
+
+The intercept and slope terms are modeled hierarchichally to account for
+the non-independence of observations across years within plots and to
+allow us to test the hypothesis that our treatments alter the ANPP-soil
+moisture relationship. As noted above, plot-level coefficients are drawn
+from treatment-level coefficients, which are drawn from overall
+coefficients. We also include a covariance structure among the intercept
+and slope at each level. Formally, our hierarhical structure is as
+follows, where we drop the intercept (0) and slope (1) subscripts and
+instead refer to a vector of coefficients, \(\boldsymbol{\beta}\):
+
+\vspace{-1em}
+
+\begin{align}
+\boldsymbol{\beta}_{j(k)} &\sim \text{MVN} \left( \boldsymbol{\beta}_k, \boldsymbol{\Sigma}(k) \right), \\
+\boldsymbol{\beta}_{k} &\sim \text{MVN} \left( \boldsymbol{\beta}, \boldsymbol{\Sigma}  \right), \\
+\boldsymbol{\beta} &\sim \text{Normal} \left( 0, 1 \right),
+\end{align}
+
+\noindent{}where \(\boldsymbol{\beta}_{j(k)}\) is the vector of
+regression coefficients (intercept and slope) for plot \emph{j}
+associated with treatment \emph{k}, \(\boldsymbol{\beta}_{k}\) is the
+vector of coefficients for each treatment, and \(\boldsymbol{\beta}\) is
+the vector of overall coefficients. The plot- and treatment-level
+coefficients are drawn from multivariate normal distributions with
+covariance matrix \(\boldsymbol{\Sigma}\). For the plot-level
+coefficients, each treatment has its own variance-covariance matrix
+(i.e., \(\boldsymbol{\Sigma}(k)\)). The overall coefficients are drawn
+from a normal prior with mean 0 and standard deviation 1. The random
+year effects (\(\boldsymbol{\gamma}\)) are drawn from a normal prior
+with mean 0 and standard deviation \(\sigma_{\text{year}}\), which was
+drawn from a weibull distribution. A full description of model is in
+Appendix 2.
+
+We fit the model using a Bayesian approach, obtaining posterior
+estimates of all unkowns via the No-U-Turn Hamiltonian Monte Carlo
+sampler in Stan \citep{stan2016}. We used the R package `rstan'
+\citep{rstan2016} to link R \citep{R2016} to Stan. We obtained samples
+from the posterior distribution for all model parameters from four
+parallel MCMC chains run for 10,000 iterations, saving every
+\(10^{\text{th}}\) sample. Traceplots of all parameters were visually
+inspected to ensure well-mixed chains and convergence. We also made sure
+all scale reduction factors (\(\hat{R}\)) were less than 1.1.
+
+To see if community composition differed among treatments through time,
+we used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis
+distances. For each year of the experiment, we first calculated
+Bray-Curtis distances among all plots, and then extracted those
+distances for use in the NMDS. Because we standardized species'
+abundances, some values were negative, which is not allowed for
+calculating Bray-Curtis distances. We simply added `2' to each abundance
+value to ensure all values were greater than zero. We plotted the first
+two axes of NMDS scores to see if community composition overlapped, or
+not, among treatments in each year. We used the `metaMDS()' function in
+the R package `vegan' \citep{Oksanen2016} to calculate Bray-Curtis
+distances and then to run the NMDS analysis. We used the
+`vegan::adonis()' function \citep{Oksanen2016} to perform permutational
+multivariate analysis of variance to test whether treatment plots formed
+distinct groupings. To test whether treatment plots were equally
+dispersed, or not, we used the `vegan::betadisper' function
+\citep{Oksanen2016}.
+
+All R code and data necessary to reproduce our analysis has been
+archived on Figshare (\emph{link here after acceptance}) and released on
+GitHub (\url{https://github.com/atredennick/usses_water/releases/v0.1}).
+We also include annotated Stan code in our model description in Appendix
+2.
+
+\section{RESULTS}\label{results}
+
+Three of our five treatment years fell in years of below average
+rainfall (Fig. 2A). Thus, those three years represent a lower magnitude
+of absolute change in precipitation experienced by the treatments.
+Averaged across treatments, ANPP varied from a minimum of 74.5 g
+m\(^{-2}\) in 2014 to a maximum of 237.1 g m\(^{-2}\) in 2016 (Fig. 2C).
+ANPP was slightly higher in irrigation plots and slightly lower in
+drought plots (Fig. 2C), corresponding to estimated soil volumetric
+water content (VWC) differences among treatments (Fig. 2B). Such
+differences in soil VWC indicate our treatment infrastructure was
+successful.
+
+Cumulative growing season soil moisture had a positive effect on ANPP
+(mean of \(\beta_{1}\) = 0.41; 80\% BCI = -0.08, 0.86; 95\% BCI = -0.45,
+1.13) (Fig. 3). Ecosystem functional response was similar among
+treatments, with treatment level regressions between soil moisture and
+log(ANPP) having similar intercepts and slopes (Fig. 3A). There was also
+no evidence that the treatment effects became more important over time
+because there was no directional trend in the random year effects (Fig.
+4).
+
+Community composition was similar among treatments. In no year did
+community composition among treatments not overlap, and they were
+equally dispersed in all years (Table 1; Fig. 5). Likewise, community
+composition was remarkably stable over time, with no evidence of
+divergence among treatments (Table 1; Fig. 5).
+
+\section{DISCUSSION}\label{discussion}
+
+Ecosystem response to chronic resource alteration is expected to follow
+a temporal trend. Initially, ecosystem response will be modest and
+reflect the physiological responses of constituent species. Over longer
+time periods, species reordering will cause greater responses as species
+better able to take advantage of, or cope with, new resource levels
+become more abundant. This temporal trend is formalized by the
+`Hierarchical Response Framework' \citep[HRF,][]{Smith2009}, and has
+been empirically supported \citep{Knapp2012, Wilcox2016}. A lingering
+question is not whether the HRF is a reasonable model of ecosystem
+dynamics, but rather how the time scales of ecosystem response and
+community change differ among ecosystems. Indeed, previous work has
+shown that community compositional shifts can be both rapid, on the
+order of years \citep{Hoover2014}, and slow, on order of decades
+\citep{Knapp2012, Wilcox2016}. To add to this growing body of knowledge,
+we performed a precipitation manipulation experiment in a sagebrush
+steppe ecosystem.
+
+Ecosystem functional response (i.e., the relationship between soil
+moisture and ANPP) and community composition in this sagebrush steppe
+ecosystem was consistent across drought, control, and irrigation
+treatments (Fig. 2D, Fig. 3). In other words, functional responses
+estimated from any precipitation level sampled apply to any other level
+of precipitation, and the consistent functional response was not due to
+species reordering and compensation. Thus, our results conform to the
+first of our four predictions: neither ecosystem functional response nor
+community composition changed with chronic alteration in water
+availability (Fig. 1, top left).
+
+This is surprising because grasslands generally, and sagebrush steppe
+specifically, are considered water-limited systems. Thus, our naive
+expecatations were that either (i) ecosystem functional response would
+differ among treatments as species reach physiological thresholds and
+resource limitations (Fig. 1, top right), or (ii) ecosystem functional
+response stays the same due to species reordering and compensation (Fig.
+1, bottom left).
+
+In the absence of community composition data, an obvious hypothesis to
+explain the consistent ecosystem functional response is that species
+reordered rapidly. In so doing, newly abundant species could compensate
+for the loss of ecosystem functioning of previously abundant species. We
+did not find this to be the case, as species composition was remarkably
+stable over the course of the experiment (Fig. 5).
+
+In combination, the lack of ecosystem and community response to drought
+or irrigation shows that this sagebrush steppe ecosystem is resistant to
+chronic alterations in water availability. There are three possible
+explanations for the resistance we found. First, it could be that our
+experiment simply was not long enough to induce responses. This may be
+true for community responses, which can take decades \citep{Wilcox2016}.
+
+Second, it could be that our manipulations were not large enough to
+induce a response. That is, maybe a 50\% decrease/increase in any given
+year is not abnormal give our sites historical range of variability
+\citep{Knapp2017}. We cannot definitively rule out this possibility, but
+we have reason to believe our manipulations \emph{should} have been
+large enough. Using the methods described by \citet{Lemoine2016}, we
+calculated the percent reduction and increase of mean growing season
+precipitation neccesary to reach the 1\% and 99\% extremes of the
+historical precipitation regime at our site. The 1\% quantile of
+precipitation at our site is 110 mm, a 47\% reduction from the mean, and
+the 99\% quantile is 414 mm, a 77\% increase from mean growing season
+precipitation (Appendix 3). Thus, our drought treatment represented
+extreme precipitation amounts, especially in years where ambient
+precipitation was below average (Fig. 2A). The irrigation treatment may
+have been too small, however.
+
+Third, the ecosystem and community resistance to drought and deluge we
+observed could be a real phenomenon in this system, at least over the
+five year time span we observed. The perennial plants in this cold
+desert ecosystem are tolerant to drought conditions \citep[A.R.
+Kleinhesselink, unpublished data]{Bazzaz1979, Franks2011}, meaning a
+consistent ecosystem functional response at low soil moisture is
+perfectly reasonable. For example, many of the perennial grasses in our
+focal ecosystem avoid drought stress by growing early in the growing
+season (A.R. Kleinhesselink, personal observation). Likewise, the
+dominant shrub in our focal ecosystem, \emph{Artemisia tripartita}, has
+access to water deep in the soil profile thanks to a deep root system
+\citep{Germino2014}. As for the irrigation treatments, the lack of a
+saturating response (e.g., a lower regression slope) suggests water
+availability remained a limiting factor at the levels of precipitation
+we were able to manipulate.
+
+In conclusion, our results suggest that five years of \(\pm\) 50\%
+ambient precipitation is not enough to induce a shift in ecosystem
+functional response in a sagebrush steppe. This is likely because
+component species are tolerant to drought conditions and water remains
+co-limiting at higher precipitation levels. Longer time series of
+chronic precipitation alteration may reveal plant community shifts that
+we did not observe \citep[e.g.,][]{Wilcox2016}. Our results suggest
+compositional shifts would have the largest impact at high rainfall
+because the current community maintained consistent ecosystem functional
+response at very low water availability.
+
+\section{ACKNOWLEDGEMENTS}\label{acknowledgements}
+
+We gratefully acknowledge the support of the Utah Agricultural
+Experiment Station (journal paper xxxx). We thank the many summer
+research technicians who collected the data reported in this paper and
+the US Experimental Sheep Station for facilitating work on their
+property. We also thank Susan Durham for clarifying our thinking on the
+statistical analyses and Kevin Wilcox for helpful discussions on
+analyzing community composition data.
+
+\section{FUNDING}\label{funding}
+
+NSF DBI-1400370 to Andrew Tredennick.\\
+NSF Graduate Research Fellowship to Andrew Kleinhesselink.\\
+NSF DEB-1353078 and DEB-1054040 to Peter Adler.
+
+\section{AUTHOR CONTRIBUTIONS}\label{author-contributions}
+
+\begin{itemize}
+  \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed
+drafts of the paper.
+  \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, reviewed drafts of the paper.
+  \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed
+drafts of the paper.
+\end{itemize}
+
+\newpage{}
+
+\section{TABLES}\label{tables}
+
+\begin{table}[ht]
+\centering
+\caption{Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis` tests whether treatments form unique clusters in multidimensial space; `betadisper` tests whether treatments have similar dispersion. For both tests, \emph{P} values greater than 0.05 indicate there is no support that the treatments differ.} 
+\begingroup\normalsize
+\begin{tabular}{rlrrrr}
+  \hline
+Year & Test & n & d.f. & \emph{F} & \emph{P} \\ 
+  \hline
+2011 & adonis &  21 &   2 & 1.02 & 0.45 \\ 
+  2011 & betadisper &  21 &   2 & 2.23 & 0.14 \\ 
+  2012 & adonis &  22 &   2 & 1.10 & 0.29 \\ 
+  2012 & betadisper &  22 &   2 & 0.21 & 0.81 \\ 
+  2013 & adonis &  22 &   2 & 1.23 & 0.14 \\ 
+  2013 & betadisper &  22 &   2 & 0.28 & 0.76 \\ 
+  2014 & adonis &  22 &   2 & 0.95 & 0.58 \\ 
+  2014 & betadisper &  22 &   2 & 0.35 & 0.71 \\ 
+  2015 & adonis &  21 &   2 & 1.05 & 0.37 \\ 
+  2015 & betadisper &  21 &   2 & 3.01 & 0.07 \\ 
+  2016 & adonis &  21 &   2 & 1.07 & 0.35 \\ 
+  2016 & betadisper &  21 &   2 & 0.50 & 0.62 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+\newpage{}
+
+\section{FIGURES}\label{figures}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=4in]{../figures/hypothesis_figtable.png}
+  \caption{Possible outcomes of chronic resource alteration.}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[height=5in]{../figures/Figure1.png}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment.}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{../figures/glmm_main_results.png}
+  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Soil Moisture'). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines) and the overall mean coefficients (heavy black line). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. S2-1.}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{../figures/glmm_yeardiffs.png}
+  \caption{Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
+\end{figure}
+
+\newpage{}
+
+\begin{figure}[!ht]
+  \centering
+      \includegraphics[width=5in]{../figures/sppcomp_bray_all.png}
+  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
+\end{figure}
+
+\newpage{}
+
+
+\bibliography{/Users/atredenn/Dropbox/Bibliography/usses_water.bib}
+
+
+\end{document}
