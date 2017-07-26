@@ -18,7 +18,7 @@ affiliation:
   - code: 2
     address: Department of Ecology and Evolutionary Biology, University of California, Los Angeles, Los Angeles, California 90095
   - code: 3
-    address: USSES, address...
+    address: United States Department of Agriculture, Agriculture Research Station, U.S. Sheep Experiment Station, Dubois, Idaho 83423
 abstract: >
   Precipitation is predicted to become more variable in the western United States, meaning years of above and below average precipitation will become more common. Periods of drought and deluge are major drivers of ecosystem functioning in water limited grasslands, but how ecosystems respond to precipitation may change as the duration of above and below average periods increases. Changes in ecosystem functional response could reflect compensatory changes in species composition or species reaching physiological thresholds at extreme precipitation levels. Here we report the results of a five-year experiment where we used drought and irrigation treatments (approximately 50% decrease/increase) to investigate whether ecosystem functional response remains consistent at extreme precipitation levels. We also use species-level adundance data to link ecosystem functional response to community dynamics. Ecosystem functional response, defined as the relationship between soil moisture and aboveground net primary productivity, was suprisingly consistent across drought, control, and irrigation treatments. Aboveground net primary productivity (ANPP) responded positively to availabile soil moisture, but the response was weak and did not vary across treatments. There was also no evidence that treatment effects grew over time. The similarity of ecosystem functional response across treatments was not due to compensatory shifts at the plant community level, where species composition among treatments was similar and remarkably stable over the five years. At least in the short-term, ecosystem functional response and community composition in this sagebrush steppe system is consistent, even at extreme precipitation levels. Such consistency may be due to bet-hedging strategies of constituent species.
 header-includes: >
@@ -51,17 +51,15 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 
 # INTRODUCTION
 
-Projected changes in precipitation regimes, associated with global climate change, will affect 
-
-Water availability is a strong driver of aboveground net primary productivity (ANPP) in grassland ecosystems.
-Mean annual precipitation (MAP) is strongly correlated with ANPP across sites [@Huxman2004], and, in water-limited ecosystems, interannual variation in MAP is also correlated with interannual variation in ANPP [@Hsu2012].
-These relationships suggest that chronic alterations in levels of precipitation, associated with global climate change, will impact ANPP.
+Ecosystems worldwide are projected to experience either wetter or drier conditions in the future [@Zhang2007; @Greve2014].
+This has important implications for ecosystem functioning because mean annual net primary productivity (ANPP) positively covaries with mean annual precipitation across ecosystems [@Sala1988; @Huxman2004] and interannual responses of ANPP are linked to interannual variability in precipitation within ecosystems [@Lauenroth1992; @Hsu2012; @Gherardi2015a].
+To predict how ecosystems might respond to extreme precipitation levels, we need to understand whether ecosystems tend to follow temporal trends, which assume relatively constant plant community composition, or spatial trends, which allow community composition to shift [@Wilcox2016].
 
 At a given site, the functional response of ANPP to water availability (e.g., soil moisture) can be characterized by fitting a model to historical observations of ANPP and soil moisture.
 However, the fitted functional response may provide an incomplete picture because future conditions are likely to be outside the historical range of variability [@Smith2011].
-For example, historical trends may show a linear soil moisture-ANPP relationship, but that relationship could potentially saturate if soil moisture is pushed far beyond typical levels.
+For example, historical trends may underestimate the potential for the soil moisture-ANPP relationship to saturate if soil moisture is pushed far beyond typical levels.
 Saturating relationships are actually common [@Hsu2012; @Gherardi2015a], perhaps because other resources, like nitrogen, become more limiting in wet years than dry years.
-Knowing the curvature of the soil moisture-ANPP relationship is critical for understanding how ecosystems will respond to chronic alterations in water availability.
+Knowing the curvature of the soil moisture-ANPP relationship at extreme precipitation levels is critical for understanding how ecosystems will respond to chronic alterations in water availability.
 
 Another problem with relying on historical ecoystem functional responses is that they are not static.
 Changes in species identities and abundances can alter an ecosystem's functional response to water availability because different species have different physiological thresholds for producting biomass.
@@ -72,9 +70,9 @@ Over longer time spans, ecosystem functioning may recover as new species coloniz
 For example, ANPP may initially decline, but eventually rise back to pre-treatment levels once drought-tolerant species become more abundant and compensate for drought-intolerant species [@Hoover2014].
 It is also possible that ecosystem functioning shifts to a new mean state, reflecting the suite of species in the new community [@Knapp2012].
 
-Manipulating potentially limiting resources like precipitation offers a route to understanding how ecosystems will respond to resource levels that fall outside the historical range of variability [@Avolio2015; @Gherardi2015; @Knapp2017].
+Manipulating potentially limiting resources, like precipitation, offers a route to understanding how ecosystems will respond to resource levels that fall outside the historical range of variability [@Avolio2015; @Gherardi2015; @Knapp2017].
 Altering the amount of precipitation over many years should provide insight into the time scales at which water-limited ecosystems respond to chronic resource alteration.
-Following the HRF, we propose four alternative predictions for the effect of precipitation manipulation on the ecosystem functional response to soil moisture, that is, the soil moisture-ANPP relationship (Figure 1).
+Following the HRF, we propose four alternative predictions for the effect of precipitation manipulation on the ecosystem functional response to soil moisture, that is, the soil moisture-ANPP relationship (Fig. 1).
 The four predictions are based on possible outcomes at the community (e.g., community composition) and ecosystem (e.g., soil moisture-ANPP regression) levels.
 
 First, altered precipitation changes neither ecosystem functional response nor community composition (Fig. 1, top left).
@@ -112,7 +110,7 @@ During the period of our experiment (2011 -- 2015), average mean annual precipit
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
 In 2007, we (well, one of us [P. Adler]) relocated 14 of the original quadrats, six of which were inside a large, permanent livestock exclosure.
 We use these six plots as control plots that have recieved no treatment, just ambient precipitation.
-In spring 2011, we (well, two of us [A. Kleinhesselink and P. Adler]) established 16 new 1 m$^2$ plots located in one of the same exclosures as 6 of the original vegetation monitoring plots.
+In spring 2011, we (well, two of us [A. Kleinhesselink and P. Adler]) established 16 new 1 m$^2$ plots located in the same exclosure as the six control plots.
 We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs *Purshia tridentata* and/or *Amelanchier utahensis*.
 We established the new plots in pairs and randomly assigned each plot in a pair to receive a "drought" or "irrigation" treatment.
 
@@ -132,21 +130,21 @@ Soil moisture measurements were automatically logged every four hours.
 We coupled this temporally intensive soil moisture sampling with spatially extensive readings taken at six points within all 16 plots and associated ambient measurement areas.
 These snapshot data were collected on 06/06/2012, 04/29/2015, 05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
 
-Analyzing the response to experimental treatments was complicated by the fact that we did not directly monitor soil moisture in each plot on each day of the experiment.  
-Only a subset of plots were equiped with soil moisture sensors, and within those plots, one or more of the sensors frequently failed to collect data. 
-To remedy these problems, and to produce average daily soil moisture values for the ambient, drought, and irrigation conditions, we used a statistical model to predict the average treatment effects on soil moisture during the course of the experiment.  
+Analyzing the response to experimental treatments was complicated by the fact that we did not directly monitor soil moisture in each plot on each day of the experiment.
+Only a subset of plots were equiped with soil moisture sensors, and within those plots, one or more of the sensors frequently failed to collect data.
+To remedy these problems, and to produce average daily soil moisture values for the ambient, drought, and irrigation conditions, we used a statistical model to predict the average treatment effects on soil moisture during the course of the experiment.
 
-We first averaged the observed soil moisture for each day and within each plot. 
-Then we standardized the averages within each plot group by subtracting the average ambient soil moisture in that plot group and dividing by the standard deviation of the ambient soil moisture in that plot group. 
-We then found the difference between the standardized ambient soil moisture and the standardized drought and irrigation soil moisture within each plot group. 
-These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group. 
+We first averaged the observed soil moisture for each day and within each plot.
+Then we standardized the averages within each plot group by subtracting the average ambient soil moisture in that plot group and dividing by the standard deviation of the ambient soil moisture in that plot group.
+We then found the difference between the standardized ambient soil moisture and the standardized drought and irrigation soil moisture within each plot group.
+These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.
 
-We then modeled the daily deviation from ambient conditions of the drought and irrigation treatments using a linear mixed effects model with independent variables for treatment, season (winter, spring, summer, fall), rainfall, and all two-way interactions.  
-Rainy days were defined as any day in which precipitation was recorded and average temperature was above 3$^{\circ}$C. 
-The day immediately following rainfall was also classified as rainy. 
+We then modeled the daily deviation from ambient conditions of the drought and irrigation treatments using a linear mixed effects model with independent variables for treatment, season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
+Rainy days were defined as any day in which precipitation was recorded and average temperature was above 3$^{\circ}$C.
+The day immediately following rainfall was also classified as rainy.
 We fit the model using the 'lme4::lmer()' function [@Bates2015] in R [@R2016], with random effects for plot group and date.
-We weighted observations by the number of unique sensors or spot measurements that were taken in each plot on that day. 
-We then used the model to predict the average daily soil moisture in the treated plots based on the average daily ambient soil moisture.  
+We weighted observations by the number of unique sensors or spot measurements that were taken in each plot on that day.
+We then used the model to predict the average daily soil moisture in the treated plots based on the average daily ambient soil moisture.
 We could only predict soil moisture in the treated plots on days for which we took at least one ambient soil moisture measurement (Fig. 2B).
 
 
@@ -242,7 +240,7 @@ Averaged across treatments, ANPP varied from a minimum of 74.5 g m$^{-2}$ in 201
 ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
-Cumulative March-June soil moisture had a weak positive effect on ANPP (mean of $\beta_{1}$ = `r round(betas$mean[8],2)`), but the effect is associated with high uncertainty, with credible intervals that overlap zerp (80\% BCI = `r round(betas$X10.[8],2)`, `r round(betas$X90.[8],2)`; 95\% BCI = `r round(betas$X2.5.[8],2)`, `r round(betas$X97.5.[8],2)`) (Fig. 3).
+Cumulative March-June soil moisture had a weak positive effect on ANPP (mean of $\beta_{1}$ = `r round(betas$mean[8],2)`; Fig. 3), but the effect is associated with high uncertainty, with credible intervals that overlap zerp (80\% BCI = `r round(betas$X10.[8],2)`, `r round(betas$X90.[8],2)`; 95\% BCI = `r round(betas$X2.5.[8],2)`, `r round(betas$X97.5.[8],2)`).
 Ecosystem functional response was similar among treatments, with treatment level regressions between soil moisture and log(ANPP) having similar intercepts and slopes (Fig. 3A).
 There was also no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. 4).
 
@@ -261,37 +259,26 @@ NOTES FROM MEETING WITH PETER
 4. Show Fig 2D with real model fits and move to results figure 3.
 ---->
 
-Ecosystem response to chronic resource alteration is expected to follow a temporal trend.
-Initially, ecosystem response will be modest and reflect the physiological responses of constituent species.
-Over longer time periods, species reordering will cause greater responses as species better able to take advantage of, or cope with, new resource levels become more abundant.
-This temporal trend is formalized by the 'Hierarchical Response Framework' [HRF, @Smith2009], and has been empirically supported [@Knapp2012; @Wilcox2016].
-A lingering question is not whether the HRF is a reasonable model of ecosystem dynamics, but rather how the time scales of ecosystem response and community change differ among ecosystems.
-Indeed, previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
-To add to this growing body of knowledge, we performed a precipitation manipulation experiment in a sagebrush steppe ecosystem.
+Ecosystem response to precipitation extremes depends on the physiological responses of constituent species and the rate at which community composition shifts to favor species better able to take advantage of, or cope with, new resource levels [@Smith2009].
+Previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
+Thus, a lingering question is how the time scales of ecosystem response and community change differ among ecosystems, which can be answered by manipulating precipitation to reach extreme levels.
+The results of our five year experiment in a sagebrush steppe conform to the first of our four predictions: neither ecosystem functional response nor community composition changed with chronic alteration in water availability (Fig. 1, top left).
 
-Ecosystem functional response (i.e., the relationship between soil moisture and ANPP) and community composition in this sagebrush steppe ecosystem was consistent across drought, control, and irrigation treatments (Fig. 2D, Fig. 3).
-In other words, functional responses estimated from any precipitation level sampled apply to any other level of precipitation, and the consistent functional response was not due to species reordering and compensation.
-Thus, our results conform to the first of our four predictions: neither ecosystem functional response nor community composition changed with chronic alteration in water availability (Fig. 1, top left).
+The similarity of ecosystem functional response (Fig. 3A) and community composition (Fig. 5) across treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
+Indeed, we expected ecosystem functional response, community composition, or both to change with precipitation treatment, landing us in any box of Fig. 1 \emph{except} the top left.
+So, why did our treatments fail to induce ecosystem or community responses?
+We can think of three reasons; two are limitations of our study, and one is the life history traits of the species in our focal communities.
+We first discuss the potential limitations of our study, and then discuss biological explanations.
 
-This is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
-Thus, our naive expecatations were that either (i) ecosystem functional response would differ among treatments as species reach physiological thresholds and resource limitations (Fig. 1, top right), or (ii) ecosystem functional response stays the same due to species reordering and compensation (Fig. 1, bottom left).
-
-In the absence of community composition data, an obvious hypothesis to explain the consistent ecosystem functional response is that species reordered rapidly.
-In so doing, newly abundant species could compensate for the loss of ecosystem functioning of previously abundant species.
-We did not find this to be the case, as species composition was remarkably stable over the course of the experiment (Fig. 5).
-
-In combination, the lack of ecosystem and community response to drought or irrigation shows that this sagebrush steppe ecosystem is resistant to chronic alterations in water availability.
-There are three possible explanations for the resistance we found.
-First, it could be that our experiment simply was not long enough to induce responses.
-This may be true for community responses, which can take decades [@Wilcox2016].
-
-Second, it could be that our manipulations were not large enough to induce a response.
-That is, maybe a 50\% decrease/increase in any given year is not abnormal give our sites historical range of variability [@Knapp2017].
+First, it could be that our manipulations were not large enough to induce a response.
+That is, maybe a 50\% decrease/increase in any given year is not abnormal given our site's historical range of variability [@Knapp2017].
 We cannot definitively rule out this possibility, but we have reason to believe our manipulations *should* have been large enough.
 Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation neccesary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site.
 The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 3).
 Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
 The irrigation treatment may have been too small, however.
+
+Second, 
 
 Third, the ecosystem and community resistance to drought and deluge we observed could be a real phenomenon in this system, at least over the five year time span we observed.
 The perennial plants in this cold desert ecosystem are tolerant to drought conditions [@Bazzaz1979; @Franks2011, A.R. Kleinhesselink, unpublished data], meaning a consistent ecosystem functional response at low soil moisture is perfectly reasonable.
@@ -300,8 +287,8 @@ Likewise, the dominant shrub in our focal ecosystem, *Artemisia tripartita*, has
 As for the irrigation treatments, the lack of a saturating response (e.g., a lower regression slope) suggests water availability remained a limiting factor at the levels of precipitation we were able to manipulate.
 
 In conclusion, our results suggest that five years of $\pm$ 50\% ambient precipitation is not enough to induce a shift in ecosystem functional response in a sagebrush steppe.
-This is likely because component species are tolerant to drought conditions and water remains co-limiting at higher precipitation levels.
-Longer time series of chronic precipitation alteration may reveal plant community shifts that we did not observe [e.g., @Wilcox2016].
+This is likely because the species in our focal plant community are bet hedgers, maintaining relatively consistent responses to interannual variation in precipitation to avoid booms and busts.
+Longer time series of chronic precipitation alteration may reveal plant community shifts that we did not observe [e.g., @Wilcox2016], in which case species that do not bet hedge may gain prominence and dominate the ecosystem functional response.
 Our results suggest compositional shifts would have the largest impact at high rainfall because the current community maintained consistent ecosystem functional response at very low water availability.
 
 # ACKNOWLEDGEMENTS
@@ -312,15 +299,16 @@ We also thank Susan Durham for clarifying our thinking on the statistical analys
 
 # FUNDING
 
-NSF DBI-1400370 to Andrew Tredennick.  
-NSF Graduate Research Fellowship to Andrew Kleinhesselink.  
-NSF DEB-1353078 and DEB-1054040 to Peter Adler. 
+NSF DBI-1400370 to Andrew T. Tredennick.  
+NSF Graduate Research Fellowship to Andrew R. Kleinhesselink.  
+NSF DEB-1353078 and DEB-1054040 to Peter B. Adler. 
 
 # AUTHOR CONTRIBUTIONS
 \begin{itemize}
   \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed
 drafts of the paper.
   \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, reviewed drafts of the paper.
+  \item Bret Taylor...
   \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed
 drafts of the paper.
 \end{itemize} 
