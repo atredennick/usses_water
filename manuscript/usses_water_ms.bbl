@@ -13,6 +13,10 @@ Avolio, M.~L., Pierre, K. J.~L., Houseman, G.~R., Koerner, S.~E., Grman, E.,
   community responses to global change drivers}.
 \newblock {\em Ecosphere}, 6(12):1--14.
 
+\bibitem[Bates et~al., 2015]{Bates2015}
+Bates, D., Maechler, M., Bolker, B., and Walker, S. (2015).
+\newblock {Fitting linear mixed-effects models using lme4}.
+
 \bibitem[Bazzaz, 1979]{Bazzaz1979}
 Bazzaz, F. (1979).
 \newblock {The Physiological Ecology of Plant Succession}.
@@ -44,25 +48,25 @@ Franks, S.~J. (2011).
   annual plant Brassica rapa}.
 \newblock {\em New Phytologist}, 190(1):249--257.
 
-\bibitem[Germino and Reinhardt, 2014]{Germino2014}
-Germino, M.~J. and Reinhardt, K. (2014).
-\newblock {Desert shrub responses to experimental modification of precipitation
-  seasonality and soil depth: Relationship to the two-layer hypothesis and
-  ecohydrological niche}.
-\newblock {\em Journal of Ecology}, 102(4):989--997.
-
 \bibitem[Gherardi and Sala, 2013]{Gherardi2013}
 Gherardi, L.~A. and Sala, O.~E. (2013).
 \newblock {Automated rainfall manipulation system: a reliable and inexpensive
   tool for ecologists}.
 \newblock {\em Ecosphere}, 4(2):1--10.
 
-\bibitem[Gherardi and Sala, 2015]{Gherardi2015}
-Gherardi, L.~A. and Sala, O.~E. (2015).
+\bibitem[Gherardi and Sala, 2015a]{Gherardi2015}
+Gherardi, L.~A. and Sala, O.~E. (2015a).
 \newblock {Enhanced interannual precipitation variability increases plant
   functional diversity that in turn ameliorates negative impact on
   productivity}.
 \newblock {\em Ecology Letters}, 18(12):1293--1300.
+
+\bibitem[Gherardi and Sala, 2015b]{Gherardi2015a}
+Gherardi, L.~A. and Sala, O.~E. (2015b).
+\newblock {Enhanced precipitation variability decreases grass- and increases
+  shrub-productivity}.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  112(41):12735--12740.
 
 \bibitem[Hill, 1920]{Hill1920}
 Hill, R.~R. (1920).
