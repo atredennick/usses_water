@@ -119,7 +119,8 @@ get_regression <- function(ndvi_data, biomass_data, plots = FALSE){
                          ndvi_slope  = round(fit_summary[which(fit_summary$term=="ndvi"), "estimate"],2),
                          rsquare     = round(glance(fit)$r.squared,2),
                          min_biomass = min(combo_data$biomass_grams),
-                         max_biomass = max(combo_data$biomass_grams))
+                         max_biomass = max(combo_data$biomass_grams),
+                         num_plots   = nrow(combo_data))
   
   if(plots){
     gg <- ggplot(combo_data, aes(x=ndvi, y=biomass_grams)) +
