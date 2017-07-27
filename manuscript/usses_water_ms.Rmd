@@ -251,14 +251,6 @@ Likewise, community composition was remarkably stable over time, with no evidenc
 
 # DISCUSSION
 
-<!---
-NOTES FROM MEETING WITH PETER
-1. Bet hedgers -- dominant species here deal well with low water and interannual variability; they live in dry and variable in environment, which has selected for tratis (not hitting physiological thresholds which only becom apparaent when species really go for it). Bet hedging = do the same things every year.
-2. Statistical explanation -- either (1) above explains our weak and variable relationship, or we just looked at the wrong thing; lots of other things beyond VWC that are influencing ANPP.
-3. Limitation -- snow, we don't know what happens. Its blowing around, who knows how big of an impact this has.
-4. Show Fig 2D with real model fits and move to results figure 3.
----->
-
 Ecosystem response to precipitation extremes depends on the physiological responses of constituent species and the rate at which community composition shifts to favor species better able to take advantage of, or cope with, new resource levels [@Smith2009].
 Previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
 Thus, a lingering question is how the time scales of ecosystem response and community change differ among ecosystems, which can be answered by manipulating precipitation to reach extreme levels.
@@ -268,7 +260,7 @@ The similarity of ecosystem functional response (Fig. 3A) and community composit
 Indeed, we expected ecosystem functional response, community composition, or both to change with precipitation treatment, landing us in any box of Fig. 1 \emph{except} the top left.
 So, why did our treatments fail to induce ecosystem or community responses?
 We can think of three reasons; two are limitations of our study, and one is the life history traits of the species in our focal communities.
-We first discuss the potential limitations of our study, and then discuss biological explanations.
+We first discuss the potential limitations of our study, and then discuss a biological explanation.
 
 First, it could be that our manipulations were not large enough to induce a response.
 That is, maybe a 50\% decrease/increase in any given year is not abnormal given our site's historical range of variability [@Knapp2017].
@@ -278,16 +270,24 @@ The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from th
 Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
 The irrigation treatment may have been too small, however.
 
-Second, 
+Second, ANPP at our site may be influenced by factors beyond the window of soil moisture we included in our statistical model.
+For example, temperature can also impact community composition and ANPP [@Hoover2014].
+Measurements of soil moisture likely contain a signal of temperature, through its impact on evaporation and infiltration, but the measurements will not capture the direct effect of temperature on metabolic and physiological processes.
+Likewise, we did not redistribute snow across our treatments in the winter, and snowmelt may spur early spring growth (CITATION).
 
-Third, the ecosystem and community resistance to drought and deluge we observed could be a real phenomenon in this system, at least over the five year time span we observed.
-The perennial plants in this cold desert ecosystem are tolerant to drought conditions [@Bazzaz1979; @Franks2011, A.R. Kleinhesselink, unpublished data], meaning a consistent ecosystem functional response at low soil moisture is perfectly reasonable.
+Third, the life history traits of the dominant species in our study ecosystem may explain the consistent and weak effect of soil moisture on ANPP (Fig. 3).
+Species that live in variable environments, such as cold deserts, must have strategies to ensure long-term success as conditions vary.
+One strategy is bet hedging, where species forego short-term gains to reduce the variance of long-term success (CITATION).
+The dry and variable environment of the sagebrush steppe has likely selected for bet hedging species that can maintain function at low water availability and have weak responses to high water availability.
+In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which corresponds to the weak effect of soil moisture on ANPP (i.e., the credible intervals for $\beta_1$ overlapping zero), even at precipitation extremes.
+
+Another strategy to deal with variable environmental conditions is avoidance (CITATION), which would result in a consistent ecosystem functional response at low soil moisture.
+The perennial plants in this cold desert ecosystem are tolerant to drought conditions [@Bazzaz1979; @Franks2011, A.R. Kleinhesselink, unpublished data].
 For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season [@Blaisdell1958, A.R. Kleinhesselink, personal observation].
 Likewise, the dominant shrub in our focal ecosystem, *Artemisia tripartita*, has access to water deep in the soil profile thanks to a deep root system (CITATION).
-As for the irrigation treatments, the lack of a saturating response (e.g., a lower regression slope) suggests water availability remained a limiting factor at the levels of precipitation we were able to manipulate.
 
 In conclusion, our results suggest that five years of $\pm$ 50\% ambient precipitation is not enough to induce a shift in ecosystem functional response in a sagebrush steppe.
-This is likely because the species in our focal plant community are bet hedgers, maintaining relatively consistent responses to interannual variation in precipitation to avoid booms and busts.
+This is likely because the species in our focal plant community are tolerant of drought conditions and bet hedgers in wet conditions, maintaining relatively consistent responses to interannual variation in precipitation to avoid booms and busts.
 Longer time series of chronic precipitation alteration may reveal plant community shifts that we did not observe [e.g., @Wilcox2016], in which case species that do not bet hedge may gain prominence and dominate the ecosystem functional response.
 Our results suggest compositional shifts would have the largest impact at high rainfall because the current community maintained consistent ecosystem functional response at very low water availability.
 
