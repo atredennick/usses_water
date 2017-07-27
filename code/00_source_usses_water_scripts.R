@@ -34,19 +34,19 @@ for(pack in 1:length(packages)){
 }
 
 ####  2. FIT ANPP-NDVI REGRESSIONS ----
-source("calibrate_radiometer_by_year.R")
+source("01_calibrate_radiometer_by_year.R")
 
 ####  3. MAKE DATA FIGURE (Fig. 1) ----
-source("look_at_weather.R")
+source("02_plot_data.R")
 
 ####  4. FIT ANPP-PRECIP MODEL ----
-source("anpp_randcoefs_model.R")
+source("03_anpp_randcoefs_model.R")
 
 ####  5. PLOT MODEL RESULTS (Figs. 2 and 3) ----
-source("plot_model_results.R")
+source("04_plot_model_results.R")
 
 ####  6. RUN NMDS ANALYSIS AND PLOTS (Figs. 4 and 5, Table 1) ----
-source("community_dynamics.R")
+source("04_community_dynamics.R")
 
 
 

@@ -80,12 +80,6 @@ Gherardi, L.~A. and Sala, O.~E. (2015b).
 \newblock {\em Proceedings of the National Academy of Sciences},
   112(41):12735--12740.
 
-\bibitem[Greve et~al., 2014]{Greve2014}
-Greve, P., Orlowsky, B., Mueller, B., Sheffield, J., Reichstein, M., and
-  Seneviratne, S.~I. (2014).
-\newblock {Global assessment of trends in wetting and drying over land}.
-\newblock {\em Nature Geoscience}, 7(10):716--721.
-
 \bibitem[Hill, 1920]{Hill1920}
 Hill, R.~R. (1920).
 \newblock {Charting Quadrats with a Pantograph}.
@@ -101,14 +95,6 @@ Hoover, D.~L., Knapp, A.~K., and Smith, M.~D. (2014).
 Hsu, J.~S., Powell, J., and Adler, P.~B. (2012).
 \newblock {Sensitivity of mean annual primary production to precipitation}.
 \newblock {\em Global Change Biology}, 18(7):2246--2255.
-
-\bibitem[Huxman et~al., 2004]{Huxman2004}
-Huxman, T.~E., Smith, M.~D., Fay, P.~A., Knapp, A.~K., Shaw, M.~R., Loik,
-  M.~E., Smith, S.~D., Tissue, D.~T., Zak, J.~C., Weltzin, J.~F., Pockman,
-  W.~T., Sala, O.~E., Haddad, B.~M., Harte, J., Koch, G.~W., Schwinning, S.,
-  Small, E.~E., and Williams, D.~G. (2004).
-\newblock {Convergence across biomes to a common rain-use efficiency}.
-\newblock {\em Nature}, 429(6992):651--654.
 
 \bibitem[Knapp et~al., 2017]{Knapp2017}
 Knapp, A.~K., Avolio, M.~L., Beier, C., Carroll, C. J.~W., Collins, S.~L.,
@@ -131,11 +117,6 @@ Kulmatiski, A., Adler, P.~B., Stark, J.~M., and Tredennick, A.~T. (2017).
   availability than root biomass}.
 \newblock {\em Ecosphere}, 8(3).
 
-\bibitem[Lauenroth and Sala, 1992]{Lauenroth1992}
-Lauenroth, W. and Sala, O. (1992).
-\newblock {Long-term forage production of North-American shortgrass steppe}.
-\newblock {\em Ecological Applications}, 2(4):397--403.
-
 \bibitem[Lemoine et~al., 2016]{Lemoine2016}
 Lemoine, N.~P., Sheffield, J., Dukes, J.~S., Knapp, A.~K., and Smith, M.~D.
   (2016).
@@ -151,11 +132,6 @@ Oksanen, J. (2016).
 {{R Core Team}} (2016).
 \newblock {\em {R: A Language and Environment for Statistical Computing}}.
 \newblock Vienna, Austria.
-
-\bibitem[Sala et~al., 1988]{Sala1988}
-Sala, O.~E., Parton, W.~J., Joyce, L.~A., and Lauenroth, W.~K. (1988).
-\newblock {Primary production of the central grassland region of the United
-  States}.
 
 \bibitem[Seger, 1987]{Seger1987}
 Seger, J. (1987).
@@ -194,12 +170,5 @@ Wilcox, K.~R., Blair, J.~M., Smith, M.~D., and Knapp, A.~K. (2016).
 \newblock {Does ecosystem sensitivity to precipitation at the site-level
   conform to regional-scale predictions?}
 \newblock {\em Ecology}, 97(3):561--568.
-
-\bibitem[Zhang et~al., 2007]{Zhang2007}
-Zhang, X., Zwiers, F.~W., Hegerl, G.~C., Lambert, F.~H., Gillett, N.~P.,
-  Solomon, S., Stott, P.~A., and Nozawa, T. (2007).
-\newblock {Detection of human influence on twentieth-century precipitation
-  trends}.
-\newblock {\em Nature}, 448(7152):461--5.
 
 \end{thebibliography}

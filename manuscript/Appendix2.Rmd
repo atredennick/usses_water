@@ -45,8 +45,8 @@ A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
 \subsection{Model Description}
 Our hierarchical Bayesian model with random intercepts and random slopes allowed us to test for differences among treatments in the relationship between ANPP and growing season precipitation, and allowed us to account for the non-independence of observations through time within a plot.
 The random effects structure mirrors the nested structure of the data: plot-level parameters are nested within treatment-level parameters, which are nested within overall parameters.
-In what follows, $\textbf{X}$ is the design matrix including a column of 1s for intercepts and a column of precipitation values for each observation, $\textbf{y}$ is a row vector of log(ANPP) values for each observation, *i* references observations, *j* references plots, *k* references treatment, and *t* references year.
-The notation *i(j(k(t)))* reads as 'observation *i* associated with plot *j* associated with treatment *k* within year *t*'.
+In what follows, $\textbf{X}$ is the design matrix including a column of 1s for intercepts and a column of precipitation values for each observation, $\textbf{y}$ is a row vector of log(ANPP) values for each observation, *j* references plots, *k* references treatment, and *t* references year.
+The notation *j(k(t))* reads as 'observation of plot *j* associated with treatment *k* within year *t*'.
 Recall we have three treatments: drought (~50\% decrease in precipitation), control (ambient precipitation), and irrigation (~50\% increase in precipitation).
 
 We assume the observations are conditionally Gaussian,
@@ -54,15 +54,15 @@ We assume the observations are conditionally Gaussian,
 \vspace{-2em}
 
 \begin{align}
-y_{i(j(k(t)))} \sim \text{Normal}\left(\mu_{i(j(k(t)))}, \sigma^2_k \right),
+y_{j(k(t))} \sim \text{Normal}\left(\mu_{j(k(t))}, \sigma^2_k \right),
 \end{align}
 
-\noindent{}where $\mu_{i(j(k(t)))}$ is the determinstic expectation from the regression model,
+\noindent{}where $\mu_{j(k(t))}$ is the determinstic expectation from the regression model,
 
 \vspace{-2em}
 
 \begin{align}
-\mu_{i(j(k(t)))} = \textbf{x}_i'\boldsymbol{\beta_{j(k)} + \gamma_{t}}.
+\mu_{j(k(t))} = \textbf{x}_{k(t)}'\boldsymbol{\beta_{j(k)} + \gamma_{t}}.
 \end{align}
 
 The intercept and slope in the parameter vector $\boldsymbol{\beta}$ were modeled hierarchically,
@@ -90,7 +90,9 @@ The random year effects ($\boldsymbol{\gamma}$) are modeled as intercept offsets
 
 We fit the model using MCMC as implemented in the software Stan [@stan2016].
 Our Stan code is below.
-All code necessary to reproduce our results is in the supplementary code set (Appendix 3).
+All code necessary to reproduce our results has been archived on Figshare (*link here*) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
+
+\newpage{}
 
 \subsection{Stan Code}
 ```{r stan1, echo=T, eval=F}
@@ -168,6 +170,63 @@ generated quantities {
   inter_diffs[1] = beta_treat[1][1] - beta_treat[2][1]; # control - drought
   inter_diffs[2] = beta_treat[1][1] - beta_treat[3][1]; # control - irrigation
 }
+
+```
+
+\newpage{}
+
+# Figures
+
+```{r hrv, fig.cap="Scatterplot, on the arithmetic scale, of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines) and the overall mean coefficients (heavy black line).", echo=FALSE, message=FALSE}
+library(tidyverse)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(ggthemes)
+
+source("../code/read_format_data.R") # load data
+all_fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
+
+lmod <- lm(log(anpp) ~ total_seasonal_vwc, anpp_data)
+x <- model.matrix(lmod)
+newx <- as.data.frame(unique(x)) %>% select(total_seasonal_vwc)
+newx$vwc_id <- c(1:nrow(newx))
+mean_log_anpp <- mean(log(anpp_data$anpp))
+sd_log_anpp <- sd(log(anpp_data$anpp))
+model_preds <- reshape2::melt(rstan::extract(all_fit, pars="ypreds_mu")) %>%
+  rename(iteration = iterations, vwc_id = Var2, estimate = value, stan_name = L1) %>%
+  left_join(newx, by="vwc_id") %>%
+  group_by(total_seasonal_vwc) %>%
+  summarise(mean_estimate = mean(estimate*sd_log_anpp+mean_log_anpp)) %>%
+  mutate(backtrans_estimate = mean_estimate) %>%
+  ungroup()
+
+trt_vwc <- data.frame(treatment = rep(c("Control","Drought","Irrigation"), each = nrow(newx)),
+                      treat_id = rep(c(1:3), each = nrow(newx)),
+                      vwc = rep(newx$total_seasonal_vwc, times = 3),
+                      vwc_id = rep(newx$vwc_id, times = 3))
+treat_preds <- reshape2::melt(rstan::extract(all_fit, pars="ypreds")) %>%
+  rename(iteration = iterations, treat_id = Var2, vwc_id = Var3, estimate = value, stan_name = L1) %>%
+  left_join(trt_vwc, by = c("vwc_id","treat_id")) %>%
+  group_by(treatment, vwc) %>%
+  summarise(mean_estimate = mean(estimate*sd_log_anpp+mean_log_anpp)) %>%
+  mutate(backtrans_estimate = mean_estimate) %>%
+  ungroup()
+
+
+ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
+  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
+  geom_line(data=treat_preds, aes(x=vwc, y=exp(backtrans_estimate), color=treatment))+
+  geom_line(data=model_preds, aes(x=total_seasonal_vwc, y=exp(backtrans_estimate)), size=1)+
+  scale_fill_brewer(palette = "Set2")+
+  scale_color_brewer(palette = "Set2")+
+  #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
+  #scale_y_continuous(breaks=seq(50,350,50))+
+  xlab("March-June Cumulative VWC")+
+  ylab(expression(paste("ANPP (g ",m^2,")")))+
+  guides(fill=FALSE,color=FALSE)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 
 ```
 

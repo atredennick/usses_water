@@ -131,23 +131,23 @@ ggsave("../figures/glmm_main_results.png",plot = gout, width = 5.5, height = 6, 
 
 
 
-####
-####  DATA AND REGRESSION PLOT ON ARITHMETIC SCALE FOR SI ----
-####
-ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
-  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  geom_line(data=treat_preds, aes(x=vwc, y=exp(backtrans_estimate), color=treatment))+
-  geom_line(data=model_preds, aes(x=total_seasonal_vwc, y=exp(backtrans_estimate)), size=1)+
-  scale_fill_brewer(palette = "Set2")+
-  scale_color_brewer(palette = "Set2")+
-  #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
-  #scale_y_continuous(breaks=seq(50,350,50))+
-  xlab("March-June Cumulative VWC")+
-  ylab(expression(paste("ANPP (g ",m^2,")")))+
-  guides(fill=FALSE,color=FALSE)+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank())
-ggsave("../figures/glmm_main_results_arithmetic.png", width = 4, height = 3, units = "in", dpi =120)
+# ####
+# ####  DATA AND REGRESSION PLOT ON ARITHMETIC SCALE FOR SI ----
+# ####
+# ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
+#   geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
+#   geom_line(data=treat_preds, aes(x=vwc, y=exp(backtrans_estimate), color=treatment))+
+#   geom_line(data=model_preds, aes(x=total_seasonal_vwc, y=exp(backtrans_estimate)), size=1)+
+#   scale_fill_brewer(palette = "Set2")+
+#   scale_color_brewer(palette = "Set2")+
+#   #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
+#   #scale_y_continuous(breaks=seq(50,350,50))+
+#   xlab("March-June Cumulative VWC")+
+#   ylab(expression(paste("ANPP (g ",m^2,")")))+
+#   guides(fill=FALSE,color=FALSE)+
+#   theme_bw()+
+#   theme(panel.grid.minor = element_blank())
+# ggsave("../figures/glmm_main_results_arithmetic.png", width = 4, height = 3, units = "in", dpi =120)
 
 
 

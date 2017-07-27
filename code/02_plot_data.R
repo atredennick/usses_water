@@ -46,51 +46,7 @@ ppt_histogram <- ggplot(weather, aes(x=ppt1))+
   xlab("Growing Season Precipitation (mm)")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())+
-  ggtitle("A")
-
-####
-####  READ IN ANPP DATA AND PLOT TREND ----
-####
-permanent_quad_biomass <- readRDS("../data/estimated_biomass/permanent_plots_estimated_biomass.RDS")
-
-
-
-####
-####  INITIAL PLOTS ----
-####
-permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
-biomass_year_treatment <- permanent_quad_biomass %>%
-  group_by(Treatment,year) %>%
-  summarise(mean_biomass = mean(biomass_grams_est))
-
-
-biomass_yr_trt_summ <- permanent_quad_biomass %>%
-  filter(!str_detect(quadname, 'P1|P7')) %>%
-  group_by(Treatment,year) %>%
-  summarise(mean_biomass = mean(biomass_grams_est),
-            sd_biomass = sd(biomass_grams_est)) %>%
-  filter(year > 2011)
-
-stats_lab <- expression(paste("year*treatment  ", italic("P"), " = 0.67"))
-anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
-  geom_line()+
-  geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
-  geom_point(color="white", size=3)+
-  geom_point()+
-  geom_point(color="grey35", shape=1)+
-  scale_color_brewer(palette = "Set2", name="Treatment")+
-  scale_x_continuous(breaks=c(2011:2016))+
-  scale_y_continuous(breaks=seq(50,350,50))+
-  ylab(expression(paste("ANPP (g ", m^-2,")")))+
-  xlab("Year")+
-  ggtitle("C")+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank())+
-  guides(color = guide_legend(override.aes = list(size=1)))+
-  theme(legend.position = c(0.2, 0.75),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
-        legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"),
-        legend.box.background = element_rect())
+  ggtitle("A)")
 
 
 
@@ -112,7 +68,7 @@ soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, col
   scale_color_brewer(palette = "Set2", name="Treatment")+
   ylab(expression(paste("Mean Soil VWC (ml ", ml^-1,")")))+
   xlab("Julian Day")+
-  ggtitle("B")+
+  ggtitle("B)")+
   scale_y_continuous(breaks=seq(0,24,8))+
   facet_grid(year~.)+
   theme_bw()+
@@ -124,41 +80,48 @@ soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, col
 
 
 ####
-####  MAKE SCATTERPLOT OF ANPP vs. PRECIP ----
+####  ANPP PLOT ----
 ####
-source("read_format_data.R") # load data
-mod <- lm(log(anpp)~total_seasonal_vwc, data = dplyr::filter(anpp_data, Treatment == "Control"))
-hist(resid(mod))
+permanent_quad_biomass <- readRDS("../data/estimated_biomass/permanent_plots_estimated_biomass.RDS")
+permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
+biomass_year_treatment <- permanent_quad_biomass %>%
+  group_by(Treatment,year) %>%
+  summarise(mean_biomass = mean(biomass_grams_est))
 
-library(lme4)
-library(lmerTest)
-mod1 <- lmer(anpp~total_seasonal_vwc + (1|Treatment), data = anpp_data)
-mod2 <- lmer(log(anpp)~total_seasonal_vwc + (1|Treatment), data = anpp_data)
-lmerTest::anova(mod1,mod2)
+biomass_yr_trt_summ <- permanent_quad_biomass %>%
+  filter(!str_detect(quadname, 'P1|P7')) %>%
+  group_by(Treatment,year) %>%
+  summarise(mean_biomass = mean(biomass_grams_est),
+            sd_biomass = sd(biomass_grams_est)) %>%
+  filter(year > 2011)
 
-# data_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
-#   geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-#   #stat_smooth(method="lm", aes(color=Treatment), se=FALSE, size=0.5)+
-#   stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),aes(color=Treatment), se=FALSE, size=0.5)+
-#   #stat_smooth(method="lm", color="black", se=FALSE, size=0.7)+
-#   stat_smooth(method="glm", formula=y~x, method.args=list(family=quasi(link='log')),color="black", se=FALSE, size=0.5)+
-#   scale_fill_brewer(palette = "Set2")+
-#   scale_color_brewer(palette = "Set2")+
-#   #scale_x_continuous(limits=c(100,300),breaks=seq(100,300,50))+
-#   scale_y_continuous(breaks=seq(50,350,50))+
-#   xlab("March-June Cumulative VWC")+
-#   ylab(expression(paste("ANPP (g ",m^2,")")))+
-#   ggtitle("D")+
-#   guides(fill=FALSE,color=FALSE)+
-#   theme_bw()+
-#   theme(panel.grid.minor = element_blank())
+anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Treatment))+
+  geom_line()+
+  geom_errorbar(aes(ymin=mean_biomass-sd_biomass, ymax=mean_biomass+sd_biomass), width=0.05)+
+  geom_point(color="white", size=3)+
+  geom_point()+
+  geom_point(color="grey35", shape=1)+
+  scale_color_brewer(palette = "Set2", name="Treatment")+
+  scale_x_continuous(breaks=c(2011:2016))+
+  scale_y_continuous(breaks=seq(50,350,50))+
+  ylab(expression(paste("ANPP (g ", m^-2,")")))+
+  xlab("Year")+
+  ggtitle("C)")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  guides(color = guide_legend(override.aes = list(size=1)))+
+  theme(legend.position = c(0.2, 0.75),legend.key.size = unit(1,"pt"),legend.title = element_text(size=10),
+        legend.text = element_text(size = 8),
+        legend.key.height = unit(0.8,"line"),
+        legend.box.background = element_rect())
+
 
 
 ####
 ####  COMBINE PLOTS AND SAVE ----
 ####
 gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,ncol=1,nrow=3)
-ggsave("../figures/Figure1.png", gout, width=3.2, height=8, units="in", dpi=120)
+ggsave("../figures/data_panels.png", gout, width=3.2, height=8, units="in", dpi=120)
 
 
 
@@ -201,21 +164,21 @@ write.csv(anpp_summary, "../results/avg_anpp_by_year.csv")
 ####
 ####  CHARACTERIZE HRV OF PRECIP ----
 ####
-weather <- read.csv("../data/weather/ClimateIPM.csv")
-mean_ppt <- mean(weather$ppt1)
-quants_ppt <- quantile(weather$ppt1,probs = c(0.01,0.99))
-quants_ppt[1]/mean_ppt*100
-quants_ppt[2]/mean_ppt*100
-
-ggplot(weather, aes(x=ppt1))+
-  geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
-  geom_line(stat="density", color="blue")+
-  geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
-  geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
-  ylab("Density")+
-  xlab("Growing Season Precipitation (mm)")+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank())
+# weather <- read.csv("../data/weather/ClimateIPM.csv")
+# mean_ppt <- mean(weather$ppt1)
+# quants_ppt <- quantile(weather$ppt1,probs = c(0.01,0.99))
+# quants_ppt[1]/mean_ppt*100
+# quants_ppt[2]/mean_ppt*100
+# 
+# ggplot(weather, aes(x=ppt1))+
+#   geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
+#   geom_line(stat="density", color="blue")+
+#   geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
+#   geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
+#   ylab("Density")+
+#   xlab("Growing Season Precipitation (mm)")+
+#   theme_bw()+
+#   theme(panel.grid.minor = element_blank())
 
 
 
