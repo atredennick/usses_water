@@ -28,9 +28,9 @@ packages <- c(
   "viridis"
 )
 
-for(pack in 1:length(packages)){
-  if(packages[pack] %in% rownames(installed.packages())==FALSE)
-  {stop(paste("You need to install the", packages[pack]), " package from CRAN.")}
+missing_packages <- packages[ !packages %in% installed.packages() ] 
+if (length(missing_packages) > 0 ){
+  stop(paste("You need to install the", missing_packages), " packages from CRAN.")
 }
 
 ####  2. FIT ANPP-NDVI REGRESSIONS ----
@@ -46,7 +46,7 @@ source("03_anpp_randcoefs_model.R")
 source("04_plot_model_results.R")
 
 ####  6. RUN NMDS ANALYSIS AND PLOTS (Figs. 4 and 5, Table 1) ----
-source("04_community_dynamics.R")
+source("05_community_dynamics.R")
 
 
 
