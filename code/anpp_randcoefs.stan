@@ -22,7 +22,7 @@ parameters {
 	cov_matrix[Npreds] Sigma;				        # covariance matrix for treatment-level coefficients
 	cov_matrix[Npreds] Sigma_plot[Ntreats];	# unique covariance matrix for plot-level coefficients for each treatment
 	vector<lower=0>[Ntreats] sd_y;          # treatment-level observation std. dev.
-	vector<lower=0>[Nyears] sigma_year;     # year std. dev. hyperprior
+	real<lower=0> sigma_year;               # year std. dev. hyperprior
 }
 
 transformed parameters {
