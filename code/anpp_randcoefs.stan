@@ -55,16 +55,23 @@ model {
 generated quantities {
   vector[Nppts] ypreds[Ntreats];
   vector[Nppts] ypreds_mu;
-  vector[Nppts] ydiff_control_drought;
-  vector[Nppts] ydiff_control_irrigate;
   vector[Nobs] resid;
-  vector[2] inter_diffs;
-  resid = y - yhat;
+  vector[3] inter_diffs;
+  vector[3] vwc_diffs;
+  
+  resid = y - yhat; # residuals
   for(i in 1:Ntreats)
-    ypreds[i] = newx*beta_treat[i]; # mean predictions for each treatment-year
-  ypreds_mu = newx*beta_mu;
-  ydiff_control_drought = ypreds[1] - ypreds[2]; # difference between mean predictions
-  ydiff_control_irrigate = ypreds[1] - ypreds[3]; # difference between mean predictions
-  inter_diffs[1] = beta_treat[1][1] - beta_treat[2][1]; # difference between control and drought in avg ppt year
-  inter_diffs[2] = beta_treat[1][1] - beta_treat[3][1]; # difference between control and drought in avg ppt year
+    ypreds[i] = newx*beta_treat[i]; # treatment-level mean predictions
+  ypreds_mu = newx*beta_mu; # mean predictions
+  
+  # Difference among intercepts
+  inter_diffs[1] = beta_treat[1][1] - beta_treat[2][1]; # control - drought
+  inter_diffs[2] = beta_treat[1][1] - beta_treat[3][1]; # control - irrigation
+  inter_diffs[3] = beta_treat[2][1] - beta_treat[3][1]; # drought - irrigation
+  
+  # Difference among slopes
+  vwc_diffs[1] = beta_treat[1][2] - beta_treat[2][2]; # control - drought
+  vwc_diffs[2] = beta_treat[1][2] - beta_treat[3][2]; # control - irrigation
+  vwc_diffs[3] = beta_treat[2][2] - beta_treat[3][2]; # drought - irrigation
 }
+
