@@ -17,10 +17,11 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes
+library(ggjoy)        # Joy plots!
 library(stringr)      # Working with strings
 library(rstan)        # For MCMC and Stan objects
 library(gridExtra)    # For combining ggplot objects
-library(viridis)
+library(viridis)      # Pleasing color palette
 
 
 
@@ -162,24 +163,21 @@ betas <- reshape2::melt(rstan::extract(all_fit, pars="year_off")) %>%
   rename(iteration = iterations, year_id = Var2, estimate = value, stan_name = L1) %>%
   left_join(year_id_names, by="year_id")
 
-ggplot(filter(betas), aes(x=estimate))+
+ggplot(betas, aes(x=estimate, y=as.factor(year_id), fill=as.factor(year_id), color=as.factor(year_id), height = ..density..))+
   geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
-  geom_line(stat="density",aes(color=as.character(year_id)),adjust=5,size=1)+
-  scale_color_brewer(palette = "Set1",name="Year", labels=c("1 (2012)","2 (2013)", "3 (2014)", "4 (2015)", "5 (2016)"))+
-  # scale_color_viridis(end=0.8,discrete=T,name="Year",
-  #                     labels=c("1 (2012)","2 (2013)", "3 (2014)", "4 (2015)", "5 (2016)"))+
+  geom_joy(stat="density", adjust=3, alpha=0.9)+
   scale_x_continuous(breaks=seq(-3,3,0.5), limits=c(-3,3))+
-  scale_y_continuous(breaks=seq(0,1.25,0.25))+
+  scale_y_discrete(labels = c("2012","2013","2014","2015","2016"))+
+  scale_fill_viridis(end=0.8,discrete=T)+
+  scale_color_viridis(end=0.8,discrete=T)+
+  guides(fill=FALSE, color=FALSE)+
   xlab("Parameter Value")+
-  ylab("Probability Density")+
+  ylab("Year")+
   theme_bw()+
-  theme(panel.grid.minor = element_blank())+
-  theme(legend.position = c(0.85,0.7),
-        legend.key.size = unit(10,"pt"),
-        legend.title = element_text(size=10),
-        legend.text = element_text(size = 8),
-        legend.key.height = unit(0.8,"line"),
-        legend.box.background = element_rect())
+  theme(panel.grid.minor = element_blank(),
+        panel.border     = element_blank(), 
+        axis.line        = element_blank(),
+        axis.ticks       = element_blank())
 ggsave("../figures/glmm_yeardiffs.png", width = 6, height = 3, units = "in", dpi =120)
 
 
