@@ -1,7 +1,7 @@
 ##  anpp_randcoefs_model.R: Script to run GLMM analysis to test for treatment 
 ##  effects on the relationship between precipitation and ANPP.
 ##
-##  NOTE: Stan will issue a couple warnings after running the MCMC that, as
+##  NOTE: Stan may issue a couple warnings after running the MCMC that, as
 ##  the messages state, can be safely ignored. Just rejects a couple proposals
 ##  that result in ill-formed covariance matrices.
 ##
@@ -24,7 +24,7 @@ library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes
 library(stringr)      # Working with strings
 library(rstan)        # For MCMC
-
+library(lme4)         # Mixed-effects modeling
 
 
 
@@ -38,70 +38,59 @@ source("read_format_data.R")
 ####
 ####  SET UP AND FIT MODEL IN STAN ----
 ####
-fit_stan_model <- function(model_data, check_diags=FALSE, treattype){
-  lmod <- lm(log(anpp) ~ vwc_scaled, model_data)
-  x <- model.matrix(lmod)
-  newx <- unique(x)
-  anppdat <- list(Nobs = nrow(model_data),
-                  Npreds = ncol(x),
-                  Nplots = length(unique(model_data$quadname)),
-                  Ntreats = length(unique(model_data$Treatment)),
-                  Nppts = nrow(newx),
-                  Nyears = length(unique(model_data$year)),
-                  y = as.numeric(scale(log(model_data$anpp))),
-                  x = x,
-                  newx = newx,
-                  plot_id = as.numeric(as.factor(model_data$quadname)),
-                  treat_id = as.numeric(as.factor(as.character(model_data$Treatment))),
-                  year_id = as.numeric(as.factor(model_data$year)),
-                  R = diag(1,ncol(x)))
-  
-  rstan_options(auto_write = TRUE)
-  options(mc.cores = parallel::detectCores())
-  rt <- stanc("anpp_randcoefs.stan")
-  sm <- stan_model(stanc_ret = rt, verbose=FALSE)
-  set.seed(123)
-  fit <- sampling(sm, data=anppdat, iter=2000, chains=4, 
-                  thin=2, control = list(adapt_delta = 0.99))
-  
-  if(check_diags){
-    pnames <- c("sigmaeps", "sigmaint", "sigmaslope","beta[1]",
-                "beta[2]","beta[3]","beta[4]","beta[5]")
-    for(p in pnames){
-      muc <- rstan::extract(fit, pars=p,  permuted=FALSE, inc_warmup=FALSE)
-      mdf <- reshape2::melt(muc)
-      dir.create("./scratch/")
-      ggplot(mdf,aes(x=iterations,y=value,color=chains)) + 
-        geom_line() + 
-        ylab(mdf$parameters[1])
-      ggsave(paste0("./scratch/diag_",treattype,"_",p,".png"), 
-             height = 4, width = 5, units = "in", dpi=72)
-    }
-  }
-  return(fit)
-}
+##  Set up fixed and random design matrices
+lmod <- lm(log(anpp) ~ Treatment*vwc_scaled, anpp_data)
+x    <- model.matrix(lmod)
+newx <- unique(x)
 
-all_fit <- fit_stan_model(anpp_data,check_diags = FALSE, treattype = "all")
-saveRDS(all_fit, "../results/randcoefs_alltreatments_fit.RDS")
+lmod <- lm(log(anpp) ~ vwc_scaled, anpp_data)
+z    <- model.matrix(lmod)
+
+##  Make data list for Stan
+anppdat <- list(
+  Nobs     = nrow(anpp_data),
+  Npreds   = ncol(x),
+  Npreds2  = ncol(z),
+  Nplots   = length(unique(anpp_data$quadname)),
+  Ntreats  = length(unique(anpp_data$Treatment)),
+  Nppts    = nrow(newx),
+  Nyears   = length(unique(anpp_data$year)),
+  y        = as.numeric(scale(log(anpp_data$anpp))),
+  x        = x,
+  z        = z,
+  newx     = newx,
+  plot_id  = as.numeric(as.factor(anpp_data$quadname)),
+  treat_id = as.numeric(as.factor(as.character(anpp_data$Treatment))),
+  year_id  = as.numeric(as.factor(anpp_data$year)),
+  R        = diag(1,ncol(z))
+  ) # close list
+
+##  Fit the model in Stan
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+set.seed(123)
+
+rt  <- stanc("anpp_randcoefs.stan")
+sm  <- stan_model(stanc_ret = rt, verbose=FALSE)
+fit <- sampling(sm, data = anppdat, iter = 10000, chains = 4, thin = 10)
+
+##  Save the model fit
+saveRDS(fit, "../results/randcoefs_alltreatments_fit.RDS")
 
 
 
 ####
-####  PLOT RESIDUALS ----
+####  OPTIONAL DIAGNOSTICS ----
 ####
-# predictions <- reshape2::melt(rstan::extract(all_fit, pars="yhat")) %>%
-#   rename(iteration = iterations, obs_id = Var2, estimate = value, stan_name = L1) %>%
-#   group_by(obs_id) %>%
-#   summarise(mean_estimate = mean(estimate))
+# library(bayesplot)
+# stan_diag(fit)
+# draws <- as.array(all_fit, pars = 'Sigma_u')
+# mcmc_trace(draws)
 # 
-# resids <- reshape2::melt(rstan::extract(all_fit, pars="resid")) %>%
-#   rename(iteration = iterations, obs_id = Var2, resid = value, stan_name = L1) %>%
-#   left_join(predictions, by="obs_id") %>%
-#   group_by(obs_id) %>%
-#   summarise(mean_resid = mean(resid),
-#             mean_est_anpp = mean(mean_estimate)) %>%
-#   ungroup()
+# summary(all_fit, pars = 'beta')$summary
+# fixef(m1)
 # 
-# ggplot(resids, aes(x=mean_est_anpp, y=mean_resid))+
-#   geom_hline(aes(yintercept=0))+
-#   geom_point()
+# summary(all_fit, pars = 'L_u')$summary
+# summary(all_fit, pars = 'sigma_u')
+# summary(all_fit, pars = 'Sigma_u')$summary
+# 
