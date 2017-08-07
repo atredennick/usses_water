@@ -46,6 +46,35 @@ get_one_tailed <- function(values){
 
 
 ####
+####  CALCULATE PROBABILITIES OF TREATMENT DIFFERENCES ----
+####
+comp_id_names <- data.frame(comp_id    = c(1,2,3),
+                            Comparison = c("Control - Drought",
+                                           "Control - Irrigation",
+                                           "Drought - Irrigation"))
+
+inter_diffs <- reshape2::melt(rstan::extract(all_fit, pars="inter_diffs")) %>%
+  rename(iteration = iterations, comp_id = Var2, estimate = value, stan_name = L1) %>%
+  left_join(comp_id_names, by="comp_id")
+intercept_probs <- inter_diffs %>%
+  group_by(Comparison) %>%
+  summarise(prob = get_one_tailed(estimate)) %>%
+  mutate(beta = "Intercept")
+
+slope_diffs <- reshape2::melt(rstan::extract(all_fit, pars="vwc_diffs")) %>%
+  rename(iteration = iterations, comp_id = Var2, estimate = value, stan_name = L1) %>%
+  left_join(comp_id_names, by="comp_id")
+slope_probs <- slope_diffs %>%
+  group_by(Comparison) %>%
+  summarise(prob = get_one_tailed(estimate)) %>%
+  mutate(beta = "Soil Moisture Effect")
+
+beta_probs <- rbind(intercept_probs, slope_probs) %>%
+  spread(key = beta, value = prob)
+saveRDS(beta_probs, file = "../results/betadiff_probabilities.RDS")
+
+
+####
 ####  PLOT TREATMENT-LEVEL POSTERIOR DISTRIBUTIONS ----
 ####
 param_id_names <- data.frame(param_id = c(1,2),

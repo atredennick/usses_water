@@ -314,12 +314,10 @@ The research was also supported by the National Science Foundation, through a Po
 
 # AUTHOR CONTRIBUTIONS
 \begin{itemize}
-  \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed
-drafts of the paper.
-  \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, reviewed drafts of the paper.
+  \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed drafts of the paper.
+  \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed drafts of the paper.
   \item Bret Taylor contributed reagents/materials/analysis tools, reviewed drafts of the paper.
-  \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed
-drafts of the paper.
+  \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed drafts of the paper.
 \end{itemize} 
 
 # SUPPLEMENTAL INFORMATION
@@ -337,6 +335,15 @@ drafts of the paper.
 
 ```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 library(xtable)
+coef_probs <- readRDS("../results/betadiff_probabilities.RDS")
+coef_caption <- "Probability that the difference between treatment-level coefficients is greater or less than zero for each of the precipitation treatments. Probabilities denote max(Pr(difference) $>$ 0, Pr(difference) $<$ 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the compared coefficients being different from one another. Pr(difference) values far from 0 or 1 indicate no support for the difference being greater than zero. Bold coefficients denote Pr(difference) $\\geq$ 0.95 (there are none)."
+print(xtable(coef_probs, caption = coef_caption, digits = 2),
+      caption.placement="top",
+      include.rownames = F,
+      sanitize.colnames.function = identity,
+      comment = FALSE,
+      size = "normalsize")
+
 # Read in species composition stats
 sppcomp_stats <- readRDS("../results/sppcomp_stats.RDS")
 colnames(sppcomp_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{F}", "\\emph{P}")
@@ -350,17 +357,6 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
        sanitize.colnames.function = identity,
        comment = FALSE,
        size = "normalsize")
-
-# coef_probs <- readRDS("../results/coef_probabilities.RDS")
-#
-# coef_caption <- "Probability that each log(ANPP) coefficient is greater or less than zero for each of the precipitation treatments.
-# Probabilities denote max(Pr(coefficient) > 0, Pr(coefficient) < 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the coefficient being important in the model. Bold coefficients denote Pr(coefficient) $\\geq$ 0.95."
-# print(xtable(coef_probs, caption = coef_caption, digits = 2),
-#       caption.placement="top",
-#       include.rownames = F,
-#       sanitize.colnames.function = identity,
-#       comment = FALSE,
-#       size = "normalsize")
 ```
 
 

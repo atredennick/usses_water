@@ -586,7 +586,7 @@ DEB-1353078 and DEB-1054040 to PBA.
 \begin{itemize}
   \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed
 drafts of the paper.
-  \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, reviewed drafts of the paper.
+  \item Andrew R. Kleinhesselink conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed drafts of the paper.
   \item Bret Taylor contributed reagents/materials/analysis tools, reviewed drafts of the paper.
   \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed
 drafts of the paper.
@@ -605,6 +605,20 @@ drafts of the paper.
 \section{TABLES}\label{tables}
 
 \begin{table}[ht]
+\centering
+\caption{Probability that the difference between treatment-level coefficients is greater or less than zero for each of the precipitation treatments. Probabilities denote max(Pr(difference) $>$ 0, Pr(difference) $<$ 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the compared coefficients being different from one another. Pr(difference) values far from 0 or 1 indicate no support for the difference being greater than zero. Bold coefficients denote Pr(difference) $\geq$ 0.95 (there are none).} 
+\begingroup\normalsize
+\begin{tabular}{lrr}
+  \hline
+Comparison & Intercept & Soil Moisture Effect \\ 
+  \hline
+Control - Drought & 0.70 & 0.72 \\ 
+  Control - Irrigation & 0.57 & 0.85 \\ 
+  Drought - Irrigation & 0.65 & 0.70 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}\begin{table}[ht]
 \centering
 \caption{Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis` tests whether treatments form unique clusters in multidimensial space; `betadisper` tests whether treatments have similar dispersion. For both tests, \emph{P} values greater than 0.05 indicate there is no support that the treatments differ.} 
 \begingroup\normalsize
