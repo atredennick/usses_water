@@ -112,10 +112,21 @@ We assume the observations are conditionally Gaussian,
 
 \begin{align}
 \boldsymbol{\gamma} \sim \text{MVN} \left( 0, \Sigma \right), \\
-\Sigma \sim \text{Cholesky...}
+\Sigma = \sigma_{plt}^2 \textbf{R}, \\
+\sigma_{plt} \sim \text{Uniform}(0,1), \\
+\textbf{R} \sim \text{Cholesky}(1)
 \end{align}
 
-\noindent{The random year effects ($\boldsymbol{\eta}$) are modeled as intercept offsets centered on zero with a shared variance ($\sigma_{yr}$): $\boldsymbol{\gamma} \sim \text{Normal} \left( 0, \sigma_{yr}  \right)$.
+\noindent{}The random year effects ($\boldsymbol{\eta}$) are modeled as intercept offsets centered on zero with a shared variance ($\sigma_{yr}$): $\boldsymbol{\gamma} \sim \text{Normal} \left( 0, \sigma_{yr}  \right)$.
+
+The Bayesian posterior distribution of our model can be expressed as:
+
+\vspace{-2em}
+
+\begin{align}
+\left[ \boldsymbol{\beta}, \boldsymbol{\gamma}, \boldsymbol{\eta}, \sigma_{yr}, \sigma_{plt}, \textbf{R}, \sigma \right | \textbf{y}] &\propto \left( \prod_{i=1}^{n} \left[ y_i | \boldsymbol{\beta}, \boldsymbol{\gamma}, \boldsymbol{\eta}, \sigma \right] \right) \left( \prod_{j=1}^{J} \left[ \gamma_j | \sigma_{plt}, \textbf{R} \right] \right) \\
+&\times \left( \prod_{t=1}^{T} \left[ \eta_t | \sigma_{yr} \right] \right)  [\boldsymbol{\beta}] [\sigma_{plt}] [\textbf{R}] [\sigma_{yr}] [\sigma]
+\end{align}
 
 We fit the model using MCMC as implemented in the software Stan [@stan2016].
 Our Stan code is below.
