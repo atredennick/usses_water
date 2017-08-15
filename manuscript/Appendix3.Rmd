@@ -36,8 +36,8 @@ urlcolor: black
 
 \begin{center}
 \textbf{\Large{Appendix 3}} \\
-A.T. Tredennick, A.R. Kleinhesselink, \& P.B. Adler \\
-``Ecosystem and community resistance...'' \\
+A.T. Tredennick, A.R. Kleinhesselink, B. Taylor \& P.B. Adler \\
+``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe'' \\
 \emph{PeerJ}
 \end{center}
 

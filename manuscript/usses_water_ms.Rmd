@@ -179,21 +179,40 @@ This means that our approach is biased toward detecting compositional changes.
 ## Data Analysis
 Our main goal was to test whether the relationship between ANPP and soil moisture differed among the drought, control, and irrigation treatments.
 Based on our own observations and previous work at our study site [@Blaisdell1958; @Dalgleish2011; @Adler2012], we chose to use cumulative volumetric water content from March through June as our metric of soil moisture (hereafter referred to simply as `soil moisture').
-To achieve this goal, we fit a multi-level random intercept and random slope regression with log(ANPP) as the response variable and soil moisture as the sole predictor.
+To achieve this goal, we fit a hierarchical regression model with log(ANPP) as the response variable and soil moisture as the sole predictor.
 We log-transformed ANPP to account for heteroscedasticity.
-We fit the model under a Bayesian framework, allowing us to test for treatment differences by comparing the posterior distributions of the treatment-level coefficients [e.g., @Tredennick2013].
 Both log(ANPP) and soil moisture were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
 
 Our model is defined as follows:
 
 \vspace{-2em}
 
+<!---
 \begin{align}
 \mu_{j(k(t))} &= \beta_{0,j(k)} + \beta_{1,j(k)}x_{k(t)} + \gamma_t, \\
 y_{j(k(t))} &\sim \text{Normal} \left(\mu_{j(k(t))}, \sigma^2_{k} \right),
 \end{align}
+---->
 
-\noindent{}where $\mu_{j(k(t))}$ is the deterministic prediction from the regression model for plot *j* associated with treatment *k* in year *t*, $\beta_{0,j(k)}$ is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of soil moisture for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
+\begin{align}
+\mu_{i} &= \boldsymbol{\beta}\textbf{x}_i + \boldsymbol{\gamma}_{j(i)}\textbf{z}_i + \eta_t, \\
+\textbf{y} &\sim \text{Normal} \left(\boldsymbol{\mu}, \sigma^2 \right),
+\end{align}
+
+\noindent{}where $\mu_{i}$ is the deterministic prediction from the regression model for observation *i*, which is associated with plot *j* and treatment year *t*. $\boldsymbol{\beta}$ is the vector of coefficients for the fixed effects in the design matrix $\textbf{X}$. Each row of the design matrix represents a single observation ($\textbf{x}_i$) and is a vector with the following elements: 1 for the intercept, a binary 0 or 1 if the treatment is "drought", a binary 0 or 1 if the treatment is "irrigation", the scaled value of volumetric water content (VWC), binary "drought" value times VWC, and binary "irrigation" value times VWC. Thus, our model treats "control" observations as the main treatment and then estimates intercept and slope offsets for the "drought" and "irrigation" treatments. In reference to our model, the hypotheses we wish to test are: (1) the coefficient for drought$\times$VWC is positive and different from zero, and (2) the coefficient for irrigation$\times$VWC is negative and different from zero
+
+To account for the fact that observations within plots and years are not independent, we include three random effects. Specifically, we include plot-specific offsets ($\boldsymbol{\gamma}$) for the intercept and slope terms and year-specific intercept offsets ($\eta_t$). The covariate vector $\textbf{z}_i$ for each observation *i* has two elements: a 1 for the intercept and the scaled value of VWC for that plot and year. The plot-specific coefficients are modeled hierarchically, where plot level coefficients are drawn from a multivariate normal distribution with mean 0 and a variance-covariance strucutre that allows the intercept and slope terms to be correlated:
+
+\vspace{-1em}
+
+\begin{align}
+\boldsymbol{\gamma}_{j(i)} &\sim \text{MVN} \left( 0, \Sigma  \right),
+\end{align}
+
+\noindent{}where $\Sigma$ is the variance-covariance matrix and *j(i)* reads as "plot *j* associated with observation *i*". The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-cauchy distribution. A full description of our model is in Appendix 2.
+
+<!----
+is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of soil moisture for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
 Data include the standardized log(ANPP) observations $\left( y_{j(k(t))} \right)$ and soil moisture ($x_{k(t)}$).
 
 The intercept and slope terms are modeled hierarchically to account for the non-independence of observations across years within plots and to allow us to test the hypothesis that our treatments alter the ANPP-soil moisture relationship.
@@ -216,6 +235,7 @@ For the plot-level coefficients, each treatment has its own variance-covariance 
 The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
 The random year effects ($\boldsymbol{\gamma}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a weibull distribution.
 A full description of model is in Appendix 2.
+---->
 
 We fit the model using a Bayesian approach, obtaining posterior estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
@@ -324,7 +344,7 @@ The research was also supported by the National Science Foundation, through a Po
 
 \begin{description}
 \item [Appendix 1.] Additional methods and information on estimating aboveground net primary productivity.
-\item [Appendix 2.] Details of the hierarchical Bayesian model and Fig. A2-1.
+\item [Appendix 2.] Details of the hierarchical Bayesian model, Fig. A2-1, and Fig. A2-2.
 \item [Appendix 3.] Details on analysis of precipitation historical range of variability and Fig. A3-1.
 \end{description}
 
@@ -335,9 +355,11 @@ The research was also supported by the National Science Foundation, through a Po
 
 ```{r table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 library(xtable)
-coef_probs <- readRDS("../results/betadiff_probabilities.RDS")
-coef_caption <- "Probability that the difference between treatment-level coefficients is greater or less than zero for each of the precipitation treatments. Probabilities denote max(Pr(difference) $>$ 0, Pr(difference) $<$ 0), where the sign of the coefficient was ignored. Thus, probabilities represent the probability of the compared coefficients being different from one another. Pr(difference) values far from 0 or 1 indicate no support for the difference being greater than zero. Bold coefficients denote Pr(difference) $\\geq$ 0.95 (there are none)."
-print(xtable(coef_probs, caption = coef_caption, digits = 2),
+effect_summary <- readRDS("../results/effect_summary.RDS")
+colnames(effect_summary) <- c("Coefficient", "Treatment", "Posterior Mean", "Posterior Median",
+                              "Lower 95\\% BCI", "Upper 95\\% BCI")
+coef_caption <- "Summary statistics from the posterior distributions of coefficients for each treatment."
+print(xtable(effect_summary, caption = coef_caption, digits = 2),
       caption.placement="top",
       include.rownames = F,
       sanitize.colnames.function = identity,
@@ -350,7 +372,7 @@ colnames(sppcomp_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{
 sppcomp_stats$d.f. <- as.integer(sppcomp_stats$d.f.)
 
 # Make the table
-inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis` tests whether treatments form unique clusters in multidimensial space; `betadisper` tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support that the treatments differ."
+inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis' tests whether treatments form unique clusters in multidimensial space; `betadisper' tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support that the treatments differ."
 print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_caption, digits = 2),
        caption.placement="top",
        include.rownames = F,
@@ -386,10 +408,10 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
-  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of treatment-level parameters ('Intercept' and the effect of 'Soil Moisture'). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines) and the overall mean coefficients (heavy black line). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
+  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of the intercept and slope offsets for the drought and irrigation treatments. Offsets indicate the amount to which the coefficients for drought or irrigation treatments differ from the control treatment estimates. Probabilities (``Pr $<$ 0 ='') for each distribution indicate the probability that coefficient is less than zero. Probabilities greater than 0.95 indicate strong support for the coefficient being less than zero. We only show the one-tailed probability for the value being less than zero because the median of each distribution is less than zero. Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
 \end{figure}
 
-
+<!---
 \newpage{}
 
 \begin{figure}[!ht]
@@ -397,6 +419,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
       \includegraphics[width=5in]{../figures/glmm_yeardiffs.png}
   \caption{Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
 \end{figure}
+--->
 
 
 \newpage{}
@@ -407,13 +430,6 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
   \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
 \end{figure}
 
-<!---
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[width=6in]{../figures/rank_clocks_scaled_abundance.png}
-  \caption{Rank clocks of average species' scaled abundance by treatment. (A) All species. (B) Dominant species.}
-\end{figure}
----->
 
 \newpage{}
 

@@ -9,7 +9,7 @@
 ##  Date created: June 2, 2017
 
 ##  Clear everything
-rm(list=ls(all.names = T))
+rm(list = ls(all.names = TRUE))
 
 ##  Set working directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
@@ -65,13 +65,14 @@ anppdat <- list(
   R        = diag(1,ncol(z))
   ) # close list
 
-##  Fit the model in Stan
+##  Set Stan options
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 set.seed(123)
 
+##  Fit the model in Stan
 rt  <- stanc("anpp_randcoefs.stan")
-sm  <- stan_model(stanc_ret = rt, verbose=FALSE)
+sm  <- stan_model(stanc_ret = rt, verbose = FALSE)
 fit <- sampling(sm, data = anppdat, iter = 10000, chains = 4, thin = 10)
 
 ##  Save the model fit
