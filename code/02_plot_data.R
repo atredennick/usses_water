@@ -21,6 +21,7 @@ library(stringr)
 library(ggthemes)
 library(ggalt)
 library(gridExtra)
+library(cowplot)
 
 
 
@@ -45,8 +46,7 @@ ppt_histogram <- ggplot(weather, aes(x=ppt1))+
   ylab("Density")+
   xlab("Growing Season Precipitation (mm)")+
   theme_bw()+
-  theme(panel.grid.minor = element_blank())+
-  ggtitle("A)")
+  theme(panel.grid.minor = element_blank())
 
 
 
@@ -68,7 +68,6 @@ soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, col
   scale_color_brewer(palette = "Set2", name="Treatment")+
   ylab(expression(paste("Mean Soil VWC (ml ", ml^-1,")")))+
   xlab("Julian Day")+
-  ggtitle("B)")+
   scale_y_continuous(breaks=seq(0,24,8))+
   facet_grid(year~.)+
   theme_bw()+
@@ -106,7 +105,6 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
   scale_y_continuous(breaks=seq(50,350,50))+
   ylab(expression(paste("ANPP (g ", m^-2,")")))+
   xlab("Year")+
-  ggtitle("C)")+
   theme_bw()+
   theme(panel.grid.minor = element_blank())+
   guides(color = guide_legend(override.aes = list(size=1)))+
@@ -120,8 +118,11 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
 ####
 ####  COMBINE PLOTS AND SAVE ----
 ####
-gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,ncol=1,nrow=3)
-ggsave("../figures/data_panels.png", gout, width=3.2, height=8, units="in", dpi=120)
+# gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,ncol=1,nrow=3)
+gout <- cowplot::plot_grid(ppt_histogram,soil_vwc,anpp_means,
+                           ncol=1, labels = c("A)","B)","C)"), hjust = -0.4)
+
+ggsave("../figures/data_panels.png", gout, width=3.3, height=8, units="in", dpi=120)
 
 
 
