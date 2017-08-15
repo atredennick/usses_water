@@ -21,11 +21,14 @@ packages <- c(
   "dplyr",
   "ggthemes",
   "ggalt",
+  "ggjoy",
   "gridExtra",
   "stringr",
   "rstan",
   "vegan",
-  "viridis"
+  "viridis",
+  "RColorBrewer",
+  "cowplot"
 )
 
 missing_packages <- packages[ !packages %in% installed.packages() ] 
@@ -36,16 +39,16 @@ if (length(missing_packages) > 0 ){
 ####  2. FIT ANPP-NDVI REGRESSIONS ----
 source("01_calibrate_radiometer_by_year.R")
 
-####  3. MAKE DATA FIGURE (Fig. 1) ----
+####  3. MAKE DATA FIGURE (Fig. 2) ----
 source("02_plot_data.R")
 
 ####  4. FIT ANPP-PRECIP MODEL ----
 source("03_anpp_randcoefs_model.R")
 
-####  5. PLOT MODEL RESULTS (Figs. 2 and 3) ----
+####  5. PLOT MODEL RESULTS (Fig. 3, Table 1) ----
 source("04_plot_model_results.R")
 
-####  6. RUN NMDS ANALYSIS AND PLOTS (Figs. 4 and 5, Table 1) ----
+####  6. RUN NMDS ANALYSIS AND PLOTS (Fig. 4, Table 2) ----
 source("05_community_dynamics.R")
 
 

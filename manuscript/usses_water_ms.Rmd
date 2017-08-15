@@ -295,7 +295,7 @@ The results of our five year experiment in a sagebrush steppe conform to the fir
 
 The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) between drought and control treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
 Indeed, we expected ecosystem functional response, community composition, or both to change under the drought treatment, landing us in any box of Fig. 1 \emph{except} the top left.
-So, why did our dourhgt treatment fail to induce ecosystem or community responses?
+So, why did our drought treatment fail to induce ecosystem or community responses?
 We can think of three reasons; two are limitations of our study, and one is the life history traits of the species in our focal communities.
 We first discuss the potential limitations of our study, and then discuss the biological explanation.
 
