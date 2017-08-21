@@ -269,7 +269,7 @@ Averaged across treatments, ANPP varied from a minimum of 74.5 g m$^{-2}$ in 201
 ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
-Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3), but the effect is associated with high uncertainty, with credible intervals that overlap zero (Table 1).
+Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3), but the effect is associated with high uncertainty, with credible intervals that overlap zero, regardless of treatment (Table 1).
 Ecosystem functional response was similar among treatments (Table 1; Fig. 3), but there is evidence that the slope for the irrigation treatment is less than the slope for the control treatment.
 This evidence comes from interpreting the posterior distribution of the slope offset for the irrigation treatment, from which we calculate a 98% probability that the estimate is less than zero (Fig. 3A, right panel).
 There was no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. A2-2).
@@ -288,7 +288,7 @@ Thus, a lingering question is how the time scales of ecosystem response and comm
 The results of our five year experiment in a sagebrush steppe conform to two of our four predictions, depending on treatment.
 Under chronic drought, neither ecosystem functional response nor community composition changed (Fig. 1, top left).
 But under irrigation, ecosystem functional response was different from the control treatment while community composition remained unchanged (Fig. 1, top right).
-Thus, we found some evidence for a saturating response at high water availability (Fig. 3), but the response of ANPP to soil moisture was weak overall (Table 1).
+Thus, we found some evidence for a saturating response at high water availability (Fig. 3), but the response of ANPP to soil moisture was weak overall, regardless of treatment (Table 1).
 <!---
 The results of our five year experiment in a sagebrush steppe conform to the first of our four predictions: neither ecosystem functional response nor community composition changed with chronic alteration in water availability (Fig. 1, top left).
 --->
