@@ -336,13 +336,14 @@ moisture differed among the drought, control, and irrigation treatments.
 Based on our own observations and previous work at our study site
 \citep{Blaisdell1958, Dalgleish2011, Adler2012}, we chose to use
 cumulative volumetric water content from March through June as our
-metric of soil moisture (hereafter referred to simply as `soil
-moisture'). To achieve this goal, we fit a hierarchical regression model
-with log(ANPP) as the response variable and soil moisture as the sole
-predictor. We log-transformed ANPP to account for heteroscedasticity.
-Both log(ANPP) and soil moisture were standardized to have mean 0 and
-unit variance before fitting the model {[}i.e.,
-\((x_i - \bar{x})/\sigma_x\){]}.
+metric of soil moisture (hereafter referred to as `VWC'). To achieve
+this goal, we fit a generalized linear mixed effects regression model
+with log(ANPP) as the response variable and VWC and treatment as fixed
+effects. Plot and year of treatment were included as random effects to
+account for non-independence of observations, as described below. We
+log-transformed ANPP to account for heteroscedasticity. Both log(ANPP)
+and VWC were standardized to have mean 0 and unit variance before
+fitting the model {[}i.e., \((x_i - \bar{x})/\sigma_x\){]}.
 
 Our model is defined as follows:
 
@@ -361,17 +362,19 @@ vector of coefficients for the fixed effects in the design matrix
 observation (\(\textbf{x}_i\)) and is a vector with the following
 elements: 1 for the intercept, a binary 0 or 1 if the treatment is
 ``drought'', a binary 0 or 1 if the treatment is ``irrigation'', the
-scaled value of volumetric water content (VWC), binary ``drought'' value
-times VWC, and binary ``irrigation'' value times VWC. Thus, our model
-treats ``control'' observations as the main treatment and then estimates
-intercept and slope offsets for the ``drought'' and ``irrigation''
-treatments. In reference to our model, the hypotheses we wish to test
-are: (1) the coefficient for drought\(\times\)VWC is positive and
-different from zero, and (2) the coefficient for irrigation\(\times\)VWC
-is negative and different from zero
+scaled value of VWC, binary ``drought'' value times VWC, and binary
+``irrigation'' value times VWC. Thus, our model treats ``control''
+observations as the main treatment and then estimates intercept and
+slope offsets for the ``drought'' and ``irrigation'' treatments. In
+reference to our model, the hypotheses we wish to test are:
+
+\begin{description}
+\item [H1] The coefficient for drought$\times$VWC is positive and different from zero.
+\item [H2] The coefficient for irrigation$\times$VWC is negative and different from zero.
+\end{description}
 
 To account for the fact that observations within plots and years are not
-independent, we include three random effects. Specifically, we include
+independent, we include two random effects. Specifically, we include
 plot-specific offsets (\(\boldsymbol{\gamma}\)) for the intercept and
 slope terms and year-specific intercept offsets (\(\eta_t\)). The
 covariate vector \(\textbf{z}_i\) for each observation \emph{i} has two
@@ -443,16 +446,16 @@ successful.
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP
 (Table 1; Fig. 3), but the effect is associated with high uncertainty,
-with credible intervals that overlap zero (Table 1). Ecosystem
-functional response was similar among treatments (Table 1; Fig. 3), but
-there is evidence that the slope for the irrigation treatment is less
-than the slope for the control treatment. This evidence comes from
-interpreting the posterior distribution of the slope offset for the
-irrigation treatment, from which we calculate a 98\% probability that
-the estimate is less than zero (Fig. 3A, right panel). There was no
-evidence that the treatment effects became more important over time
-because there was no directional trend in the random year effects (Fig.
-A2-2).
+with credible intervals that overlap zero, regardless of treatment
+(Table 1). Ecosystem functional response was similar among treatments
+(Table 1; Fig. 3B), but there is evidence that the slope for the
+irrigation treatment is less than the slope for the control treatment.
+This evidence comes from interpreting the posterior distribution of the
+slope offset for the irrigation treatment, from which we calculate a
+98\% probability that the estimate is less than zero (Fig. 3A, right
+panel). There was no evidence that the treatment effects became more
+important over time because there was no directional trend in the random
+year effects (Fig. A2-2).
 
 Community composition was similar among treatments. In no year did
 community composition among treatments not overlap, and they were
@@ -480,7 +483,8 @@ changed (Fig. 1, top left). But under irrigation, ecosystem functional
 response was different from the control treatment while community
 composition remained unchanged (Fig. 1, top right). Thus, we found some
 evidence for a saturating response at high water availability (Fig. 3),
-but the response of ANPP to soil moisture was weak overall (Table 1).
+but the response of ANPP to soil moisture was weak overall, regardless
+of treatment (Table 1).
 
 The similarity of ecosystem functional response (Fig. 3) and community
 composition (Fig. 5) between drought and control treatments is

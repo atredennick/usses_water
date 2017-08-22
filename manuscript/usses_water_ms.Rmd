@@ -178,10 +178,11 @@ This means that our approach is biased toward detecting compositional changes.
 
 ## Data Analysis
 Our main goal was to test whether the relationship between ANPP and soil moisture differed among the drought, control, and irrigation treatments.
-Based on our own observations and previous work at our study site [@Blaisdell1958; @Dalgleish2011; @Adler2012], we chose to use cumulative volumetric water content from March through June as our metric of soil moisture (hereafter referred to simply as `soil moisture').
-To achieve this goal, we fit a hierarchical regression model with log(ANPP) as the response variable and soil moisture as the sole predictor.
+Based on our own observations and previous work at our study site [@Blaisdell1958; @Dalgleish2011; @Adler2012], we chose to use cumulative volumetric water content from March through June as our metric of soil moisture (hereafter referred to as `VWC').
+To achieve this goal, we fit a generalized linear mixed effects regression model with log(ANPP) as the response variable and VWC and treatment as fixed effects.
+Plot and year of treatment were included as random effects to account for non-independence of observations, as described below.
 We log-transformed ANPP to account for heteroscedasticity.
-Both log(ANPP) and soil moisture were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
+Both log(ANPP) and VWC were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
 
 Our model is defined as follows:
 
@@ -199,9 +200,14 @@ y_{j(k(t))} &\sim \text{Normal} \left(\mu_{j(k(t))}, \sigma^2_{k} \right),
 \textbf{y} &\sim \text{Normal} \left(\boldsymbol{\mu}, \sigma^2 \right),
 \end{align}
 
-\noindent{}where $\mu_{i}$ is the deterministic prediction from the regression model for observation *i*, which is associated with plot *j* and treatment year *t*. $\boldsymbol{\beta}$ is the vector of coefficients for the fixed effects in the design matrix $\textbf{X}$. Each row of the design matrix represents a single observation ($\textbf{x}_i$) and is a vector with the following elements: 1 for the intercept, a binary 0 or 1 if the treatment is "drought", a binary 0 or 1 if the treatment is "irrigation", the scaled value of volumetric water content (VWC), binary "drought" value times VWC, and binary "irrigation" value times VWC. Thus, our model treats "control" observations as the main treatment and then estimates intercept and slope offsets for the "drought" and "irrigation" treatments. In reference to our model, the hypotheses we wish to test are: (1) the coefficient for drought$\times$VWC is positive and different from zero, and (2) the coefficient for irrigation$\times$VWC is negative and different from zero
+\noindent{}where $\mu_{i}$ is the deterministic prediction from the regression model for observation *i*, which is associated with plot *j* and treatment year *t*. $\boldsymbol{\beta}$ is the vector of coefficients for the fixed effects in the design matrix $\textbf{X}$. Each row of the design matrix represents a single observation ($\textbf{x}_i$) and is a vector with the following elements: 1 for the intercept, a binary 0 or 1 if the treatment is "drought", a binary 0 or 1 if the treatment is "irrigation", the scaled value of VWC, binary "drought" value times VWC, and binary "irrigation" value times VWC. Thus, our model treats "control" observations as the main treatment and then estimates intercept and slope offsets for the "drought" and "irrigation" treatments. In reference to our model, the hypotheses we wish to test are:
 
-To account for the fact that observations within plots and years are not independent, we include three random effects. Specifically, we include plot-specific offsets ($\boldsymbol{\gamma}$) for the intercept and slope terms and year-specific intercept offsets ($\eta_t$). The covariate vector $\textbf{z}_i$ for each observation *i* has two elements: a 1 for the intercept and the scaled value of VWC for that plot and year. The plot-specific coefficients are modeled hierarchically, where plot level coefficients are drawn from a multivariate normal distribution with mean 0 and a variance-covariance strucutre that allows the intercept and slope terms to be correlated:
+\begin{description}
+\item [H1] The coefficient for drought$\times$VWC is positive and different from zero.
+\item [H2] The coefficient for irrigation$\times$VWC is negative and different from zero.
+\end{description}
+
+To account for the fact that observations within plots and years are not independent, we include two random effects. Specifically, we include plot-specific offsets ($\boldsymbol{\gamma}$) for the intercept and slope terms and year-specific intercept offsets ($\eta_t$). The covariate vector $\textbf{z}_i$ for each observation *i* has two elements: a 1 for the intercept and the scaled value of VWC for that plot and year. The plot-specific coefficients are modeled hierarchically, where plot level coefficients are drawn from a multivariate normal distribution with mean 0 and a variance-covariance strucutre that allows the intercept and slope terms to be correlated:
 
 \vspace{-1em}
 
@@ -255,11 +261,11 @@ To test whether treatment plots were equally dispersed, or not, we used the 'veg
 All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
 We also include annotated Stan code in our model description in Appendix 2.
 
-
+<!---
 ```{r get_results, echo=FALSE}
 betas <- read.csv("../results/beta_summaries.csv")
 ```
-
+--->
 
 # RESULTS
 
@@ -270,7 +276,7 @@ ANPP was slightly higher in irrigation plots and slightly lower in drought plots
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3), but the effect is associated with high uncertainty, with credible intervals that overlap zero, regardless of treatment (Table 1).
-Ecosystem functional response was similar among treatments (Table 1; Fig. 3), but there is evidence that the slope for the irrigation treatment is less than the slope for the control treatment.
+Ecosystem functional response was similar among treatments (Table 1; Fig. 3B), but there is evidence that the slope for the irrigation treatment is less than the slope for the control treatment.
 This evidence comes from interpreting the posterior distribution of the slope offset for the irrigation treatment, from which we calculate a 98% probability that the estimate is less than zero (Fig. 3A, right panel).
 There was no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. A2-2).
 
