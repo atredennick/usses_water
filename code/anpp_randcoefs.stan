@@ -42,7 +42,7 @@ transformed parameters {
 
 model {
   ####  PRIORS
-  sigma_year ~ cauchy(0,2)
+  sigma_year ~ cauchy(0,2);
   year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
   beta ~ normal(0,1);	             # priors on treatment coefficients
   L_u ~ lkj_corr_cholesky(1);      # prior on the cholesky factor which controls the 
