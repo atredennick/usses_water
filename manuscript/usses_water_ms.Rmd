@@ -1,5 +1,5 @@
 ---
-title: Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe
+title: Consistent, and weak, ecosystem functional response across precipitation extremes in a sagebrush steppe
 preprint: false
 author: 
   - name: Andrew T. Tredennick
@@ -24,9 +24,9 @@ abstract: |
   
   **Methods.** We conducted a five year precipitation manipulation experiment in a sagebrush steppe ecosystem in Idaho, US. We used drought and irrigation treatments (approximately 50% decrease/increase) to investigate whether ecosystem functional response remains consistent at extreme precipitation levels. We recorded data on aboveground net primary productivity (ANPP), species abundance, and soil moisture. We fit a generalized linear mixed effects model to determine if the relationship between ANPP and soil moisture differed among treatments. We used nondimensional multivariate scaling to quantify community composition over the five years.
   
-  **Results.** Ecosystem functional response, defined as the linear relationship between soil moisture and ANPP, was similar among drought and control treatments, but the irrigation treatment had a slightly lower slope. ANPP responded positively to availabile soil moisture, but the response was weak and uncertain regardless of treatment. There was also no evidence that treatment effects grew over time. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
+  **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among drought and control treatments, but the irrigation treatment had a lower slope than the control treatment. However, ANPP response to availabile soil moisture was weak and uncertain regardless of treatment, with all slopes overlapping zero. There was also no evidence that treatment effects grew over time. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
   
-  **Discussion.** At least in the short-term, ecosystem functional response and community composition in this sagebrush steppe system is consistent, even at extreme precipitation levels. The similarity of ecosystem functional response across treatments was not due to compensatory shifts at the plant community level, but instead reflects the consistent responses of individual species. Such consistency may be due to bet-hedging strategies where species respond weakly to soil moisture to ensure low variance of long-term success.
+  **Discussion.** Despite some evidence that ecosystem functional response saturated under extreme wet conditions, the response of ANPP to soil moisture was consistintly weak and community composition was remarkably stable. The similarity, or difference, of ecosystem functional response across treatments was not due to compensatory shifts at the plant community level, but instead reflects the weak responses of individual species. Such responses may be due to bet-hedging strategies where species respond weakly to even extreme levels of soil moisture to ensure low variance of long-term success.
 header-includes: >
   \usepackage{setspace}
   \usepackage{todonotes}
@@ -294,7 +294,8 @@ Thus, a lingering question is how the time scales of ecosystem response and comm
 The results of our five year experiment in a sagebrush steppe conform to two of our four predictions, depending on treatment.
 Under chronic drought, neither ecosystem functional response nor community composition changed (Fig. 1, top left).
 But under irrigation, ecosystem functional response was different from the control treatment while community composition remained unchanged (Fig. 1, top right).
-Thus, we found some evidence for a saturating response at high water availability (Fig. 3), but the response of ANPP to soil moisture was weak overall, regardless of treatment (Table 1).
+Thus, we found some evidence for a saturating response at high water availability (Fig. 3A, right panel).
+However, the response of ANPP to soil moisture was consitently weak, regardless of treatment (Table 1).
 <!---
 The results of our five year experiment in a sagebrush steppe conform to the first of our four predictions: neither ecosystem functional response nor community composition changed with chronic alteration in water availability (Fig. 1, top left).
 --->
