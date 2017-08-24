@@ -4,13 +4,10 @@ data {
   int<lower=0> Nplots;         # number of plots
   int<lower=0> Ntreats;        # number of treatments
   int<lower=0> Nobs;           # number of observations
-  int<lower=0> Nppts;          # number of precip levels to predict
   int<lower=0> Nyears;         # number of years
   vector[Nobs] y;              # vector of observations
   row_vector[Npreds] x[Nobs];	 # design matrix for fixed effects
   row_vector[Npreds2] z[Nobs]; # simple design matrix for random effects 
-  matrix[Nppts,Npreds] newx;   # design matrix for predictions 
-  matrix[Npreds2,Npreds2] R;	 # priors for covariance matrix
   int plot_id[Nobs];           # vector of plot ids
   int treat_id[Nobs];          # vector of treatment ids
   int year_id[Nobs];           # vector of year ids
@@ -31,7 +28,7 @@ transformed parameters {
   vector[Npreds2] u[Nplots];       # transformed plot random effects
   matrix[Npreds2,Npreds2] Sigma_u; # plot ranef cov matrix
   
-  Sigma_u = diag_pre_multiply(sigma_u, L_u); # plot-level covariance matrix 
+  Sigma_u = diag_pre_multiply(sigma_u, L_u); # cholesky factor for plot-level covariance matrix 
   for(j in 1:Nplots)
     u[j] = Sigma_u * beta_plot[j]; # plot random intercepts and slopes
   
@@ -42,11 +39,13 @@ transformed parameters {
 
 model {
   ####  PRIORS
-  sigma_year ~ cauchy(0,2)
+  sigma_year ~ cauchy(0,2.5);
+  sd_y ~ cauchy(0,2.5);
   year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
-  beta ~ normal(0,1);	             # priors on treatment coefficients
-  L_u ~ lkj_corr_cholesky(1);      # prior on the cholesky factor which controls the 
-                                   # correlation between plot level treatment effects
+  beta ~ normal(0,5);	             # priors on treatment coefficients
+  L_u ~ lkj_corr_cholesky(2.0);      # prior on the cholesky factor which controls the 
+                                    # correlation between plot level treatment effects
+  sigma_u ~ cauchy(0,2.5);
   
   for(i in 1:Nplots)
 		beta_plot[i] ~ normal(0,1); # plot-level coefficients for intercept and slope
