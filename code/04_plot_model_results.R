@@ -4,7 +4,7 @@
 ##  Date created: May 25, 2017
 
 ##  Clear everything
-rm(list=ls(all.names = T))
+rm(list=ls(all.names = TRUE))
 
 ##  Set working directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
@@ -151,16 +151,26 @@ regression <- regression %>%
   mutate(backtrans_estimate = estimate*sd_log_anpp+mean_log_anpp,
          backtrans_vwc = newx*sd_vwc+mean_vwc)
 
-regress_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
-  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  geom_line(data=regression, aes(x=backtrans_vwc, y=backtrans_estimate, color=Treatment), size=1)+
-  scale_fill_brewer(palette = "Set2")+
-  scale_color_brewer(palette = "Set2")+
-  xlab("March-June Cumulative VWC")+
-  ylab(expression(paste("log[ANPP (g ",m^2,")]")))+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank())#+
-  #ggtitle("B)")
+regression_limited <- {}
+for(dotrt in unique(regression$Treatment)){
+  tmpdat <- filter(regression, Treatment == dotrt)
+  tmprange <- range(anpp_data[which(anpp_data$Treatment==dotrt),"total_seasonal_vwc"])
+  tmpdat$backtrans_vwc[tmpdat$backtrans_vwc < tmprange[1] | tmpdat$backtrans_vwc > tmprange[2]] <- NA
+  regression_limited <- rbind(regression_limited, tmpdat)
+}
+
+suppressWarnings( # ignore wanrnings about NA values
+  regress_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
+    geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
+    geom_line(data=regression_limited, aes(x=backtrans_vwc, y=backtrans_estimate, color=Treatment), size=1)+
+    scale_fill_brewer(palette = "Set2")+
+    scale_color_brewer(palette = "Set2")+
+    xlab("March-June Cumulative VWC")+
+    ylab(expression(paste("log[ANPP (g ",m^2,")]")))+
+    theme_bw()+
+    theme(panel.grid.minor = element_blank())
+)
+
 
 gridplot <- cowplot::plot_grid(treat_posteriors, regress_plot, nrow = 2, labels = c("A)","B)"))
 gridplot

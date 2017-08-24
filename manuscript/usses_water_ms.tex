@@ -24,8 +24,8 @@
 \usepackage{setspace} \usepackage{todonotes} \usepackage{rotating}
 \usepackage{color, soul} \usepackage{sectsty} \usepackage{bm,mathrsfs}
 
-\title{Consistent ecosystem functional response across precipitation extremes
-in a sagebrush steppe}
+\title{Consistent, and weak, ecosystem functional response across precipitation
+extremes in a sagebrush steppe}
 
 \author[1]{Andrew T. Tredennick}
 
@@ -70,27 +70,29 @@ and irrigation treatments (approximately 50\% decrease/increase) to
 investigate whether ecosystem functional response remains consistent at
 extreme precipitation levels. We recorded data on aboveground net
 primary productivity (ANPP), species abundance, and soil moisture. We
-fit a random intercept, random slope model to determine if the
+fit a generalized linear mixed effects model to determine if the
 relationship between ANPP and soil moisture differed among treatments.
 We used nondimensional multivariate scaling to quantify community
 composition over the five years.
 
 \textbf{Results.} Ecosystem functional response, defined as the
-relationship between soil moisture and ANPP, did not vary across
-drought, control, and irrigation treatments. ANPP responded positively
-to availabile soil moisture, but the response was weak and uncertain.
-There was also no evidence that treatment effects grew over time. Plant
-community composition was remarkably stable over the course of the
-experiment and did not differ among treatments.
+relationship between soil moisture and ANPP was similar among drought
+and control treatments, but the irrigation treatment had a lower slope
+than the control treatment. However, ANPP response to availabile soil
+moisture was weak and uncertain regardless of treatment, with all slopes
+overlapping zero. There was also no evidence that treatment effects grew
+over time. Plant community composition was remarkably stable over the
+course of the experiment and did not differ among treatments.
 
-\textbf{Discussion.} At least in the short-term, ecosystem functional
-response and community composition in this sagebrush steppe system is
-consistent, even at extreme precipitation levels. The similarity of
-ecosystem functional response across treatments was not due to
-compensatory shifts at the plant community level, but instead reflects
-the consistent responses of individual species. Such consistency may be
-due to bet-hedging strategies where species respond weakly to soil
-moisture to ensure low variance of long-term success.
+\textbf{Discussion.} Despite some evidence that ecosystem functional
+response saturated under extreme wet conditions, the response of ANPP to
+soil moisture was consistintly weak and community composition was
+remarkably stable. The similarity, or difference, of ecosystem
+functional response across treatments was not due to compensatory shifts
+at the plant community level, but instead reflects the weak responses of
+individual species. Such responses may be due to bet-hedging strategies
+where species respond weakly to even extreme levels of soil moisture to
+ensure low variance of long-term success.
 % Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text. Dummy abstract text.
 \end{abstract}
 
@@ -336,13 +338,14 @@ moisture differed among the drought, control, and irrigation treatments.
 Based on our own observations and previous work at our study site
 \citep{Blaisdell1958, Dalgleish2011, Adler2012}, we chose to use
 cumulative volumetric water content from March through June as our
-metric of soil moisture (hereafter referred to simply as `soil
-moisture'). To achieve this goal, we fit a hierarchical regression model
-with log(ANPP) as the response variable and soil moisture as the sole
-predictor. We log-transformed ANPP to account for heteroscedasticity.
-Both log(ANPP) and soil moisture were standardized to have mean 0 and
-unit variance before fitting the model {[}i.e.,
-\((x_i - \bar{x})/\sigma_x\){]}.
+metric of soil moisture (hereafter referred to as `VWC'). To achieve
+this goal, we fit a generalized linear mixed effects regression model
+with log(ANPP) as the response variable and VWC and treatment as fixed
+effects. Plot and year of treatment were included as random effects to
+account for non-independence of observations, as described below. We
+log-transformed ANPP to account for heteroscedasticity. Both log(ANPP)
+and VWC were standardized to have mean 0 and unit variance before
+fitting the model {[}i.e., \((x_i - \bar{x})/\sigma_x\){]}.
 
 Our model is defined as follows:
 
@@ -361,17 +364,19 @@ vector of coefficients for the fixed effects in the design matrix
 observation (\(\textbf{x}_i\)) and is a vector with the following
 elements: 1 for the intercept, a binary 0 or 1 if the treatment is
 ``drought'', a binary 0 or 1 if the treatment is ``irrigation'', the
-scaled value of volumetric water content (VWC), binary ``drought'' value
-times VWC, and binary ``irrigation'' value times VWC. Thus, our model
-treats ``control'' observations as the main treatment and then estimates
-intercept and slope offsets for the ``drought'' and ``irrigation''
-treatments. In reference to our model, the hypotheses we wish to test
-are: (1) the coefficient for drought\(\times\)VWC is positive and
-different from zero, and (2) the coefficient for irrigation\(\times\)VWC
-is negative and different from zero
+scaled value of VWC, binary ``drought'' value times VWC, and binary
+``irrigation'' value times VWC. Thus, our model treats ``control''
+observations as the main treatment and then estimates intercept and
+slope offsets for the ``drought'' and ``irrigation'' treatments. In
+reference to our model, the hypotheses we wish to test are:
+
+\begin{description}
+\item [H1] The coefficient for drought$\times$VWC is positive and different from zero.
+\item [H2] The coefficient for irrigation$\times$VWC is negative and different from zero.
+\end{description}
 
 To account for the fact that observations within plots and years are not
-independent, we include three random effects. Specifically, we include
+independent, we include two random effects. Specifically, we include
 plot-specific offsets (\(\boldsymbol{\gamma}\)) for the intercept and
 slope terms and year-specific intercept offsets (\(\eta_t\)). The
 covariate vector \(\textbf{z}_i\) for each observation \emph{i} has two
@@ -443,16 +448,16 @@ successful.
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP
 (Table 1; Fig. 3), but the effect is associated with high uncertainty,
-with credible intervals that overlap zero (Table 1). Ecosystem
-functional response was similar among treatments (Table 1; Fig. 3), but
-there is evidence that the slope for the irrigation treatment is less
-than the slope for the control treatment. This evidence comes from
-interpreting the posterior distribution of the slope offset for the
-irrigation treatment, from which we calculate a 98\% probability that
-the estimate is less than zero (Fig. 3A, right panel). There was no
-evidence that the treatment effects became more important over time
-because there was no directional trend in the random year effects (Fig.
-A2-2).
+with credible intervals that overlap zero, regardless of treatment
+(Table 1). Ecosystem functional response was similar among treatments
+(Table 1; Fig. 3B), but there is evidence that the slope for the
+irrigation treatment is less than the slope for the control treatment.
+This evidence comes from interpreting the posterior distribution of the
+slope offset for the irrigation treatment, from which we calculate a
+98\% probability that the estimate is less than zero (Fig. 3A, right
+panel). There was no evidence that the treatment effects became more
+important over time because there was no directional trend in the random
+year effects (Fig. A2-2).
 
 Community composition was similar among treatments. In no year did
 community composition among treatments not overlap, and they were
@@ -471,22 +476,29 @@ rapid, on the order of years \citep{Hoover2014}, and slow, on order of
 decades \citep{Knapp2012, Wilcox2016}. Thus, a lingering question is how
 the time scales of ecosystem response and community change differ among
 ecosystems, which can be answered by manipulating precipitation to reach
-extreme levels. The results of our five year experiment in a sagebrush
-steppe conform to the first of our four predictions: neither ecosystem
-functional response nor community composition changed with chronic
-alteration in water availability (Fig. 1, top left).
+extreme levels.
+
+The results of our five year experiment in a sagebrush steppe conform to
+two of our four predictions, depending on treatment. Under chronic
+drought, neither ecosystem functional response nor community composition
+changed (Fig. 1, top left). But under irrigation, ecosystem functional
+response was different from the control treatment while community
+composition remained unchanged (Fig. 1, top right). Thus, we found some
+evidence for a saturating response at high water availability (Fig. 3A,
+right panel). However, the response of ANPP to soil moisture was
+consitently weak, regardless of treatment (Table 1).
 
 The similarity of ecosystem functional response (Fig. 3) and community
-composition (Fig. 5) across treatments is surprising because grasslands
-generally, and sagebrush steppe specifically, are considered
-water-limited systems. Indeed, we expected ecosystem functional
-response, community composition, or both to change with precipitation
-treatment, landing us in any box of Fig. 1 \emph{except} the top left.
-So, why did our treatments fail to induce ecosystem or community
-responses? We can think of three reasons; two are limitations of our
-study, and one is the life history traits of the species in our focal
-communities. We first discuss the potential limitations of our study,
-and then discuss the biological explanation.
+composition (Fig. 5) between drought and control treatments is
+surprising because grasslands generally, and sagebrush steppe
+specifically, are considered water-limited systems. Indeed, we expected
+ecosystem functional response, community composition, or both to change
+under the drought treatment, landing us in any box of Fig. 1
+\emph{except} the top left. So, why did our drought treatment fail to
+induce ecosystem or community responses? We can think of three reasons;
+two are limitations of our study, and one is the life history traits of
+the species in our focal communities. We first discuss the potential
+limitations of our study, and then discuss the biological explanation.
 
 First, it could be that our manipulations were not large enough to
 induce a response. That is, maybe a 50\% decrease/increase in any given
@@ -502,7 +514,8 @@ the 99\% quantile is 414 mm, a 77\% increase from mean growing season
 precipitation (Appendix 3). Thus, our drought treatment represented
 extreme precipitation amounts, especially in years where ambient
 precipitation was below average (Fig. 2A). The irrigation treatment may
-have been too small, however.
+have been too small, yet that is the treatment where we observed an
+effect (Fig. 3).
 
 Second, ANPP at our site may be influenced by factors beyond the window
 of soil moisture we included in our statistical model. For example,
@@ -604,12 +617,12 @@ DEB-1353078 and DEB-1054040 to PBA.
   \hline
 Coefficient & Treatment & Posterior Mean & Posterior Median & Lower 95\% BCI & Upper 95\% BCI \\ 
   \hline
-Intercept & Control & 0.02 & 0.03 & -1.06 & 1.01 \\ 
-  Intercept & Drought & -0.04 & -0.04 & -1.39 & 1.21 \\ 
-  Intercept & Irrigation & -0.13 & -0.11 & -1.35 & 1.09 \\ 
-  Slope & Control & 0.63 & 0.64 & -0.33 & 1.61 \\ 
-  Slope & Drought & 0.46 & 0.47 & -0.59 & 1.52 \\ 
-  Slope & Irrigation & 0.26 & 0.26 & -0.60 & 1.12 \\ 
+Intercept & Control & 0.05 & 0.06 & -0.91 & 0.97 \\ 
+  Intercept & Drought & -0.01 & -0.02 & -1.27 & 1.25 \\ 
+  Intercept & Irrigation & -0.09 & -0.08 & -1.25 & 1.04 \\ 
+  Slope & Control & 0.62 & 0.60 & -0.27 & 1.60 \\ 
+  Slope & Drought & 0.45 & 0.45 & -0.57 & 1.52 \\ 
+  Slope & Irrigation & 0.26 & 0.25 & -0.53 & 1.09 \\ 
    \hline
 \end{tabular}
 \endgroup
