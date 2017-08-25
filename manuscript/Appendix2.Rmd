@@ -106,15 +106,15 @@ We assume the observations are conditionally Gaussian,
 \mu_{i} &= \boldsymbol{\beta}\textbf{x}_i + \boldsymbol{\gamma}_{j(i)}\textbf{z}_i + \eta_t.
 \end{align}
 
-\noindent{}All fixed effect $\beta$s were drawn from normally distributed priors with mean 0 and standard deviation 1: $\boldsymbol{\beta} \sim \text{Normal}(0,1)$. $\gamma$ random effects were drawn from a multivariate prior centered on zero with a shared variance covariance matrix:
+\noindent{}All fixed effect $\beta$s were drawn from normally distributed priors with mean 0 and standard deviation 5: $\boldsymbol{\beta} \sim \text{Normal}(0,5)$. $\gamma$ random effects were drawn from a multivariate prior centered on zero with a shared variance covariance matrix:
 
 \vspace{-2em}
 
 \begin{align}
 \boldsymbol{\gamma} \sim \text{MVN} \left( 0, \Sigma \right), \\
 \Sigma = \sigma_{plt}^2 \textbf{R}, \\
-\sigma_{plt} \sim \text{Uniform}(0,1), \\
-\textbf{R} \sim \text{Cholesky}(1)
+\sigma_{plt} \sim \text{Cauchy}(0,2.5), \\
+\textbf{R} \sim \text{LKJ}(2.0)
 \end{align}
 
 \noindent{}The random year effects ($\boldsymbol{\eta}$) are modeled as intercept offsets centered on zero with a shared variance ($\sigma_{yr}$): $\boldsymbol{\gamma} \sim \text{Normal} \left( 0, \sigma_{yr}  \right)$.
@@ -142,13 +142,10 @@ data {
   int<lower=0> Nplots;         # number of plots
   int<lower=0> Ntreats;        # number of treatments
   int<lower=0> Nobs;           # number of observations
-  int<lower=0> Nppts;          # number of precip levels to predict
   int<lower=0> Nyears;         # number of years
   vector[Nobs] y;              # vector of observations
   row_vector[Npreds] x[Nobs];	 # design matrix for fixed effects
   row_vector[Npreds2] z[Nobs]; # simple design matrix for random effects 
-  matrix[Nppts,Npreds] newx;   # design matrix for predictions 
-  matrix[Npreds2,Npreds2] R;	 # priors for covariance matrix
   int plot_id[Nobs];           # vector of plot ids
   int treat_id[Nobs];          # vector of treatment ids
   int year_id[Nobs];           # vector of year ids
@@ -180,10 +177,11 @@ transformed parameters {
 
 model {
   ####  PRIORS
-  sigma_year ~ cauchy(0,2)
+  sigma_u ~ cauchy(0,2.5)
+  sigma_year ~ cauchy(0,2.5)
   year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
-  beta ~ normal(0,1);	             # priors on treatment coefficients
-  L_u ~ lkj_corr_cholesky(1);      # prior on the cholesky factor which controls the 
+  beta ~ normal(0,5);	             # priors on treatment coefficients
+  L_u ~ lkj_corr_cholesky(2.0);      # prior on the cholesky factor which controls the 
                                    # correlation between plot level treatment effects
   
   for(i in 1:Nplots)
@@ -193,13 +191,18 @@ model {
   for(i in 1:Nobs)
     y[i] ~ normal(yhat[i], sd_y); # observations vary normally around expected values
 }
+
+generated quantities{
+  corr_matrix[Npreds2] R = multiply_lower_tri_self_transpose(L_u);
+  cov_matrix[Npreds2] V = quad_form_diag(R,sigma_u);
+}
 ```
 
 \newpage{}
 
 # Figures
 
-```{r scatterplot, fig.cap="Scatterplot, on the arithmetic scale, of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines).", echo=FALSE, message=FALSE}
+```{r scatterplot, fig.cap="Scatterplot, on the arithmetic scale, of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines).", echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes
@@ -262,9 +265,17 @@ regression <- regression %>%
   mutate(backtrans_estimate = estimate*sd_log_anpp+mean_log_anpp,
          backtrans_vwc = newx*sd_vwc+mean_vwc)
 
+regression_limited <- {}
+for(dotrt in unique(regression$Treatment)){
+  tmpdat <- filter(regression, Treatment == dotrt)
+  tmprange <- range(anpp_data[which(anpp_data$Treatment==dotrt),"total_seasonal_vwc"])
+  tmpdat$backtrans_vwc[tmpdat$backtrans_vwc < tmprange[1] | tmpdat$backtrans_vwc > tmprange[2]] <- NA
+  regression_limited <- rbind(regression_limited, tmpdat)
+}
+
 ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
   geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
-  geom_line(data=regression, aes(x=backtrans_vwc, y=exp(backtrans_estimate), color=Treatment), size=1)+
+  geom_line(data=regression_limited, aes(x=backtrans_vwc, y=exp(backtrans_estimate), color=Treatment), size=1)+
   scale_fill_brewer(palette = "Set2")+
   scale_color_brewer(palette = "Set2")+
   xlab("March-June Cumulative VWC")+
@@ -276,7 +287,26 @@ ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
 
 \newpage{}
 
-```{r year_effects, fig.cap="Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.", echo=FALSE, message=FALSE, warning=FALSE}
+```{r posteriors, fig.cap="Prior (dashed lines) and posterior (solid line) distributions of intercepts and slopes for each treatment. The slope represents the main effect of soil moisture on log(ANPP). The red line marks 0. Shrinkage of the posterior distribution and/or changes in the mean indicate the data informed model parameters beyond the information contained in the prior for all coefficients.",echo=FALSE, message=FALSE, warning=FALSE}
+posteriors <- treat_effects %>%
+  separate(param_name, into = c("Treatment", "Coefficient")) %>%
+  mutate(prior = rnorm(n = nrow(treat_effects), 0, 5)) %>%
+  gather(Distribution, Value, -iteration, -Treatment, -Coefficient)
+
+ggplot(posteriors, aes(x=Value, linetype=Distribution))+
+    geom_line(stat = "density")+
+    geom_vline(aes(xintercept=0), color="red", size=0.2)+
+    scale_x_continuous(limits=c(-5,5))+
+    scale_linetype_discrete(labels = c("Posterior","Prior"), name = NULL)+
+    facet_grid(Coefficient~Treatment)+
+    ylab("Density")+
+    theme_few()+
+    theme(axis.text = element_text(size=7))
+```
+
+\newpage{}
+
+```{r year_effects, fig.cap="Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 to smooth the density curves for visual clarity.", echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes

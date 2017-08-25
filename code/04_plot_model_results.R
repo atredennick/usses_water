@@ -173,32 +173,35 @@ suppressWarnings( # ignore wanrnings about NA values
 )
 
 suppressWarnings( # ignore wanrnings about NA values
-  gridplot <- cowplot::plot_grid(treat_posteriors, regress_plot, nrow = 2, labels = c("A)","B)"))
+  gridplot <- cowplot::plot_grid(treat_posteriors, NULL, regress_plot, 
+                                 rel_heights = c(1, 0.08, 1),
+                                 nrow = 3, 
+                                 labels = c("A)","","B)"))
 )
 ggsave("../figures/glmm_main_results.png", plot = gridplot, width = 7, height = 5, units = "in", dpi =120)
 
 
 
 ####
-####  PLOT PRIORS AND POSTERIORS ----
+####  PLOT PRIORS AND POSTERIORS (now in App. 2) ----
 ####
-posteriors <- treat_effects %>%
-  separate(param_name, into = c("Treatment", "Coefficient")) %>%
-  mutate(prior = rnorm(n = nrow(treat_effects), 0, 5)) %>%
-  gather(Distribution, Value, -iteration, -Treatment, -Coefficient)
-
-suppressWarnings( # ignore wanrnings about NA values
-  ggplot(posteriors, aes(x=Value, linetype=Distribution))+
-    geom_line(stat = "density")+
-    geom_vline(aes(xintercept=0), color="red", size=0.2)+
-    scale_x_continuous(limits=c(-5,5))+
-    scale_linetype_discrete(labels = c("Posterior","Prior"), name = NULL)+
-    facet_grid(Coefficient~Treatment)+
-    ylab("Density")+
-    theme_few()+
-    theme(axis.text = element_text(size=7))
-)
-ggsave("../figures/priors_and_posteriors.png", width = 7, height = 4, units = "in", dpi =120)
+# posteriors <- treat_effects %>%
+#   separate(param_name, into = c("Treatment", "Coefficient")) %>%
+#   mutate(prior = rnorm(n = nrow(treat_effects), 0, 5)) %>%
+#   gather(Distribution, Value, -iteration, -Treatment, -Coefficient)
+# 
+# suppressWarnings( # ignore wanrnings about NA values
+#   ggplot(posteriors, aes(x=Value, linetype=Distribution))+
+#     geom_line(stat = "density")+
+#     geom_vline(aes(xintercept=0), color="red", size=0.2)+
+#     scale_x_continuous(limits=c(-5,5))+
+#     scale_linetype_discrete(labels = c("Posterior","Prior"), name = NULL)+
+#     facet_grid(Coefficient~Treatment)+
+#     ylab("Density")+
+#     theme_few()+
+#     theme(axis.text = element_text(size=7))
+# )
+# ggsave("../figures/priors_and_posteriors.png", width = 7, height = 4, units = "in", dpi =120)
 
 
 

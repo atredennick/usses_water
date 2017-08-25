@@ -601,7 +601,7 @@ DEB-1353078 and DEB-1054040 to PBA.
 
 \begin{description}
 \item [Appendix 1.] Additional methods and information on estimating aboveground net primary productivity.
-\item [Appendix 2.] Details of the hierarchical Bayesian model, Fig. A2-1, and Fig. A2-2.
+\item [Appendix 2.] Details of the hierarchical Bayesian model, Fig. A2-1, Fig. A2-2, and Fig. A2-3.
 \item [Appendix 3.] Details on analysis of precipitation historical range of variability and Fig. A3-1.
 \end{description}
 
@@ -617,12 +617,12 @@ DEB-1353078 and DEB-1054040 to PBA.
   \hline
 Coefficient & Treatment & Posterior Mean & Posterior Median & Lower 95\% BCI & Upper 95\% BCI \\ 
   \hline
-Intercept & Control & 0.05 & 0.06 & -0.91 & 0.97 \\ 
-  Intercept & Drought & -0.01 & -0.02 & -1.27 & 1.25 \\ 
-  Intercept & Irrigation & -0.09 & -0.08 & -1.25 & 1.04 \\ 
-  Slope & Control & 0.62 & 0.60 & -0.27 & 1.60 \\ 
-  Slope & Drought & 0.45 & 0.45 & -0.57 & 1.52 \\ 
-  Slope & Irrigation & 0.26 & 0.25 & -0.53 & 1.09 \\ 
+Intercept & Control & 0.22 & 0.16 & -1.25 & 2.16 \\ 
+  Intercept & Drought & 0.64 & 0.44 & -1.37 & 3.79 \\ 
+  Intercept & Irrigation & -0.51 & -0.37 & -2.99 & 1.26 \\ 
+  Slope & Control & 1.31 & 1.14 & -0.30 & 3.83 \\ 
+  Slope & Drought & 1.18 & 1.00 & -0.62 & 4.12 \\ 
+  Slope & Irrigation & 0.83 & 0.68 & -0.61 & 3.12 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -674,7 +674,7 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
-  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of the intercept and slope offsets for the drought and irrigation treatments. Offsets indicate the amount to which the coefficients for drought or irrigation treatments differ from the control treatment estimates. Probabilities (``Pr $<$ 0 ='') for each distribution indicate the probability that coefficient is less than zero. Probabilities greater than 0.95 indicate strong support for the coefficient being less than zero. We only show the one-tailed probability for the value being less than zero because the median of each distribution is less than zero. Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
+  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of the intercept and slope offsets for the drought and irrigation treatments. Offsets indicate the amount to which the coefficients for drought or irrigation treatments differ from the control treatment estimates. Probabilities (``Pr $<$ 0 ='') for each distribution indicate the probability that coefficient is less than zero. Probabilities greater than 0.95 indicate strong support for the coefficient being less than zero. We only show the one-tailed probability for the value being less than zero because the median of each distribution is less than zero. Kernel bandwidths of posterior densities were adjusted by a factor of 5 to smooth the distribution for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
 \end{figure}
 
 \newpage{}
