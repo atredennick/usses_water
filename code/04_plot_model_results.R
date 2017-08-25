@@ -63,14 +63,15 @@ betas <- data.frame(extract(all_fit, pars = 'beta')) %>%
   separate(param_name, c("Treatment", "Type"), "::")
 
 treat_slopes <- betas %>%
-  filter(Treatment != "Control")
+  filter(Treatment != "Control") %>%
+  mutate(Type = paste(Type,"Offset"))
 
 slope_probs <- treat_slopes %>%
   group_by(Treatment, Type) %>%
   summarise(probs = round(get_one_tailed(estimate),2)) %>%
   mutate(prob_text = paste("Pr < 0 =", probs))
-slope_probs$xpos <- c(1.16, 1, 1, 1)
-slope_probs$ypos <- c(1.5,1.2,2.8,2.2)
+slope_probs$xpos <- c(-2.8, -1, -3.6, -1.15)
+slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
 
 treat_cols <- brewer.pal(3,"Set2")[2:3]
 
@@ -78,7 +79,7 @@ treat_posteriors <- ggplot(treat_slopes)+
   geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
   geom_joy(stat="density", adjust=3, alpha=0.8, aes(x=estimate, y=Treatment, fill=Treatment, color=Treatment, height = ..density..))+
   geom_text(data = slope_probs, aes(x=xpos, y=ypos, label = prob_text), size = 3)+
-  facet_wrap(~Type)+
+  facet_wrap(~Type, scales = "free")+
   scale_y_discrete(labels = c("Drought","Irrigation"))+
   scale_fill_manual(values = treat_cols)+
   scale_color_manual(values = treat_cols)+
@@ -171,12 +172,33 @@ suppressWarnings( # ignore wanrnings about NA values
     theme(panel.grid.minor = element_blank())
 )
 
-
-gridplot <- cowplot::plot_grid(treat_posteriors, regress_plot, nrow = 2, labels = c("A)","B)"))
-gridplot
+suppressWarnings( # ignore wanrnings about NA values
+  gridplot <- cowplot::plot_grid(treat_posteriors, regress_plot, nrow = 2, labels = c("A)","B)"))
+)
 ggsave("../figures/glmm_main_results.png", plot = gridplot, width = 7, height = 5, units = "in", dpi =120)
 
 
+
+####
+####  PLOT PRIORS AND POSTERIORS ----
+####
+posteriors <- treat_effects %>%
+  separate(param_name, into = c("Treatment", "Coefficient")) %>%
+  mutate(prior = rnorm(n = nrow(treat_effects), 0, 5)) %>%
+  gather(Distribution, Value, -iteration, -Treatment, -Coefficient)
+
+suppressWarnings( # ignore wanrnings about NA values
+  ggplot(posteriors, aes(x=Value, linetype=Distribution))+
+    geom_line(stat = "density")+
+    geom_vline(aes(xintercept=0), color="red", size=0.2)+
+    scale_x_continuous(limits=c(-5,5))+
+    scale_linetype_discrete(labels = c("Posterior","Prior"), name = NULL)+
+    facet_grid(Coefficient~Treatment)+
+    ylab("Density")+
+    theme_few()+
+    theme(axis.text = element_text(size=7))
+)
+ggsave("../figures/priors_and_posteriors.png", width = 7, height = 4, units = "in", dpi =120)
 
 
 

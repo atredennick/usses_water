@@ -54,3 +54,8 @@ model {
   for(i in 1:Nobs)
     y[i] ~ normal(yhat[i], sd_y); # observations vary normally around expected values
 }
+
+generated quantities{
+  corr_matrix[Npreds2] R = multiply_lower_tri_self_transpose(L_u);
+  cov_matrix[Npreds2] V = quad_form_diag(R,sigma_u);
+}

@@ -14,6 +14,8 @@ rm(list = ls(all.names = TRUE))
 ##  Set working directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 
+
+
 ####
 ####  LOAD LIBRARIES ----
 ####
@@ -23,6 +25,8 @@ library(ggthemes)     # Pleasing ggplot themes
 library(stringr)      # Working with strings
 library(rstan)        # For MCMC
 library(lme4)         # Mixed-effects modeling
+
+
 
 ####
 ####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ----
@@ -35,6 +39,8 @@ m1 <- lmer( y ~ Treatment*vwc_scaled + (1|year_id) + (vwc_scaled|quadname), my_d
 summary(m1)
 
 attr(VarCorr(m1)$quadname, 'correlation')
+
+
 
 ####
 ####  SET UP AND FIT MODEL IN STAN ----
@@ -76,33 +82,37 @@ fit <- sampling(sm, data = anppdat, iter = 10000, chains = 4, thin = 10)
 ##  Save the model fit
 saveRDS(fit, "../results/randcoefs_alltreatments_fit.RDS")
 
-betas <- as.numeric( summary(fit, 'beta')$summary[,1] )
-
-df <- data.frame( x = anppdat$x, predicted = anppdat$x %*% betas)
-
-df <- df %>% 
-  mutate( predicted = predicted*sd(log(anpp_data$anpp)) + mean(log(anpp_data$anpp))) %>% 
-  mutate( Treatment = ifelse( x.TreatmentDrought == 1, 'Drought', 'Control')) %>% 
-  mutate( Treatment = ifelse( x.TreatmentIrrigation == 1, 'Irrigation', Treatment)) %>% 
-  mutate( VWC = anpp_data$total_seasonal_vwc) %>% 
-  mutate( observed = anpp_data$anpp) %>% 
-  mutate( year = anppdat$year_id)
-
-ggplot(df, aes( x = VWC, y = predicted, color = Treatment, shape = factor( year))) + 
-  geom_line(aes( group  = Treatment)) + 
-  geom_point( aes( x = VWC, y = log(observed))) + 
-  scale_color_manual(values = c('black', 'red', 'blue')) + 
-  ylab( 'Annual Net Primary Productivity') 
-
-L_u <- matrix( summary(fit, 'L_u')$summary[,1], 2,2, byrow = T)
-L_u #lower cholesky
-L_u%*%t(L_u) # this should be the correlation matrix but it's odd that the lower diagonal is not one
 
 
 ####
 ####  OPTIONAL DIAGNOSTICS ----
 ####
-library(bayesplot)
-stan_diag(fit)
-draws <- as.array(fit, pars = 'L_u')
-mcmc_trace(draws)
+# betas <- as.numeric( summary(fit, 'beta')$summary[,1] )
+# 
+# df <- data.frame( x = anppdat$x, predicted = anppdat$x %*% betas)
+# 
+# df <- df %>% 
+#   mutate( predicted = predicted*sd(log(anpp_data$anpp)) + mean(log(anpp_data$anpp))) %>% 
+#   mutate( Treatment = ifelse( x.TreatmentDrought == 1, 'Drought', 'Control')) %>% 
+#   mutate( Treatment = ifelse( x.TreatmentIrrigation == 1, 'Irrigation', Treatment)) %>% 
+#   mutate( VWC = anpp_data$total_seasonal_vwc) %>% 
+#   mutate( observed = anpp_data$anpp) %>% 
+#   mutate( year = anppdat$year_id)
+# 
+# ggplot(df, aes( x = VWC, y = predicted, color = Treatment, shape = factor( year))) + 
+#   geom_line(aes( group  = Treatment)) + 
+#   geom_point( aes( x = VWC, y = log(observed))) + 
+#   scale_color_manual(values = c('black', 'red', 'blue')) + 
+#   ylab( 'Annual Net Primary Productivity') 
+# 
+# L_u <- matrix( summary(fit, 'L_u')$summary[,1], 2,2, byrow = T)
+# L_u #lower cholesky
+# L_u%*%t(L_u) # this should be the correlation matrix but it's odd that the lower diagonal is not one
+# R <- matrix( summary(fit, 'R')$summary[,1], 2,2, byrow = T)
+# 
+# 
+# library(bayesplot)
+# stan_diag(fit)
+# draws <- as.array(fit, pars = 'beta')
+# mcmc_trace(draws)
+# summary(fit, pars = "beta")
