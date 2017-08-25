@@ -58,12 +58,6 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 
 # INTRODUCTION
 
-<!---
-Ecosystems worldwide are projected to experience either wetter or drier conditions in the future [@Zhang2007; @Greve2014].
-This has important implications for ecosystem functioning because mean annual net primary productivity (ANPP) positively covaries with mean annual precipitation across ecosystems [@Sala1988; @Huxman2004] and interannual responses of ANPP are linked to interannual variability in precipitation within ecosystems [@Lauenroth1992; @Hsu2012; @Gherardi2015a].
-To predict how ecosystems might respond to extreme precipitation levels, we need to understand whether ecosystems tend to follow temporal trends, which assume relatively constant plant community composition, or spatial trends, which allow community composition to shift [@Wilcox2016].
---->
-
 The functional response of aboveground net primary productivity (ANPP) to water availability (e.g., soil moisture) can be characterized by fitting a model to historical observations of ANPP and soil moisture at a given site.
 However, the fitted functional response may provide an incomplete picture because future conditions are likely to be outside the historical range of variability [@Smith2011].
 For example, historical trends may underestimate the potential for the soil moisture-ANPP relationship to saturate or weaken if soil moisture is pushed far beyond typical levels.
@@ -188,13 +182,6 @@ Our model is defined as follows:
 
 \vspace{-2em}
 
-<!---
-\begin{align}
-\mu_{j(k(t))} &= \beta_{0,j(k)} + \beta_{1,j(k)}x_{k(t)} + \gamma_t, \\
-y_{j(k(t))} &\sim \text{Normal} \left(\mu_{j(k(t))}, \sigma^2_{k} \right),
-\end{align}
----->
-
 \begin{align}
 \mu_{i} &= \boldsymbol{\beta}\textbf{x}_i + \boldsymbol{\gamma}_{j(i)}\textbf{z}_i + \eta_t, \\
 \textbf{y} &\sim \text{Normal} \left(\boldsymbol{\mu}, \sigma^2 \right),
@@ -226,32 +213,6 @@ The plot-specific coefficients are modeled hierarchically, where plot level coef
 The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-cauchy distribution. 
 A full description of our model is in Appendix 2.
 
-<!----
-is the intercept for plot *j* associated with treatment *k*, $\beta_{1,j(k)}$ is the slope term for the effect of soil moisture for plot *j* associated with treatment *k*, $\gamma_t$ is the intercept offset for year *t*, and $\sigma^2_k$ is the process variance for treatment *k*.
-Data include the standardized log(ANPP) observations $\left( y_{j(k(t))} \right)$ and soil moisture ($x_{k(t)}$).
-
-The intercept and slope terms are modeled hierarchically to account for the non-independence of observations across years within plots and to allow us to test the hypothesis that our treatments alter the ANPP-soil moisture relationship.
-Thus, our multi-level model has three grouping levels for coefficients, representing the nested structure of the data: (i) overall coefficients, (ii) treatment coefficients, and (iii) plot coefficients.
-Each subsequent level is drawn from the distribution of coefficients at the previous level, meaning plot-level coefficients are drawn from treatment-level coefficients, which are drawn from overall coefficients.
-We also include a covariance structure among the intercept and slope at each level.
-Formally, our hierarchical structure is as follows, where we drop the intercept (0) and slope (1) subscripts and instead refer to a vector of coefficients, $\boldsymbol{\beta}$:
-
-\vspace{-1em}
-
-\begin{align}
-\boldsymbol{\beta}_{j(k)} &\sim \text{MVN} \left( \boldsymbol{\beta}_k, \boldsymbol{\Sigma}(k) \right), \\
-\boldsymbol{\beta}_{k} &\sim \text{MVN} \left( \boldsymbol{\beta}, \boldsymbol{\Sigma}  \right), \\
-\boldsymbol{\beta} &\sim \text{Normal} \left( 0, 1 \right),
-\end{align}
-
-\noindent{}where $\boldsymbol{\beta}_{j(k)}$ is the vector of regression coefficients (intercept and slope) for plot *j* associated with treatment *k*, $\boldsymbol{\beta}_{k}$ is the vector of coefficients for each treatment, and $\boldsymbol{\beta}$ is the vector of overall coefficients.
-The plot- and treatment-level coefficients are drawn from multivariate normal distributions with covariance matrix $\boldsymbol{\Sigma}$.
-For the plot-level coefficients, each treatment has its own variance-covariance matrix (i.e., $\boldsymbol{\Sigma}(k)$).
-The overall coefficients are drawn from a normal prior with mean 0 and standard deviation 1.
-The random year effects ($\boldsymbol{\gamma}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a weibull distribution.
-A full description of model is in Appendix 2.
----->
-
 We fit the model using a Bayesian approach and obtained posterior estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
 We obtained samples from the posterior distribution for all model parameters from four parallel MCMC chains run for 10,000 iterations, saving every $10^{\text{th}}$ sample.
@@ -270,11 +231,6 @@ To test whether treatment plots were equally dispersed, or not, we used the ```v
 All R code and data necessary to reproduce our analysis has been archived on Figshare (\emph{link here after acceptance}) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
 We also include annotated Stan code in our model description in Appendix 2.
 
-<!---
-```{r get_results, echo=FALSE}
-betas <- read.csv("../results/beta_summaries.csv")
-```
---->
 
 # RESULTS
 
@@ -307,10 +263,6 @@ Neither ecosystem functional response nor community composition changed under ch
 Ecosystem functional response under chronic irrigation was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), consistent with the top right prediction in Fig. 1.
 The altered ecosystem functional response under irrigation matched our expectations becuase we found evidence for a saturating response for the irrigation treatment (Fig. 3A, right panel).
 However, the response of ANPP to soil moisture in all treatments was consistently weak (Table 1, Fig. A2-2) and within-year variation of ANPP was large (Fig. 3B) 
-
-<!---
-The results of our five year experiment in a sagebrush steppe conform to the first of our four predictions: neither ecosystem functional response nor community composition changed with chronic alteration in water availability (Fig. 1, top left).
---->
 
 The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) between drought and control treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
 Indeed, we expected ecosystem functional response, community composition, or both to change under the drought treatment, landing us in any box of Fig. 1 \emph{except} the top left.
@@ -346,7 +298,7 @@ Furthermore, the dominant shrub in our focal ecosystem, *Artemisia tripartita*, 
 
 The weaker soil moisture-ANPP relationship we observed for the irrigation treatment, evidenced by the less positive slope relative to controls (Fig. 3A, right panel), has three non-exclusive explanations.
 First, species' biomass production may have hit physiological thresholds and/or become limited by other factors, such as nitrogen availability [@LeBauer2008].
-\pba{PETER: DO WE KNOW ANYTHING ABOUT NITROGEN AT USSES? WANT TO ADD A SENTENCE HERE ABOUT HOW LIKELY THIS IS...}
+\pba{PETER: DO WE KNOW ANYTHING ABOUT NITROGEN AT USSES? WANT TO ADD A SENTENCE HERE ABOUT HOW LIKELY OR UNLIKEL THIS IS...}
 Second, the less positive slope could be another indicator of bet hedging in this community.
 Avoiding high biomass production in wet years could benefit species in the long run if climate conditions are variable.
 Third, the less positive slope may be a statistical artifact due the variability of ANPP within years and our low sample size.
@@ -426,6 +378,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
   \caption{Possible outcomes of chronic resource alteration based on the 'Hierachical Response Framework' (Smith et al. 2009).}
 \end{figure}
 
+
 \newpage{}
 
 
@@ -438,24 +391,16 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 
 \newpage{}
 
+
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
   \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of the intercept and slope offsets for the drought and irrigation treatments. Offsets indicate the amount to which the coefficients for drought or irrigation treatments differ from the control treatment estimates. Probabilities (``Pr $<$ 0 ='') for each distribution indicate the probability that coefficient is less than zero. Probabilities greater than 0.95 indicate strong support for the coefficient being less than zero. We only show the one-tailed probability for the value being less than zero because the median of each distribution is less than zero. Kernel bandwidths of posterior densities were adjusted by a factor of 5 to smooth the distribution for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
 \end{figure}
 
-<!---
-\newpage{}
-
-\begin{figure}[!ht]
-  \centering
-      \includegraphics[width=5in]{../figures/glmm_yeardiffs.png}
-  \caption{Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 for visual clarity.}
-\end{figure}
---->
-
 
 \newpage{}
+
 
 \begin{figure}[!ht]
   \centering
