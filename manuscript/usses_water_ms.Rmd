@@ -81,7 +81,7 @@ The four predictions are based on possible outcomes at the community (e.g., comm
 
 First, altered precipitation changes neither ecosystem functional response nor community composition (Fig. 1, top left).
 In this case, changes in ANPP simply follow the soil moisture-ANPP relationship under ambient conditions.
-This corresponds to the early phases of the Hierarchical Respone Framework, where ecosystem response follows the physiological responses of individual species.
+This corresponds to the early phases of the Hierarchical Response Framework, where ecosystem response follows the physiological responses of individual species.
 Second, the ecosystem functional response changes but community composition remains the same (Fig. 1, top right).
 A saturating soil moisture-ANPP response fits this scenario, where individual species hit physiological thresholds or are limited by some other resource.
 Third, the ecosystem functional response is consistent but underlying community composition changes (Fig. 1, bottom left).
@@ -210,7 +210,7 @@ The plot-specific coefficients are modeled hierarchically, where plot level coef
 \end{align}
 
 \noindent{}where $\Sigma$ is the variance-covariance matrix and *j(i)* reads as "plot *j* associated with observation *i*". 
-The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-cauchy distribution. 
+The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-Cauchy distribution. 
 A full description of our model is in Appendix 2.
 
 We fit the model using a Bayesian approach and obtained posterior estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
@@ -261,7 +261,7 @@ Thus, a lingering question is how the time scales of ecosystem response and comm
 The results of our five year experiment in a sagebrush steppe conform to two of our four predictions, depending on treatment.
 Neither ecosystem functional response nor community composition changed under chronic drought (Fig. 3A, Fig. 4), consistent with the top left prediction in Fig. 1.
 Ecosystem functional response under chronic irrigation was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), consistent with the top right prediction in Fig. 1.
-The altered ecosystem functional response under irrigation matched our expectations becuase we found evidence for a saturating response for the irrigation treatment (Fig. 3A, right panel).
+The altered ecosystem functional response under irrigation matched our expectations because we found evidence for a saturating response for the irrigation treatment (Fig. 3A, right panel).
 However, the response of ANPP to soil moisture in all treatments was consistently weak (Table 1, Fig. A2-2) and within-year variation of ANPP was large (Fig. 3B) 
 
 The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) between drought and control treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
@@ -375,7 +375,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=4in]{../figures/hypothesis_figtable.png}
-  \caption{Possible outcomes of chronic resource alteration based on the 'Hierachical Response Framework' (Smith et al. 2009).}
+  \caption{Possible outcomes of chronic resource alteration based on the 'Hierarchical Response Framework' (Smith et al. 2009).}
 \end{figure}
 
 
