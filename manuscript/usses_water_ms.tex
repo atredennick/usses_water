@@ -109,18 +109,18 @@ ensure low variance of long-term success.
 
 \section{INTRODUCTION}\label{introduction}
 
-At a given site, the functional response of aboveground net primary
-productivity (ANPP) to water availability (e.g., soil moisture) can be
-characterized by fitting a model to historical observations of ANPP and
-soil moisture. However, the fitted functional response may provide an
+The functional response of aboveground net primary productivity (ANPP)
+to water availability (e.g., soil moisture) can be characterized by
+fitting a model to historical observations of ANPP and soil moisture at
+a given site. However, the fitted functional response may provide an
 incomplete picture because future conditions are likely to be outside
 the historical range of variability \citep{Smith2011}. For example,
 historical trends may underestimate the potential for the soil
-moisture-ANPP relationship to saturate if soil moisture is pushed far
-beyond typical levels. Saturating relationships are actually common
-\citep{Hsu2012, Gherardi2015a}, perhaps because other resources, like
-nitrogen, become more limiting in wet years than dry years. Knowing the
-curvature of the soil moisture-ANPP relationship at extreme
+moisture-ANPP relationship to saturate or weaken if soil moisture is
+pushed far beyond typical levels. Saturating relationships are actually
+common \citep{Hsu2012, Gherardi2015a}, perhaps because other resources,
+like nitrogen, become more limiting in wet years than dry years. Knowing
+the curvature of the soil moisture-ANPP relationship at extreme
 precipitation levels is critical for understanding how ecosystems will
 respond to chronic alterations in water availability.
 
@@ -129,16 +129,16 @@ responses is that they are not static. Changes in species identities and
 abundances can alter an ecosystem's functional response to water
 availability because different species have different physiological
 thresholds for producing biomass. \citet{Smith2009} introduced the
-`Hierarchical Response Framework' (HRF) for understanding the interplay
-of community composition and ecosystem functioning in response to
-resource manipulations over time. In the near term, ecosystem
-functioning such as ANPP will reflect the physiological responses of
-individual species to the manipulated resource level. For example, ANPP
-may decline under simulated drought because the initial community
-consisted of drought-intolerant species \citep{Hoover2014}. Over longer
-time spans, ecosystem functioning may recover as new species colonize or
-initial species reorder in relative abundance. For example, ANPP may
-initially decline, but eventually rise back to pre-treatment levels once
+`Hierarchical Response Framework' for understanding the interplay of
+community composition and ecosystem functioning in response to resource
+manipulations over time. In the near term, ecosystem functioning such as
+ANPP will reflect the physiological responses of individual species to
+the manipulated resource level. For example, ANPP may decline under
+simulated drought because the initial community consisted of
+drought-intolerant species \citep{Hoover2014}. Ecosystem functioning may
+recover over longer time spans as new species colonize or initial
+species reorder in relative abundance. For example, ANPP may initially
+decline, but eventually rise back to pre-treatment levels once
 drought-tolerant species become more abundant and compensate for
 drought-intolerant species \citep{Hoover2014}. It is also possible that
 ecosystem functioning shifts to a new mean state, reflecting the suite
@@ -150,39 +150,41 @@ that fall outside the historical range of variability
 \citep{Avolio2015, Gherardi2015, Knapp2017}. Altering the amount of
 precipitation over many years should provide insight into the time
 scales at which water-limited ecosystems respond to chronic resource
-alteration. Following the HRF, we propose four alternative predictions
-for the effect of precipitation manipulation on the ecosystem functional
-response to soil moisture, that is, the soil moisture-ANPP relationship
-(Fig. 1). The four predictions are based on possible outcomes at the
-community (e.g., community composition) and ecosystem (e.g., soil
-moisture-ANPP regression) levels.
+alteration. We propose four alternative predictions for the effect of
+precipitation manipulation on the ecosystem functional response to soil
+moisture based on the Hierarchical Response Framework (Fig. 1). We
+define `ecosystem functional response' as the relationship between
+available soil moisture and ANPP. The four predictions are based on
+possible outcomes at the community (e.g., community composition) and
+ecosystem (e.g., soil moisture-ANPP regression) levels.
 
 First, altered precipitation changes neither ecosystem functional
 response nor community composition (Fig. 1, top left). In this case,
 changes in ANPP simply follow the soil moisture-ANPP relationship under
-ambient conditions. This corresponds to the early phases of the HRF,
-where ecosystem response is due to the physiological responses of
-individual species. Second, the ecosystem functional response changes
-but community composition remains the same (Fig. 1, top right). A
-saturating soil moisture-ANPP response fits this scenario, where
-individual species hit physiological thresholds or are limited by some
-other resource. Third, the ecosystem functional response is consistent
-but underlying community composition changes (Fig. 1, bottom left). In
-this case, changes in species' identities or abundances occur in
-response to altered precipitation levels and species more suited to the
-new conditions compensate for reduced function of initial species.
-Fourth, and last, both ecosystem functional response and community
-composition change (Fig. 1, bottom right). New species, or newly
-abundant species, with different physiological responses completely
-reshape the ecosystem functional response.
+ambient conditions. This corresponds to the early phases of the
+Hierarchical Respone Framework, where ecosystem response follows the
+physiological responses of individual species. Second, the ecosystem
+functional response changes but community composition remains the same
+(Fig. 1, top right). A saturating soil moisture-ANPP response fits this
+scenario, where individual species hit physiological thresholds or are
+limited by some other resource. Third, the ecosystem functional response
+is consistent but underlying community composition changes (Fig. 1,
+bottom left). In this case, changes in species' identities or abundances
+occur in response to altered precipitation levels and species more
+suited to the new conditions compensate for reduced function of initial
+species. Fourth, and last, both ecosystem functional response and
+community composition change (Fig. 1, bottom right). New species, or
+newly abundant species, with different physiological responses
+completely reshape the ecosystem functional response.
 
 All four outcomes are possible in any given ecosystem, but the time
 scales at which the different scenarios play out likely differ
 \citep{Smith2009, Wilcox2016, Knapp2017}. Thus, our task is not to test
-the validity of the HRF, but rather to amass information on how quickly
-ecosystem functional responses change in different ecosystems. Likewise,
-we need to understand whether changes at the ecosystem level are driven
-by community level changes or individual level responses.
+the validity of the Hierarchical Response Framework, but rather to amass
+information on how quickly ecosystem functional responses change in
+different ecosystems. We also need to understand whether changes at the
+ecosystem level are driven by community level changes or individual
+level responses.
 
 To that end, here we report the results of a five-year precipitation
 manipulation experiment in a sagebrush steppe grassland. We imposed
@@ -195,10 +197,10 @@ interested in the consistency of the soil moisture-ANPP relationship
 among treatments. Is the relationship steeper under the drought
 treatment, at low soil moisture? Does the relationship saturate under
 the irrigation treatment, at high soil moisture? To answer these
-questions we fit a random intercept, random slope model to test whether
-the regressions differed among treatments. We also analyzed community
-composition over time, allowing us to place our experimental results
-within the framework of the HRF and our competing predictions (Fig. 1).
+questions we fit a generalized linear mixed effects model to test
+whether the regressions differed among treatments. We also analyzed
+community composition over time, allowing us to place our experimental
+results within the framework our competing predictions (Fig. 1).
 
 \section{METHODS}\label{methods}
 
@@ -233,8 +235,8 @@ randomly assigned each plot in a pair to receive a ``drought'' or
 ``irrigation'' treatment.
 
 Drought and irrigation treatments were designed to decrease and increase
-the amount of ambient precipitation by 50\%, respectively. To achieve
-this, we used a system of rain-out shelters and automatic irrigation
+the amount of ambient precipitation by 50\%. To achieve this, we used a
+system of rain-out shelters and automatic irrigation
 \citep{Gherardi2013}. The rain-out shelters consisted of transparent
 acrylic shingles 1-1.5 m above the ground that covered an area of
 \(2.5\times2\) m. The shingles intercepted approximately 50\% of
@@ -255,8 +257,10 @@ soil moisture at the same depths. Soil moisture measurements were
 automatically logged every four hours. We coupled this temporally
 intensive soil moisture sampling with spatially extensive readings taken
 at six points within all 16 plots and associated ambient measurement
-areas. These snapshot data were collected on 06/06/2012, 04/29/2015,
-05/07/2015, 06/09/2015, and 05/10/2016 using a handheld EC-5 sensor.
+areas. These snapshot data were collected on 06-06-2012, 04-29-2015,
+05-07-2015, 06-09-2015, and
+05-10-2016\footnote{Dates formatted as: mm-dd-yyyy.} using a handheld
+EC-5 sensor.
 
 Analyzing the response to experimental treatments was complicated by the
 fact that we did not directly monitor soil moisture in each plot on each
@@ -437,27 +441,29 @@ We also include annotated Stan code in our model description in Appendix
 
 Three of our five treatment years fell in years of below average
 rainfall (Fig. 2A). Thus, those three years represent a lower magnitude
-of absolute change in precipitation experienced by the treatments.
-Averaged across treatments, ANPP varied from a minimum of 74.5 g
-m\(^{-2}\) in 2014 to a maximum of 237.1 g m\(^{-2}\) in 2016 (Fig. 2C).
-ANPP was slightly higher in irrigation plots and slightly lower in
-drought plots (Fig. 2C), corresponding to estimated soil volumetric
-water content (VWC) differences among treatments (Fig. 2B). Such
-differences in soil VWC indicate our treatment infrastructure was
-successful.
+of absolute change in precipitation experienced by the treatments. ANPP
+varied from a minimum of 74.5 g m\(^{-2}\) in 2014 to a maximum of 237.1
+g m\(^{-2}\) in 2016 when averaged across treatments (Fig. 2C). ANPP was
+slightly higher in irrigation plots and slightly lower in drought plots
+(Fig. 2C), corresponding to estimated soil volumetric water content
+(VWC) differences among treatments (Fig. 2B). Such differences in soil
+VWC indicate our treatment infrastructure was successful.
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP
-(Table 1; Fig. 3), but the effect is associated with high uncertainty,
-with credible intervals that overlap zero, regardless of treatment
-(Table 1). Ecosystem functional response was similar among treatments
-(Table 1; Fig. 3B), but there is evidence that the slope for the
-irrigation treatment is less than the slope for the control treatment.
-This evidence comes from interpreting the posterior distribution of the
-slope offset for the irrigation treatment, from which we calculate a
-98\% probability that the estimate is less than zero (Fig. 3A, right
-panel). There was no evidence that the treatment effects became more
-important over time because there was no directional trend in the random
-year effects (Fig. A2-2).
+(Table 1; Fig. 3). The effect of soil moisture for each treatment is
+associated with high uncertainty, however, with credible intervals that
+overlap zero (Table 1). Although the parameter estimates for the effect
+of soil moisture overlap zero, the posterior distributions of the slopes
+all shrank and shifted to more positive values relative to the prior
+distributions (Fig. A2-2). Ecosystem functional response was similar
+among treatments (Table 1; Fig. 3B), but there is evidence that the
+slope for the irrigation treatment is less than the slope for the
+control treatment. This evidence comes from interpreting the posterior
+distribution of the slope offset for the irrigation treatment, from
+which we calculate a 99\% one-tailed probability that the estimate is
+less than zero (Fig. 3A, right panel). There was no evidence that the
+treatment effects became more important over time because there was no
+directional trend in the random year effects (Fig. A2-2).
 
 Community composition was similar among treatments. In no year did
 community composition among treatments not overlap, and they were
