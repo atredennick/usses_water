@@ -173,6 +173,7 @@ suppressWarnings( # ignore wanrnings about NA values
 
 
 gridplot <- cowplot::plot_grid(treat_posteriors, regress_plot, nrow = 2, labels = c("A)","B)"))
+gridplot
 ggsave("../figures/glmm_main_results.png", plot = gridplot, width = 7, height = 5, units = "in", dpi =120)
 
 
