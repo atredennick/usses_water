@@ -22,7 +22,7 @@ affiliation:
 abstract: |
   **Background.** Precipitation is predicted to become more variable in the western United States, meaning years of above and below average precipitation will become more common. Periods of extreme precipitation are major drivers of ecosystem functioning in water limited grasslands, but how ecosystems respond to precipitation may change as the duration of above and below average periods increases. Changes in ecosystem functional response could reflect compensatory changes in species composition or species reaching physiological thresholds at extreme precipitation levels. 
   
-  **Methods.** We conducted a five year precipitation manipulation experiment in a sagebrush steppe ecosystem in Idaho, US. We used drought and irrigation treatments (approximately 50% decrease/increase) to investigate whether ecosystem functional response remains consistent at extreme precipitation levels. We recorded data on aboveground net primary productivity (ANPP), species abundance, and soil moisture. We fit a generalized linear mixed effects model to determine if the relationship between ANPP and soil moisture differed among treatments. We used nondimensional multivariate scaling to quantify community composition over the five years.
+  **Methods.** We conducted a five year precipitation manipulation experiment in a sagebrush steppe ecosystem in Idaho, United States. We used drought and irrigation treatments (approximately 50% decrease/increase) to investigate whether ecosystem functional response remains consistent at extreme precipitation levels. We recorded data on aboveground net primary productivity (ANPP), species abundance, and soil moisture. We fit a generalized linear mixed effects model to determine if the relationship between ANPP and soil moisture differed among treatments. We used nonmetric multidimensional scaling to quantify community composition over the five years.
   
   **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among drought and control treatments, but the irrigation treatment had a lower slope than the control treatment. However, ANPP response to availabile soil moisture was weak and uncertain regardless of treatment, with all slopes overlapping zero. There was also large variation in ANPP within-years. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
   
@@ -219,7 +219,7 @@ We obtained samples from the posterior distribution for all model parameters fro
 Trace plots of all parameters were visually inspected to ensure well-mixed chains and convergence.
 We also made sure all scale reduction factors ($\hat{R}$ values) were less than 1.1 [@Gelman2009].
 
-We used non-dimensional multivariate scaling (NMDS) based on Bray-Curtis distances to see if community composition differed among treatments through time.
+We used nonmetric multidimensional scaling (NMDS) based on Bray-Curtis distances to see if community composition differed among treatments through time.
 We first calculated Bray-Curtis distances among all plots for each year of the experiment and then extracted those distances for use in the NMDS.
 Some values of standardized species' abundances were negative, which is not allowed for calculating Bray-Curtis distances.
 We simply added '2' to each abundance value to ensure all values were greater than zero.
@@ -239,6 +239,7 @@ Thus, those three years represent a lower magnitude of absolute change in precip
 ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 when averaged across treatments (Fig. 2C).
 ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
+ANPP was highly variable within years (Fig. 2C).
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3).
 The effect of soil moisture for each treatment is associated with high uncertainty, however, with 95\% Bayesian credible intervals that overlap zero (Table 1).
@@ -289,7 +290,7 @@ Species that live in variable environments, such as cold deserts, must have stra
 One strategy is bet hedging, where species forego short-term gains to reduce the variance of long-term success [@Seger1987].
 In other words, species do the same thing every year, with only minimal response to environmental conditions.
 The dry and variable environment of the sagebrush steppe has likely selected for bet hedging species that can maintain function at low water availability and have weak responses to high water availability.
-In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which corresponds to the weak effect of soil moisture on ANPP (i.e., the Bayesian credible intervals for $\beta$ in Eq. 1 overlapping zero).
+In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which corresponds to the weak effect of soil moisture on ANPP (i.e., the Bayesian credible intervals for the slopes in $\boldsymbol{\beta}$ in Eq. 1 overlapping zero).
 
 Another strategy to deal with variable environmental conditions is avoidance, which would also result in a consistent ecosystem functional response between drought and control treatments.
 The perennial plants in this cold desert ecosystem are tolerant to drought conditions [@Bazzaz1979; @Franks2011, A.R. Kleinhesselink, unpublished data].
@@ -300,7 +301,7 @@ The weaker soil moisture-ANPP relationship we observed for the irrigation treatm
 First, species' biomass production may have hit physiological thresholds and/or become limited by other factors, such as nitrogen availability [@LeBauer2008].
 \pba{PETER: DO WE KNOW ANYTHING ABOUT NITROGEN AT USSES? WANT TO ADD A SENTENCE HERE ABOUT HOW LIKELY OR UNLIKEL THIS IS...}
 Second, the less positive slope could be another indicator of bet hedging in this community.
-Avoiding high biomass production in wet years could benefit species in the long run if climate conditions are variable.
+Avoiding high biomass and seed production in wet years could benefit species in the long run if climate conditions are variable.
 Third, the less positive slope may be a statistical artifact due the variability of ANPP within years and our low sample size.
 
 In conclusion, our results suggest the species in our focal plant community are tolerant of drought conditions and bet hedgers in wet conditions.
