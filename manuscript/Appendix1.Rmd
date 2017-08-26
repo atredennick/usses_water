@@ -78,8 +78,8 @@ library(xtable)
 library(tidyverse)
 library(dplyr)
 tab_dat <- read.csv("../data/estimated_biomass/ndvi_biomass_regression_parameters.csv", row.names = 1) %>%
-  filter(year > 2011)
-colnames(tab_dat) <- c("Year", "Intercept", "NDVI Slope", "$R^2$", "Min(biomass)", "Max(biomass)", "Algorithm")
+  filter(year > 2011 & year < 2017)
+colnames(tab_dat) <- c("Year", "Intercept", "NDVI Slope", "$R^2$", "Min(biomass)", "Max(biomass)", "\\emph{N}", "Algorithm")
 
 my_caption <- "Details of regression models used to estimate biomass each year."
 print(xtable(tab_dat, caption = my_caption, digits = 2),
