@@ -386,7 +386,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/data_panels.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Observed soil volumetric water content (VWC) over the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment.}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Mean soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. **\emph{note plot b doesn't have a treatment legend, consider adding to the side of (B) and removing from (C)} }
 \end{figure}
 
 
@@ -396,7 +396,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
-  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions of the intercept and slope offsets for the drought and irrigation treatments. Offsets indicate the amount to which the coefficients for drought or irrigation treatments differ from the control treatment estimates. Probabilities (``Pr $<$ 0 ='') for each distribution indicate the probability that coefficient is less than zero. Probabilities greater than 0.95 indicate strong support for the coefficient being less than zero. We only show the one-tailed probability for the value being less than zero because the median of each distribution is less than zero. Kernel bandwidths of posterior densities were adjusted by a factor of 5 to smooth the distribution for visual clarity. (B) Scatterplot of the data and model estimates shown a solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
+  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $<$ 0 ='') for each coefficient indicate the probability that the coefficient is less than zero. We only show the one-tailed probability for the value being less than zero because the median of each distribution is less than zero. The posterior densities were smoothed for visual clarity by increasing kernal bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
 \end{figure}
 
 
@@ -406,7 +406,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/sppcomp_bray_all.png}
-  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
+  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment. **\emph{Worth adding arrow vectors showing association between axes and dominant species?}}
 \end{figure}
 
 
