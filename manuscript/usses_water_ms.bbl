@@ -17,11 +17,6 @@ Avolio, M.~L., Pierre, K. J.~L., Houseman, G.~R., Koerner, S.~E., Grman, E.,
 Bates, D., Maechler, M., Bolker, B., and Walker, S. (2015).
 \newblock {Fitting linear mixed-effects models using lme4}.
 
-\bibitem[Bazzaz, 1979]{Bazzaz1979}
-Bazzaz, F. (1979).
-\newblock {The Physiological Ecology of Plant Succession}.
-\newblock {\em Annual Review of Ecology and Systematics}, 10:351--371.
-
 \bibitem[Blaisdell, 1958]{Blaisdell1958}
 Blaisdell, J.~P. (1958).
 \newblock {Seasonal development and yield of native plants on the upper snake
@@ -53,12 +48,6 @@ Epstein, H.~E., Lauenroth, W.~K., and Burke, I.~C. (1997).
 \newblock {Effects of temperature and soil texture on ANPP in the U.S. Great
   plains}.
 \newblock {\em Ecology}, 78(8):2628--2631.
-
-\bibitem[Franks, 2011]{Franks2011}
-Franks, S.~J. (2011).
-\newblock {Plasticity and evolution in drought avoidance and escape in the
-  annual plant Brassica rapa}.
-\newblock {\em New Phytologist}, 190(1):249--257.
 
 \bibitem[Gelman and Hill, 2009]{Gelman2009}
 Gelman, A. and Hill, J. (2009).
@@ -102,6 +91,12 @@ Hsu, J.~S., Powell, J., and Adler, P.~B. (2012).
 \newblock {Sensitivity of mean annual primary production to precipitation}.
 \newblock {\em Global Change Biology}, 18(7):2246--2255.
 
+\bibitem[Kleinhesselink, 2017]{Kleinhesselink2017b}
+Kleinhesselink, A.~R. (2017).
+\newblock {\em {Direct and indirect effects of climate change on plant
+  populations and communities in sagebrush steppe}}.
+\newblock Dissertation, Utah State University.
+
 \bibitem[Knapp et~al., 2017]{Knapp2017}
 Knapp, A.~K., Avolio, M.~L., Beier, C., Carroll, C. J.~W., Collins, S.~L.,
   Dukes, J.~S., Fraser, L.~H., Griffin-Nolan, R.~J., Hoover, D.~L., Jentsch,
@@ -139,6 +134,12 @@ Lemoine, N.~P., Sheffield, J., Dukes, J.~S., Knapp, A.~K., and Smith, M.~D.
 \bibitem[Oksanen, 2016]{Oksanen2016}
 Oksanen, J. (2016).
 \newblock {Vegan: ecological diversity}.
+
+\bibitem[Peters et~al., 2012]{Peters2012}
+Peters, D. P.~C., Yao, J., Sala, O.~E., and Anderson, J.~P. (2012).
+\newblock {Directional climate change and potential reversal of desertification
+  in arid and semiarid ecosystems}.
+\newblock {\em Global Change Biology}, 18(1):151--163.
 
 \bibitem[{{R Core Team}}, 2016]{R2016}
 {{R Core Team}} (2016).
