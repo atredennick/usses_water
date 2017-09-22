@@ -26,7 +26,7 @@ abstract: |
   
   **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among drought and control treatments, but the irrigation treatment had a lower slope than the control treatment. However, ANPP response to availabile soil moisture was weak and uncertain regardless of treatment, with all slopes overlapping zero. There was also large spatial variation in ANPP within-years. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
   
-  **Discussion.** Despite some evidence that ecosystem functional response became less sensitive under sustained wet conditions, the response of ANPP to soil moisture was consistently weak and community composition was stable. Differences in ecosystem functional responses across treatments were not related to compensatory shifts at the plant community level, but instead may reflect the insensitivity of the dominant species to soil moisture. These species may be successful precisely because they have evolved life history strategies which buffer them against precipitation variability.
+  **Discussion.** Despite some evidence that ecosystem functional response became less sensitive under sustained wet conditions, the response of ANPP to soil moisture was consistently weak and community composition was stable. The similarity of ecosystem functional responses across treatments was not related to compensatory shifts at the plant community level, but instead may reflect the insensitivity of the dominant species to soil moisture. These species may be successful precisely because they have evolved life history strategies which buffer them against precipitation variability.
 header-includes: >
   \usepackage{setspace}
   \usepackage{todonotes}
@@ -193,7 +193,7 @@ Our model is defined as follows:
 $\boldsymbol{\beta}$ is the vector of coefficients for the fixed effects in the design matrix $\textbf{X}$. 
 Each row of the design matrix represents a single observation ($\textbf{x}_i$) and is a vector with the following elements: 1 for the intercept, a binary 0 or 1 if the treatment is "drought", a binary 0 or 1 if the treatment is "irrigation", the scaled value of VWC, binary "drought" value times VWC, and binary "irrigation" value times VWC. 
 Thus, our model treats "control" observations as the main treatment and then estimates intercept and slope offsets for the "drought" and "irrigation" treatments. 
-We use our model to test the following hypotheses:
+We use our model to test two statistical hypotheses based on the questions in our Introduction:
 
 \begin{description}
 \item [H1.] The coefficient for drought$\times$VWC is positive and different from zero.
@@ -262,40 +262,41 @@ Community composition was also remarkably stable over time, with no evidence of 
 
 # DISCUSSION
 
-Ecosystem response to precipitation extremes depends on the physiological responses of constituent species and the rate at which community composition shifts to favor species better able to take advantage of, or cope with, new resource levels [@Smith2009].
+Ecosystem response to a new precipitation regime depends on the physiological responses of constituent species and the rate at which community composition shifts to favor species better able to take advantage of, or cope with, new resource levels [@Smith2009].
 Previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
-A lingering question is how the time scales of ecosystem response and community change vary among ecosystems. Precipitation manipulation experiments can help answer this question, especially if they push water availability outside the historical range of variability for long periods. 
+A lingering question is how the time scales of ecosystem response and community change vary among ecosystems. 
+Precipitation manipulation experiments can help answer this question, especially if they push water availability outside the historical range of variability for long periods. 
 
 The results of our five year experiment in a sagebrush steppe conform to two of our four predictions, depending on treatment.
-Neither ecosystem functional response nor community composition changed under chronic drought (Fig. 3A, Fig. 4), representin the top left SCENARIO in Fig. 1.
-Ecosystem functional response under chronic irrigation was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right SCENARIO in Fig. 1.
-The altered ecosystem functional response under irrigation matched our expectations because we found evidence for a saturating response for the irrigation treatment (Fig. 3).
-<!--- Can we really call it saturating if it is concave up? More accurate to say weaker response than control? --->
-However, the response of ANPP to soil moisture in all treatments was consistently weak (Table 1, Fig. A2-2) and within-year variation of ANPP was large (Fig. 3B).
-<!---Last sentence leaves me hanging...what's your point? Did it the response change or not? Statistically but not ecologically significant?--->
+Ecosystem functional response and community composition did not change under chronic drought (Fig. 3A, Fig. 4), representing the top left scenario in Fig. 1.
+Ecosystem functional response under chronic irrigation was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1.
+The altered ecosystem functional response under irrigation matched our expectations because we found evidence for a weaker response for the irrigation treatment (Fig. 3).
+Although the difference between the control and irrigation slopes is likely different from zero (Fig. 3A), the posterior distribution of the slopes (not their difference) are similar and overlap broadly (Table1, Fig. A2-2).
+Thus, the statistical difference between the slopes is not ecologically meaningful.
+We therefore conclude that ecosystem functional response is consistent and weak across all precipitation treatments.
 
-The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) between drought and control treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
-Indeed, we expected ecosystem functional response, community composition, or both to change under the drought treatment, landing us in any box of Fig. 1 \emph{except} the top left.
-Why did our drought treatment fail to induce ecosystem or community responses?
+The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) among treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
+Indeed, we expected ecosystem functional response, community composition, or both to change under our treatments.
+Why did our treatments fail to induce ecosystem or community responses?
 We can think of three reasons; two are limitations of our study, and one is the life history traits of the species in our focal communities.
 We first discuss the potential limitations of our study, and then discuss the biological explanation.
 
-First, it could be that our drought manipulation was not large enough to induce a response.
+First, it could be that our precipitation manipulations were not large enough to induce a response.
 That is, a 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
-We cannot definitively rule out this possibility, but we have reason to believe our drought treatment *should* have been large enough.
+We cannot definitively rule out this possibility, but we have reason to believe our treatments *should* have been large enough.
 Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A3-3).
 The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 3).
 Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
-The irrigation treatment may not qualify as extreme, yet that is the treatment where we did observe an effect (Fig. 3).
+The irrigation treatment may not qualify as extreme, yet that is the treatment where we did observe an effect (Fig. 3A).
 
 Second, ANPP at our site may be influenced by additional factors, not only the cumulative March-June soil moisture covariate we included in our statistical model.
 For example, temperature can impact ANPP directly [@Epstein1997] and by exacerbating the effects of soil moisture [@DeBoeck2011].
 Measurements of soil moisture likely contain a signal of temperature, through its impact on evaporation and infiltration, but the measurements will not capture the direct effect of temperature on metabolic and physiological processes.
 We also did not redistribute snow across our treatments in the winter, and snow melt may spur early spring growth.
 Failure to account for potentially important covariates could explain the within-year spread of ANPP (Fig 2C, Fig. 3B) and the resulting uncertain relationship we observed between soil moisture and ANPP across all treatments (Table 1, Fig. A2-2).
-<!---so why didn't we do this? sample size limitations, power? --->
+Unfortunately, we did not collect data on additional factors because our focus was on precipitation.
 
-Third, the life history traits of the dominant species in our study ecosystem may explain the consistently positive, but weak and uncertain, effect of soil moisture on ANPP (Fig. 3).
+Third, the life history traits of the dominant species in our study ecosystem may explain the consistently positive, but weak and uncertain, effect of soil moisture on ANPP (Table 1, Fig. 3).
 Species that live in variable environments, such as cold deserts, must have strategies to ensure long-term success as conditions vary.
 One strategy is bet hedging, where species forego short-term gains to reduce the variance of long-term success [@Seger1987].
 In other words, species follow the same conservative strategy every year, designed to minimize response to environmental conditions.
@@ -306,6 +307,7 @@ Another strategy to deal with variable environmental conditions is avoidance, wh
 For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season [@Blaisdell1958, A.R. Kleinhesselink, personal observation].
 Furthermore, the dominant shrub in our focal ecosystem, *Artemisia tripartita*, has access to water deep in the soil profile thanks to a deep root system [@Kulmatiski2017a].
 
+<!---
 The weaker soil moisture-ANPP relationship we observed for the irrigation treatment has three non-exclusive explanations.
 First, species' biomass production may have hit physiological thresholds and/or become limited by other factors, such as nitrogen availability [@LeBauer2008].
 \pba{PETER: DO WE KNOW ANYTHING ABOUT NITROGEN AT USSES? WANT TO ADD A SENTENCE HERE ABOUT HOW LIKELY OR UNLIKEL THIS IS...NUTNET SHOWS POSITIVE EFFECTS OF N*P ON PRODUCTION, EFFECT OF N ALONE NOT AS CLEAR. YOU COULD CITE THIS AS UNPUBLISHED DATA}
@@ -314,9 +316,12 @@ Second, the less positive slope could be an indicator of bet hedging in this com
 Avoiding high biomass and seed production in wet years could benefit species in the long run if climate conditions are variable.
 \pba{but why would this have cause a change relative to controls? this should also be true for controls...}
 Third, the less positive slope may be a statistical artifact due the variability of ANPP within years and our low sample size.
+--->
 
-In conclusion, our results suggest the species in our focal plant community are tolerant of drought conditions and unresponsive to wet conditions. \pba{no, you can't be a bet hedger in wet years but not in dry years...}
-Longer, chronic precipitation alteration might reveal plant community shifts that we did not observe [e.g., @Wilcox2016]. For example, a long-term increase in water availability could allow species that do not bet hedge to gain prominence and dominate the ecosystem functional response.
+In conclusion, our results suggest the species in our focal plant community are insensitive to to changes in precipitation regime. 
+Such insensitivity can buffer species against precipitation variability in this semi-arid ecosystem, making them successful in the long run.
+Longer, chronic precipitation alteration might reveal plant community shifts that we did not observe [e.g., @Wilcox2016]. 
+For example, a long-term increase in water availability could allow species that do not bet hedge to gain prominence and dominate the ecosystem functional response.
 Our results suggest compositional shifts would have the largest impact at high rainfall because the current community maintained consistent ecosystem functional response at very low water availability.
 
 # ACKNOWLEDGEMENTS
