@@ -162,75 +162,8 @@ ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
   facet_wrap("Year")+
   scale_y_continuous(limits=c(-0.15,0.15))+
   scale_x_continuous(limits=c(-0.18,0.18))+
+  coord_fixed()+
   theme_few()+
   theme(panel.grid.major = element_line(color="grey90"))
 ggsave(paste0(figure_path,"sppcomp_bray_all.png"), width=6, height = 4, units = "in", dpi = 120)
 
-
-
-
-
-####
-####  RANK CLOCKS ON SCALED COMMUNITY DATA ----
-####
-# scaled_comp_ts <- full_community_matrix_scaled %>%
-#   gather(key = species, value = scaled_abundance, -quad, -year, -Treatment) %>%
-#   group_by(year, Treatment, species) %>%
-#   summarise(mean_scaled_abundance = mean(scaled_abundance))
-# 
-# ## Create the graph
-# g1 <- ggplot(scaled_comp_ts, aes(year, mean_scaled_abundance, color = species)) + 
-#   geom_line(size = 1, alpha = 0.8) + 
-#   facet_wrap(~Treatment) +
-#   coord_polar()+
-#   labs(x=NULL, y=NULL) + 
-#   guides(color=FALSE)+
-#   theme_dark()+
-#   theme(text = element_text(size = 14), 
-#         strip.text.x = element_text(size = 14, color="black"), 
-#         strip.background = element_blank(),
-#         panel.grid.major = element_line(size = 1, color="grey55"),
-#         panel.grid.minor = element_line(colour="grey55")) + 
-#   theme(legend.position="bottom", 
-#         legend.text=element_text(face = "italic")) +
-#   geom_segment(aes(x = 2011, y = 0, xend = 2011, yend = 0.4), color = "grey70")+
-#   scale_color_viridis(discrete=T)+
-#   scale_x_continuous(breaks=c(2011,2012,2013,2014,2015))+
-#   ggtitle("A. All species")+
-#   theme(axis.title.y=element_blank(),
-#         axis.text.y=element_blank(),
-#         axis.text.x=element_text(color="grey90"),
-#         axis.ticks.y=element_blank())
-# 
-# 
-# domspp <- c("Artemisia tripartita", "Poa secunda", "Pseudoroegneria spicata", "Hesperostipa comata")
-# scaled_dom_ts <- scaled_comp_ts %>%
-#   filter(species %in% domspp)
-# 
-# ## Create the graph
-# g2 <- ggplot(scaled_dom_ts, aes(year, mean_scaled_abundance, color = species)) + 
-#   geom_line(size = 1) + 
-#   facet_wrap(~Treatment) +
-#   coord_polar()+
-#   labs(x=NULL, y=NULL, color="Species") + 
-#   theme_dark()+
-#   theme(text = element_text(size = 14), 
-#         strip.text.x = element_text(size = 14, color="black"), 
-#         strip.background = element_blank(),
-#         panel.grid.major = element_line(size = 1, color="grey55"),
-#         panel.grid.minor = element_line(colour="grey55")) + 
-#   theme(legend.position="bottom", 
-#         legend.text=element_text(face = "italic")) +
-#   geom_segment(aes(x = 2011, y = 0, xend = 2011, yend = 0.4), color = "grey70")+
-#   scale_x_continuous(breaks=c(2011,2012,2013,2014,2015))+
-#   scale_color_brewer(palette = "Accent")+
-#   ggtitle("B. Dominant species")+
-#   theme(axis.title.y=element_blank(),
-#         axis.text.y=element_blank(),
-#         axis.text.x=element_text(color="grey90"),
-#         axis.ticks.y=element_blank())
-# 
-# gout <- grid.arrange(g1,g2,nrow=2)
-# ggsave("../figures/rank_clocks_scaled_abundance.png", plot = gout, width = 9, height = 7.5, units="in", dpi=120)
-# 
-# 
