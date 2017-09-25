@@ -39,6 +39,7 @@ output:
   rticles::peerj_article:
     number_sections: false
     base_format: rmarkdown::pdf_document # bookdown::pdf_document2 # for using \@ref()
+fontsize: 12pt
 ---
 
 \definecolor{blue}{rgb}{0,0,0.7} 
