@@ -59,7 +59,7 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 # INTRODUCTION
 
 At any given site, the relationship between aboveground net primary productivity (ANPP) and water availability (e.g., soil moisture) can be characterized by regressing historical observations of ANPP on observations of soil moisture. 
-The fitted functional response can then be used to project ANPP under future precipitation regimes (REFERENCE). 
+Fitted functional responses can then be used to infer how ANPP may change under future precipitation regimes [e.g., @Hsu2012]. 
 A problem with this approach is that it requires extrapolation if future precipitation falls outside outside the historical range of variability [@Smith2011; @Peters2012].
 For example, the soil moisture-ANPP relationship may be linear within the historical range of interannual variation, but could saturate at higher levels of soil moisture. 
 In fact, saturating relationships are actually common [@Hsu2012; @Gherardi2015a], perhaps because other resources, like nitrogen, become more limiting in wet years than dry years.
@@ -106,6 +106,7 @@ We also analyzed community composition over time, allowing us to place our exper
 # METHODS
 
 ## Study Area
+
 We conducted our precipitation manipulation experiment in a sagebrush steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
 The plant community is dominated by the shrub *Artemesia tripartita* and three perennial bunchgrasses, *Pseudoroegneria spicata*, *Poa secunda*, and *Hesperostipa comata*.
 During the period of our experiment (2011 -- 2015), average mean annual precipitation was 265 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
@@ -116,6 +117,7 @@ We use these six plots as control plots (i.e. ambient precipitation) in the expe
 In spring 2011, we established 16 new 1 m$^2$ plots located in the same exclosure as the six control plots.
 We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs *Purshia tridentata* and/or *Amelanchier utahensis*.
 We established the new plots in pairs and randomly assigned each plot in a pair to receive a "drought" or "irrigation" treatment.
+
 
 ## Precipitation Experiment
 
@@ -160,7 +162,7 @@ We recorded ground reflectance at four wavelengths, two associated with red refl
 At each plot in each year, we took four readings of ground reflectances at the above wavelengths.
 We also took readings in 12 (2015), 15 (2012, 2013, 2014), or 16 (2016) calibration plots adjacent to the experimental site, in which we harvested all aboveground biomass produced in the current year (we excluded litter and standing dead material), dried it to a constant weight at 60$^{\circ}$C, and weighed it to estimate ANPP. We harvested at peak biomass each year, typically in late June.
 
-For each plot and year, we averaged the four readings for each wavelength and then calculated a greenness index based on the same bands used to calculate NDVI using the MODIS and AVHRR [YOU HAVEN'T DEFINED THESE] bands for NDVI.
+For each plot and year, we averaged the four readings for each wavelength and then calculated a greenness index based on the same bands used to calculate NDVI using the MODIS (Moderate Resolution Imaging Spectroradiometer) and AVHRR (Advanced Very High Resolution Radiometer) bands for NDVI.
 We regressed the greenness index against the dry biomass weight from the ten calibration plots to convert the greenness index to ANPP.
 We fit regressions to a MODIS-based index and an AVHRR-based index for each year and retained the regression with the better fit based on $R^2$ values.
 We then predicted ANPP using the best regression equation for each year (Appendix 1).
@@ -200,8 +202,7 @@ We use our model to test two statistical hypotheses based on the questions in ou
 \item [H2.] The coefficient for irrigation$\times$VWC is negative and different from zero.
 \end{description}
 
-These hypotheses are based on evidence that precipitation-ANPP relationships often saturate with increasing precipitation (REFERENCES).
-<!---these should probably be stated in the Intro--->
+\noindent{}These hypotheses are based on evidence that precipitation-ANPP relationships often saturate with increasing precipitation [@Hsu2012; @Gherardi2015a].
 
 We include two random effects to account for the fact that observations within plots and years are not independent. 
 Specifically, we include plot-specific offsets ($\boldsymbol{\gamma}$) for the intercept and slope terms and year-specific intercept offsets ($\eta_t$). 
@@ -216,8 +217,7 @@ The plot-specific coefficients are modeled hierarchically, where plot level coef
 
 \noindent{}where $\Sigma$ is the variance-covariance matrix and *j(i)* reads as "plot *j* associated with observation *i*". 
 The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-Cauchy distribution. 
-A full description of our model is in Appendix 2.
-<!---call out available computer code here?--->
+A full description of our model and associated R [@R2016] code is in Appendix 2.
 
 We fit the model using a Bayesian approach and obtained posterior estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
 We used the R package 'rstan' [@rstan2016] to link R [@R2016] to Stan.
@@ -240,9 +240,7 @@ We also include annotated Stan code in our model description in Appendix 2.
 
 # RESULTS
 
-Three of our five study years received below average precipitation (Fig. 2A).
-Because our treatments are proportional changes in ambient precipitation, those three years represent a lower magnitude of absolute difference in precipitation among the treatments.
-<!---why is the previous point important here? should it go in Methods?--->
+Ambient precipitation was variable over the five years of the study (Fig. 2A), meaning our experiment captured a range of environmental conditions.
 ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 when averaged across treatments (Fig. 2C).
 ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 Such differences in soil VWC indicate our treatment infrastructure was successful.
@@ -256,7 +254,7 @@ This evidence comes from interpreting the posterior distribution of the slope of
 There was no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. A2-3).
 
 Community composition was similar among treatments.
-Community composition among treatments overlapped in all years and was equally dispersed in all years (Table 2; Fig. 5).
+The multidimensional space of community composition overlapped among treatments in all years and was equally dispersed in all years (Table 2; Fig. 5).
 Community composition was also remarkably stable over time, with no evidence of divergence among treatments (Table 2; Fig. 5).
 
 
@@ -270,9 +268,9 @@ Precipitation manipulation experiments can help answer this question, especially
 The results of our five year experiment in a sagebrush steppe conform to two of our four predictions, depending on treatment.
 Ecosystem functional response and community composition did not change under chronic drought (Fig. 3A, Fig. 4), representing the top left scenario in Fig. 1.
 Ecosystem functional response under chronic irrigation was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1.
-The altered ecosystem functional response under irrigation matched our expectations because we found evidence for a weaker response for the irrigation treatment (Fig. 3).
-Although the difference between the control and irrigation slopes is likely different from zero (Fig. 3A), the posterior distribution of the slopes (not their difference) are similar and overlap broadly (Table1, Fig. A2-2).
-Thus, the statistical difference between the slopes is not ecologically meaningful.
+The decrease in the slope of the VWC $\times$ productivity relationship in the irrigated plots is consistent with a weaker response of productivity to additional water in this ecosystem.
+This suggests that if average soil moisture were pushed consistently higher than currently observed ambient conditions, there would be a weaker relationship between precipitation and productivity in this system.
+Nonetheless, the slopes of the VWC $\times$ productivity relationship were similar among treatments (Table 1), at least at the level of irrigation we imposed.
 We therefore conclude that ecosystem functional response is consistent and weak across all precipitation treatments.
 
 The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) among treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
@@ -301,7 +299,7 @@ Species that live in variable environments, such as cold deserts, must have stra
 One strategy is bet hedging, where species forego short-term gains to reduce the variance of long-term success [@Seger1987].
 In other words, species follow the same conservative strategy every year, designed to minimize response to environmental conditions.
 The dry and variable environment of the sagebrush steppe has likely selected for bet hedging species that can maintain function at low water availability and have weak responses to high water availability.
-In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which corresponds to the weak effect of soil moisture on ANPP (i.e., the Bayesian credible intervals for the slopes in $\boldsymbol{\beta}$ in Eq. 1 overlapping zero).
+In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which corresponds to the weak effect of soil moisture on ANPP (i.e., the Bayesian credible intervals for the slopes overlapping zero; Table 1).
 
 Another strategy to deal with variable environmental conditions is avoidance, which would also result in a consistent ecosystem functional response between drought and control treatments.
 For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season [@Blaisdell1958, A.R. Kleinhesselink, personal observation].
@@ -402,7 +400,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/data_panels.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Mean soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. **\emph{note plot b doesn't have a treatment legend, consider adding to the side of (B) and removing from (C)} }
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Mean soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
 \end{figure}
 
 
@@ -422,7 +420,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/sppcomp_bray_all.png}
-  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment. **\emph{Worth adding arrow vectors showing association between axes and dominant species?}}
+  \caption{Nonmetric multidimensional scaling scores representing plant communities in each plot, colored by treatment.}
 \end{figure}
 
 
