@@ -330,7 +330,7 @@ We also thank Susan Durham for clarifying our thinking on the statistical analys
 
 # FUNDING
 
-This research was supported by the Utah Agricultural Experiment Station, Utah State University, and approved as journal paper number XXXX.
+This research was supported by the Utah Agricultural Experiment Station, Utah State University, and approved as journal paper number 9035.
 The research was also supported by the National Science Foundation, through a Postdoctoral Research Fellowship in Biology and Mathematics to ATT (DBI-1400370), a Graduate Research Fellowship to ARK, and grants DEB-1353078 and DEB-1054040 to PBA. 
 
 # AUTHOR CONTRIBUTIONS
