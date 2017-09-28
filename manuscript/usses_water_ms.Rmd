@@ -255,8 +255,8 @@ This evidence comes from interpreting the posterior distribution of the slope of
 There was no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. A2-3).
 
 Community composition was similar among treatments.
-The multidimensional space of community composition overlapped among treatments in all years and was equally dispersed in all years (Table 2; Fig. 5).
-Community composition was also remarkably stable over time, with no evidence of divergence among treatments (Table 2; Fig. 5).
+The multidimensional space of community composition overlapped among treatments in all years and was equally dispersed in all years (Table 2; Fig. 4).
+Community composition was also remarkably stable over time, with no evidence of divergence among treatments (Table 2; Fig. 4).
 
 
 # DISCUSSION
@@ -274,7 +274,7 @@ This suggests that if average soil moisture were pushed consistently higher than
 Nonetheless, the slopes of the VWC $\times$ productivity relationship were similar among treatments (Table 1), at least at the level of irrigation we imposed.
 We therefore conclude that ecosystem functional response is consistent and weak across all precipitation treatments.
 
-The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 5) among treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
+The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 4) among treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
 Indeed, we expected ecosystem functional response, community composition, or both to change under our treatments.
 Why did our treatments fail to induce ecosystem or community responses?
 We can think of three reasons; two are limitations of our study, and one is the life history traits of the species in our focal communities.
@@ -317,7 +317,9 @@ Avoiding high biomass and seed production in wet years could benefit species in 
 Third, the less positive slope may be a statistical artifact due the variability of ANPP within years and our low sample size.
 --->
 
-In conclusion, our results suggest the species in our focal plant community are insensitive to to changes in precipitation regime. 
+# CONCLUSIONS
+
+Our results suggest the species in our focal plant community are insensitive to to changes in precipitation regime. 
 Such insensitivity can buffer species against precipitation variability in this semi-arid ecosystem, making them successful in the long run.
 Longer, chronic precipitation alteration might reveal plant community shifts that we did not observe [e.g., @Wilcox2016]. 
 For example, a long-term increase in water availability could allow species that do not bet hedge to gain prominence and dominate the ecosystem functional response.
