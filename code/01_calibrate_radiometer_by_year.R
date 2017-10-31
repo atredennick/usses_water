@@ -15,6 +15,8 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 # recent years (2014 and beyond), biomass in 0.5m^2 plots (est biomass * 2)
 # earlier years (2013 and earlier), biomass in 0.25m^2 (est biomass * 4)
 
+
+
 ####
 ####  FILE PATHS, OUTPUT PATHS, ETC. ----
 ####
@@ -141,7 +143,7 @@ check_reps <- function(x){
   ids <- which(is_letter(x$rep))
   if(length(ids) > 0) {
     x     <- x[-ids, ]
-    x$rep <- as.integer(x$rep)
+    x$rep <- as.integer(levels(x$rep)[factor(x$rep)]) # recode factor labels
   }
   return(x)
 }
@@ -277,6 +279,8 @@ permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams
 ####
 ####  SAVE OUTPUT ----
 ####
+all_year_params
+
 write.csv(all_year_params, paste0(out_path,"ndvi_biomass_regression_parameters.csv"))
 saveRDS(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_biomass.RDS"))
 #write.csv(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_biomass.csv"))
