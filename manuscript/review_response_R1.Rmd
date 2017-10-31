@@ -1,0 +1,82 @@
+---
+layout: 11pt
+header-includes:
+  - \usepackage{lineno}
+  - \usepackage{setspace}
+  - \usepackage{todonotes}
+  - \linespread{1}
+  - \usepackage{rotating}
+  - \usepackage[usenames]{color}
+  - \usepackage[font={small},labelfont={bf},labelsep=quad]{caption}
+  - \usepackage{tikz}
+  - \usepackage{bm,mathrsfs}
+  - \usepackage[sc]{mathpazo}
+  - \usepackage{mathtools}
+bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
+csl: components/ecology_letters.csl
+
+## rmarkdown render options
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: false
+    number_sections: true
+fontsize: 11pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+---
+
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+\renewcommand\thefigure{R1-\arabic{figure}}  
+\renewcommand\thetable{R1-\arabic{table}} 
+
+\definecolor{ForestGreen}{rgb}{0.1,0.44,0.1} 
+\definecolor{blue}{rgb}{0,0,0.7} 
+\definecolor{red}{rgb}{0.8,0,0}
+
+\newcommand{\new}{\textcolor{red}} 
+\newcommand{\comment}{\textcolor{ForestGreen}}
+\newcommand{\response}{\textcolor{blue}}
+
+\begin{center}
+\textbf{\Large{Response to Reviews}}
+\end{center}
+
+\begin{flushright}
+Date: \today
+\end{flushright}
+
+Dr. Buckley,
+
+Thank you for the opportunity to revise our manuscript.
+All three reviewers agree our paper is interesting, but point out several areas where we could improve the analysis.
+We were impressed with the very constructive reviews, and thank the reviewers for taking such care when reading our paper.
+We hope our paper is now suitable for publication in \emph{PeerJ}.
+
+In our point-by-point response below, the original reviews are in black and \response{our responses are in blue.} 
+Likewise, changes made in the manuscript text are \response{in blue} for clarity.
+In our responses, we refer to line numbers of the revised manuscript unless otherwise stated.
+
+\bigskip{}
+
+\normalsize 
+\hrulefill
+
+Manuscript number: 20739  
+Title: Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe  
+Author(s): Tredennick, A.T.; Kleinhesselink, A.R.; Taylor, J.B.;  Adler, P.B.
+
+\hrulefill
+\bigskip{} \bigskip{}
+
+\textbf{Editors Comments for the Author(s)}
+
+Please pay close attention to the comments from Reviewer 1 regarding the validity of the findings. Once you have responded to these comments in a point-by-point cover letter and using tracked changes in the manuscript document, I will likely send your manuscript out for re-review.
+
+\response{We provide point-by-point responses to reviewer comments below. We have taken care to address Reviewer 1's concerns (also echoed by Reviewer 2) by }
+
+\bigskip{}
+
+\textbf{Reviewer: 1}
+
