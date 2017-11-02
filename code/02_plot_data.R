@@ -53,6 +53,7 @@ ppt_histogram <- ggplot(weather, aes(x=ppt1))+
 ####
 ####  PLOT SOIL WATER BY TREATMENT ----
 ####
+mycols <- c("#009E73", "#0072B2", "#D55E00")
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
   select(-year) %>%
   separate(simple_date, c("year","month","day")) %>%
@@ -62,19 +63,21 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   #mutate(month_year = as.factor(paste0(year,"-",month))) %>%
   ungroup()
 
-soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
-  geom_line(size=0.5)+
-  #geom_xspline(spline_shape=-0.5)+
-  scale_color_brewer(palette = "Set2", name="Treatment")+
-  ylab(expression(paste("Mean Soil VWC (ml ", ml^-1,")")))+
-  xlab("Julian Day")+
-  scale_y_continuous(breaks=seq(0,24,8))+
-  facet_grid(year~.)+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank(),
-        strip.background = element_blank(), 
-        strip.text = element_text(size=6))+
-  guides(color=FALSE)
+suppressWarnings(# ignore warnings about missing values, we know they are empty
+  soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
+    geom_line(size=0.5)+
+    scale_color_manual(values = mycols, name="Treatment")+
+    ylab(expression(paste("Mean Soil VWC (ml ", ml^-1,")")))+
+    xlab("Julian Day")+
+    scale_y_continuous(breaks=seq(0,24,8))+
+    facet_grid(year~.)+
+    theme_bw()+
+    theme(panel.grid.minor = element_blank(),
+          strip.background = element_blank(), 
+          strip.text = element_text(size=6))+
+    guides(color=FALSE)
+)
+
 
 
 
@@ -100,7 +103,7 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
   geom_point(color="white", size=3)+
   geom_point()+
   geom_point(color="grey35", shape=1)+
-  scale_color_brewer(palette = "Set2", name="Treatment")+
+  scale_color_manual(values = mycols, name="Treatment")+
   scale_x_continuous(breaks=c(2011:2016))+
   scale_y_continuous(breaks=seq(50,350,50))+
   ylab(expression(paste("ANPP (g ", m^-2,")")))+
@@ -118,9 +121,10 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
 ####
 ####  COMBINE PLOTS AND SAVE ----
 ####
-# gout <- grid.arrange(ppt_histogram,soil_vwc,anpp_means,ncol=1,nrow=3)
-gout <- cowplot::plot_grid(ppt_histogram,soil_vwc,anpp_means,
-                           ncol=1, labels = c("A)","B)","C)"), hjust = -0.4)
+suppressWarnings(# ignore warnings about missing values, we know they are empty
+  gout <- cowplot::plot_grid(ppt_histogram,soil_vwc,anpp_means,
+                             ncol=1, labels = c("A)","B)","C)"), hjust = -0.4)
+)
 
 ggsave("../figures/data_panels.png", gout, width=3.3, height=8, units="in", dpi=120)
 

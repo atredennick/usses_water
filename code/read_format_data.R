@@ -31,7 +31,7 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   group_by(year,month,Treatment,type,year) %>%
   summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
   filter(type=="predicted") %>%
-  mutate(month_year = as.factor(paste0(year,"-",month))) %>%
+  mutate(month_year = paste0(year,"-",month)) %>%
   filter(month %in% c("03","04","05","06")) %>%
   group_by(year,Treatment) %>%
   summarise(total_seasonal_vwc = sum(avg_vwc, na.rm = T)) %>%
