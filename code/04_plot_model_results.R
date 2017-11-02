@@ -74,7 +74,7 @@ slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch dir
 slope_probs$xpos <- c(-2.8, -1, -3.6, -1.15)
 slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
 
-treat_cols <- brewer.pal(3,"Set2")[2:3]
+treat_cols <- brewer.pal(3,"Set1")[2:3]
 
 treat_posteriors <- ggplot(treat_slopes)+
   geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
@@ -165,8 +165,8 @@ suppressWarnings( # ignore wanrnings about NA values
   regress_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
     geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
     geom_line(data=regression_limited, aes(x=backtrans_vwc, y=backtrans_estimate, color=Treatment), size=1)+
-    scale_fill_brewer(palette = "Set2")+
-    scale_color_brewer(palette = "Set2")+
+    scale_fill_brewer(palette = "Set1")+
+    scale_color_brewer(palette = "Set1")+
     xlab("March-June Cumulative VWC")+
     ylab(expression(paste("log[ANPP (g ",m^2,")]")))+
     theme_bw()+
