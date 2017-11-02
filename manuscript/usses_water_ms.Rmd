@@ -61,7 +61,7 @@ opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE,
 
 At any given site, the relationship between aboveground net primary productivity (ANPP) and water availability (e.g., soil moisture) can be characterized by regressing historical observations of ANPP on observations of soil moisture. 
 Fitted functional responses can then be used to infer how ANPP may change under future precipitation regimes [e.g., @Hsu2012]. 
-A problem with this approach is that it requires extrapolation if future precipitation falls outside outside the historical range of variability [@Smith2011; @Peters2012].
+A problem with this approach is that it requires extrapolation if future precipitation falls outside the historical range of variability [@Smith2011; @Peters2012].
 For example, the soil moisture-ANPP relationship may be linear within the historical range of interannual variation, but could saturate at higher levels of soil moisture. 
 In fact, saturating relationships are actually common [@Hsu2012; @Gherardi2015a], perhaps because other resources, like nitrogen, become more limiting in wet years than dry years.
 Failure to accurately estimate the curvature of the soil moisture-ANPP relationship will lead to over- or underprediction of ANNP under extreme precipitation [@Peters2012].
@@ -413,7 +413,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
-  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $\lessgtr$ 0 ='') for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernal bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
+  \caption{Results from the generalized linear mixed effects model. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $\lessgtr$ 0 ='') for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1.}
 \end{figure}
 
 
