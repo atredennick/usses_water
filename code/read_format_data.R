@@ -46,7 +46,7 @@ suppressWarnings( # suppress factors to characters warning
     rename(anpp = biomass_grams_est) %>%
     left_join(weather, by = "year") %>%
     left_join(soil_moisture, by = c("year","Treatment")) %>%
-    select(-QuadName,-quad,-Grazing,-paddock,-ndvi) %>%
+    select(-QuadName,-quad,-Grazing,-paddock) %>%
     mutate(ppt1_scaled = as.numeric(scale(ppt1)),
            vwc_scaled = as.numeric(scale(total_seasonal_vwc)),
            year_id = year - 2011)
