@@ -53,7 +53,7 @@ ppt_histogram <- ggplot(weather, aes(x=ppt1))+
 ####
 ####  PLOT SOIL WATER BY TREATMENT ----
 ####
-mycols <- c("#009E73", "#0072B2", "#D55E00")
+mycols <- c("#009E73", "#D55E00", "#0072B2")
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
   select(-year) %>%
   separate(simple_date, c("year","month","day")) %>%
