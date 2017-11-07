@@ -69,17 +69,62 @@ droughts <- filter(anpp_data, Treatment == "Drought") %>%
 irrigates <- filter(anpp_data, Treatment == "Irrigation") %>%
   dplyr::select(Treatment,quadname,year,anpp)
 
+drought_diffs <- {}
 for(do_year in unique(droughts$year)){
   year_controls <- filter(controls, year==do_year)
   year_droughts <- filter(droughts, year==do_year)
   for(do_plot in unique(year_droughts$quadname)){
     plot_droughts <- filter(year_droughts, quadname == do_plot)
     diffs <- year_controls$anpp - plot_droughts$anpp
-    print(do_year)
-    print(do_plot)
-    print(diffs)
+    tmp_out <- data.frame(treatment = "drought",
+                          year = do_year,
+                          quadname = do_plot,
+                          cntrl_minus_treat = diffs)
+    drought_diffs <- rbind(drought_diffs, tmp_out)
   } # end plot
-  
 } # end year
-do_year = 2016
-do_plot = "X17"
+
+irrigate_diffs <- {}
+for(do_year in unique(droughts$year)){
+  year_controls <- filter(controls, year==do_year)
+  year_irrigates <- filter(irrigates, year==do_year)
+  for(do_plot in unique(year_irrigates$quadname)){
+    plot_irrigates <- filter(year_irrigates, quadname == do_plot)
+    diffs <- year_controls$anpp - plot_irrigates$anpp
+    tmp_out <- data.frame(treatment = "irrigation",
+                          year = do_year,
+                          quadname = do_plot,
+                          cntrl_minus_treat = diffs)
+    irrigate_diffs <- rbind(irrigate_diffs, tmp_out)
+  } # end plot
+} # end year
+
+vwc_diffs <- sens_vwc %>%
+  separate(comparison, c("control","treatment")) %>%
+  dplyr::select(-control)
+
+all_diffs <- rbind(drought_diffs, irrigate_diffs) %>%
+  mutate(treatment = as.character(treatment)) %>%
+  left_join(vwc_diffs, by = c("year","treatment")) %>%
+  mutate(sensitivity = cntrl_minus_treat / vwc_diff)
+
+mycols <- c("#009E73", "#D55E00", "#0072B2")
+treat_cols <- mycols[2:3]
+ggplot(all_diffs, aes(x = year, y = sensitivity, color = treatment, fill = treatment))+
+  geom_jitter(shape = 21, width = 0.1, color = "grey35", alpha = 0.6)+
+  stat_smooth(se=F, method="lm")+
+  scale_fill_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
+  scale_color_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
+  ylab("Sensitivity")+
+  xlab("Year")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank(),
+        legend.position = c(0.12, 0.9),
+        legend.background = element_rect(colour = NA, fill = NA))
+
+
+drought_fit <- lm(formula = sensitivity ~ year + quadname, data = filter(all_diffs, treatment == "drought"))
+summary(drought_fit)
+
+irrigate_fit <- lm(formula = sensitivity ~ year + quadname, data = filter(all_diffs, treatment == "irrigation"))
+summary(irrigate_fit)

@@ -272,7 +272,8 @@ all_quad_biomass <- all_quad_biomass %>%
 
 
 permanent_quad_biomass <- left_join(plot_info, all_quad_biomass, by=c("quadname"="quad")) %>%
-  arrange(year,Treatment,quad)
+  arrange(year,Treatment,quad) %>%
+  filter(is.na(year) == FALSE)
 
 permanent_quad_biomass[which(permanent_quad_biomass$year < 2014), "biomass_grams_est"] <- permanent_quad_biomass[which(permanent_quad_biomass$year < 2014), "biomass_grams_est"] * 4 # 0.25 m^2 plots
 permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams_est"] <- permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams_est"] * 2 # 0.5 m^2 plots
@@ -282,8 +283,6 @@ permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams
 ####
 ####  SAVE OUTPUT ----
 ####
-all_year_params
-
 write.csv(all_year_params, paste0(out_path,"ndvi_biomass_regression_parameters.csv"))
 saveRDS(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_biomass.RDS"))
 #write.csv(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_biomass.csv"))

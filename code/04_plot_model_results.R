@@ -49,7 +49,7 @@ get_one_tailed <- function(values){
 ####
 ####  PLOT TREATMENT-LEVEL POSTERIOR DISTRIBUTIONS ----
 ####
-mycols <- c("#009E73", "#0072B2", "#D55E00")
+mycols <- c("#009E73", "#D55E00", "#0072B2")
 param_labels <- c("Control::Intercept",
                   "Drought::Intercept", 
                   "Irrigation::Intercept",
