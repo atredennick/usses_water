@@ -267,10 +267,13 @@ for(i in 1:length(years_can_estimate)){
 plot_info <- read.csv("../data/estimated_biomass/quad_info.csv") %>%
   mutate(quadname = gsub(" ","",QuadName))
 
-suppressWarnings(
-  permanent_quad_biomass <- left_join(plot_info, all_quad_biomass, by=c("quadname"="quad")) %>%
-    arrange(year,Treatment,quad)
-) # suppress warning about character coercing
+all_quad_biomass <- all_quad_biomass %>%
+  mutate(quad = as.character(quad))
+
+
+permanent_quad_biomass <- left_join(plot_info, all_quad_biomass, by=c("quadname"="quad")) %>%
+  arrange(year,Treatment,quad)
+
 permanent_quad_biomass[which(permanent_quad_biomass$year < 2014), "biomass_grams_est"] <- permanent_quad_biomass[which(permanent_quad_biomass$year < 2014), "biomass_grams_est"] * 4 # 0.25 m^2 plots
 permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams_est"] <- permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams_est"] * 2 # 0.5 m^2 plots
 
