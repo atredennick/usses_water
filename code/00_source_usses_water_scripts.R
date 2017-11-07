@@ -51,6 +51,9 @@ source("04_plot_model_results.R")
 ####  6. RUN NMDS ANALYSIS AND PLOTS (Fig. 4, Table 2) ----
 source("05_community_dynamics.R")
 
+####  7. FIT NDVI-PRECIP MODEL (Appendix 3) ----
+source("06_ndvi_randcoefs_model.R")
+
 
 
 

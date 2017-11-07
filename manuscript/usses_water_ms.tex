@@ -102,8 +102,7 @@ them against precipitation variability.
 \maketitle
 \thispagestyle{empty}
 
-\definecolor{blue}{rgb}{0,0,0.7} \definecolor{red}{rgb}{0.7,0,0}
-\newcommand{\pba}{\textcolor{blue}} \newcommand{\ark}{\textcolor{red}}
+\definecolor{blue}{rgb}{0,0,0.7} \newcommand{\new}{\textcolor{blue}}
 
 \reversemarginpar
 
@@ -209,18 +208,18 @@ scenarios (Fig. 1).
 We conducted our precipitation manipulation experiment in a sagebrush
 steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near
 Dubois, Idaho (44.2\(^{\circ}\) N, 112.1\(^{\circ}\) W), 1500 m above
-sea level. The plant community is dominated by the shrub \emph{Artemesia
-tripartita} and three perennial bunchgrasses, \emph{Pseudoroegneria
-spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata}. During the
-period of our experiment (2011 -- 2015), average mean annual
-precipitation was 265 mm year\(\phantom{}^{-1}\) and mean monthly
-temperature ranged from -5.2\(^{\circ}\)C in January to
-21.8\(^{\circ}\)C in July. Between 1926 and 1932, range scientists at
-the USSES established 26 permanent 1 m\(^2\) quadrats to track
-vegetation change over time. In 2007, we relocated 14 of the original
-quadrats, six of which were inside a large, permanent livestock
-exclosure. We use these six plots as control plots (i.e.~ambient
-precipitation) in the experiment described below.
+sea level. The plant community is dominated by the shrub
+\emph{Artemesia tripartita} and three perennial bunchgrasses,
+\emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and
+\emph{Hesperostipa comata}. During the period of our experiment (2011 --
+2015), average mean annual precipitation was 265 mm
+year\(\phantom{}^{-1}\) and mean monthly temperature ranged from
+-5.2\(^{\circ}\)C in January to 21.8\(^{\circ}\)C in July. Between 1926
+and 1932, range scientists at the USSES established 26 permanent 1
+m\(^2\) quadrats to track vegetation change over time. In 2007, we
+relocated 14 of the original quadrats, six of which were inside a large,
+permanent livestock exclosure. We use these six plots as control plots
+(i.e.~ambient precipitation) in the experiment described below.
 
 In spring 2011, we established 16 new 1 m\(^2\) plots located in the
 same exclosure as the six control plots. We avoided areas on steep hill
@@ -364,19 +363,18 @@ Our model is defined as follows:
 \end{align}
 
 \noindent{}where \(\mu_{i}\) is the deterministic prediction from the
-regression model for observation \emph{i}, which is associated with plot
-\emph{j} and treatment year \emph{t}. \(\boldsymbol{\beta}\) is the
-vector of coefficients for the fixed effects in the design matrix
-\(\textbf{X}\). Each row of the design matrix represents a single
-observation (\(\textbf{x}_i\)) and is a vector with the following
-elements: 1 for the intercept, a binary 0 or 1 if the treatment is
-``drought'', a binary 0 or 1 if the treatment is ``irrigation'', the
-scaled value of VWC, binary ``drought'' value times VWC, and binary
-``irrigation'' value times VWC. Thus, our model treats ``control''
-observations as the main treatment and then estimates intercept and
-slope offsets for the ``drought'' and ``irrigation'' treatments. We use
-our model to test two statistical hypotheses based on the questions in
-our Introduction:
+regression model for observation \(i\), which is associated with plot
+\(j\) and treatment year \(t\). \(\boldsymbol{\beta}\) is the vector of
+coefficients for the fixed effects in the design matrix \(\textbf{X}\).
+Each row of the design matrix represents a single observation
+(\(\textbf{x}_i\)) and is a vector with the following elements: 1 for
+the intercept, a binary 0 or 1 if the treatment is ``drought'', a binary
+0 or 1 if the treatment is ``irrigation'', the scaled value of VWC,
+binary ``drought'' value times VWC, and binary ``irrigation'' value
+times VWC. Thus, our model treats ``control'' observations as the main
+treatment and then estimates intercept and slope offsets for the
+``drought'' and ``irrigation'' treatments. We use our model to test two
+statistical hypotheses based on the questions in our Introduction:
 
 \begin{description}
 \item [H1.] The coefficient for drought$\times$VWC is positive and different from zero.
@@ -391,7 +389,7 @@ We include two random effects to account for the fact that observations
 within plots and years are not independent. Specifically, we include
 plot-specific offsets (\(\boldsymbol{\gamma}\)) for the intercept and
 slope terms and year-specific intercept offsets (\(\eta_t\)). The
-covariate vector \(\textbf{z}_i\) for each observation \emph{i} has two
+covariate vector \(\textbf{z}_i\) for each observation \(i\) has two
 elements: a 1 for the intercept and the scaled value of VWC for that
 plot and year. The plot-specific coefficients are modeled
 hierarchically, where plot level coefficients are drawn from a
@@ -405,12 +403,11 @@ structure that allows the intercept and slope terms to be correlated:
 \end{align}
 
 \noindent{}where \(\Sigma\) is the variance-covariance matrix and
-\emph{j(i)} reads as ``plot \emph{j} associated with observation
-\emph{i}''. The random year effects (\(\boldsymbol{\eta}\)) are drawn
-from a normal prior with mean 0 and standard deviation
-\(\sigma_{\text{year}}\), which was drawn from a half-Cauchy
-distribution. A full description of our model and associated R
-\citep{R2016} code is in Appendix 2.
+\(j(i)\) reads as ``plot \(j\) associated with observation \(i\)''. The
+random year effects (\(\boldsymbol{\eta}\)) are drawn from a normal
+prior with mean 0 and standard deviation \(\sigma_{\text{year}}\), which
+was drawn from a half-Cauchy distribution. A full description of our
+model and associated R \citep{R2016} code is in Appendix 2.
 
 We fit the model using a Bayesian approach and obtained posterior
 estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo
@@ -460,7 +457,7 @@ successful. ANPP was highly variable across plots within years (Fig.
 2C).
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP
-(Table 1; Fig. 3). The effect of soil moisture for each treatment is
+(Table 1; Fig. 3B). The effect of soil moisture for each treatment is
 associated with high uncertainty, however, with 95\% Bayesian credible
 intervals that overlap zero (Table 1). Although the parameter estimates
 for the effect of soil moisture overlap zero, the posterior
@@ -472,10 +469,8 @@ among treatments (Table 1; Fig. 3B), but there is evidence that the
 slope for the irrigation treatment is less than the slope for the
 control treatment. This evidence comes from interpreting the posterior
 distribution of the slope offset for the irrigation treatment, from
-which we calculate a 99\% one-tailed probability that the estimate is
-less than zero (Fig. 3A, right panel). There was no evidence that the
-treatment effects became more important over time because there was no
-directional trend in the random year effects (Fig. A2-3).
+which we calculate a \new{96}\% one-tailed probability that the estimate
+is less than zero (Fig. 3A, right panel).
 
 Community composition was similar among treatments. The multidimensional
 space of community composition overlapped among treatments in all years
@@ -534,10 +529,10 @@ we have reason to believe our treatments \emph{should} have been large
 enough. Using the methods described by \citet{Lemoine2016}, we
 calculated the percent reduction and increase of mean growing season
 precipitation necessary to reach the 1\% and 99\% extremes of the
-historical precipitation regime at our site (Fig. A3-3). The 1\%
+historical precipitation regime at our site (Fig. A4-1). The 1\%
 quantile of precipitation at our site is 110 mm, a 47\% reduction from
 the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean
-growing season precipitation (Appendix 3). Thus, our drought treatment
+growing season precipitation (Appendix 4). Thus, our drought treatment
 represented extreme precipitation amounts, especially in years where
 ambient precipitation was below average (Fig. 2A). The irrigation
 treatment may not qualify as extreme, yet that is the treatment where we
@@ -631,7 +626,8 @@ DEB-1353078 and DEB-1054040 to PBA.
 \begin{description}
 \item [Appendix 1.] Additional methods and information on estimating aboveground net primary productivity.
 \item [Appendix 2.] Details of the hierarchical Bayesian model, Fig. A2-1, Fig. A2-2, and Fig. A2-3.
-\item [Appendix 3.] Details on analysis of precipitation historical range of variability and Fig. A3-1.
+\item [Appendix 3.] \new{Results from analysis of NDVI without conversion to ANPP, Fig. A3-1.}
+\item [Appendix 4.] Details on analysis of precipitation historical range of variability and Fig. A4-1.
 \end{description}
 
 \newpage{}
@@ -646,12 +642,12 @@ DEB-1353078 and DEB-1054040 to PBA.
   \hline
 Coefficient & Treatment & Posterior Mean & Posterior Median & Lower 95\% BCI & Upper 95\% BCI \\ 
   \hline
-Intercept & Control & 0.22 & 0.16 & -1.25 & 2.16 \\ 
-  Intercept & Drought & 0.64 & 0.44 & -1.37 & 3.79 \\ 
-  Intercept & Irrigation & -0.51 & -0.37 & -2.99 & 1.26 \\ 
-  Slope & Control & 1.31 & 1.14 & -0.30 & 3.83 \\ 
-  Slope & Drought & 1.18 & 1.00 & -0.62 & 4.12 \\ 
-  Slope & Irrigation & 0.83 & 0.68 & -0.61 & 3.12 \\ 
+Intercept & Control & 0.16 & 0.14 & -1.22 & 1.69 \\ 
+  Intercept & Drought & 0.13 & 0.05 & -1.69 & 2.39 \\ 
+  Intercept & Irrigation & -0.24 & -0.18 & -2.11 & 1.53 \\ 
+  Slope & Control & 0.94 & 0.86 & -0.51 & 2.69 \\ 
+  Slope & Drought & 0.65 & 0.57 & -0.99 & 2.62 \\ 
+  Slope & Irrigation & 0.72 & 0.65 & -0.54 & 2.26 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -665,13 +661,13 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
   \hline
 2011 & adonis &  21 &   2 & 1.02 & 0.44 \\ 
   2011 & betadisper &  21 &   2 & 2.23 & 0.14 \\ 
-  2012 & adonis &  22 &   2 & 1.10 & 0.32 \\ 
+  2012 & adonis &  22 &   2 & 1.10 & 0.34 \\ 
   2012 & betadisper &  22 &   2 & 0.21 & 0.81 \\ 
-  2013 & adonis &  22 &   2 & 1.23 & 0.14 \\ 
+  2013 & adonis &  22 &   2 & 1.23 & 0.16 \\ 
   2013 & betadisper &  22 &   2 & 0.28 & 0.76 \\ 
-  2014 & adonis &  22 &   2 & 0.95 & 0.58 \\ 
+  2014 & adonis &  22 &   2 & 0.95 & 0.56 \\ 
   2014 & betadisper &  22 &   2 & 0.35 & 0.71 \\ 
-  2015 & adonis &  21 &   2 & 1.05 & 0.40 \\ 
+  2015 & adonis &  21 &   2 & 1.05 & 0.37 \\ 
   2015 & betadisper &  21 &   2 & 3.01 & 0.07 \\ 
   2016 & adonis &  21 &   2 & 1.07 & 0.36 \\ 
   2016 & betadisper &  21 &   2 & 0.50 & 0.62 \\ 

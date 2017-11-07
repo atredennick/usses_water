@@ -61,7 +61,7 @@ anppdat <- list(
   Nplots   = length(unique(anpp_data$quadname)),
   Ntreats  = length(unique(anpp_data$Treatment)),
   Nyears   = length(unique(anpp_data$year)),
-  y        = as.numeric(scale(log(anpp_data$ndvi))),
+  y        = as.numeric(anpp_data$ndvi),
   x        = x,
   z        = z,
   plot_id  = as.numeric(as.factor(anpp_data$quadname)),
@@ -75,7 +75,7 @@ options(mc.cores = parallel::detectCores())
 set.seed(123)
 
 ##  Fit the model in Stan
-rt  <- stanc("anpp_randcoefs.stan")
+rt  <- stanc("ndvi_randcoefs.stan")
 sm  <- stan_model(stanc_ret = rt, verbose = FALSE)
 fit <- sampling(sm, data = anppdat, iter = 10000, chains = 4, thin = 10)
 

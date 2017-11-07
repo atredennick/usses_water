@@ -72,7 +72,7 @@ slope_probs <- treat_slopes %>%
   summarise(probs = round(get_one_tailed(estimate),2)) %>%
   mutate(prob_text = paste("Pr < 0 =", probs))
 slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch direction of drought intercpet since greater than 0
-slope_probs$xpos <- c(-2.8, -1, -3.6, -1.15)
+slope_probs$xpos <- c(-2.8, -0.7, -2.8, -0.7)
 slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
 
 treat_cols <- mycols[2:3]

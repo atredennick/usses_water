@@ -43,23 +43,24 @@ fontsize: 12pt
 ---
 
 \definecolor{blue}{rgb}{0,0,0.7} 
-\definecolor{red}{rgb}{0.7,0,0}
-\newcommand{\pba}{\textcolor{blue}}
-\newcommand{\ark}{\textcolor{red}}
+\newcommand{\new}{\textcolor{blue}}
 
 \reversemarginpar
 
 ```{r caching, include=FALSE}
 library("methods")
 library("knitr")
-opts_chunk$set(tidy=FALSE, warning=FALSE, message=FALSE, 
+opts_chunk$set(tidy = FALSE, warning = FALSE, message = FALSE, 
                comment = NA, verbose = TRUE, echo=FALSE)
 ```
 
 
 # INTRODUCTION
 
-At any given site, the relationship between aboveground net primary productivity (ANPP) and water availability (e.g., soil moisture) can be characterized by regressing historical observations of ANPP on observations of soil moisture. 
+\new{Water availability is a major driver of annual net primary productivity (ANPP) in grassland ecosystems} [@Huxman2004; @Hsu2012].
+\new{}
+
+At any given site, the relationship between ANPP and water availability (e.g., soil moisture) can be characterized by regressing historical observations of ANPP on observations of soil moisture. 
 Fitted functional responses can then be used to infer how ANPP may change under future precipitation regimes [e.g., @Hsu2012]. 
 A problem with this approach is that it requires extrapolation if future precipitation falls outside the historical range of variability [@Smith2011; @Peters2012].
 For example, the soil moisture-ANPP relationship may be linear within the historical range of interannual variation, but could saturate at higher levels of soil moisture. 
@@ -109,14 +110,14 @@ We also analyzed community composition over time, allowing us to place our exper
 ## Study Area
 
 We conducted our precipitation manipulation experiment in a sagebrush steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
-The plant community is dominated by the shrub *Artemesia tripartita* and three perennial bunchgrasses, *Pseudoroegneria spicata*, *Poa secunda*, and *Hesperostipa comata*.
+The plant community is dominated by the shrub \emph{Artemesia tripartita} and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata}.
 During the period of our experiment (2011 -- 2015), average mean annual precipitation was 265 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
 In 2007, we relocated 14 of the original quadrats, six of which were inside a large, permanent livestock exclosure.
 We use these six plots as control plots (i.e. ambient precipitation) in the experiment described below.
 
 In spring 2011, we established 16 new 1 m$^2$ plots located in the same exclosure as the six control plots.
-We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs *Purshia tridentata* and/or *Amelanchier utahensis*.
+We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs \emph{Purshia tridentata} and/or \emph{Amelanchier utahensis}.
 We established the new plots in pairs and randomly assigned each plot in a pair to receive a "drought" or "irrigation" treatment.
 
 
@@ -192,7 +193,7 @@ Our model is defined as follows:
 \textbf{y} &\sim \text{Normal} \left(\boldsymbol{\mu}, \sigma^2 \right),
 \end{align}
 
-\noindent{}where $\mu_{i}$ is the deterministic prediction from the regression model for observation *i*, which is associated with plot *j* and treatment year *t*. 
+\noindent{}where $\mu_{i}$ is the deterministic prediction from the regression model for observation $i$, which is associated with plot $j$ and treatment year $t$. 
 $\boldsymbol{\beta}$ is the vector of coefficients for the fixed effects in the design matrix $\textbf{X}$. 
 Each row of the design matrix represents a single observation ($\textbf{x}_i$) and is a vector with the following elements: 1 for the intercept, a binary 0 or 1 if the treatment is "drought", a binary 0 or 1 if the treatment is "irrigation", the scaled value of VWC, binary "drought" value times VWC, and binary "irrigation" value times VWC. 
 Thus, our model treats "control" observations as the main treatment and then estimates intercept and slope offsets for the "drought" and "irrigation" treatments. 
@@ -207,7 +208,7 @@ We use our model to test two statistical hypotheses based on the questions in ou
 
 We include two random effects to account for the fact that observations within plots and years are not independent. 
 Specifically, we include plot-specific offsets ($\boldsymbol{\gamma}$) for the intercept and slope terms and year-specific intercept offsets ($\eta_t$). 
-The covariate vector $\textbf{z}_i$ for each observation *i* has two elements: a 1 for the intercept and the scaled value of VWC for that plot and year. 
+The covariate vector $\textbf{z}_i$ for each observation $i$ has two elements: a 1 for the intercept and the scaled value of VWC for that plot and year. 
 The plot-specific coefficients are modeled hierarchically, where plot level coefficients are drawn from a multivariate normal distribution with mean 0 and a variance-covariance structure that allows the intercept and slope terms to be correlated:
 
 \vspace{-1em}
@@ -216,7 +217,7 @@ The plot-specific coefficients are modeled hierarchically, where plot level coef
 \boldsymbol{\gamma}_{j(i)} &\sim \text{MVN} \left( 0, \Sigma  \right),
 \end{align}
 
-\noindent{}where $\Sigma$ is the variance-covariance matrix and *j(i)* reads as "plot *j* associated with observation *i*". 
+\noindent{}where $\Sigma$ is the variance-covariance matrix and $j(i)$ reads as "plot $j$ associated with observation $i$". 
 The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-Cauchy distribution. 
 A full description of our model and associated R [@R2016] code is in Appendix 2.
 
@@ -247,12 +248,11 @@ ANPP was slightly higher in irrigation plots and slightly lower in drought plots
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 ANPP was highly variable across plots within years (Fig. 2C).
 
-Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3).
+Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3B).
 The effect of soil moisture for each treatment is associated with high uncertainty, however, with 95\% Bayesian credible intervals that overlap zero (Table 1).
 Although the parameter estimates for the effect of soil moisture overlap zero, the posterior distributions of the slopes all shrank and shifted to more positive values relative to the prior distributions (Fig. A2-2), which indicates the data did influence parameter estimates beyond the information from the uninformative priors.
 Ecosystem functional response was similar among treatments (Table 1; Fig. 3B), but there is evidence that the slope for the irrigation treatment is less than the slope for the control treatment.
-This evidence comes from interpreting the posterior distribution of the slope offset for the irrigation treatment, from which we calculate a 99% one-tailed probability that the estimate is less than zero (Fig. 3A, right panel).
-There was no evidence that the treatment effects became more important over time because there was no directional trend in the random year effects (Fig. A2-3).
+This evidence comes from interpreting the posterior distribution of the slope offset for the irrigation treatment, from which we calculate a \new{96}% one-tailed probability that the estimate is less than zero (Fig. 3A, right panel).
 
 Community composition was similar among treatments.
 The multidimensional space of community composition overlapped among treatments in all years and was equally dispersed in all years (Table 2; Fig. 4).
@@ -282,9 +282,9 @@ We first discuss the potential limitations of our study, and then discuss the bi
 
 First, it could be that our precipitation manipulations were not large enough to induce a response.
 That is, a 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
-We cannot definitively rule out this possibility, but we have reason to believe our treatments *should* have been large enough.
-Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A3-3).
-The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 3).
+We cannot definitively rule out this possibility, but we have reason to believe our treatments \emph{should} have been large enough.
+Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A4-1).
+The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 4).
 Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
 The irrigation treatment may not qualify as extreme, yet that is the treatment where we did observe an effect (Fig. 3A).
 
@@ -304,18 +304,7 @@ In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles,
 
 Another strategy to deal with variable environmental conditions is avoidance, which would also result in a consistent ecosystem functional response between drought and control treatments.
 For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season [@Blaisdell1958, A.R. Kleinhesselink, personal observation].
-Furthermore, the dominant shrub in our focal ecosystem, *Artemisia tripartita*, has access to water deep in the soil profile thanks to a deep root system [@Kulmatiski2017a].
-
-<!---
-The weaker soil moisture-ANPP relationship we observed for the irrigation treatment has three non-exclusive explanations.
-First, species' biomass production may have hit physiological thresholds and/or become limited by other factors, such as nitrogen availability [@LeBauer2008].
-\pba{PETER: DO WE KNOW ANYTHING ABOUT NITROGEN AT USSES? WANT TO ADD A SENTENCE HERE ABOUT HOW LIKELY OR UNLIKEL THIS IS...NUTNET SHOWS POSITIVE EFFECTS OF N*P ON PRODUCTION, EFFECT OF N ALONE NOT AS CLEAR. YOU COULD CITE THIS AS UNPUBLISHED DATA}
-
-Second, the less positive slope could be an indicator of bet hedging in this community.
-Avoiding high biomass and seed production in wet years could benefit species in the long run if climate conditions are variable.
-\pba{but why would this have cause a change relative to controls? this should also be true for controls...}
-Third, the less positive slope may be a statistical artifact due the variability of ANPP within years and our low sample size.
---->
+Furthermore, the dominant shrub in our focal ecosystem, \emph{Artemisia tripartita}, has access to water deep in the soil profile thanks to a deep root system [@Kulmatiski2017a].
 
 # CONCLUSIONS
 
@@ -348,7 +337,8 @@ The research was also supported by the National Science Foundation, through a Po
 \begin{description}
 \item [Appendix 1.] Additional methods and information on estimating aboveground net primary productivity.
 \item [Appendix 2.] Details of the hierarchical Bayesian model, Fig. A2-1, Fig. A2-2, and Fig. A2-3.
-\item [Appendix 3.] Details on analysis of precipitation historical range of variability and Fig. A3-1.
+\item [Appendix 3.] \new{Results from analysis of NDVI without conversion to ANPP, Fig. A3-1.}
+\item [Appendix 4.] Details on analysis of precipitation historical range of variability and Fig. A4-1.
 \end{description}
 
 
