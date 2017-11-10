@@ -35,7 +35,7 @@ source("read_format_data.R")
 
 my_df <- anpp_data
 my_df$y <- as.numeric(scale( log( anpp_data$anpp ) ))
-m1 <- lmer( y ~ Treatment*vwc_scaled + (1|year_id) + (vwc_scaled|quadname), my_df)
+m1 <- lmer( y ~ Treatment*vwc_scaled*year_id + (1|year_id) + (vwc_scaled|quadname), my_df)
 summary(m1)
 
 attr(VarCorr(m1)$quadname, 'correlation')
@@ -46,7 +46,7 @@ attr(VarCorr(m1)$quadname, 'correlation')
 ####  SET UP AND FIT MODEL IN STAN ----
 ####
 ##  Set up fixed and random design matrices
-lmod <- lm(log(anpp) ~ Treatment*vwc_scaled, anpp_data)
+lmod <- lm(log(anpp) ~ Treatment*vwc_scaled*year_id, anpp_data)
 x    <- model.matrix(lmod)
 newx <- unique(x)
 head(x)
@@ -77,7 +77,7 @@ set.seed(123)
 ##  Fit the model in Stan
 rt  <- stanc("anpp_randcoefs.stan")
 sm  <- stan_model(stanc_ret = rt, verbose = FALSE)
-fit <- sampling(sm, data = anppdat, iter = 10000, chains = 4, thin = 10)
+fit <- sampling(sm, data = anppdat, iter = 5000, chains = 4, thin = 1)
 
 ##  Save the model fit
 saveRDS(fit, "../results/randcoefs_alltreatments_fit.RDS")

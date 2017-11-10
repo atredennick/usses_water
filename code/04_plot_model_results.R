@@ -54,8 +54,14 @@ param_labels <- c("Control::Intercept",
                   "Drought::Intercept", 
                   "Irrigation::Intercept",
                   "Control::Slope", 
+                  "Control::InterceptYear", 
                   "Drought::Slope", 
-                  "Irrigation::Slope")
+                  "Irrigation::Slope",
+                  "Drought::InterceptYear", 
+                  "Irrigation::InterceptYear",
+                  "Control::SlopeYear",
+                  "Drought::SlopeYear",
+                  "Irrigation::SlopeYear")
 
 betas <- data.frame(extract(all_fit, pars = 'beta')) %>% 
   mutate(iteration = row_number()) %>% 
@@ -67,20 +73,20 @@ treat_slopes <- betas %>%
   filter(Treatment != "Control") %>%
   mutate(Type = paste(Type,"Offset"))
 
-slope_probs <- treat_slopes %>%
-  group_by(Treatment, Type) %>%
-  summarise(probs = round(get_one_tailed(estimate),2)) %>%
-  mutate(prob_text = paste("Pr < 0 =", probs))
-slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch direction of drought intercpet since greater than 0
-slope_probs$xpos <- c(-2.8, -0.7, -2.8, -0.7)
-slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
+# slope_probs <- treat_slopes %>%
+#   group_by(Treatment, Type) %>%
+#   summarise(probs = round(get_one_tailed(estimate),2)) %>%
+#   mutate(prob_text = paste("Pr < 0 =", probs))
+# slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch direction of drought intercpet since greater than 0
+# slope_probs$xpos <- c(-2.8, -0.7, -2.8, -0.7)
+# slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
 
 treat_cols <- mycols[2:3]
 
 treat_posteriors <- ggplot(treat_slopes)+
   geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
   geom_joy(stat="density", adjust=3, alpha=0.8, aes(x=estimate, y=Treatment, fill=Treatment, color=Treatment, height = ..density..))+
-  geom_text(data = slope_probs, aes(x=xpos, y=ypos, label = prob_text), size = 3)+
+  #geom_text(data = slope_probs, aes(x=xpos, y=ypos, label = prob_text), size = 3)+
   facet_wrap(~Type, scales = "free")+
   scale_y_discrete(labels = c("Drought","Irrigation"))+
   scale_fill_manual(values = treat_cols)+
