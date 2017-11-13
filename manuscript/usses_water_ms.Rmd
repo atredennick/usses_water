@@ -58,7 +58,8 @@ opts_chunk$set(tidy = FALSE, warning = FALSE, message = FALSE,
 # INTRODUCTION
 
 \new{Water availability is a major driver of annual net primary productivity (ANPP) in grassland ecosystems} [@Huxman2004; @Hsu2012].
-\new{}
+\new{Therefore, projected changes in precipitation regimes, associated with global climate change, will impact grassland ecosystem functioning.
+Increases in precipitation variability will result in prolonged periods of extremely wet or dry years, and predicting the consequences of such chronic resource alterations requires understanding how ecosystems respond to above and below average precipitation levels.}
 
 At any given site, the relationship between ANPP and water availability (e.g., soil moisture) can be characterized by regressing historical observations of ANPP on observations of soil moisture. 
 Fitted functional responses can then be used to infer how ANPP may change under future precipitation regimes [e.g., @Hsu2012]. 
