@@ -24,7 +24,7 @@ abstract: |
   
   **Methods.** We conducted a five year precipitation manipulation experiment in a sagebrush steppe ecosystem in Idaho, United States. We used drought and irrigation treatments (approximately 50% decrease/increase) to investigate whether ecosystem functional response remains consistent under sustained high or low precipitation. We recorded data on aboveground net primary productivity (ANPP), species abundance, and soil moisture. We fit a generalized linear mixed effects model to determine if the relationship between ANPP and soil moisture differed among treatments. We used nonmetric multidimensional scaling to quantify community composition over the five years.
   
-  **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among drought and control treatments, but the irrigation treatment had a lower slope than the control treatment. However, ANPP response to available soil moisture was weak and uncertain regardless of treatment, with all slopes overlapping zero. There was also large spatial variation in ANPP within-years. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
+  **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among drought and control treatments, but the irrigation treatment had a lower slope than the control treatment. However, all estimates for the effect of soil moisture on ANPP overlapped zero, indicating the relationship is weak and uncertain regardless of treatment. There was also large spatial variation in ANPP within-years, which contributes to the uncertainty of the soil moisture effect. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
   
   **Discussion.** Despite some evidence that ecosystem functional response became less sensitive under sustained wet conditions, the response of ANPP to soil moisture was consistently weak and community composition was stable. The similarity of ecosystem functional responses across treatments was not related to compensatory shifts at the plant community level, but instead may reflect the insensitivity of the dominant species to soil moisture. These species may be successful precisely because they have evolved life history strategies which buffer them against precipitation variability.
 header-includes: >
@@ -137,15 +137,15 @@ We monitored soil moisture in four of the drought-irrigation pairs using Decagon
 We installed four sensors around the edges of each 1x1 m census plot, two at 5 cm soil depth and two at 25 cm soil depth.
 We also installed four sensors in areas nearby the four selected plot pairs to measure ambient soil moisture at the same depths.
 Soil moisture measurements were automatically logged every four hours.
-We coupled this temporally intensive soil moisture sampling with spatially extensive readings taken at six points within all 16 plots and associated ambient measurement areas.
-These snapshot data were collected on 06-06-2012, 04-29-2015, 05-07-2015, 06-09-2015, and 05-10-2016\footnote{Dates formatted as: mm-dd-yyyy.} using a handheld EC-5 sensor.
+We coupled this temporally intensive soil moisture sampling with spatially extensive readings \new{taken with a handheld EC-5 sensor} at six points within all 16 plots and associated ambient measurement areas.
+These snapshot data were collected on 06-06-2012, 04-29-2015, 05-07-2015, 06-09-2015, and 05-10-2016\footnote{Dates formatted as: mm-dd-yyyy.}.
 
 Analyzing the response to experimental treatments was complicated by the fact that we did not directly monitor soil moisture in each plot on each day of the experiment.
 Only a subset of plots were equipped with soil moisture sensors, and within those plots, one or more of the sensors frequently failed to collect data.
 To remedy these problems, and to produce average daily soil moisture values for the ambient, drought, and irrigation treatments, we used a statistical model to predict the average treatment effects on soil moisture during the course of the experiment.
 
-We first averaged the observed soil moisture for each day and within each plot.
-Then we standardized the averages within each plot group by subtracting the average ambient soil moisture in that plot group and dividing by the standard deviation of the ambient soil moisture in that plot group.
+We first averaged the observed soil moisture for each day (*d*) and plot (*i*), $x_{i,d}$.
+\new{Then we standardized the average of each plot within a plot group ($g$) by subtracting the mean ambient soil moisture of the plot group for the day ($\overline{x}_{g,d} = \sum^{i=1}_G x_{i,d} / n$) from each plot's daily average and dividing by the standard deviation of the ambient soil moisture in that plot group ($\sigma_{g,d}$): $x^*_{i,d} = \frac{x_{i,d} - \overline{x}_{g,d}}{\sigma_{g,d}}$.}
 We then found the difference between the standardized ambient soil moisture and the standardized drought and irrigation soil moisture within each plot group.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.
 
@@ -169,6 +169,7 @@ For each plot and year, we averaged the four readings for each wavelength and th
 We regressed the greenness index against the dry biomass weight from the ten calibration plots to convert the greenness index to ANPP.
 We fit regressions to a MODIS-based index and an AVHRR-based index for each year and retained the regression with the better fit based on $R^2$ values.
 We then predicted ANPP using the best regression equation for each year (Appendix 1).
+\new{Our analysis, described below, can be done using NDVI directly, but we focus on ANPP to more easily relate our findings to previous work and because our results do not change if we analyze NDVI directly (Appendix 2).}
 
 Species composition data came from two sources: yearly census maps for each plot made using a pantograph [@Hill1920] and yearly counts of annual species in each plot.
 From these sources, we determined the density of all annuals and perennials forbs, the basal cover of perennial grasses, and the canopy cover of shrubs.

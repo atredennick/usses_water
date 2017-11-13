@@ -78,11 +78,13 @@ quantify community composition over the five years.
 \textbf{Results.} Ecosystem functional response, defined as the
 relationship between soil moisture and ANPP was similar among drought
 and control treatments, but the irrigation treatment had a lower slope
-than the control treatment. However, ANPP response to available soil
-moisture was weak and uncertain regardless of treatment, with all slopes
-overlapping zero. There was also large spatial variation in ANPP
-within-years. Plant community composition was remarkably stable over the
-course of the experiment and did not differ among treatments.
+than the control treatment. However, all estimates for the effect of
+soil moisture on ANPP overlapped zero, indicating the relationship is
+weak and uncertain regardless of treatment. There was also large spatial
+variation in ANPP within-years, which contributes to the uncertainty of
+the soil moisture effect. Plant community composition was remarkably
+stable over the course of the experiment and did not differ among
+treatments.
 
 \textbf{Discussion.} Despite some evidence that ecosystem functional
 response became less sensitive under sustained wet conditions, the
@@ -258,11 +260,10 @@ installed four sensors in areas nearby the four selected plot pairs to
 measure ambient soil moisture at the same depths. Soil moisture
 measurements were automatically logged every four hours. We coupled this
 temporally intensive soil moisture sampling with spatially extensive
-readings taken at six points within all 16 plots and associated ambient
-measurement areas. These snapshot data were collected on 06-06-2012,
-04-29-2015, 05-07-2015, 06-09-2015, and
-05-10-2016\footnote{Dates formatted as: mm-dd-yyyy.} using a handheld
-EC-5 sensor.
+readings \new{taken with a handheld EC-5 sensor} at six points within
+all 16 plots and associated ambient measurement areas. These snapshot
+data were collected on 06-06-2012, 04-29-2015, 05-07-2015, 06-09-2015,
+and 05-10-2016\footnote{Dates formatted as: mm-dd-yyyy.}.
 
 Analyzing the response to experimental treatments was complicated by the
 fact that we did not directly monitor soil moisture in each plot on each
@@ -274,15 +275,14 @@ irrigation treatments, we used a statistical model to predict the
 average treatment effects on soil moisture during the course of the
 experiment.
 
-We first averaged the observed soil moisture for each day and within
-each plot. Then we standardized the averages within each plot group by
-subtracting the average ambient soil moisture in that plot group and
-dividing by the standard deviation of the ambient soil moisture in that
-plot group. We then found the difference between the standardized
-ambient soil moisture and the standardized drought and irrigation soil
-moisture within each plot group. These transformations ensured that the
-treatment effects in each plot were appropriately scaled by the local
-ambient conditions within each plot group.
+We first averaged the observed soil moisture for each day (\emph{d}) and
+plot (\emph{i}), \(x_{i,d}\).
+\new{Then we standardized the average of each plot within a plot group ($g$) by subtracting the mean ambient soil moisture of the plot group for the day ($\overline{x}_{g,d} = \sum^{i=1}_G x_{i,d} / n$) from each plot's daily average and dividing by the standard deviation of the ambient soil moisture in that plot group ($\sigma_{g,d}$): $x^*_{i,d} = \frac{x_{i,d} - \overline{x}_{g,d}}{\sigma_{g,d}}$.}
+We then found the difference between the standardized ambient soil
+moisture and the standardized drought and irrigation soil moisture
+within each plot group. These transformations ensured that the treatment
+effects in each plot were appropriately scaled by the local ambient
+conditions within each plot group.
 
 We then modeled the daily deviation from ambient conditions of the
 drought and irrigation treatments using a linear mixed effects model
@@ -326,6 +326,7 @@ ANPP. We fit regressions to a MODIS-based index and an AVHRR-based index
 for each year and retained the regression with the better fit based on
 \(R^2\) values. We then predicted ANPP using the best regression
 equation for each year (Appendix 1).
+\new{Our analysis, described below, can be done using NDVI directly, but we focus on ANPP to more easily relate our findings to previous work and because our results do not change if we analyze NDVI directly (Appendix 2).}
 
 Species composition data came from two sources: yearly census maps for
 each plot made using a pantograph \citep{Hill1920} and yearly counts of
@@ -594,9 +595,10 @@ ecosystem, making them successful in the long run. Longer, chronic
 precipitation alteration might reveal plant community shifts that we did
 not observe \citep[e.g.,][]{Wilcox2016}. For example, a long-term
 increase in water availability could allow species that do not bet hedge
-to gain prominence and dominate the ecosystem functional response. Our
-results suggest compositional shifts would have the largest impact at
-high rainfall because the current community maintained consistent
+to gain prominence and dominate the ecosystem functional response.
+\new{Time \emph{per se} may be especially relevant in our focal ecosystem where the perennial species are long-lived, meaning compositional turnover may take many more years than we report on here.}
+Our results suggest compositional shifts would have the largest impact
+at high rainfall because the current community maintained consistent
 ecosystem functional response at very low water availability.
 
 \section{ACKNOWLEDGEMENTS}\label{acknowledgements}
@@ -664,18 +666,18 @@ Intercept & Control & 0.16 & 0.14 & -1.22 & 1.69 \\
   \hline
 Year & Test & n & d.f. & \emph{F} & \emph{P} \\ 
   \hline
-2011 & adonis &  21 &   2 & 1.02 & 0.44 \\ 
-  2011 & betadisper &  21 &   2 & 2.23 & 0.14 \\ 
-  2012 & adonis &  22 &   2 & 1.10 & 0.34 \\ 
+2011 & adonis &  21 &   2 & 1.02 & 0.43 \\ 
+  2011 & betadisper &  21 &   2 & 2.22 & 0.14 \\ 
+  2012 & adonis &  22 &   2 & 1.09 & 0.28 \\ 
   2012 & betadisper &  22 &   2 & 0.21 & 0.81 \\ 
-  2013 & adonis &  22 &   2 & 1.23 & 0.16 \\ 
-  2013 & betadisper &  22 &   2 & 0.28 & 0.76 \\ 
-  2014 & adonis &  22 &   2 & 0.95 & 0.56 \\ 
+  2013 & adonis &  22 &   2 & 1.25 & 0.16 \\ 
+  2013 & betadisper &  22 &   2 & 0.44 & 0.65 \\ 
+  2014 & adonis &  22 &   2 & 0.95 & 0.55 \\ 
   2014 & betadisper &  22 &   2 & 0.35 & 0.71 \\ 
-  2015 & adonis &  21 &   2 & 1.05 & 0.37 \\ 
+  2015 & adonis &  21 &   2 & 1.05 & 0.39 \\ 
   2015 & betadisper &  21 &   2 & 3.01 & 0.07 \\ 
-  2016 & adonis &  21 &   2 & 1.07 & 0.36 \\ 
-  2016 & betadisper &  21 &   2 & 0.50 & 0.62 \\ 
+  2016 & adonis &  21 &   2 & 1.07 & 0.33 \\ 
+  2016 & betadisper &  21 &   2 & 0.49 & 0.62 \\ 
    \hline
 \end{tabular}
 \endgroup

@@ -167,7 +167,7 @@ I also have a couple of concerns that potentially influence the results that the
 
 English is high quality with very few typos, though a few locations in text could use rephrasing to increase clarity. Some restructuring of the introduction is suggested to provide a more logical and engaging presentation of the topic. Whenever I had a question about a topic the authors were referring to, or a method they were using, their citations were sufficient for me to conduct further investigation. More discussion of prior work into the role of dominant species in determining ecosystem function may be warranted.
 
-\response{These are all good suggestions. Reviewer 2 agreed that the paper would benefit from a broader introduction, which we have added (lines xx-xx). We have also added a brief introduction to the idea that domoninant species play a large role in determining ecosystem functioning (lines xx-xx).}
+\response{These are all good suggestions. Reviewer 2 agreed that the paper would benefit from a broader introduction, which we have added (lines xx-xx). We have also added a brief reference to the idea that domoninant species play a large role in determining ecosystem functioning (lines xx-xx).}
 
 There are no significant departures from standard structure.
 
@@ -215,15 +215,15 @@ This is a good article that yields insight into how experimental work can allow 
 
 General comments to authors
 
-Lines 31-32: sentence beginning with “However, ANPP response…” seems fairly vague and weakly worded, consider revising to increase clarity.
+Lines 31-32: sentence beginning with "However, ANPP response…" seems fairly vague and weakly worded, consider revising to increase clarity.
 
-\response{We have revised this sentence to read, "xxx" (lines xx-xx).}
+\response{We have revised this sentence to read, "However, all estimates for the effect of soil moisture on ANPP overlapped zero, indicating the relationship is weak and uncertain regardless of treatment." (lines xx-xx).}
 
 Introduction: 
 
 While the abstract opens with a strong justification tying the paper into shifting precipitation patterns as a result of climate change and the need to develop a way to predict how communities might change with long-term exposure, the introduction opens only with a statement saying that there is a relationship between soil moisture and ANPP. This seems incredibly weak and uncompelling. The authors should consider restructuring their introduction so that the justification for their study is at the beginning. They have several other paragraphs in the paper that could do nicely as an opening paragraph. The opening paragraph of the discussion Lines 262-269 would make for an excellent opening. Or, with a little retooling the second paragraph of the introduction (lines 53-64) would make for a better statement of research motivation than the current opening. 
 
-\response{Fair point, and one that echoes Reviewer 2's critique of our introduction. We have added a new opening paragraph that we hope better sets the stage.}
+\response{Fair point, and one that echoes Reviewer 2's critique of our introduction. We have added a new opening paragraph that we hope better sets the stage (lines xx-xx).}
 
 Line 46 "outside" is repeated twice
 
