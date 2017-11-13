@@ -57,17 +57,14 @@ mycols <- c("#009E73", "#D55E00", "#0072B2")
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
   select(-year) %>%
   separate(simple_date, c("year","month","day")) %>%
-  # group_by(year,month,Treatment,type,year) %>%
-  # summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
   filter(type=="observed") %>%
-  #mutate(month_year = as.factor(paste0(year,"-",month))) %>%
   ungroup()
 
 suppressWarnings(# ignore warnings about missing values, we know they are empty
   soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
     geom_line(size=0.5)+
     scale_color_manual(values = mycols, name="Treatment")+
-    ylab(expression(paste("Mean Soil VWC (ml ", ml^-1,")")))+
+    ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
     xlab("Julian Day")+
     scale_y_continuous(breaks=seq(0,24,8))+
     facet_grid(year~.)+

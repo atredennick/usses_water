@@ -144,17 +144,18 @@ Analyzing the response to experimental treatments was complicated by the fact th
 Only a subset of plots were equipped with soil moisture sensors, and within those plots, one or more of the sensors frequently failed to collect data.
 To remedy these problems, and to produce average daily soil moisture values for the ambient, drought, and irrigation treatments, we used a statistical model to predict the average treatment effects on soil moisture during the course of the experiment.
 
-We first averaged the observed soil moisture for each day (*d*) and plot (*i*), $x_{i,d}$.
-\new{Then we standardized the average of each plot within a plot group ($g$) by subtracting the mean ambient soil moisture of the plot group for the day ($\overline{x}_{g,d} = \sum^{i=1}_G x_{i,d} / n$) from each plot's daily average and dividing by the standard deviation of the ambient soil moisture in that plot group ($\sigma_{g,d}$): $x^*_{i,d} = \frac{x_{i,d} - \overline{x}_{g,d}}{\sigma_{g,d}}$.}
-We then found the difference between the standardized ambient soil moisture and the standardized drought and irrigation soil moisture within each plot group.
+\new{We first averaged the observed soil moisture for each day ($d$) and plot ($i$), $x_{i,d}$.
+Plots were assigned to plot groups consisting of a control, a drought, and an irrigation plot.
+We standardized the average of each plot within a plot group ($g$) by subtracting the mean ambient soil moisture of the plot group for the day ($\overline{x}_{g,d} = \sum^{i=1}_n x_{i,d} / n$) from each plot's daily average and dividing by the standard deviation of the ambient soil moisture in that plot group ($\sigma_{g,d}$): $x^*_{i,d} = \frac{x_{i,d} - \overline{x}_{g,d}}{\sigma_{g,d}}$.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.
+We then found the difference between the standardized ambient soil moisture and the standardized drought and irrigation soil moisture within each plot group: $\Delta x^*_{\text{trt.}} = x^*_{\text{control}} - x^*_{\text{trt.}}$.}
 
-We then modeled the daily deviation from ambient conditions of the drought and irrigation treatments using a linear mixed effects model with independent variables for treatment, season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
+We then modeled the daily deviation \new{($\Delta x^*_\text{trt.}$)} from ambient conditions of the drought and irrigation treatments using a linear mixed effects model with independent variables for treatment, season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
 Rainy days were defined as any day in which precipitation was recorded and average temperature was above 3$^{\circ}$C.
 The day immediately following rainfall was also classified as rainy.
 We fit the model using the ```lme4::lmer()``` function [@Bates2015] in R [@R2016], with random effects for plot group and date.
 We weighted observations by the number of unique sensors or spot measurements that were taken in each plot on that day.
-We then used the model to predict the average daily soil moisture in the treated plots based on the average daily ambient soil moisture.
+We then estimated average daily soil moisture in the treated plots based on the average daily ambient soil moisture \new{and the model predicted daily deviation for each treatment ($\Delta x^*_\text{trt.}$)}.
 We could only predict soil moisture in the treated plots on days for which we took at least one ambient soil moisture measurement.
 See @Kleinhesselink2017b for complete details on our approach to estimating soil moisture.
 
@@ -339,8 +340,8 @@ The research was also supported by the National Science Foundation, through a Po
 
 \begin{description}
 \item [Appendix 1.] Additional methods and information on estimating aboveground net primary productivity.
-\item [Appendix 2.] Details of the hierarchical Bayesian model, Fig. A2-1, Fig. A2-2, and Fig. A2-3.
-\item [Appendix 3.] \new{Results from analysis of NDVI without conversion to ANPP, Fig. A3-1.}
+\item [Appendix 2.] \new{Results from analysis of NDVI without conversion to ANPP, Fig. A3-1.}
+\item [Appendix 3.] Details of the hierarchical Bayesian model, Fig. A2-1, Fig. A2-2, and Fig. A2-3.
 \item [Appendix 4.] Details on analysis of precipitation historical range of variability and Fig. A4-1.
 \end{description}
 
@@ -396,7 +397,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/data_panels.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) Mean soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) \new{Estimated daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
 \end{figure}
 
 

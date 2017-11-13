@@ -257,7 +257,7 @@ Lines 132-135: Wasn’t initially clear that these were manually collected data 
 
 Lines 142-147: Description of standardization procedure is confusing. I had to read it three times before the procedure was clear to me. Consider rewording for clarity.
 
-\response{Upon re-reading, we completely agree! We have substantially rewritten this section for clarity (lines xxx-xxx). Hopefully it is less confusing now.}
+\response{Upon re-reading, we completely agree! We have substantially rewritten this section for clarity and have added some mathematical notation to make our description precise (lines xxx-xxx). Hopefully it is less confusing now.}
 
 Lines 148-158: I’m a bit confused on which plots this modeling was conducted for. Was it done only on those plots that had permanent sensors in place? Or when possible was it also extrapolated to include those plots that only had point in time measurements. Please clarify.
 
@@ -267,7 +267,7 @@ Lines 168-174: I like the idea of using the two separate estimates of greenness 
 
 \response{Thank you.}
 
-Line 188: later, in figure 2, the authors refer to mean volumetric water content as “VWC” also. It would be best to use a different abbreviation for the two separate uses of volumetric water content: mean and cumulative. 
+Line 188: later, in figure 2, the authors refer to mean volumetric water content as ``VWC'' also. It would be best to use a different abbreviation for the two separate uses of volumetric water content: mean and cumulative. 
 
 \response{This is a good catch. We actually only use \emph{cumulative} volumetric water content, and we have made this consistent throughout the manuscript.}
 
@@ -291,7 +291,7 @@ Lines 289-299: strong discussion and support for the sizes of the treatment appl
 
 \response{Thanks for the kind words.}
 
-Lines 320-325: seems like authors are indicating that ecosystem response was driven by the response of the dominant species. Might be good to bring in some other work that has found similar results and discuss it a bit, for example: “Drivers of Variation in Aboveground Net Primary Productivity and Plant Community Composition Differ Across a Broad Precipitation Gradient” (La Pierre et al., 2016).
+Lines 320-325: seems like authors are indicating that ecosystem response was driven by the response of the dominant species. Might be good to bring in some other work that has found similar results and discuss it a bit, for example: ``Drivers of Variation in Aboveground Net Primary Productivity and Plant Community Composition Differ Across a Broad Precipitation Gradient'' (La Pierre et al., 2016).
 
 \response{Excellent suggestion. We have added this to the discussion on lines xxx-xxx, and also allude to dominant species' effects in the introduction on lines xx-xx.}
 
@@ -303,8 +303,8 @@ Table 1: These are the beta coefficents from the model correct? Might be good to
 
 Figure 2: Here is the use of VWC as “mean soil volumetric water content” I referred to earlier. Like I said it would probably be best to have different abbreviations for different metrics of soil moisture. Also interesting, though not the point of this paper, after three consecutive dry years with progressively decreasing ANPP it looks like the ecosystem was primed for recovery as soon as an average precipitation year hit in 2015. No evidence of drought legacy. 
 
-\response{Sorry about this mistake. We actually only use \emph{cumulative} volumetric water content and have corrected this in the manuscript.}
+\response{Sorry about this mistake. We use \emph{cumulative} March-June volumetric water content for the statistical model, but in this figure we plot the estimated daily values as a time series. We have updated the figure axis label and the caption to clarify.}
 
 Figures general: differences between colors used to indicate treatments are not at all distinguishable if viewed in greyscale. Authors should consider using a color scheme with more contrast.
 
-\response{We have increased the contrast between colors so that they are easier to distinguish if printed in black and white.}
+\response{We have increased the contrast between colors so that they are easier to distinguish if printed in black and white. They are not perfect, but they are from a color-blind friendly palette and we anticipate most readers of \emph{PeerJ} will read the paper online.}
