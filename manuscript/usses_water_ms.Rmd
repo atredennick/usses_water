@@ -313,6 +313,7 @@ Our results suggest the species in our focal plant community are insensitive to 
 Such insensitivity can buffer species against precipitation variability in this semi-arid ecosystem, making them successful in the long run.
 Longer, chronic precipitation alteration might reveal plant community shifts that we did not observe [e.g., @Wilcox2016]. 
 For example, a long-term increase in water availability could allow species that do not bet hedge to gain prominence and dominate the ecosystem functional response.
+\new{Time \emph{per se} may be especially relevant in our focal ecosystem where the perennial species are long-lived, meaning compositional turnover may take many more years than we report on here.}
 Our results suggest compositional shifts would have the largest impact at high rainfall because the current community maintained consistent ecosystem functional response at very low water availability.
 
 # ACKNOWLEDGEMENTS

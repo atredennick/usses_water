@@ -132,22 +132,22 @@ I also have a couple of concerns that potentially influence the results that the
 
 + I don’t understand the rationale for why the analysis is presented in terms of ANPP responses whereas NDVI was measured. The ANPP values represent a linear transformation of the NDVI measurements, but with a mediocre to low $R^2$ (A1-2), e.g., $R^2$ for year 2015 was 0.21 -- an information that is somewhat buried in the supplementary files. This less than ideal relationship is not discussed, e.g., as potential fourth source for not finding responses (lines 285-288). Why not analyzing NDVI--soil moisture relationships instead/in addition to ANPP--soil moisture relationships?
 
-\response{This comment echoes one of reviewer 1's concerns. As we mentioned above, we have conducted a model comparison where we show that results are consistent whether we use ANPP or NDVI (see new Appendix X). Thus, in the main text we retain the analysis focused on ANPP because we think it connects better to previous research. Also, as mentioned above, there was an error in our regression for the year 2015, which has been fixed (see new Table A1-2).}
+\response{This comment echoes one of reviewer 1's concerns. As we mention above, we have conducted a model comparison where we show that results are consistent whether we use ANPP or NDVI (see new Appendix X). Thus, in the main text we retain the analysis focused on ANPP because we think it connects better to previous research. Also, as mentioned above, there was an error in our regression for the year 2015, which has been fixed (see new Table A1-2).}
 
 *Validity of the findings*
 
 + The interpretation/discussion is coherent with the results. Even though the study found no responses, I agree that this is a reasonable outcome for a shrub-dominated, semi-arid ecosystem.
 + The introduction presents the idea that there are four basic types of how ANPP responds to increases/decreases in soil moisture and that the time it takes to express a response will differ among different communities (lines 87-90). Even though the discussion section suggests that species life history traits (‘bet hedging’, lines 310-319) are important to understand the results of no treatment responses, I feel that it would be as important to discuss how the lifespan of species in the community in relation to the experimental duration of the treatments promotes/hinders the observation of responses.
 
-\response{This is an interesting point, and one we failed to discuss. We have added some text to our discussion on this topic (lines xxx-xxx).}
+\response{This is an interesting point, and one we failed to discuss. We have added a sentence about this in our Conclusion section (lines xxx-xxx).}
 
 + Several of the dominant species (e.g., threetip sagebrush and bluebunch wheatgrass) have a lifespan that is much longer than the 5-year experiment; while other species in the community have shorter reproductive cycles. It seems that even with a 5-year experiment the longer-lived species of the experimental community may not have had sufficient time to (fully) respond and make it possible to observe measurable changes in the community composition/response.
 
-\response{Yes, we agree that the rate of community turnover is likely related to the lifespans of constituent species. The physiological responses, however, should not depend on lifespan. Indeed, this it at the core of the Hierarchical Response Framework. We have added text discussing the impact of lifespan on community turnover (lines xxx-xxx).}
+\response{Yes, we agree that the rate of community turnover is likely related to the lifespans of constituent species. The physiological responses, however, should not depend on lifespan. Indeed, this it at the core of the Hierarchical Response Framework. We have added text discussing the impact of lifespan on community turnover in our Conclusion (lines xxx-xxx).}
 
-+ I would find it interesting if the plant community analysis is additionally carried out separately for short-lived vs long-lived species (Fig. 4) -- based on the expectations that short-lived species have more ‘opportunities’ to respond/turnover than long-lived species.
++ I would find it interesting if the plant community analysis is additionally carried out separately for short-lived vs long-lived species (Fig. 4) -- based on the expectations that short-lived species have more `opportunities' to respond/turnover than long-lived species.
 
-\response{Separate out annuals?}
+\response{This is a great suggestion, and one we had not thought of. We conducted the analysis suggested by the reviewer and found no difference among perennials and annuals (Fig. R1). We have added this result in our Results section on lines xxx-xxx, but do not inlcude the figure.}
 
 *Comments for the Author*
 
@@ -167,7 +167,7 @@ I also have a couple of concerns that potentially influence the results that the
 
 English is high quality with very few typos, though a few locations in text could use rephrasing to increase clarity. Some restructuring of the introduction is suggested to provide a more logical and engaging presentation of the topic. Whenever I had a question about a topic the authors were referring to, or a method they were using, their citations were sufficient for me to conduct further investigation. More discussion of prior work into the role of dominant species in determining ecosystem function may be warranted.
 
-\response{These are all good suggestions. Reviwer 2 agreed that the paper would benefit from a broader introduction, which we have added (lines xx-xx). We have also added a brief introduction to the idea that domoninant species play a large role in determining ecosystem functioning (lines xx-xx).}
+\response{These are all good suggestions. Reviewer 2 agreed that the paper would benefit from a broader introduction, which we have added (lines xx-xx). We have also added a brief introduction to the idea that domoninant species play a large role in determining ecosystem functioning (lines xx-xx).}
 
 There are no significant departures from standard structure.
 
