@@ -154,10 +154,9 @@ for(doyr in unique(full_community_matrix_scaled$year)){
 saveRDS(object = out_stats, file = "../results/sppcomp_stats.RDS")
 
 mycols <- c("#009E73", "#0072B2", "#D55E00")
-ggplot(nmds_df, aes(x=MDS1, y=MDS2, color=Treatment))+
-  geom_point()+
-  geom_point(color="grey35",shape=1)+
-  scale_color_manual(values=mycols)+
+ggplot(nmds_df, aes(x=MDS1, y=MDS2, fill=Treatment))+
+  geom_point(shape = 21, color = "grey35")+
+  scale_fill_manual(values=mycols)+
   ylab("NMDS 2")+
   xlab("NMDS 1")+
   facet_wrap("Year")+
