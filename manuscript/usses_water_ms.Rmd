@@ -144,19 +144,20 @@ Analyzing the response to experimental treatments was complicated by the fact th
 Only a subset of plots were equipped with soil moisture sensors, and within those plots, one or more of the sensors frequently failed to collect data.
 To remedy these problems, and to produce average daily soil moisture values for the ambient, drought, and irrigation treatments, we used a statistical model to predict the average treatment effects on soil moisture during the course of the experiment.
 
-\new{We first averaged the observed soil moisture for each day ($d$) and plot ($i$), $x_{i,d}$.
-Plots were assigned to plot groups consisting of a control, a drought, and an irrigation plot.
-We standardized the average of each plot within a plot group ($g$) by subtracting the mean ambient soil moisture of the plot group for the day ($\overline{x}_{g,d} = \sum^{i=1}_n x_{i,d} / n$) from each plot's daily average and dividing by the standard deviation of the ambient soil moisture in that plot group ($\sigma_{g,d}$): $x^*_{i,d} = \frac{x_{i,d} - \overline{x}_{g,d}}{\sigma_{g,d}}$.
-These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.
-We then found the difference between the standardized ambient soil moisture and the standardized drought and irrigation soil moisture within each plot group: $\Delta x^*_{\text{trt.}} = x^*_{\text{control}} - x^*_{\text{trt.}}$.}
+\new{We first averaged the observed soil moisture readings for each day ($d$) and plot ($i$), $x_{i,d}$.
+Plots were organized in groups of three, with each group ($g$) containing consisting of a control, a drought, and an irrigation plot.
+Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions in the control plot. Specifically we subtracted the ambient daily soil moisture measured in the control plot from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the control plot ($\Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{control}})/sd(x_{g,d,\text{control}})$) where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
+These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group. 
 
-We then modeled the daily deviation \new{($\Delta x^*_\text{trt.}$)} from ambient conditions of the drought and irrigation treatments using a linear mixed effects model with independent variables for treatment, season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
+We then modeled these daily deviations \new{($\Delta x\text{trt.}$)} from ambient conditions using a linear mixed effects model with independent variables for treatment (irrigation or drought), season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
 Rainy days were defined as any day in which precipitation was recorded and average temperature was above 3$^{\circ}$C.
 The day immediately following rainfall was also classified as rainy.
 We fit the model using the ```lme4::lmer()``` function [@Bates2015] in R [@R2016], with random effects for plot group and date.
 We weighted observations by the number of unique sensors or spot measurements that were taken in each plot on that day.
-We then estimated average daily soil moisture in the treated plots based on the average daily ambient soil moisture \new{and the model predicted daily deviation for each treatment ($\Delta x^*_\text{trt.}$)}.
+We then used the model to predict the deviations from ambient conditions produced in the treated plots on each day of the experiment.  
+We added these predicted deviations to the average daily ambient soil moisture to generate predictions for daily soil moisture in all of the treated plots: $\bar{x}_{d, \text{trt.}} = \Delta \bar{x}_{d,\text{trt.}} + \bar{x}_{d,\text{control}}$, where $\bar{x}_{d,\text{trt.}}$ is the average predicted daily soil moisture in the treated plots and $\bar{x}_{d,\text{control}}$ is the daily ambient soil moisture averaged across all control plots. 
 We could only predict soil moisture in the treated plots on days for which we took at least one ambient soil moisture measurement.
+This procedure allowed us to predict daily soil moisture conditions for all plots, even on those days when some of our direct treatment measurements were missing due to malfunction of the sensors or dataloggers. 
 See @Kleinhesselink2017b for complete details on our approach to estimating soil moisture.
 
 
