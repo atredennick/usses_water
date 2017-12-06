@@ -87,6 +87,7 @@ saveRDS(fit, "../results/randcoefs_alltreatments_fit.RDS")
 ####
 ####  OPTIONAL DIAGNOSTICS ----
 ####
+# fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
 # betas <- as.numeric( summary(fit, 'beta')$summary[,1] )
 # 
 # df <- data.frame( x = anppdat$x, predicted = anppdat$x %*% betas)
