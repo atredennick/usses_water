@@ -323,6 +323,7 @@ Our results suggest compositional shifts would have the largest impact at high r
 
 We thank the many summer research technicians who collected the data reported in this paper and the USDA, U.S. Sheep Experiment Station (Dubois, ID) for facilitating work on their property.
 We also thank Susan Durham for clarifying our thinking on the statistical analyses and Kevin Wilcox for helpful discussions on analyzing community composition data.
+\new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
 
 # FUNDING
 
