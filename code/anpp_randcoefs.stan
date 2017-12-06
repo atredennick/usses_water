@@ -34,14 +34,14 @@ transformed parameters {
   
   # regression model for expected values (one for each plot-year)
   for (i in 1:Nobs)
-    yhat[i] = x[i]*beta + z[i]*u[plot_id[i]] + year_off[year_id[i]]; 
+    yhat[i] = x[i]*beta + z[i]*u[plot_id[i]]; #+ year_off[year_id[i]]; 
 }
 
 model {
   ####  PRIORS
   sigma_year ~ cauchy(0,2.5);
   sd_y ~ cauchy(0,2.5);
-  year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
+  # year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
   beta ~ normal(0,5);	             # priors on treatment coefficients
   L_u ~ lkj_corr_cholesky(2.0);      # prior on the cholesky factor which controls the 
                                     # correlation between plot level treatment effects
