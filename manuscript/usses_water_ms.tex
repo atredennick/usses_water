@@ -412,8 +412,10 @@ structure that allows the intercept and slope terms to be correlated:
 \(j(i)\) reads as ``plot \(j\) associated with observation \(i\)''. The
 random year effects (\(\boldsymbol{\eta}\)) are drawn from a normal
 prior with mean 0 and standard deviation \(\sigma_{\text{year}}\), which
-was drawn from a half-Cauchy distribution. A full description of our
-model and associated R \citep{R2016} code is in Appendix 2.
+was drawn from a half-Cauchy distribution.
+\new{We used a vague prior distribution for each $\beta$: $\boldsymbol{\beta} \sim \text{Normal}(0,5)$.}
+A full description of our model and associated R \citep{R2016} code is
+in Appendix 2.
 
 We fit the model using a Bayesian approach and obtained posterior
 estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo
@@ -519,7 +521,12 @@ response is consistent and weak across all precipitation treatments.
 The similarity of ecosystem functional response (Fig. 3) and community
 composition (Fig. 4) among treatments is surprising because grasslands
 generally, and sagebrush steppe specifically, are considered
-water-limited systems. Indeed, we expected ecosystem functional
+water-limited systems. \new{For example,} \citet{Huxman2004} and
+\citet{Knapp2015}
+\new{showed that semi-arid sites are more sensitive to drought than mesic sites, and}
+\citet{Wilcox2017}
+\new{found that semi-arid sites are particularly sensitive to irrigation treatments.}
+\new{Based on these findings}, we expected ecosystem functional
 response, community composition, or both to change under our treatments.
 Why did our treatments fail to induce ecosystem or community responses?
 We can think of three reasons; two are limitations of our study, and one
@@ -585,6 +592,8 @@ observation]{Blaisdell1958}. Furthermore, the dominant shrub in our
 focal ecosystem, \emph{Artemisia tripartita}, has access to water deep
 in the soil profile thanks to a deep root system
 \citep{Kulmatiski2017a}.
+\new{The dominance of our site by the shrub \emph{A. tripartita} may explain why our results do not conform to broader patterns of grassland sensitivity to precipitation manipulations}
+\citep[e.g.,][]{Huxman2004, Knapp2015, Wilcox2017}.
 
 \section{CONCLUSIONS}\label{conclusions}
 

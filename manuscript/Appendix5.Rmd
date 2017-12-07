@@ -12,6 +12,7 @@ header-includes:
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
+  - \usepackage{float}
 bibliography: ~/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
@@ -34,6 +35,7 @@ urlcolor: black
 \renewcommand\thetable{Ax-\arabic{table}}  
 \renewcommand\thesection{Section Ax\arabic{section}}
 
+
 \begin{center}
 \textbf{\Large{Appendix X}} \\
 A.T. Tredennick, A.R. Kleinhesselink, B. Taylor \& P.B. Adler \\
@@ -48,6 +50,14 @@ Averaging across time, *Artemisia tripartita* and *Balsamorhiza sagittata* are t
 Combined, these two species represent 28\% of total cover in control plots, 25\% of total cover in drought plots, and 25\% of total cover in irrigation plots.
 Four to five species dominate the community in general (Figure Ax-1), indicating a high level of dominance in this plant community.
 
+We also conducted our community composition analysis with only annual species.
+Annual species are shorter-lived than the perennial species in our community, so they may respond more quickly to alterations of precipitation.
+In general, our results for annual species conform to the results from the full community analysis in the main text.
+Annual plant community composition is relatively stable through time (Fig. Ax-5) and in most years there is no evidence that treatment differentiates community composition (Table Ax-).
+
+\newpage{}
+# Tables
+
 ```{r get_data, echo=FALSE, message=FALSE, warning=FALSE}
 ####
 ####  LOAD PACKAGES ----
@@ -56,6 +66,8 @@ library(tidyverse) # all the good things from Wikham
 library(dplyr)     # data munging
 library(stringr)   # working with strings
 library(ggthemes)  # pleasing ggplot2 themes
+library(vegan)     # NMDS and community analysis
+library(xtable)    # Generating LaTeX tables in RMarkdown
 
 
 
@@ -164,21 +176,80 @@ dom_annuals <- annual_data %>%
   left_join(weather_data, by = "year")
 ```
 
-\newpage{}
-# Table Ax-1: Statistical results from linear model relating density of Allysum desertorum to precipitation.
+Table Ax-1: Statistical results from linear model relating density of Allysum desertorum to precipitation.
 ```{r report_models, echo = FALSE}
 summary(lm(mean_density~ppt1*Treatment, data = filter(dom_annuals, species == "Allyssum desertorum")))
 ```
 
 \newpage{}
-# Table Ax-2: Statistical results from linear model relating density of Bromus tectorum to precipitation.
+Table Ax-2: Statistical results from linear model relating density of Bromus tectorum to precipitation.
 ```{r report_models2, echo = FALSE}
 summary(lm(mean_density~ppt1*Treatment, data = filter(dom_annuals, species == "Bromus tectorum")))
 ```
 
 \newpage{}
 
-```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Basal area of individuals was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment."}
+```{r annual_nmds, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
+####
+####  ANALYZE JUST THE ANNUALS ----
+####
+# Set missing species abundances as 0, which == absent
+annual_community_matrix[is.na(annual_community_matrix)] <- 0
+
+annual_community_matrix_scaled <- cbind(annual_community_matrix[,1:3,drop=F],
+                                        scale(annual_community_matrix[,4:ncol(annual_community_matrix)]))
+
+spp_to_remove <- names(which(is.nan(colMeans(annual_community_matrix_scaled[4:ncol(annual_community_matrix_scaled)]))))
+ids_to_remove <- which(colnames(annual_community_matrix_scaled) %in% spp_to_remove)
+annual_community_matrix_scaled <- annual_community_matrix_scaled %>%
+  select(-ids_to_remove)
+
+
+nmds_df_annuals <- {}
+out_stats <- {}
+for(doyr in unique(annual_community_matrix_scaled$year)){
+  tmp <- filter(annual_community_matrix_scaled, year == doyr) %>% select(-year)
+   invisible( capture.output( # already checked for convergence
+    tmp_bray <- metaMDS(tmp[3:ncol(tmp)]+2, "bray", trymax = 999)
+  ))
+  nmds_points <- as.data.frame(tmp_bray$points)
+  nmds_points$Treatment <- tmp$Treatment
+  nmds_points$Year <- doyr
+  nmds_df_annuals <- rbind(nmds_df_annuals, nmds_points)
+  adonis_stats <- as.data.frame(vegan::adonis(tmp[3:ncol(tmp)]+2~tmp$Treatment)$aov.tab)[1,]
+  betadisper_stats <- anova(vegan::betadisper(vegan::vegdist(tmp[3:ncol(tmp)]+2),tmp$Treatment))[1,]
+  tmp_out <- rbind(adonis_stats[,-which(colnames(adonis_stats)=="R2")],
+                   as.numeric(betadisper_stats))
+  row.names(tmp_out) <- c()
+  out_stats <- rbind(out_stats, data.frame(year = doyr,
+                                           test = c("adonis","betadisper"),
+                                           n = nrow(tmp),
+                                           tmp_out))
+}
+```
+
+\setcounter{table}{2}
+
+```{r annual_nmds_table, echo = FALSE, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
+colnames(out_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{F}", "\\emph{P}")
+out_stats$d.f. <- as.integer(out_stats$d.f.)
+out_stats <- arrange(out_stats, Year)
+
+# Make the table
+inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments for annual species only. `adonis' tests whether treatments form unique clusters in multidimensial space; `betadisper' tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support that the treatments differ."
+print(xtable(dplyr::select(out_stats, -Sums, -Means), caption = inyear_caption, digits = 2),
+       caption.placement="top",
+       include.rownames = F,
+       sanitize.colnames.function = identity,
+       comment = FALSE,
+       size = "normalsize")
+```
+
+\newpage{}
+
+# Figures
+
+```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Basal area of individuals was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment.", fig.pos="h",fig.align="center"}
 ####
 ####  EXTRACT COVER OF MOST DOMINANT SPECIES ----
 ####
@@ -309,4 +380,57 @@ ggplot(dom_annuals, aes(x = ppt1, y = mean_density, color = Species))+
   xlab("Precipitation (mm)")+
   ylab("Abundance")
 ```
+
+
+```{r annual_nmds2, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Nonmetric multidimensional scaling scores representing annual plant communities in each plot, colored by treatment."}
+####
+####  ANALYZE JUST THE ANNUALS ----
+####
+# Set missing species abundances as 0, which == absent
+annual_community_matrix[is.na(annual_community_matrix)] <- 0
+
+annual_community_matrix_scaled <- cbind(annual_community_matrix[,1:3,drop=F],
+                                        scale(annual_community_matrix[,4:ncol(annual_community_matrix)]))
+
+spp_to_remove <- names(which(is.nan(colMeans(annual_community_matrix_scaled[4:ncol(annual_community_matrix_scaled)]))))
+ids_to_remove <- which(colnames(annual_community_matrix_scaled) %in% spp_to_remove)
+annual_community_matrix_scaled <- annual_community_matrix_scaled %>%
+  select(-ids_to_remove)
+
+
+nmds_df_annuals <- {}
+out_stats <- {}
+for(doyr in unique(annual_community_matrix_scaled$year)){
+  tmp <- filter(annual_community_matrix_scaled, year == doyr) %>% select(-year)
+   invisible( capture.output( # already checked for convergence
+    tmp_bray <- metaMDS(tmp[3:ncol(tmp)]+2, "bray", trymax = 999)
+  ))
+  nmds_points <- as.data.frame(tmp_bray$points)
+  nmds_points$Treatment <- tmp$Treatment
+  nmds_points$Year <- doyr
+  nmds_df_annuals <- rbind(nmds_df_annuals, nmds_points)
+  adonis_stats <- as.data.frame(vegan::adonis(tmp[3:ncol(tmp)]+2~tmp$Treatment)$aov.tab)[1,]
+  betadisper_stats <- anova(vegan::betadisper(vegan::vegdist(tmp[3:ncol(tmp)]+2),tmp$Treatment))[1,]
+  tmp_out <- rbind(adonis_stats[,-which(colnames(adonis_stats)=="R2")],
+                   as.numeric(betadisper_stats))
+  row.names(tmp_out) <- c()
+  out_stats <- rbind(out_stats, data.frame(year = doyr,
+                                           test = c("adonis","betadisper"),
+                                           n = nrow(tmp),
+                                           tmp_out))
+}
+
+mycols <- c("#009E73", "#0072B2", "#D55E00")
+ggplot(nmds_df_annuals, aes(x=MDS1, y=MDS2, color=Treatment))+
+  geom_point()+
+  geom_point(color="grey35",shape=1)+
+  scale_color_manual(values=mycols)+
+  ylab("NMDS 2")+
+  xlab("NMDS 1")+
+  facet_wrap(~Year)+
+  #scale_y_continuous(limits=c(-0.15,0.15))+
+  #scale_x_continuous(limits=c(-0.18,0.18))+
+  coord_fixed()
+```
+
 

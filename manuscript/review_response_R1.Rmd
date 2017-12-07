@@ -147,7 +147,7 @@ I also have a couple of concerns that potentially influence the results that the
 
 + I would find it interesting if the plant community analysis is additionally carried out separately for short-lived vs long-lived species (Fig. 4) -- based on the expectations that short-lived species have more `opportunities' to respond/turnover than long-lived species.
 
-\response{This is a great suggestion, and one we had not thought of. We conducted the analysis suggested by the reviewer and found no difference among perennials and annuals (Fig. R1). We have added this result in our Results section on lines xxx-xxx, but do not inlcude the figure.}
+\response{This is a great suggestion, and one we had not thought of. We conducted the analysis suggested by the reviewer and found that community composition was stable for both annuals (short-lived) and perennials (long-lived). In a few years we detected signficant treatment effects on dispersion or mean of community composition. But upon further investigation, we found that these statistical results were detecting changes in rare species because the dominant annuals showed similar dynamics through time, regardless of treatment (Fig. Ax-x). Likewise, the stable perennial community contributes most to ANPP is this systems. We briefly mention this analysis in our Results section on lines xxx-xxx, and show the full analysis in Appendix X.}
 
 *Comments for the Author*
 

@@ -223,6 +223,7 @@ The plot-specific coefficients are modeled hierarchically, where plot level coef
 
 \noindent{}where $\Sigma$ is the variance-covariance matrix and $j(i)$ reads as "plot $j$ associated with observation $i$". 
 The random year effects ($\boldsymbol{\eta}$) are drawn from a normal prior with mean 0 and standard deviation $\sigma_{\text{year}}$, which was drawn from a half-Cauchy distribution. 
+\new{We used a vague prior distribution for each $\beta$: $\boldsymbol{\beta} \sim \text{Normal}(0,5)$.}
 A full description of our model and associated R [@R2016] code is in Appendix 2.
 
 We fit the model using a Bayesian approach and obtained posterior estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo sampler in Stan [@stan2016].
@@ -279,7 +280,8 @@ Nonetheless, the slopes of the VWC $\times$ productivity relationship were simil
 We therefore conclude that ecosystem functional response is consistent and weak across all precipitation treatments.
 
 The similarity of ecosystem functional response (Fig. 3) and community composition (Fig. 4) among treatments is surprising because grasslands generally, and sagebrush steppe specifically, are considered water-limited systems.
-Indeed, we expected ecosystem functional response, community composition, or both to change under our treatments.
+\new{For example,} @Huxman2004 and @Knapp2015 \new{showed that semi-arid sites are more sensitive to drought than mesic sites, and} @Wilcox2017 \new{found that semi-arid sites are particularly sensitive to irrigation treatments.}
+\new{Based on these findings}, we expected ecosystem functional response, community composition, or both to change under our treatments.
 Why did our treatments fail to induce ecosystem or community responses?
 We can think of three reasons; two are limitations of our study, and one is the life history traits of the species in our focal communities.
 We first discuss the potential limitations of our study, and then discuss the biological explanation.
@@ -309,7 +311,8 @@ In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles,
 Another strategy to deal with variable environmental conditions is avoidance, which would also result in a consistent ecosystem functional response between drought and control treatments.
 For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season [@Blaisdell1958, A.R. Kleinhesselink, personal observation].
 Furthermore, the dominant shrub in our focal ecosystem, \emph{Artemisia tripartita}, has access to water deep in the soil profile thanks to a deep root system [@Kulmatiski2017a].
-
+\new{The dominance of our site by the shrub \emph{A. tripartita} may explain why our results do not conform to broader patterns of grassland sensitivity to precipitation manipulations} [e.g., @Huxman2004; @Knapp2015; @Wilcox2017].
+ 
 # CONCLUSIONS
 
 Our results suggest the species in our focal plant community are insensitive to to changes in precipitation regime. 
