@@ -166,19 +166,63 @@ suppressWarnings( # ignore wanrnings about NA values
   regress_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
     geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
     geom_line(data=regression_limited, aes(x=backtrans_vwc, y=backtrans_estimate, color=Treatment), size=1)+
-    scale_fill_manual(values = mycols)+
-    scale_color_manual(values = mycols)+
+    scale_fill_manual(values = mycols, name = NULL)+
+    scale_color_manual(values = mycols, name = NULL)+
     xlab("March-June Cumulative VWC")+
     ylab(expression(paste("log[ANPP (g ",m^2,")]")))+
     theme_bw()+
-    theme(panel.grid.minor = element_blank())
+    theme(panel.grid.minor = element_blank(),
+          legend.position = c(0.12, 0.85),
+          legend.background = element_rect(colour = NA, fill = NA),
+          legend.text=element_text(size=7),
+          legend.key.size = unit(0.4, "cm"))
 )
 
-suppressWarnings( # ignore wanrnings about NA values
-  gridplot <- cowplot::plot_grid(treat_posteriors, NULL, regress_plot, 
-                                 rel_heights = c(1, 0.08, 1),
-                                 nrow = 3, 
-                                 labels = c("A)","","B)"))
+
+####
+####  SENSITIVITIES ------------------------------------------------------------
+####
+all_diffs <- readRDS("../results/sensitvities.RDS")
+sens_plot <- ggplot(all_diffs, aes(x = year, y = sensitivity, fill = treatment))+
+    geom_jitter(shape = 21, width = 0.1, color = "grey25", alpha=0.8)+
+    stat_smooth(data = filter(all_diffs, treatment == "drought"), color = treat_cols[1], se=F, method="lm")+
+    scale_fill_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
+    scale_color_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
+    ylab("Sensitivity")+
+    xlab("Year")+
+    guides(color = FALSE, fill = FALSE)+
+    theme_bw()+
+    theme(panel.grid.minor = element_blank(),
+          legend.position = c(0.12, 0.9),
+          legend.background = element_rect(colour = NA, fill = NA))
+
+
+
+####
+####  COMBINE PLOTS AND SAVE ---------------------------------------------------
+####
+# suppressWarnings( # ignore warnings about NA values
+#   gridplot <- cowplot::plot_grid(treat_posteriors, NULL, regress_plot, sens_plot, 
+#                                  rel_heights = c(1, 0.08, 1),
+#                                  nrow = 3,
+#                                  ncol = 2,
+#                                  labels = c("A)","","B)","C)"))
+# )
+
+suppressWarnings( # ignore warnings about NA values
+  bottom_row <- plot_grid(regress_plot, NULL, sens_plot, 
+                          labels = c('B','', 'C'),
+                          align = 'h', 
+                          rel_widths = c(1, 0.1, 1), 
+                          nrow = 1)
+)
+
+suppressWarnings( # ignore warnings about NA values
+  gridplot <- plot_grid(treat_posteriors, NULL, bottom_row, 
+                        ncol = 1, 
+                        nrow = 3, 
+                        labels = c("A"), 
+                        rel_heights = c(1, 0.1, 1))
 )
 ggsave("../figures/glmm_main_results.png", plot = gridplot, width = 7, height = 5, units = "in", dpi =120)
 
