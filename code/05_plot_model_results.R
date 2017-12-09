@@ -201,6 +201,7 @@ sens_plot <- ggplot(all_diffs, aes(x = year, y = sensitivity, fill = treatment))
 ####
 ####  COMBINE PLOTS AND SAVE ---------------------------------------------------
 ####
+##  Version without sensitivity analysis
 # suppressWarnings( # ignore warnings about NA values
 #   gridplot <- cowplot::plot_grid(treat_posteriors, NULL, regress_plot, sens_plot, 
 #                                  rel_heights = c(1, 0.08, 1),
@@ -209,6 +210,7 @@ sens_plot <- ggplot(all_diffs, aes(x = year, y = sensitivity, fill = treatment))
 #                                  labels = c("A)","","B)","C)"))
 # )
 
+##  Version with sensitivity analysis
 suppressWarnings( # ignore warnings about NA values
   bottom_row <- plot_grid(regress_plot, NULL, sens_plot, 
                           labels = c('B','', 'C'),
