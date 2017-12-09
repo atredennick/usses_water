@@ -125,7 +125,5 @@ ggplot(all_diffs, aes(x = year, y = sensitivity, color = treatment, fill = treat
 
 drought_fit <- lm(formula = sensitivity ~ year, data = filter(all_diffs, treatment == "drought"))
 summary(drought_fit)
-mod1 <- gls(sensitivity ~ year, data = filter(all_diffs, treatment == "drought"), correlation=corARMA(p=1,q=1))
-summary(mod1)
 irrigate_fit <- lm(formula = sensitivity ~ year, data = filter(all_diffs, treatment == "irrigation"))
 summary(irrigate_fit)
