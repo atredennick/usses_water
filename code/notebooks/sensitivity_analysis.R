@@ -75,7 +75,7 @@ for(do_year in unique(droughts$year)){
   year_droughts <- filter(droughts, year==do_year)
   for(do_plot in unique(year_droughts$quadname)){
     plot_droughts <- filter(year_droughts, quadname == do_plot)
-    diffs <- year_controls$anpp - plot_droughts$anpp
+    diffs <- mean(year_controls$anpp) - plot_droughts$anpp
     tmp_out <- data.frame(treatment = "drought",
                           year = do_year,
                           quadname = do_plot,
@@ -90,7 +90,7 @@ for(do_year in unique(droughts$year)){
   year_irrigates <- filter(irrigates, year==do_year)
   for(do_plot in unique(year_irrigates$quadname)){
     plot_irrigates <- filter(year_irrigates, quadname == do_plot)
-    diffs <- year_controls$anpp - plot_irrigates$anpp
+    diffs <- mean(year_controls$anpp) - plot_irrigates$anpp
     tmp_out <- data.frame(treatment = "irrigation",
                           year = do_year,
                           quadname = do_plot,
@@ -123,8 +123,9 @@ ggplot(all_diffs, aes(x = year, y = sensitivity, color = treatment, fill = treat
         legend.background = element_rect(colour = NA, fill = NA))
 
 
-drought_fit <- lm(formula = sensitivity ~ year + quadname, data = filter(all_diffs, treatment == "drought"))
+drought_fit <- lm(formula = sensitivity ~ year, data = filter(all_diffs, treatment == "drought"))
 summary(drought_fit)
-
-irrigate_fit <- lm(formula = sensitivity ~ year + quadname, data = filter(all_diffs, treatment == "irrigation"))
+mod1 <- gls(sensitivity ~ year, data = filter(all_diffs, treatment == "drought"), correlation=corARMA(p=1,q=1))
+summary(mod1)
+irrigate_fit <- lm(formula = sensitivity ~ year, data = filter(all_diffs, treatment == "irrigation"))
 summary(irrigate_fit)

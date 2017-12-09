@@ -1,9 +1,13 @@
-##  look_at_weather.R: Script to look at the historical distribution of
-##  precipitation at Dubois, Idaho, and to compare our treatment years to
-##  historical events.
+################################################################################
+##  02_plot_data.R: Script to plot the historical distribution of precipitation 
+##  at Dubois, Idaho, and to compare our treatment years to historical events. 
+##  The script also plots modeled VWC for each treatment through time, and the
+##  temporal trend of ANPP for each treatment.
 ##
+##  ----------------------------------------------------------------------------
 ##  Author: Andrew Tredennick (atredenn@gmail.com)
 ##  Date created: May 10, 2017
+################################################################################
 
 ##  Clear the workspace
 rm(list = ls(all.names = T))
@@ -12,27 +16,28 @@ rm(list = ls(all.names = T))
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 
+
 ####
-####  LIBRARIES ----
+####  LOAD LIBRARIES -----------------------------------------------------------
 ####
-library(tidyverse)
-library(dplyr)
-library(stringr)
-library(ggthemes)
-library(ggalt)
-library(gridExtra)
-library(cowplot)
+library(tidyverse) # Data science packages
+library(dplyr)     # Data summarizing and manipulating
+library(stringr)   # Working with strings
+library(ggthemes)  # Pleasing themes for ggplot
+library(cowplot)   # For combining ggplot objects
 
 
 
 ####
-####  READ IN WEATHER DATA AND PLOT ----
+####  READ IN WEATHER DATA AND PLOT --------------------------------------------
 ####
 weather <- read.csv("../data/weather/ClimateIPM.csv")
 trt_data <- weather %>%
   filter(year>2011) %>%
-  select(year, ppt1)
-trt_data$Treatment <- "Control"
+  select(year, ppt1) %>%
+  mutate(Treatment = "Control")
+
+##  Adjust 2012 and 2015 values so they are distinguishable on the plot
 trt_data[which(trt_data$year==2015),"ppt1"] <- trt_data[which(trt_data$year==2015),"ppt1"]+10
 trt_data[which(trt_data$year==2012),"ppt1"] <- trt_data[which(trt_data$year==2012),"ppt1"]-5
 
@@ -51,7 +56,7 @@ ppt_histogram <- ggplot(weather, aes(x=ppt1))+
 
 
 ####
-####  PLOT SOIL WATER BY TREATMENT ----
+####  PLOT SOIL WATER BY TREATMENT ---------------------------------------------
 ####
 mycols <- c("#009E73", "#D55E00", "#0072B2")
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
@@ -77,12 +82,13 @@ suppressWarnings(# ignore warnings about missing values, we know they are empty
 
 
 
-
 ####
-####  ANPP PLOT ----
+####  ANPP PLOT ----------------------------------------------------------------
 ####
 permanent_quad_biomass <- readRDS("../data/estimated_biomass/permanent_plots_estimated_biomass.RDS")
-permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
+permanent_quad_biomass <- permanent_quad_biomass %>% 
+  filter(Treatment %in% c("Control","Drought","Irrigation"))
+
 biomass_year_treatment <- permanent_quad_biomass %>%
   group_by(Treatment,year) %>%
   summarise(mean_biomass = mean(biomass_grams_est))
@@ -116,19 +122,18 @@ anpp_means <- ggplot(biomass_yr_trt_summ, aes(x=year, y=mean_biomass, color=Trea
 
 
 ####
-####  COMBINE PLOTS AND SAVE ----
+####  COMBINE PLOTS AND SAVE ---------------------------------------------------
 ####
 suppressWarnings(# ignore warnings about missing values, we know they are empty
   gout <- cowplot::plot_grid(ppt_histogram,soil_vwc,anpp_means,
                              ncol=1, labels = c("A)","B)","C)"), hjust = -0.4)
 )
-
 ggsave("../figures/data_panels.png", gout, width=3.3, height=8, units="in", dpi=120)
 
 
 
 ####
-####  GET MEAN PPT AND TEMPERATURES FROM 2011-2015 ----
+####  GET MEAN PPT AND TEMPERATURES FROM 2011-2015 -----------------------------
 ####
 weather <- read.csv("../data/weather/monthlyClimate.csv") %>%
   filter(year > 2010 & year < 2016)
@@ -153,37 +158,34 @@ write.csv(x = weather_table, file = "../results/weather_summary.csv")
 
 
 ####
-####  GET MIN AND MAX ANPP VALUES, AVERAGED OVER TREATMENT ----
+####  CALCULATE MIN AND MAX ANPP VALUES, AVERAGED OVER TREATMENT ---------------
 ####
 source("read_format_data.R") # load data
-anpp_summary <- anpp_data %>%
+anpp_data %>%
   group_by(year) %>%
-  summarise(mean_anpp = mean(anpp))
-write.csv(anpp_summary, "../results/avg_anpp_by_year.csv")
+  summarise(mean_anpp = mean(anpp)) %>%
+  write_csv(path = "../results/avg_anpp_by_year.csv")
 
 
 
 ####
-####  CHARACTERIZE HRV OF PRECIP ----
+####  CALCULATE TREATMENT DIFFERENCES ACROSS YEARS -----------------------------
 ####
-# weather <- read.csv("../data/weather/ClimateIPM.csv")
-# mean_ppt <- mean(weather$ppt1)
-# quants_ppt <- quantile(weather$ppt1,probs = c(0.01,0.99))
-# quants_ppt[1]/mean_ppt*100
-# quants_ppt[2]/mean_ppt*100
-# 
-# ggplot(weather, aes(x=ppt1))+
-#   geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
-#   geom_line(stat="density", color="blue")+
-#   geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
-#   geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
-#   ylab("Density")+
-#   xlab("Growing Season Precipitation (mm)")+
-#   theme_bw()+
-#   theme(panel.grid.minor = element_blank())
+anpp_data %>%
+  group_by(Treatment) %>%
+  summarise(mean_anpp = mean(anpp)) %>%
+  mutate(base_anpp = mean_anpp[Treatment == "Control"],
+         perc_diff = round(((mean_anpp - base_anpp)/base_anpp)*100)) %>%
+  write_csv(path =  "../results/anpp_trt_diffs.csv")
 
 
 
-
-
-
+####
+####  CALCULATE VWC DIFFERENCES ACROSS YEARS -----------------------------------
+####
+soil_moisture %>%
+  group_by(Treatment) %>%
+  summarise(mean_vwc = mean(total_seasonal_vwc)) %>%
+  mutate(base_vwc = mean_vwc[Treatment == "Control"],
+         perc_diff = round(((mean_vwc - base_vwc)/base_vwc)*100)) %>%
+  write_csv(path =  "../results/vwc_trt_diffs.csv")

@@ -3,11 +3,11 @@ title: Ecosystem functional response across precipitation extremes in a sagebrus
 preprint: false
 author: 
   - name: Andrew T. Tredennick
-    affiliation: 1
+    affiliation: 1,*
     corresponding: true
     email: atredenn@gmail.com
   - name: Andrew R. Kleinhesselink
-    affiliation: 1,2
+    affiliation: 1,2,*
   - name: J. Bret Taylor
     affiliation: 3
   - name: Peter B. Adler
@@ -34,6 +34,7 @@ header-includes: >
   \usepackage{color, soul}
   \usepackage{sectsty}
   \usepackage{bm,mathrsfs}
+  \usepackage{lipsum}
 bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
 output: 
   rticles::peerj_article:
@@ -44,6 +45,14 @@ fontsize: 12pt
 
 \definecolor{blue}{rgb}{0,0,0.7} 
 \newcommand{\new}{\textcolor{blue}}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\blfootnote{*Authors contributed equally to this work.}
 
 \reversemarginpar
 
@@ -249,9 +258,10 @@ We also include annotated Stan code in our model description in Appendix 2.
 
 Ambient precipitation was variable over the five years of the study (Fig. 2A), meaning our experiment captured a range of environmental conditions.
 ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 when averaged across treatments (Fig. 2C).
-ANPP was slightly higher in irrigation plots and slightly lower in drought plots (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
+ANPP was slightly higher in irrigation plots \new{(on average 17\% higher)} and slightly lower in drought plots \new{(on average 23\% lower) relative to control plots} (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
+\new{VWC in drought plots was 12\% less than in control plots on average, and VWC in irrigation plots was 19\% higher than in control plots on average.}
 Such differences in soil VWC indicate our treatment infrastructure was successful.
-ANPP was highly variable across plots within years (Fig. 2C).
+ANPP was highly variable across plots within years, \new{as indicated by the large and overlapping standard deviations} (Fig. 2C).
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3B).
 The effect of soil moisture for each treatment is associated with high uncertainty, however, with 95\% Bayesian credible intervals that overlap zero (Table 1).

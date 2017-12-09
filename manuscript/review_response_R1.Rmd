@@ -74,7 +74,9 @@ Author(s): Tredennick, A.T.; Kleinhesselink, A.R.; Taylor, J.B.;  Adler, P.B.
 
 Please pay close attention to the comments from Reviewer 1 regarding the validity of the findings. Once you have responded to these comments in a point-by-point cover letter and using tracked changes in the manuscript document, I will likely send your manuscript out for re-review.
 
-\response{We provide point-by-point responses to reviewer comments below. We have taken care to address Reviewer 1's concerns (also echoed by Reviewer 2) by }
+\response{We provide point-by-point responses to reviewer comments below. We have taken care to address Reviewer 1's concerns (also echoed by Reviewer 2) by substantially revising our Introduction section. In particular, we have shifted our focus away from the Hierarchical Response Framework, and instead focus on how species' responses and community compositional shifts can impact ecosystem functional response. We do this, rather than implementing the suggestions of Reviewer 1, because our data limits the complexity of our statistical model. Within a year and treatment, each plot has the same value of volumetric water content. Therefore, we simply don't have the variation needed to fit a VWC$\times$Treatment$\times$Year interaction, which would be necessary to incorporate the effect of time on the ecosystem functional response.} 
+
+\response{We therefore use the Hierarchical Response Framework to support our hypotheses about potential mechanisms driving change in ecosystem functional response (species' responses and community change), but refrain from suggesting we are explicitly testing the Hierarchical Response Framework. We also circle back to this point in our Discussion (lines xxx-xxx). Fortunately, our community-level analysis does have an explicit temporal component, which does link back to the Hierarchical Response Framework.}
 
 \bigskip{}
 
@@ -108,11 +110,11 @@ I also have a couple of concerns that potentially influence the results that the
 
 2. I didn't see mention of the priors on $\beta$, but I might've missed it. See Lemoine et al. (2016) - Ecology for a discussion of this issue. (very minor issue, I doubt the priors make too much difference here).
 
-\response{Sorry this was not clear. We included the prior specification [$\beta \sim \text{Normal}(0,5)$] in Appendix 2 on line 59. We have now included this in the main text on line xx.}
+\response{Sorry this was not clear. We included the prior specification [$\beta \sim \text{Normal}(0,5)$] in Appendix X on line 59. We have now included this in the main text on line xx.}
 
 3. My biggest concern is that the statistical tests don't seem to test the HRF because they treat year/time as a "nuisance" variable that adds noise to the observations. But the HRF is explicitly about time and how the response of ecosystem function changes over time. So incoporating time as an explicit part of the analysis would be necessary. The easiest way would be to regress ANPP against VWC and allow the slope to vary by year to see if the slopes follow the pattern dictated by HRF (or could use a hierarchical gaussian process/LOWESS model or other non-parametric model to allow for non-lienarity along the VWC gradient - drought - control - irrigation). Perhaps another approach would be to calculate a 'sensitivity' for each replicate (or treatment) within a Bayesian model, then look at how sensitivity to drought/irrigation changes through time (in the same model, i.e. plot-level sensitivity nested within year, with fixed effects to contrast sensitivity to drought/irrigation, a la Wilcox et al. 2017). That is an explicit test of HRF, where the sensitivites could show any number of temporal patterns outlined by Smith.
 
-\response{The reviewer is correct that our analysis is not an explicit test of the Hierarchical Response Framework because we did not explicitly model the effect of time on ecosystem functional response. Unfortunately, we are unable to do so given our data -- in each year every plot shares the same average soil moisture for its particular treatment, making it difficult to fit year-specific slopes. The sensitivity analysis would also be interesting, but moves us farther away from our interest in the ecosystem functional response. To remedy the situation, we have revised our motivation in the introduction to focus on the mechanisms that could alter ecosystem functional response, physiological responses and changes in community composition, without attributing specific time scales to them. Thus, we no longer pitch our paper as a test of the Hierarchical Response Framework, but we do rely on it to motivate our study. We also note that a community change may have to happen relatively early in the time series to impact ecosystem functional response. Fortunately, our community level analysis allows to investigate this (and we found that the communities do not diverge over time, or change at all).}
+\response{The reviewer is correct that our analysis is not an explicit test of the Hierarchical Response Framework because we did not explicitly model the effect of time on ecosystem functional response. Unfortunately, we are unable to do so given our data -- in each year every plot shares the same average soil moisture for its particular treatment, making it difficult to fit year-specific slopes for each treatment level. The sensitivity analysis would also be interesting, but moves us farther away from our interest in the ecosystem functional response. To remedy the situation, we have revised our motivation in the introduction to focus on the mechanisms that could alter ecosystem functional response, physiological responses and changes in community composition, without attributing specific time scales to them (lines xxx-xxx). Thus, we no longer pitch our paper as a test of the Hierarchical Response Framework, but we do rely on it to motivate our study. We also note that a community change may have to happen relatively early in the time series to impact ecosystem functional response (line xxx). Fortunately, our community level analysis allows to investigate this (and we found that the communities do not diverge over time, or change at all).}
 
 \bigskip{}
 
@@ -132,7 +134,7 @@ I also have a couple of concerns that potentially influence the results that the
 
 + I don’t understand the rationale for why the analysis is presented in terms of ANPP responses whereas NDVI was measured. The ANPP values represent a linear transformation of the NDVI measurements, but with a mediocre to low $R^2$ (A1-2), e.g., $R^2$ for year 2015 was 0.21 -- an information that is somewhat buried in the supplementary files. This less than ideal relationship is not discussed, e.g., as potential fourth source for not finding responses (lines 285-288). Why not analyzing NDVI--soil moisture relationships instead/in addition to ANPP--soil moisture relationships?
 
-\response{This comment echoes one of reviewer 1's concerns. As we mention above, we have conducted a model comparison where we show that results are consistent whether we use ANPP or NDVI (see new Appendix X). Thus, in the main text we retain the analysis focused on ANPP because we think it connects better to previous research. Also, as mentioned above, there was an error in our regression for the year 2015, which has been fixed (see new Table A1-2).}
+\response{This comment echoes one of reviewer 1's concerns. As we mention above, we have conducted a model comparison where we show that results are consistent whether we use ANPP or NDVI (see new Appendix X). In the main text we retain the analysis focused on ANPP because we think it connects better to previous research. Also, as mentioned above, there was an error in our regression for the year 2015, which has been fixed (see new Table A1-2).}
 
 *Validity of the findings*
 
@@ -143,7 +145,7 @@ I also have a couple of concerns that potentially influence the results that the
 
 + Several of the dominant species (e.g., threetip sagebrush and bluebunch wheatgrass) have a lifespan that is much longer than the 5-year experiment; while other species in the community have shorter reproductive cycles. It seems that even with a 5-year experiment the longer-lived species of the experimental community may not have had sufficient time to (fully) respond and make it possible to observe measurable changes in the community composition/response.
 
-\response{Yes, we agree that the rate of community turnover is likely related to the lifespans of constituent species. The physiological responses, however, should not depend on lifespan. Indeed, this it at the core of the Hierarchical Response Framework. We have added text discussing the impact of lifespan on community turnover in our Conclusion (lines xxx-xxx).}
+\response{Yes, we agree that the rate of community turnover is likely related to the lifespans of constituent species. We have added text discussing the impact of lifespan on community turnover in our Conclusion (lines xxx-xxx).}
 
 + I would find it interesting if the plant community analysis is additionally carried out separately for short-lived vs long-lived species (Fig. 4) -- based on the expectations that short-lived species have more `opportunities' to respond/turnover than long-lived species.
 
@@ -153,11 +155,11 @@ I also have a couple of concerns that potentially influence the results that the
 
 + Fig. 3: Misspelling in ‘increasing kernal bandwidth’ -- this should be ‘kernel’
 
-\response{Good catch; fixed.}
+\response{Good catch. Fixed.}
 
 + Fig 4: Expand caption: explain that dots represents plots and dimensions represent species.
 
-\response{Good idea; done.}
+\response{Good idea. Done.}
 
 \bigskip{}
 
@@ -167,7 +169,7 @@ I also have a couple of concerns that potentially influence the results that the
 
 English is high quality with very few typos, though a few locations in text could use rephrasing to increase clarity. Some restructuring of the introduction is suggested to provide a more logical and engaging presentation of the topic. Whenever I had a question about a topic the authors were referring to, or a method they were using, their citations were sufficient for me to conduct further investigation. More discussion of prior work into the role of dominant species in determining ecosystem function may be warranted.
 
-\response{These are all good suggestions. Reviewer 2 agreed that the paper would benefit from a broader introduction, which we have added (lines xx-xx). We have also added a brief reference to the idea that domoninant species play a large role in determining ecosystem functioning (lines xx-xx).}
+\response{These are all good suggestions. Reviewer 2 agreed that the paper would benefit from a broader introduction, which we have added (lines xx-xx). We have also added a reference to the idea that domoninant species play a large role in determining ecosystem functioning (lines xx-xx).}
 
 There are no significant departures from standard structure.
 
@@ -217,7 +219,7 @@ General comments to authors
 
 Lines 31-32: sentence beginning with "However, ANPP response…" seems fairly vague and weakly worded, consider revising to increase clarity.
 
-\response{We have revised this sentence to read, "However, all estimates for the effect of soil moisture on ANPP overlapped zero, indicating the relationship is weak and uncertain regardless of treatment." (lines xx-xx).}
+\response{We have revised this sentence to read, "However, all estimates for the effect of soil moisture on ANPP broadly overlapped zero, indicating the relationship is weak and uncertain regardless of treatment." (lines xx-xx).}
 
 Introduction: 
 
@@ -227,7 +229,7 @@ While the abstract opens with a strong justification tying the paper into shifti
 
 Line 46 "outside" is repeated twice
 
-\response{Good catch; extra "outside" is removed.}
+\response{Good catch. Extra "outside" has been removed.}
 
 Lines 71-72. While this is an excellent and clear definition of ‘ecosystem functional response’, I think it might be prudent at some point to explain why the authors are using soil moisture as an explanatory variable for ANPP instead of [precipitation]. I agree that soil moisture is generally a better predictor of ANPP than direct precipitation measures, but most of the articles the authors cite refer to ANPP-precipitation relationships, so taking a moment to explain why they are using soil moisture would be warranted. 
 
@@ -245,7 +247,7 @@ Methods:
 
 110-113: Could the authors please explain why these long-term monitoring plots make better controls than just say a generic 1 m2 plot within the exclosures next to the experimental plots. Certainly the long-term record on community shifts in these plots are likely interesting in their own right, but it doesn’t seem like they add much to the current study.
 
-\response{From above, "We used the control plots we did because demographic data had been collected in these plots historically (e.g., the 1930's) and our other studies rely on comparing new demographic data to historic demographic data. We also use the demographic data to determine species composition. Given that this demographic data is time-consuming to collect, we decided to use the historical plots as controls rather than adding even more plots."}
+\response{From above, "We used the control plots we did because demographic data had been collected in these plots historically (e.g., the 1930's) and our other studies rely on comparing new demographic data to historic demographic data. We also use the demographic data to determine species composition. Given that this demographic data is time-consuming to collect, we decided to use the historical plots as controls rather than adding even more plots." We have added this justification in our Methods section on lines xxx-xxx.}
 
 Lines 126-127: It does concern me that the authors didn’t account for snow/winter precipitation on their irrigation plots. It appears as though a large percentage of the yearly precipitation in Dubois, ID falls over winter. Additionally, since their drought shelters were left up over winter they may actually have attracted drifting and captured more snow on the plots. To their credit, the authors did address this issue to some extent in the Discussion, lines 305-306.
 
@@ -261,7 +263,7 @@ Lines 142-147: Description of standardization procedure is confusing. I had to r
 
 Lines 148-158: I’m a bit confused on which plots this modeling was conducted for. Was it done only on those plots that had permanent sensors in place? Or when possible was it also extrapolated to include those plots that only had point in time measurements. Please clarify.
 
-\response{We have revised this section to make this more clear (lines xxx-xxx).}
+\response{We have revised this section to make this clearer (lines xxx-xxx). To answer the reviewer's question, }
 
 Lines 168-174: I like the idea of using the two separate estimates of greenness and then using the one that predicts best every year. Very thorough. 
 
