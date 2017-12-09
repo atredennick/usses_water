@@ -13,7 +13,6 @@ rm(list = ls(all.names = TRUE))
 
 ##  Set working directory to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
-setwd("../")
 
 
 ####
@@ -55,8 +54,8 @@ sens_vwc <- anpp_data %>%
 sensitivity <- left_join(sens_anpp, sens_vwc, by = c("year", "comparison")) %>%
   mutate(sens = anpp_diff / vwc_diff)
 
-ggplot(sensitivity, aes(x=year, y=sens, color=comparison))+
-  geom_line()
+# ggplot(sensitivity, aes(x=year, y=sens, color=comparison))+
+#   geom_line()
 
 
 ##  By plot-treatment -- compare each treatment plot to each control in each year
@@ -108,22 +107,38 @@ all_diffs <- rbind(drought_diffs, irrigate_diffs) %>%
   left_join(vwc_diffs, by = c("year","treatment")) %>%
   mutate(sensitivity = cntrl_minus_treat / vwc_diff)
 
-mycols <- c("#009E73", "#D55E00", "#0072B2")
-treat_cols <- mycols[2:3]
-ggplot(all_diffs, aes(x = year, y = sensitivity, color = treatment, fill = treatment))+
-  geom_jitter(shape = 21, width = 0.1, color = "grey35", alpha = 0.6)+
-  stat_smooth(se=F, method="lm")+
-  scale_fill_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
-  scale_color_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
-  ylab("Sensitivity")+
-  xlab("Year")+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank(),
-        legend.position = c(0.12, 0.9),
-        legend.background = element_rect(colour = NA, fill = NA))
+saveRDS(object = all_diffs, file = "../results/sensitvities.RDS")
 
 
-drought_fit <- lm(formula = sensitivity ~ year, data = filter(all_diffs, treatment == "drought"))
-summary(drought_fit)
-irrigate_fit <- lm(formula = sensitivity ~ year, data = filter(all_diffs, treatment == "irrigation"))
-summary(irrigate_fit)
+
+####
+####  FIT LINEAR MODELS FOR EFFECT OF TIME -------------------------------------
+####
+drought_fit <- lm(formula = sensitivity ~ year, 
+                  data = filter(all_diffs, treatment == "drought"))
+irrigate_fit <- lm(formula = sensitivity ~ year, 
+                   data = filter(all_diffs, treatment == "irrigation"))
+
+pvals <- c(summary(drought_fit)$coefficients[2,4], 
+           summary(irrigate_fit)$coefficients[2,4])
+
+data.frame(treatment = c("drought", "irrigation"),
+           pvalues = pvals) %>%
+  write_csv("../results/sensitivity_year_pvalues.csv")
+
+# mycols <- c("#009E73", "#D55E00", "#0072B2")
+# treat_cols <- mycols[2:3]
+# ggplot(all_diffs, aes(x = year, y = sensitivity, color = treatment, fill = treatment))+
+#   geom_jitter(shape = 21, width = 0.1, color = "grey35", alpha = 0.6)+
+#   stat_smooth(se=F, method="lm")+
+#   scale_fill_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
+#   scale_color_manual(values = treat_cols, name = NULL, labels = c("Drought","Irrigation"))+
+#   ylab("Sensitivity")+
+#   xlab("Year")+
+#   theme_bw()+
+#   theme(panel.grid.minor = element_blank(),
+#         legend.position = c(0.12, 0.9),
+#         legend.background = element_rect(colour = NA, fill = NA))
+
+
+
