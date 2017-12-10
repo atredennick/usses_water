@@ -76,7 +76,7 @@ Please pay close attention to the comments from Reviewer 1 regarding the validit
 
 \response{We provide point-by-point responses to reviewer comments below. We have taken care to address Reviewer 1's concerns (also echoed by Reviewer 2) by including the suggested sensitivity analysis (see new section in Methods, lines xxx-xxx). Unfortunately, we could not implement the suggestion of Reviewer 1 to include a VWC$\times$Treatment$\times$Year interaction in our model because our data limits the complexity of our statistical model. Within a year and treatment, each plot has the same value of volumetric water content. Therefore, we simply don't have the variation needed to fit a VWC$\times$Treatment$\times$Year interaction, which would be necessary to incorporate the effect of time on the ecosystem functional response.}
 
-\response{The sensitivity analysis allows us to examine how the magnitude of the treatment effect changes over time. We found that the response of ANPP to drought grew over time, while the response of ANPP to irrigation is static (new panel D in Figure 3). We think this analysis improves the connection of our results to the Hierarchical Response Framework.} 
+\response{The sensitivity analysis allows us to examine how the magnitude of the treatment effect changes over time. We found that the response of ANPP to drought grew over time, while the response of ANPP to irrigation is static (new panel C in Figure 3). We think this analysis improves the connection of our results to the Hierarchical Response Framework.} 
 
 \bigskip{}
 

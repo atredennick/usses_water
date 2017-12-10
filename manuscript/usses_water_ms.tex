@@ -28,10 +28,10 @@
 \title{Ecosystem functional response across precipitation extremes in a
 sagebrush steppe}
 
-\author[1]{Andrew T. Tredennick}
+\author[1,*]{Andrew T. Tredennick}
 
-\corrauthor[1]{Andrew T. Tredennick}{\href{mailto:atredenn@gmail.com}{\nolinkurl{atredenn@gmail.com}}}
-\author[1,2]{Andrew R. Kleinhesselink}
+\corrauthor[1,*]{Andrew T. Tredennick}{\href{mailto:atredenn@gmail.com}{\nolinkurl{atredenn@gmail.com}}}
+\author[1,2,*]{Andrew R. Kleinhesselink}
 
 \author[3]{J. Bret Taylor}
 
@@ -107,6 +107,15 @@ them against precipitation variability.
 
 \definecolor{blue}{rgb}{0,0,0.7} \newcommand{\new}{\textcolor{blue}}
 
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\blfootnote{*Authors contributed equally to this work.}
+
 \reversemarginpar
 
 \section{INTRODUCTION}\label{introduction}
@@ -125,8 +134,8 @@ approach is that it requires extrapolation if future precipitation falls
 outside the historical range of variability
 \citep{Smith2011, Peters2012}. For example, the soil moisture-ANPP
 relationship may be linear within the historical range of interannual
-variation, but could saturate at higher levels of soil moisture. In
-fact, saturating relationships are actually common
+variation, but could saturate at higher levels of soil moisture.
+Saturating relationships are actually common
 \citep{Hsu2012, Gherardi2015a}, perhaps because other resources, like
 nitrogen, become more limiting in wet years than dry years. Failure to
 accurately estimate the curvature of the soil moisture-ANPP relationship
@@ -218,9 +227,10 @@ We conducted our precipitation manipulation experiment in a sagebrush
 steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near
 Dubois, Idaho (44.2\(^{\circ}\) N, 112.1\(^{\circ}\) W), 1500 m above
 sea level. The plant community is dominated by the shrub
-\emph{Artemesia tripartita} and three perennial bunchgrasses,
-\emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and
-\emph{Hesperostipa comata}
+\emph{Artemesia tripartita},
+\new{the perennial forb \emph{Balsamorhiza sagittata}}, and three
+perennial bunchgrasses, \emph{Pseudoroegneria spicata},
+\emph{Poa secunda}, and \emph{Hesperostipa comata}
 \new{(see Appendix 1 for rank abundance curves)}. During the period of
 our experiment (2011 -- 2015), average mean annual precipitation was 265
 mm year\(\phantom{}^{-1}\) and mean monthly temperature ranged from
@@ -230,7 +240,7 @@ m\(^2\) quadrats to track vegetation change over time. In 2007, we
 relocated 14 of the original quadrats, six of which were inside a large,
 permanent livestock exclosure. We use these six plots as control plots
 (i.e.~ambient precipitation) in the experiment described below.
-\new{We used the relocated plots as our controls because demographic data is difficult to collect and is already being collected in these plots for other ongoing studies.}
+\new{We used the relocated plots as our controls because collecting demographic data is difficult and it is already being collected in these plots for other ongoing studies.}
 
 In spring 2011, we established 16 new 1 m\(^2\) plots located in the
 same exclosure as the six control plots. We avoided areas on steep hill
@@ -281,7 +291,7 @@ experiment.
 
 \new{We first averaged the observed soil moisture readings for each day ($d$) and plot ($i$), $x_{i,d}$.
 Plots were organized in groups of three, with each group ($g$) containing consisting of a control, a drought, and an irrigation plot.
-Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions in the control plot. Specifically we subtracted the ambient daily soil moisture measured in the control plot from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the control plot ($\Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{control}})/sd(x_{g,d,\text{control}})$) where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
+Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions in the control plot. Specifically we subtracted the ambient daily soil moisture measured in the control plot from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the control plot $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{control}})/\text{s.d.}(x_{g,d,\text{control}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.}
 
 \new{We then modeled these daily deviations ($\Delta x_{g,d,\text{trt.}}$)}
@@ -302,7 +312,7 @@ which we took at least one ambient soil moisture measurement. This
 procedure allowed us to predict daily soil moisture conditions for all
 plots, even on those days when some of our direct treatment measurements
 were missing due to malfunction of the sensors or dataloggers. See
-\citet{Kleinhesselink2017b} for complete details on our approach to
+\citet{Kleinhesselink2017b} for more details on our approach to
 estimating soil moisture.
 
 \subsection{Data Collection}\label{data-collection}
@@ -444,7 +454,7 @@ Therefore, we conducted an independent analysis to determine if the sensitivity 
 
 \new{We define `sensitivity' as $\frac{ \text{ANPP}_{\text{control}} - \text{ANPP}_{\text{treatment}} } { \text{VWC}_{\text{control}} - \text{VWC}_{\text{treatment}} }$, following}
 \citet{Wilcox2017}.
-\new{This metric of sensitivity measures the response of ANPP standardized to the magnitude of the treatment. 
+\new{This metric of sensitivity measures the response of ANPP standardized by the magnitude of the treatment. 
 Because our treatment and control plots are not paired, we conducted this analysis by comparing each treatment plot to the mean of the control plots in each year. 
 Then, independently for each treatment, we regressed sensitivity against year of treatment using the \texttt{lm()} function in R}
 \citep{R2016}.
@@ -470,9 +480,9 @@ treatment plots formed distinct groupings. To test whether treatment
 plots were equally dispersed, or not, we used the
 \texttt{vegan::betadisper()} function \citep{Oksanen2016}.
 
-\new{We conducted the above analysis for all species, and then conducted a separate analyses for annual species only (Appendix 1). 
-Annual species have shorter life spans, so conducting a separate analysis allows us to discover if community responses are restricted to short-lived species that might respond more quickly to altered precipitation regimes. 
-Given the dominance of perennial species in our system (Appendix 1), shifts in the annual plant community could be masked in the analysis of the full community.}
+\new{We conducted the above analysis for all species, and then conducted a separate analysis for annual species only (Appendix 1). 
+Annual species have shorter life spans, so conducting a separate analysis allowed us to discover if community responses are restricted to short-lived species that might respond more quickly to altered precipitation regimes. 
+Given the dominance of perennial species in our system (Appendix 1), shifts in the annual plant community could be difficult to detect in the analysis of the full community.}
 
 \subsubsection{Reproducibility}\label{reproducibility}
 
@@ -518,7 +528,7 @@ irrigation treatment
 \new{and a 96\% one-tailed probability that the estimate is less than zero for the drought treatment}
 (Fig. 3A, right panel).
 
-\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3D). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0002; Fig. 3D)}.
+\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0002; Fig. 3C)}.
 
 Community composition was similar among treatments. The multidimensional
 space of community composition overlapped among treatments in all years
@@ -527,7 +537,8 @@ composition was also remarkably stable over time, with no evidence of
 divergence among treatments (Table 2; Fig. 4).
 \new{There were also no changes in the dominant species over time in any treatment (Appendix 1).
 Splitting the analysis apart for annuals led to similar results.
-There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights them equally (Fig. A1-4).}
+There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights them equally (Fig. A1-4).
+By definition, thsee rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
 
 \section{DISCUSSION}\label{discussion}
 
@@ -642,11 +653,10 @@ in the soil profile thanks to a deep root system
 \new{The dominance of our site by the shrub \emph{A. tripartita} (Appendix 1) may explain why our results do not conform to broader patterns of grassland sensitivity to precipitation manipulations}
 \citep[e.g.,][]{Huxman2004, Knapp2015, Wilcox2017}.
 
-\new{We did find that ANPP became more sensitive to drought over time (Fig. 3D).
-Thus, the difference between ANPP, standardized by the difference in soil moisture, in drought and control plots grew over time.
+\new{We did find that ANPP became more sensitive to drought over time (Fig. 3C).
 The latter years of our experiment were relatively wet, meaning that the drought treatment could have the largest absolute reduction of soil moisture in those years.
 But our metric of sensitivity accounts for differences among years because ANPP differences is standardized by the difference in soil moisture within the year.
-Therefore, it is likely that the increased sensitivity to drought over time is due to the cimulative impact of drought on the dominant species.
+Therefore, it is likely that the increased sensitivity to drought over time is due to the cumulative impact of drought on the dominant species.
 Ecosystem functional response may soon shift if sensitivity continues to increase.}
 
 \section{CONCLUSIONS}\label{conclusions}
