@@ -12,7 +12,6 @@ header-includes:
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
-  - \usepackage{float}
 bibliography: ~/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
@@ -30,407 +29,42 @@ urlcolor: black
 
 \newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
-\renewcommand\thefigure{Ax-\arabic{figure}}
-\renewcommand\theequation{Ax.\arabic{equation}}
-\renewcommand\thetable{Ax-\arabic{table}}  
-\renewcommand\thesection{Section Ax\arabic{section}}
-
+\renewcommand\thefigure{A5-\arabic{figure}}
+\renewcommand\theequation{A5.\arabic{equation}}
+\renewcommand\thetable{A5-\arabic{table}}  
+\renewcommand\thesection{Section A5.\arabic{section}}
 
 \begin{center}
-\textbf{\Large{Appendix X}} \\
-A.T. Tredennick, A.R. Kleinhesselink, B. Taylor \& P.B. Adler \\
+\textbf{\Large{Appendix 5}} \\
+A.T. Tredennick, A.R. Kleinhesselink, J.B. Taylor \& P.B. Adler \\
 ``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe'' \\
 \emph{PeerJ}
 \end{center}
 
-# Details on the plant community and dynamics
+\section{Characterizing Extreme Precipitation Amounts}
 
-Here we provide more details on the plant community in terms of dominance and rarity.
-Averaging across time, *Artemisia tripartita* and *Balsamorhiza sagittata* are the two most dominant species in each treatment.
-Combined, these two species represent 28\% of total cover in control plots, 25\% of total cover in drought plots, and 25\% of total cover in irrigation plots.
-Four to five species dominate the community in general (Figure Ax-1), indicating a high level of dominance in this plant community.
+Following the proposed methods of @Lemoine2016, we calculated quantiles from the empirical distribution of growing season precipitation at Dubios, ID.
+We chose the 1\% quantile to be indicative of extreme dry conditions (drought) and the 99\% quantile to be indicative of extreme wet conditions (irrigation).
+The data consist of 91 yearly records, which we assume are approximately normally distributed.
+The R code below shows our procedure, and Fig. A5-1 shows the results.
 
-We also conducted our community composition analysis with only annual species.
-Annual species are shorter-lived than the perennial species in our community, so they may respond more quickly to alterations of precipitation.
-In general, our results for annual species conform to the results from the full community analysis in the main text.
-Annual plant community composition is relatively stable through time (Fig. Ax-5) and in most years there is no evidence that treatment differentiates community composition (Table Ax-).
+```{r hrv, fig.cap="Density of the empirical distribution of growing season precipitation at Dubois, ID. Dashed vertical lines show the 1% and 99% quantiles, assuming a normal distribution."}
+library(ggplot2)
+weather    <- read.csv("../data/weather/ClimateIPM.csv")
+mean_ppt   <- mean(weather$ppt1)
+quants_ppt <- quantile(weather$ppt1,probs = c(0.01,0.99))
+quants_ppt[1]/mean_ppt*100 # percent of mean ppt for drought
+quants_ppt[2]/mean_ppt*100 # percent of mean ppt for irrigation
 
-\newpage{}
-# Tables
-
-```{r get_data, echo=FALSE, message=FALSE, warning=FALSE}
-####
-####  LOAD PACKAGES ----
-####
-library(tidyverse) # all the good things from Wikham
-library(dplyr)     # data munging
-library(stringr)   # working with strings
-library(ggthemes)  # pleasing ggplot2 themes
-library(vegan)     # NMDS and community analysis
-library(xtable)    # Generating LaTeX tables in RMarkdown
-
-
-
-####
-####  SET DIRECTORIES; READ IN DATA ----
-####
-# Set paths
-biomass_path <- "../data/estimated_biomass/"
-weather_path <- "../data/weather/"
-output_path  <- "../output/"
-figure_path  <- "../figures/"
-
-# Read in data
-plot_biomass <- readRDS(paste0(biomass_path,"permanent_plots_estimated_biomass.RDS"))
-weather_data <- read.csv(paste0(weather_path,"ClimateIPM.csv"))
-plot_info    <- read.csv("../data/estimated_biomass/quad_info.csv")
-
-suppressWarnings( # ignore factor to character warning. It's OK.
-  cover_species <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
-    group_by(quad, year, species) %>%
-    summarise(total_area = sum(area)) %>%
-    left_join(plot_info, by = "quad") %>%
-    filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    filter(!str_detect(QuadName, 'P1|P7')) %>%
-    group_by(year, species, Treatment) %>%
-    summarise(avg_area = mean(total_area)) %>%
-    ungroup()
-)
-
-
-
-
-####
-####  COMPARE COMMUNITY COMPOSITION AMONG TREATMENTS ----
-####  USING STANDARDIZED ABUNDANCES FROM COVER AND DENSITY
-####
-suppressWarnings( # ignore factor to character warning. It's OK.
-  cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
-    group_by(quad, year, species) %>%
-    summarise(total_area = sum(area)) %>%
-    left_join(plot_info, by = "quad") %>%
-    filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    filter(!str_detect(QuadName, 'P1|P7')) %>%
-    filter(year > 2010 & is.na(species)==F) %>%
-    spread(species,total_area, fill = 0) %>%
-    select(-QuadName,-Grazing,-paddock,-Group) %>%
-    ungroup()
-)
-
-suppressWarnings( # ignore factor to character warning. It's OK.
-  density_community_matrix <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
-    mutate(ind_num = 1) %>%
-    group_by(year, quad, species) %>%
-    summarise(total_inds = sum(ind_num)) %>%
-    left_join(plot_info, by = "quad") %>%
-    filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    filter(!str_detect(QuadName, 'P1|P7')) %>%
-    filter(year > 2010 & is.na(species)==F) %>%
-    spread(species,total_inds, fill = 0) %>%
-    select(-QuadName,-Grazing,-paddock,-Group) %>%
-    ungroup()
-)
-
-density_spp <- colnames(density_community_matrix[4:ncol(density_community_matrix)])
-cover_spp   <- colnames(cover_community_matrix[4:ncol(cover_community_matrix)])
-overlap_spp <- density_spp[which(density_spp %in% cover_spp)]
-rmids       <- which(colnames(density_community_matrix) %in% overlap_spp)
-density_community_matrix <- density_community_matrix[,-rmids]
-
-suppressWarnings( # ignore factor to character warning. It's OK.
-  annual_community_matrix <- read.csv("../data/vital_rates/idaho_annuals.csv") %>%
-    select(-Notes) %>%
-    gather(species,abundance,-c(1:3)) %>%
-    left_join(plot_info, by="quad") %>%
-    select(-QuadName.y) %>%
-    rename(QuadName = QuadName.x) %>%
-    filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    filter(!str_detect(QuadName, 'P1|P7')) %>%
-    filter(year > 2010 & is.na(species)==F) %>%
-    separate(species,c("genus","species1")) %>%
-    unite(species,genus,species1,sep = " ") %>%
-    spread(species,abundance, fill = 0) %>%
-    select(-QuadName,-Grazing,-paddock,-Group,-`Lappula occidentalis`,-`Tragopogon dubius`) %>%
-    ungroup()
-)
-
-
-annual_data <- {}
-for(dotrt in unique(annual_community_matrix$Treatment)){
-  for(doyr in unique(annual_community_matrix$year)){
-    tmp <- annual_community_matrix %>%
-      gather(species, density, -quad, -year, -Treatment) %>%
-      filter(Treatment == dotrt, year == doyr) %>%
-      group_by(Treatment, year, species) %>%
-      summarise(mean_density = mean(density)) %>%
-      arrange(-mean_density) %>%
-      mutate(mean_rank = seq_along(mean_density))
-  
-    annual_data <- rbind(annual_data, tmp)
-  }
-}
-
-dom_annuals <- annual_data %>%
-  filter(species %in% c("Allyssum desertorum","Bromus tectorum")) %>%
-  select(-mean_rank) %>%
-  left_join(weather_data, by = "year")
+ggplot(weather, aes(x=ppt1))+
+  geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
+  geom_line(stat="density", color="blue")+
+  geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
+  geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
+  ylab("Density")+
+  xlab("Growing Season Precipitation (mm)")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 ```
 
-Table Ax-1: Statistical results from linear model relating density of Allysum desertorum to precipitation.
-```{r report_models, echo = FALSE}
-summary(lm(mean_density~ppt1*Treatment, data = filter(dom_annuals, species == "Allyssum desertorum")))
-```
-
-\newpage{}
-Table Ax-2: Statistical results from linear model relating density of Bromus tectorum to precipitation.
-```{r report_models2, echo = FALSE}
-summary(lm(mean_density~ppt1*Treatment, data = filter(dom_annuals, species == "Bromus tectorum")))
-```
-
-\newpage{}
-
-```{r annual_nmds, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
-####
-####  ANALYZE JUST THE ANNUALS ----
-####
-# Set missing species abundances as 0, which == absent
-annual_community_matrix[is.na(annual_community_matrix)] <- 0
-
-annual_community_matrix_scaled <- cbind(annual_community_matrix[,1:3,drop=F],
-                                        scale(annual_community_matrix[,4:ncol(annual_community_matrix)]))
-
-spp_to_remove <- names(which(is.nan(colMeans(annual_community_matrix_scaled[4:ncol(annual_community_matrix_scaled)]))))
-ids_to_remove <- which(colnames(annual_community_matrix_scaled) %in% spp_to_remove)
-annual_community_matrix_scaled <- annual_community_matrix_scaled %>%
-  select(-ids_to_remove)
-
-
-nmds_df_annuals <- {}
-out_stats <- {}
-for(doyr in unique(annual_community_matrix_scaled$year)){
-  tmp <- filter(annual_community_matrix_scaled, year == doyr) %>% select(-year)
-   invisible( capture.output( # already checked for convergence
-    tmp_bray <- metaMDS(tmp[3:ncol(tmp)]+2, "bray", trymax = 999)
-  ))
-  nmds_points <- as.data.frame(tmp_bray$points)
-  nmds_points$Treatment <- tmp$Treatment
-  nmds_points$Year <- doyr
-  nmds_df_annuals <- rbind(nmds_df_annuals, nmds_points)
-  adonis_stats <- as.data.frame(vegan::adonis(tmp[3:ncol(tmp)]+2~tmp$Treatment)$aov.tab)[1,]
-  betadisper_stats <- anova(vegan::betadisper(vegan::vegdist(tmp[3:ncol(tmp)]+2),tmp$Treatment))[1,]
-  tmp_out <- rbind(adonis_stats[,-which(colnames(adonis_stats)=="R2")],
-                   as.numeric(betadisper_stats))
-  row.names(tmp_out) <- c()
-  out_stats <- rbind(out_stats, data.frame(year = doyr,
-                                           test = c("adonis","betadisper"),
-                                           n = nrow(tmp),
-                                           tmp_out))
-}
-```
-
-\setcounter{table}{2}
-
-```{r annual_nmds_table, echo = FALSE, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
-colnames(out_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{F}", "\\emph{P}")
-out_stats$d.f. <- as.integer(out_stats$d.f.)
-out_stats <- arrange(out_stats, Year)
-
-# Make the table
-inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments for annual species only. `adonis' tests whether treatments form unique clusters in multidimensial space; `betadisper' tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support that the treatments differ."
-print(xtable(dplyr::select(out_stats, -Sums, -Means), caption = inyear_caption, digits = 2),
-       caption.placement="top",
-       include.rownames = F,
-       sanitize.colnames.function = identity,
-       comment = FALSE,
-       size = "normalsize")
-```
-
-\newpage{}
-
-# Figures
-
-```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Basal area of individuals was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment.", fig.pos="h",fig.align="center"}
-####
-####  EXTRACT COVER OF MOST DOMINANT SPECIES ----
-####
-cover_data <- {}
-for(dotrt in unique(cover_community_matrix$Treatment)){
-  tmp <- cover_community_matrix %>%
-    gather(species, area, -quad, -year, -Treatment) %>%
-    filter(Treatment == dotrt) %>%
-    group_by(Treatment, species) %>%
-    summarise(mean_area = mean(area)) %>%
-    arrange(-mean_area) %>%
-    mutate(mean_rank = seq_along(mean_area))
-  
-  cover_data <- rbind(cover_data, tmp)
-}
-
-
-ggplot(cover_data, aes(x = mean_rank, y = mean_area))+
-  geom_line()+
-  geom_point(size = 2)+
-  geom_text(data=filter(cover_data, mean_rank < 11), aes(x = mean_rank, y = mean_area, label = species), 
-            hjust = -0.05, nudge_x = 0.2, angle = 45, size = 2)+
-  scale_y_continuous(limits = c(0,0.25))+
-  xlab("Species rank")+
-  ylab(expression(paste("Mean basal area (",m^2,")")))+
-  facet_wrap(~Treatment, ncol = 3)
-
-cover_doms <- cover_data %>%
-  filter(mean_rank < 3) %>%
-  group_by(Treatment) %>%
-  summarise(total_area = sum(mean_area))
-
-```
-
-
-```{r annual_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for annual species. Density of individuals is averaged across years and plots for each treatment."}
-annual_data <- {}
-for(dotrt in unique(annual_community_matrix$Treatment)){
-  tmp <- annual_community_matrix %>%
-    gather(species, density, -quad, -year, -Treatment) %>%
-    filter(Treatment == dotrt) %>%
-    group_by(Treatment, species) %>%
-    summarise(mean_density = mean(density)) %>%
-    arrange(-mean_density) %>%
-    mutate(mean_rank = seq_along(mean_density))
-  
-  annual_data <- rbind(annual_data, tmp)
-}
-
-
-ggplot(annual_data, aes(x = mean_rank, y = mean_density))+
-  geom_line()+
-  geom_point(size = 2)+
-  geom_text(data=filter(annual_data, mean_rank < 3), aes(x = mean_rank, y = mean_density, label = species), 
-            hjust = -0.05, nudge_x = 0.2, angle = 45, size = 2)+
-  scale_y_continuous(limits = c(0,200))+
-  xlab("Species rank")+
-  ylab("Mean density")+
-  facet_wrap(~Treatment, ncol = 3)
-```
-
-```{r time_perr_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=6, fig.cap="Time series of rank abundance curves for perennial species in each treatment. Values of mean area were averaged over plots. The four most dominant species are labelled in each panel."}
-cover_data <- {}
-for(dotrt in unique(cover_community_matrix$Treatment)){
-  for(doyr in unique(cover_community_matrix$year)){
-    tmp <- cover_community_matrix %>%
-      gather(species, area, -quad, -year, -Treatment) %>%
-      filter(Treatment == dotrt, year == doyr) %>%
-      group_by(Treatment, year, species) %>%
-      summarise(mean_area = mean(area)) %>%
-      arrange(-mean_area) %>%
-      mutate(mean_rank = seq_along(mean_area))
-  
-  cover_data <- rbind(cover_data, tmp)
-  }
-}
-ggplot(cover_data, aes(x = mean_rank, y = mean_area))+
-  geom_line()+
-  geom_point(size = 2)+
-  geom_text(data=filter(cover_data, mean_rank < 5), aes(x = mean_rank, y = mean_area, label = species), 
-            hjust = -0.05, nudge_x = 0.2, angle = 45, size = 2)+
-  scale_y_continuous(limits = c(0,0.25))+
-  xlab("Species rank")+
-  ylab(expression(paste("Mean basal area (",m^2,")")))+
-  facet_grid(Treatment~year)
-```
-
-```{r time_annual_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=6, fig.cap="Time series of rank abundance curves for annual species in each treatment. Values of density were averaged over plots. The two most dominant species are labelled in each panel."}
-annual_data <- {}
-for(dotrt in unique(annual_community_matrix$Treatment)){
-  for(doyr in unique(annual_community_matrix$year)){
-    tmp <- annual_community_matrix %>%
-      gather(species, density, -quad, -year, -Treatment) %>%
-      filter(Treatment == dotrt, year == doyr) %>%
-      group_by(Treatment, year, species) %>%
-      summarise(mean_density = mean(density)) %>%
-      arrange(-mean_density) %>%
-      mutate(mean_rank = seq_along(mean_density))
-  
-    annual_data <- rbind(annual_data, tmp)
-  }
-}
-
-
-ggplot(annual_data, aes(x = mean_rank, y = mean_density))+
-  geom_line()+
-  geom_point(size = 2)+
-  geom_text(data=filter(annual_data, mean_rank < 3), aes(x = mean_rank, y = mean_density, label = species), 
-            hjust = -0.05, nudge_x = 0.2, angle = 45, size = 2)+
-  scale_y_continuous(limits = c(0,400))+
-  scale_x_continuous(breaks = c(1,6,11))+
-  xlab("Species rank")+
-  ylab("Mean density")+
-  facet_grid(Treatment~year)
-```
-
-\newpage{}
-
-```{r annual_weather, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Relationship between precipitation and abundance of dominant annuals."}
-dom_annuals <- annual_data %>%
-  filter(species %in% c("Allyssum desertorum","Bromus tectorum")) %>%
-  select(-mean_rank) %>%
-  rename(Species = species) %>%
-  left_join(weather_data, by = "year")
-
-ggplot(dom_annuals, aes(x = ppt1, y = mean_density, color = Species))+
-  geom_point()+
-  xlab("Precipitation (mm)")+
-  ylab("Abundance")
-```
-
-
-```{r annual_nmds2, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Nonmetric multidimensional scaling scores representing annual plant communities in each plot, colored by treatment."}
-####
-####  ANALYZE JUST THE ANNUALS ----
-####
-# Set missing species abundances as 0, which == absent
-annual_community_matrix[is.na(annual_community_matrix)] <- 0
-
-annual_community_matrix_scaled <- cbind(annual_community_matrix[,1:3,drop=F],
-                                        scale(annual_community_matrix[,4:ncol(annual_community_matrix)]))
-
-spp_to_remove <- names(which(is.nan(colMeans(annual_community_matrix_scaled[4:ncol(annual_community_matrix_scaled)]))))
-ids_to_remove <- which(colnames(annual_community_matrix_scaled) %in% spp_to_remove)
-annual_community_matrix_scaled <- annual_community_matrix_scaled %>%
-  select(-ids_to_remove)
-
-
-nmds_df_annuals <- {}
-out_stats <- {}
-for(doyr in unique(annual_community_matrix_scaled$year)){
-  tmp <- filter(annual_community_matrix_scaled, year == doyr) %>% select(-year)
-   invisible( capture.output( # already checked for convergence
-    tmp_bray <- metaMDS(tmp[3:ncol(tmp)]+2, "bray", trymax = 999)
-  ))
-  nmds_points <- as.data.frame(tmp_bray$points)
-  nmds_points$Treatment <- tmp$Treatment
-  nmds_points$Year <- doyr
-  nmds_df_annuals <- rbind(nmds_df_annuals, nmds_points)
-  adonis_stats <- as.data.frame(vegan::adonis(tmp[3:ncol(tmp)]+2~tmp$Treatment)$aov.tab)[1,]
-  betadisper_stats <- anova(vegan::betadisper(vegan::vegdist(tmp[3:ncol(tmp)]+2),tmp$Treatment))[1,]
-  tmp_out <- rbind(adonis_stats[,-which(colnames(adonis_stats)=="R2")],
-                   as.numeric(betadisper_stats))
-  row.names(tmp_out) <- c()
-  out_stats <- rbind(out_stats, data.frame(year = doyr,
-                                           test = c("adonis","betadisper"),
-                                           n = nrow(tmp),
-                                           tmp_out))
-}
-
-mycols <- c("#009E73", "#0072B2", "#D55E00")
-ggplot(nmds_df_annuals, aes(x=MDS1, y=MDS2, color=Treatment))+
-  geom_point()+
-  geom_point(color="grey35",shape=1)+
-  scale_color_manual(values=mycols)+
-  ylab("NMDS 2")+
-  xlab("NMDS 1")+
-  facet_wrap(~Year)+
-  #scale_y_continuous(limits=c(-0.15,0.15))+
-  #scale_x_continuous(limits=c(-0.18,0.18))+
-  coord_fixed()
-```
-
-
+# References

@@ -155,7 +155,7 @@ However, as we note in the final line of our paper (lines xxx-xxx), the increase
 
 + I would find it interesting if the plant community analysis is additionally carried out separately for short-lived vs long-lived species (Fig. 4) -- based on the expectations that short-lived species have more `opportunities' to respond/turnover than long-lived species.
 
-\response{This is a great suggestion, and one we had not thought of. We conducted the analysis suggested by the reviewer and found that community composition was stable for both annuals (short-lived) and perennials (long-lived). In a few years we detected signficant treatment effects on dispersion or mean of community composition. But upon further investigation, we found that these statistical results were detecting changes in rare species because the dominant annuals showed similar dynamics through time, regardless of treatment (Fig. Ax-x). Likewise, the stable perennial community contributes most to ANPP is this systems. We briefly mention this analysis in our Results section on lines xxx-xxx, and show the full analysis in Appendix X.}
+\response{This is a great suggestion, and one we had not thought of. We conducted the analysis suggested by the reviewer and found that community composition was also stable when we restricted the analysis to annual plants (short-lived). In a few years we detected signficant treatment effects on dispersion or mean of community composition. But upon further investigation, we found that these statistical results were detecting changes in rare species because the dominant annuals showed similar dynamics through time, regardless of treatment (Fig. Ax-x). Likewise, the stable perennial community contributes most to ANPP is this systems. We briefly mention this analysis in our Results section on lines xxx-xxx, and show the full analysis in Appendix X.}
 
 *Comments for the Author*
 
@@ -301,7 +301,7 @@ Lines 289-299: strong discussion and support for the sizes of the treatment appl
 
 Lines 320-325: seems like authors are indicating that ecosystem response was driven by the response of the dominant species. Might be good to bring in some other work that has found similar results and discuss it a bit, for example: ``Drivers of Variation in Aboveground Net Primary Productivity and Plant Community Composition Differ Across a Broad Precipitation Gradient'' (La Pierre et al., 2016).
 
-\response{Excellent suggestion. We have added this to the discussion on lines xxx-xxx, and also allude to dominant species' effects in the introduction on lines xx-xx.}
+\response{Thanks for bringing this paper to our attention. We have included a new sentence that references this citation on line xxx in the Discussion.}
 
 Figures and tables: 
 
