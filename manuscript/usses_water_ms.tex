@@ -105,20 +105,19 @@ them against precipitation variability.
 \maketitle
 \thispagestyle{empty}
 
-\definecolor{blue}{rgb}{0,0,0.7} \newcommand{\new}{\textcolor{blue}}
+\definecolor{blue}{rgb}{0,0,0.7}\newcommand{\new}{\textcolor{blue}}
 
 \newcommand\blfootnote[1]{%
   \begingroup
   \renewcommand\thefootnote{}\footnote{#1}%
   \addtocounter{footnote}{-1}%
   \endgroup
-}
-
-\blfootnote{*Authors contributed equally to this work.}
+}\blfootnote{*Authors contributed equally to this work.}
 
 \reversemarginpar
 
-\section{INTRODUCTION}\label{introduction}
+\hypertarget{introduction}{%
+\section{INTRODUCTION}\label{introduction}}
 
 \new{Water availability is a major driver of annual net primary productivity (ANPP) in grassland ecosystems}
 \citep{Huxman2004, Hsu2012}.
@@ -219,9 +218,11 @@ among treatments. We also analyzed community composition and
 time, allowing us to place our experimental results within the framework
 our scenarios (Fig. 1).
 
-\section{METHODS}\label{methods}
+\hypertarget{methods}{%
+\section{METHODS}\label{methods}}
 
-\subsection{Study Area}\label{study-area}
+\hypertarget{study-area}{%
+\subsection{Study Area}\label{study-area}}
 
 We conducted our precipitation manipulation experiment in a sagebrush
 steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near
@@ -237,20 +238,23 @@ mm year\(\phantom{}^{-1}\) and mean monthly temperature ranged from
 -5.2\(^{\circ}\)C in January to 21.8\(^{\circ}\)C in July. Between 1926
 and 1932, range scientists at the USSES established 26 permanent 1
 m\(^2\) quadrats to track vegetation change over time. In 2007, we
-relocated 14 of the original quadrats, six of which were inside a large,
-permanent livestock exclosure. We use these six plots as control plots
-(i.e.~ambient precipitation) in the experiment described below.
+relocated 14 of the original quadrats in permenanent livestock
+exclosures, \new{which we used} as control plots (i.e.~ambient
+precipitation) in the experiment described below.
 \new{We used the relocated plots as our controls because collecting demographic data is difficult and it is already being collected in these plots for other ongoing studies.}
 
 In spring 2011, we established 16 new 1 m\(^2\) plots located in the
-same exclosure as the six control plots. We avoided areas on steep hill
-slopes, areas with greater than 20\% cover of bare rock, and areas with
-greater than 10\% cover of the shrubs \emph{Purshia tridentata} and/or
+\new{largest exclosure at USSES, which also contained} six of our
+control plots. We avoided areas on steep hill slopes, areas with greater
+than 20\% cover of bare rock, and areas with greater than 10\% cover of
+the shrubs \emph{Purshia tridentata} and/or
 \emph{Amelanchier utahensis}. We established the new plots in pairs and
 randomly assigned each plot in a pair to receive a ``drought'' or
 ``irrigation'' treatment.
+\new{Thus, our experiment consisted of $n=14$ control plots, $n=8$ irrigation plots, and $n=8$ irrigation plots, for a total of 30 plots.}
 
-\subsection{Precipitation Experiment}\label{precipitation-experiment}
+\hypertarget{precipitation-experiment}{%
+\subsection{Precipitation Experiment}\label{precipitation-experiment}}
 
 Drought and irrigation treatments were designed to decrease and increase
 the amount of ambient precipitation by 50\%. To achieve this, we used a
@@ -315,7 +319,8 @@ were missing due to malfunction of the sensors or dataloggers. See
 \citet{Kleinhesselink2017b} for more details on our approach to
 estimating soil moisture.
 
-\subsection{Data Collection}\label{data-collection}
+\hypertarget{data-collection}{%
+\subsection{Data Collection}\label{data-collection}}
 
 We estimated aboveground net primary productivity (ANPP) using a
 radiometer to relate ground reflectance to plant biomass \citep[see][
@@ -357,10 +362,12 @@ equally. Assuming that rare species will respond to treatments more than
 common ones, our approach is biased towards detecting compositional
 changes.
 
-\subsection{Data Analysis}\label{data-analysis}
+\hypertarget{data-analysis}{%
+\subsection{Data Analysis}\label{data-analysis}}
 
+\hypertarget{ecosystem-functional-response}{%
 \subsubsection{Ecosystem functional
-response}\label{ecosystem-functional-response}
+response}\label{ecosystem-functional-response}}
 
 Our main goal was to test whether the relationship between ANPP and soil
 moisture differed among the drought, control, and irrigation treatments.
@@ -445,8 +452,9 @@ inspected to ensure well-mixed chains and convergence. We also made sure
 all scale reduction factors (\(\hat{R}\) values) were less than 1.1
 \citep{Gelman2009}.
 
+\hypertarget{sensitivity-of-anpp-over-time}{%
 \subsubsection{Sensitivity of ANPP over
-time}\label{sensitivity-of-anpp-over-time}
+time}\label{sensitivity-of-anpp-over-time}}
 
 \new{Unfortunately, our data does not allow us to include the effect of time on ecosystem functional response in the model described above. 
 This is because we lack sufficient within-year and within-treatment variation of soil moisture (i.e., within a year and treatment each plot shares the same value of VWC). 
@@ -460,8 +468,9 @@ Then, independently for each treatment, we regressed sensitivity against year of
 \citep{R2016}.
 \new{This analysis also allows us to link particularly sensitive treatment years to changes in community composition.}
 
+\hypertarget{community-composition-over-time}{%
 \subsubsection{Community composition over
-time}\label{community-composition-over-time}
+time}\label{community-composition-over-time}}
 
 We used nonmetric multidimensional scaling (NMDS) based on Bray-Curtis
 distances to identify temporal changes in community composition among
@@ -484,7 +493,8 @@ plots were equally dispersed, or not, we used the
 Annual species have shorter life spans, so conducting a separate analysis allowed us to discover if community responses are restricted to short-lived species that might respond more quickly to altered precipitation regimes. 
 Given the dominance of perennial species in our system (Appendix 1), shifts in the annual plant community could be difficult to detect in the analysis of the full community.}
 
-\subsubsection{Reproducibility}\label{reproducibility}
+\hypertarget{reproducibility}{%
+\subsubsection{Reproducibility}\label{reproducibility}}
 
 All R code and data necessary to reproduce our analysis has been
 archived on Figshare (\emph{link here after acceptance}) and released on
@@ -492,7 +502,8 @@ GitHub (\url{https://github.com/atredennick/usses_water/releases/v0.1}).
 We also include annotated Stan code in our model description in Appendix
 3.
 
-\section{RESULTS}\label{results}
+\hypertarget{results}{%
+\section{RESULTS}\label{results}}
 
 Ambient precipitation was variable over the five years of the study
 (Fig. 2A), meaning our experiment captured a range of environmental
@@ -540,7 +551,8 @@ Splitting the analysis apart for annuals led to similar results.
 There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights them equally (Fig. A1-4).
 By definition, thsee rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
 
-\section{DISCUSSION}\label{discussion}
+\hypertarget{discussion}{%
+\section{DISCUSSION}\label{discussion}}
 
 Ecosystem response to a new precipitation regime depends on the
 physiological responses of constituent species and the rate at which
@@ -659,7 +671,8 @@ But our metric of sensitivity accounts for differences among years because ANPP 
 Therefore, it is likely that the increased sensitivity to drought over time is due to the cumulative impact of drought on the dominant species.
 Ecosystem functional response may soon shift if sensitivity continues to increase.}
 
-\section{CONCLUSIONS}\label{conclusions}
+\hypertarget{conclusions}{%
+\section{CONCLUSIONS}\label{conclusions}}
 
 Our results suggest the species in our focal plant community are
 insensitive to to changes in precipitation regime,
@@ -678,7 +691,8 @@ at high rainfall because the current community maintained consistent
 ecosystem functional response at very low water availability.
 \new{However, the increased sensitivity of ANPP to drought conditions suggests a shift in ecosystem functional response may be near, and simply takes more time than we observed here.}
 
-\section{ACKNOWLEDGEMENTS}\label{acknowledgements}
+\hypertarget{acknowledgements}{%
+\section{ACKNOWLEDGEMENTS}\label{acknowledgements}}
 
 We thank the many summer research technicians who collected the data
 reported in this paper and the USDA, U.S. Sheep Experiment Station
@@ -688,7 +702,8 @@ Kevin Wilcox for helpful discussions on analyzing community composition
 data.
 \new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
 
-\section{FUNDING}\label{funding}
+\hypertarget{funding}{%
+\section{FUNDING}\label{funding}}
 
 This research was supported by the Utah Agricultural Experiment Station,
 Utah State University, and approved as journal paper number 9035. The
@@ -697,7 +712,8 @@ a Postdoctoral Research Fellowship in Biology and Mathematics to ATT
 (DBI-1400370), a Graduate Research Fellowship to ARK, and grants
 DEB-1353078 and DEB-1054040 to PBA.
 
-\section{AUTHOR CONTRIBUTIONS}\label{author-contributions}
+\hypertarget{author-contributions}{%
+\section{AUTHOR CONTRIBUTIONS}\label{author-contributions}}
 
 \begin{itemize}
   \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed drafts of the paper.
@@ -706,7 +722,8 @@ DEB-1353078 and DEB-1054040 to PBA.
   \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed drafts of the paper.
 \end{itemize}
 
-\section{SUPPLEMENTAL INFORMATION}\label{supplemental-information}
+\hypertarget{supplemental-information}{%
+\section{SUPPLEMENTAL INFORMATION}\label{supplemental-information}}
 
 \begin{description}
 \item [Appendix 1.] \new{Additional information on plant community composition and dynamics, Table A1-1, Table A1-2, Table A1-3, Fig. A1-1, Fig. A1-2, Fig. A1-3, Fig. A1-4, Fig. A1-5, and Fig. A1-6.}
@@ -718,7 +735,8 @@ DEB-1353078 and DEB-1054040 to PBA.
 
 \newpage{}
 
-\section{TABLES}\label{tables}
+\hypertarget{tables}{%
+\section{TABLES}\label{tables}}
 
 \begin{table}[ht]
 \centering
@@ -764,7 +782,8 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 
 \newpage{}
 
-\section{FIGURES}\label{figures}
+\hypertarget{figures}{%
+\section{FIGURES}\label{figures}}
 
 \begin{figure}[!ht]
   \centering
@@ -799,7 +818,7 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 \newpage{}
 
 
-\bibliography{/Users/atredenn/Dropbox/Bibliography/usses_water.bib}
+\bibliography{/Users/atredenn/Dropbox/Bibliography/usses\_water.bib}
 
 
 \end{document}

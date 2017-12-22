@@ -127,6 +127,18 @@ full_community_matrix_scaled <- full_community_matrix_scaled %>%
          -`Linanthus pungens`)
 
 
+##  Look at quadrats in each year
+# checker <- full_community_matrix_scaled %>%
+#   select(quad,year,Treatment) %>%
+#   arrange(-year)
+# unique(filter(checker, year == 2011)$quad)
+# unique(filter(checker, year == 2012)$quad)
+# unique(filter(checker, year == 2013)$quad)
+# unique(filter(checker, year == 2014)$quad)
+# unique(filter(checker, year == 2015)$quad)
+# unique(filter(checker, year == 2016)$quad)
+
+
 nmds_df <- {}
 out_stats <- {}
 # pdf("../figures/bray_raw.pdf",onefile = TRUE)

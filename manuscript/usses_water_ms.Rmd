@@ -123,13 +123,13 @@ We conducted our precipitation manipulation experiment in a sagebrush steppe com
 The plant community is dominated by the shrub \emph{Artemesia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
 During the period of our experiment (2011 -- 2015), average mean annual precipitation was 265 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
-In 2007, we relocated 14 of the original quadrats, six of which were inside a large, permanent livestock exclosure.
-We use these six plots as control plots (i.e. ambient precipitation) in the experiment described below.
+In 2007, we relocated 14 of the original quadrats in permenanent livestock exclosures, \new{which we used} as control plots (i.e. ambient precipitation) in the experiment described below.
 \new{We used the relocated plots as our controls because collecting demographic data is difficult and it is already being collected in these plots for other ongoing studies.}
 
-In spring 2011, we established 16 new 1 m$^2$ plots located in the same exclosure as the six control plots.
+In spring 2011, we established 16 new 1 m$^2$ plots located in the \new{largest exclosure at USSES, which also contained} six of our control plots.
 We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs \emph{Purshia tridentata} and/or \emph{Amelanchier utahensis}.
 We established the new plots in pairs and randomly assigned each plot in a pair to receive a "drought" or "irrigation" treatment.
+\new{Thus, our experiment consisted of $n=14$ control plots, $n=8$ irrigation plots, and $n=8$ irrigation plots, for a total of 30 plots.}
 
 
 ## Precipitation Experiment
