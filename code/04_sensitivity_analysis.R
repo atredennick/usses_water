@@ -44,7 +44,7 @@ sens_anpp <- anpp_data %>%
 
 sens_vwc <- anpp_data %>%
   group_by(Treatment, year) %>%
-  summarise(vwc = mean(total_seasonal_vwc)) %>%
+  summarise(vwc = mean(avg_vwc)) %>%
   spread(Treatment, vwc) %>%
   mutate(control_drought = Control - Drought,
          control_irrigation = Control - Irrigation) %>%

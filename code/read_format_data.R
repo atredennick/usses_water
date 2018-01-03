@@ -25,18 +25,35 @@ permanent_quad_biomass <- readRDS(paste0(data_path,anpp_fname))
 weather <- read.csv("../data/weather/ClimateIPM.csv") %>%
   select(-pptLag,-ppt2,-TmeanSpr1,-TmeanSpr2)
 
-soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
-  select(-year) %>%
-  separate(simple_date, c("year","month","day")) %>%
-  group_by(year,month,Treatment,type,year) %>%
-  summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
-  filter(type=="predicted") %>%
-  mutate(month_year = paste0(year,"-",month)) %>%
-  filter(month %in% c("03","04","05","06")) %>%
+soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv")
+
+soil_moisture %>% 
+  filter( julian_date > 100 & julian_date < 182, type == 'predicted') %>% 
+  ggplot( aes( x = julian_date, y = VWC, color = Treatment)) + 
+  facet_wrap(~year, ncol = 5) + 
+  geom_line() 
+
+soil_moisture <- 
+  soil_moisture %>% 
+  filter( julian_date > 100 & julian_date < 182, type == 'predicted') %>% 
   group_by(year,Treatment) %>%
-  summarise(total_seasonal_vwc = sum(avg_vwc, na.rm = T)) %>%
+  summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
   ungroup() %>%
   mutate(year = as.numeric(year))
+
+ggplot(soil_moisture, aes( x = year, y=  avg_vwc, color = Treatment )) + geom_point() + geom_line()
+# soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
+#   select(-year) %>%
+#   separate(simple_date, c("year","month","day")) %>%
+#   group_by(year,month,Treatment,type,year) %>%
+#   summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
+#   filter(type=="predicted") %>%
+#   mutate(month_year = paste0(year,"-",month)) %>%
+#   filter(month %in% c("03","04","05","06")) %>%
+#   group_by(year,Treatment) %>%
+#   summarise(total_seasonal_vwc = sum(avg_vwc, na.rm = T)) %>%
+#   ungroup() %>%
+#   mutate(year = as.numeric(year))
 
 suppressWarnings( # suppress factors to characters warning
   anpp_data <- permanent_quad_biomass %>% 
@@ -48,7 +65,7 @@ suppressWarnings( # suppress factors to characters warning
     left_join(soil_moisture, by = c("year","Treatment")) %>%
     select(-QuadName,-quad,-Grazing,-paddock) %>%
     mutate(ppt1_scaled = as.numeric(scale(ppt1)),
-           vwc_scaled = as.numeric(scale(total_seasonal_vwc)),
+           vwc_scaled = as.numeric(scale(avg_vwc)),
            year_id = year - 2011)
 )
 

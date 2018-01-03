@@ -147,8 +147,8 @@ regression$estimate <- with(regression, Intercept+Slope*newx)
 
 mean_log_anpp <- mean(log(anpp_data$anpp))
 sd_log_anpp <- sd(log(anpp_data$anpp))
-mean_vwc <- mean(anpp_data$total_seasonal_vwc)
-sd_vwc <- sd(anpp_data$total_seasonal_vwc)
+mean_vwc <- mean(anpp_data$avg_vwc)
+sd_vwc <- sd(anpp_data$avg_vwc)
 
 regression <- regression %>%
   mutate(backtrans_estimate = estimate*sd_log_anpp+mean_log_anpp,
@@ -157,13 +157,13 @@ regression <- regression %>%
 regression_limited <- {}
 for(dotrt in unique(regression$Treatment)){
   tmpdat <- filter(regression, Treatment == dotrt)
-  tmprange <- range(anpp_data[which(anpp_data$Treatment==dotrt),"total_seasonal_vwc"])
+  tmprange <- range(anpp_data[which(anpp_data$Treatment==dotrt),"avg_vwc"])
   tmpdat$backtrans_vwc[tmpdat$backtrans_vwc < tmprange[1] | tmpdat$backtrans_vwc > tmprange[2]] <- NA
   regression_limited <- rbind(regression_limited, tmpdat)
 }
 
 suppressWarnings( # ignore wanrnings about NA values
-  regress_plot <- ggplot(anpp_data, aes(x=total_seasonal_vwc,y=log(anpp)))+
+  regress_plot <- ggplot(anpp_data, aes(x=avg_vwc,y=log(anpp)))+
     geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
     geom_line(data=regression_limited, aes(x=backtrans_vwc, y=backtrans_estimate, color=Treatment), size=1)+
     scale_fill_manual(values = mycols, name = NULL)+
