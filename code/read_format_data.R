@@ -26,7 +26,7 @@ weather <- read.csv("../data/weather/ClimateIPM.csv") %>%
   select(-pptLag,-ppt2,-TmeanSpr1,-TmeanSpr2)
 
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
-  select(-year) %>%
+  dplyr::select(-year) %>%
   separate(simple_date, c("year","month","day")) %>%
   group_by(year,month,Treatment,type,year) %>%
   summarise(avg_vwc = mean(VWC,na.rm=TRUE)) %>%
@@ -46,7 +46,7 @@ suppressWarnings( # suppress factors to characters warning
     rename(anpp = biomass_grams_est) %>%
     left_join(weather, by = "year") %>%
     left_join(soil_moisture, by = c("year","Treatment")) %>%
-    select(-QuadName,-quad,-Grazing,-paddock) %>%
+    dplyr::select(-QuadName,-quad,-Grazing,-paddock) %>%
     mutate(ppt1_scaled = as.numeric(scale(ppt1)),
            vwc_scaled = as.numeric(scale(total_seasonal_vwc)),
            year_id = year - 2011)
