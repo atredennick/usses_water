@@ -152,20 +152,19 @@ These snapshot data were collected on 06-06-2012, 04-29-2015, 05-07-2015, 06-09-
 
 Analyzing the response to experimental treatments was complicated by the fact that we did not directly monitor soil moisture in each plot on each day of the experiment.
 Only a subset of plots were equipped with soil moisture sensors, and within those plots, one or more of the sensors frequently failed to collect data.
-To remedy these problems, and to produce average daily soil moisture values for the ambient, drought, and irrigation treatments, we used a statistical model to predict the average treatment effects on soil moisture during the course of the experiment.
+To remedy these problems, we used a statistical model to produce average daily soil moisture values for the ambient, drought, and irrigation treatments during the course of the experiment.
 
 \new{We first averaged the observed soil moisture readings for each day ($d$) and plot ($i$), $x_{i,d}$.
-Plots were organized in groups of three, with each group ($g$) containing consisting of a control, a drought, and an irrigation plot.
-Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions in the control plot. Specifically we subtracted the ambient daily soil moisture measured in the control plot from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the control plot $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{control}})/\text{s.d.}(x_{g,d,\text{control}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
+Experimental plots were organized in groups of two, with each group ($g$) containing a drought and irrigated plot. In addition a nearby area outside the drought or irrigated plots was monitored for local ambient soil moisture conditions.
+Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions. Specifically we subtracted the ambient daily soil moisture from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the ambient conditions $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{ambient}})/\text{s.d.}(x_{g,d,\text{ambient}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.}
 
 \new{We then modeled these daily deviations ($\Delta x_{g,d,\text{trt.}}$)} from ambient conditions using a linear mixed effects model with independent variables for treatment (irrigation or drought), season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
-Rainy days were defined as any day in which precipitation was recorded and average temperature was above 3$^{\circ}$C.
-The day immediately following rainfall was also classified as rainy.
+Using the local daily weather station data, we recorded rainy days as any day with measureable precipitation or the day after such a day and with average temperatures above 3$^{\circ}$C (to exclude days with snowfall).
 We fit the model using the ```lme4::lmer()``` function [@Bates2015] in R [@R2016], with random effects for plot group and date.
 We weighted observations by the number of unique sensors or spot measurements that were taken in each plot on that day.
 \new{We then used the model to predict the deviations from ambient conditions produced in the treated plots on each day of the experiment.  
-We added these predicted deviations to the average daily ambient soil moisture to generate predictions for daily soil moisture in all of the treated plots: $\bar{x}_{d, \text{trt.}} = \Delta \bar{x}_{d,\text{trt.}} + \bar{x}_{d,\text{control}}$, where $\bar{x}_{d,\text{trt.}}$ is the average predicted daily soil moisture in the treated plots and $\bar{x}_{d,\text{control}}$ is the daily ambient soil moisture averaged across all control plots.}
+We added these predicted deviations to the average daily ambient soil moisture to generate predictions for daily soil moisture in all of the treated plots: $\bar{x}_{d, \text{trt.}} = \Delta \bar{x}_{d,\text{trt.}} + \bar{x}_{d,\text{ambient}}$, where $\bar{x}_{d,\text{trt.}}$ is the average predicted daily soil moisture in the treated plots and $\bar{x}_{d,\text{ambient}}$ is the daily ambient soil moisture averaged across all control plots.}
 We could only predict soil moisture in the treated plots on days for which we took at least one ambient soil moisture measurement.
 This procedure allowed us to predict daily soil moisture conditions for all plots, even on those days when some of our direct treatment measurements were missing due to malfunction of the sensors or dataloggers. 
 See @Kleinhesselink2017b for more details on our approach to estimating soil moisture.
@@ -247,14 +246,14 @@ Trace plots of all parameters were visually inspected to ensure well-mixed chain
 We also made sure all scale reduction factors ($\hat{R}$ values) were less than 1.1 [@Gelman2009].
 
 ### Sensitivity of ANPP over time
-\new{Unfortunately, our data does not allow us to include the effect of time on ecosystem functional response in the model described above. 
+\new{Our data does not allow us to directly test whether the ecosystem functional response to precipitation may have changed over time in each of the treatments. 
 This is because we lack sufficient within-year and within-treatment variation of soil moisture (i.e., within a year and treatment each plot shares the same value of VWC). 
-Therefore, we conducted an independent analysis to determine if the sensitivity of ANPP to treatment changed over time.}
+However, we did use a separate analysis to test whether the the sensitivity of ANPP to treatment changed over time.}
 
-\new{We define `sensitivity' as $\frac{ \text{ANPP}_{\text{control}} - \text{ANPP}_{\text{treatment}} } { \text{VWC}_{\text{control}} - \text{VWC}_{\text{treatment}} }$, following} @Wilcox2017.
-\new{This metric of sensitivity measures the response of ANPP standardized by the magnitude of the treatment. 
-Because our treatment and control plots are not paired, we conducted this analysis by comparing each treatment plot to the mean of the control plots in each year. 
-Then, independently for each treatment, we regressed sensitivity against year of treatment using the \texttt{lm()} function in R} [@R2016].
+\new{We define `sensitivity' as $\frac{ \text{ANPP}_{\text{control}} - \text{ANPP}_{\text{treatment}} } { \text{VWC}_{\text{ambient}} - \text{VWC}_{\text{treatment}} }$, following} @Wilcox2017.
+\new{This metric of sensitivity scales the difference between ANPP in the treated and control plots by the change in soil moisture in the treated plots. 
+Because our treated plots are not directly paired with individual control plots, we compare ANPP in each treated plot to the average ANPP of the control plots in each year.
+After calculating sensitivity for each drought and irrigation plot in each year, we regressed sensitivity against year of treatment using the \texttt{lm()} function in R} [@R2016].
 \new{This analysis also allows us to link particularly sensitive treatment years to changes in community composition.}
 
 ### Community composition over time
@@ -358,11 +357,8 @@ For example, many of the perennial grasses in our focal ecosystem avoid drought 
 Furthermore, the dominant shrub in our focal ecosystem, \emph{Artemisia tripartita}, has access to water deep in the soil profile thanks to a deep root system [@Kulmatiski2017a].
 \new{The dominance of our site by the shrub \emph{A. tripartita} (Appendix 1) may explain why our results do not conform to broader patterns of grassland sensitivity to precipitation manipulations} [e.g., @Huxman2004; @Knapp2015; @Wilcox2017].
 
-\new{We did find that ANPP became more sensitive to drought over time (Fig. 3C).
-The latter years of our experiment were relatively wet, meaning that the drought treatment could have the largest absolute reduction of soil moisture in those years.
-But our metric of sensitivity accounts for differences among years because ANPP differences is standardized by the difference in soil moisture within the year.
-Therefore, it is likely that the increased sensitivity to drought over time is due to the cumulative impact of drought on the dominant species.
-Ecosystem functional response may soon shift if sensitivity continues to increase.}
+\new{We found that ANPP became more sensitive to the drought over time (Fig. 3C).  In other words, relative to the effect of the drought shelters on soil moisture, ANPP was more reduced by the drought conditions later in the experiment than early on in the experiment. 
+We interepret this increase in sensitivity as the effect of cumulative impacts of the drought on dominant species.  Plants may not have shown a large response in terms of ANPP in the first years of the experiment if they could grow from stored carbohydrate reserves or if they abstained from flowering and reproduction. As the drought progressed, these same plants may have have started to reduce in size or die. Given the long lived perennial species at this site, this increase in sensitivity may indicate a larger future change in community composition and ecosystem functional response. }
  
 # CONCLUSIONS
 
