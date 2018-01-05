@@ -45,7 +45,7 @@ suppressWarnings( # ignore factor to character warning. It's OK.
     summarise(total_area = sum(area)) %>%
     left_join(plot_info, by = "quad") %>%
     filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    # filter(!str_detect(QuadName, 'P1|P7')) %>%
+    filter(!str_detect(QuadName, 'P1|P7')) %>% # exclude control plots in pastures different from treatment plots
     group_by(year, species, Treatment) %>%
     summarise(avg_area = mean(total_area)) %>%
     ungroup()
@@ -64,7 +64,7 @@ suppressWarnings( # ignore factor to character warning. It's OK.
     summarise(total_area = sum(area)) %>%
     left_join(plot_info, by = "quad") %>%
     filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    # filter(!str_detect(QuadName, 'P1|P7')) %>%
+    filter(!str_detect(QuadName, 'P1|P7')) %>% # exclude control plots in pastures different from treatment plots
     filter(year > 2010 & is.na(species)==F) %>%
     spread(species,total_area, fill = 0) %>%
     select(-QuadName,-Grazing,-paddock,-Group) %>%
@@ -78,7 +78,7 @@ suppressWarnings( # ignore factor to character warning. It's OK.
     summarise(total_inds = sum(ind_num)) %>%
     left_join(plot_info, by = "quad") %>%
     filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    # filter(!str_detect(QuadName, 'P1|P7')) %>%
+    filter(!str_detect(QuadName, 'P1|P7')) %>% # exclude control plots in pastures different from treatment plots
     filter(year > 2010 & is.na(species)==F) %>%
     spread(species,total_inds, fill = 0) %>%
     select(-QuadName,-Grazing,-paddock,-Group) %>%
@@ -99,7 +99,7 @@ suppressWarnings( # ignore factor to character warning. It's OK.
     select(-QuadName.y) %>%
     rename(QuadName = QuadName.x) %>%
     filter(Treatment == "Control" | Treatment == "Irrigation" | Treatment == "Drought") %>%
-    # filter(!str_detect(QuadName, 'P1|P7')) %>%
+    filter(!str_detect(QuadName, 'P1|P7')) %>% # exclude control plots in pastures different from treatment plots
     filter(year > 2010 & is.na(species)==F) %>%
     separate(species,c("genus","species1")) %>%
     unite(species,genus,species1,sep = " ") %>%
@@ -124,7 +124,7 @@ full_community_matrix_scaled <- full_community_matrix_scaled %>%
   select(-ids_to_remove,
          -`Agropyron cristatum`,
          -`Antennaria rosea`,
-         -`Linanthus pungens`)
+         -`Linanthus pungens`) # removes rare species that only show up once or twice
 
 
 ##  Look at quadrats in each year

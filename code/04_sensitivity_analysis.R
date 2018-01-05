@@ -1,12 +1,11 @@
-##  anpp_randcoefs_model.R: Script to run GLMM analysis to test for treatment 
-##  effects on the relationship between precipitation and ANPP.
+################################################################################
+##  sensitivity_analysis.R: R script to conduct a simple sensitivity analysis
+##  a la Wilcox et al. 2017, Global Change Biology.
 ##
-##  NOTE: Stan may issue a couple warnings after running the MCMC that, as
-##  the messages state, can be safely ignored. Just rejects a couple proposals
-##  that result in ill-formed covariance matrices.
-##
+##  ----------------------------------------------------------------------------
 ##  Author: Andrew Tredennick
-##  Date created: November
+##  Date created: November 2, 2017
+################################################################################
 
 ##  Clear everything
 rm(list = ls(all.names = TRUE))
@@ -28,37 +27,16 @@ library(lme4)         # Mixed-effects modeling
 
 
 ####
-####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ----
+####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ---------------------------------
 ####
 source("read_format_data.R")
 
-##  By treatment
-sens_anpp <- anpp_data %>%
-  group_by(Treatment, year) %>%
-  summarise(avg_anpp = mean(anpp)) %>%
-  spread(Treatment, avg_anpp) %>%
-  mutate(control_drought = Control - Drought,
-         control_irrigation = Control - Irrigation) %>%
-  dplyr::select(-Control,-Drought,-Irrigation) %>%
-  gather(comparison, anpp_diff, -year)
-
-sens_vwc <- anpp_data %>%
-  group_by(Treatment, year) %>%
-  summarise(vwc = mean(total_seasonal_vwc)) %>%
-  spread(Treatment, vwc) %>%
-  mutate(control_drought = Control - Drought,
-         control_irrigation = Control - Irrigation) %>%
-  dplyr::select(-Control,-Drought,-Irrigation) %>%
-  gather(comparison, vwc_diff, -year)
-
-sensitivity <- left_join(sens_anpp, sens_vwc, by = c("year", "comparison")) %>%
-  mutate(sens = anpp_diff / vwc_diff)
-
-# ggplot(sensitivity, aes(x=year, y=sens, color=comparison))+
-#   geom_line()
 
 
-##  By plot-treatment -- compare each treatment plot to each control in each year
+####
+####  CALCULATE TREATMENT ANPP AND VWC DIFFERENCES -----------------------------
+####
+# By plot-treatment -- compare each treatment plot to the mean of control plots in each year
 controls <- filter(anpp_data, Treatment == "Control") %>%
   dplyr::select(Treatment,quadname,year,anpp)
 
@@ -98,15 +76,27 @@ for(do_year in unique(droughts$year)){
   } # end plot
 } # end year
 
+# Calculate difference in VWC among treatments
+sens_vwc <- anpp_data %>%
+  group_by(Treatment, year) %>%
+  summarise(vwc = mean(total_seasonal_vwc)) %>%
+  spread(Treatment, vwc) %>%
+  mutate(control_drought = Control - Drought,
+         control_irrigation = Control - Irrigation) %>%
+  dplyr::select(-Control,-Drought,-Irrigation) %>%
+  gather(comparison, vwc_diff, -year)
+
 vwc_diffs <- sens_vwc %>%
   separate(comparison, c("control","treatment")) %>%
   dplyr::select(-control)
 
+#  Combine and calculate sensitivities
 all_diffs <- rbind(drought_diffs, irrigate_diffs) %>%
   mutate(treatment = as.character(treatment)) %>%
   left_join(vwc_diffs, by = c("year","treatment")) %>%
   mutate(sensitivity = cntrl_minus_treat / vwc_diff)
 
+# Save it for plotting
 saveRDS(object = all_diffs, file = "../results/sensitvities.RDS")
 
 
@@ -127,3 +117,22 @@ data.frame(treatment = c("drought", "irrigation"),
   write_csv("../results/sensitivity_year_pvalues.csv")
 
 
+
+
+
+### OLD
+##  By treatment
+# sens_anpp <- anpp_data %>%
+#   group_by(Treatment, year) %>%
+#   summarise(avg_anpp = mean(anpp)) %>%
+#   spread(Treatment, avg_anpp) %>%
+#   mutate(control_drought = Control - Drought,
+#          control_irrigation = Control - Irrigation) %>%
+#   dplyr::select(-Control,-Drought,-Irrigation) %>%
+#   gather(comparison, anpp_diff, -year)
+# 
+# 
+# sensitivity <- left_join(sens_anpp, sens_vwc, by = c("year", "comparison")) %>%
+#   mutate(sens = anpp_diff / vwc_diff)
+# 
+# 

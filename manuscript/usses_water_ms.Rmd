@@ -121,7 +121,7 @@ We also analyzed community composition and \new{the sensitivity of ANPP to droug
 
 We conducted our precipitation manipulation experiment in a sagebrush steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
 The plant community is dominated by the shrub \emph{Artemesia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
-During the period of our experiment (2011 -- 2015), average mean annual precipitation was 265 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
+During the period of our experiment (2011 -- 2016), mean annual precipitation was 250 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
 In 2007, we relocated 14 of the original quadrats in permenanent livestock exclosures, \new{which we used} as control plots (i.e. ambient precipitation) in the experiment described below.
 \new{We used the relocated plots as our controls because collecting demographic data is difficult and it is already being collected in these plots for other ongoing studies.}
@@ -280,8 +280,8 @@ We also include annotated Stan code in our model description in Appendix 3.
 # RESULTS
 
 Ambient precipitation was variable over the five years of the study (Fig. 2A), meaning our experiment captured a range of environmental conditions.
-ANPP varied from a minimum of 74.5 g m$^{-2}$ in 2014 to a maximum of 237.1 g m$^{-2}$ in 2016 when averaged across treatments (Fig. 2C).
-ANPP was slightly higher in irrigation plots \new{(on average 17\% higher)} and slightly lower in drought plots \new{(on average 23\% lower) relative to control plots} (Fig. 2C), corresponding to estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
+ANPP varied from a minimum of 77.4 g m$^{-2}$ in 2014 to a maximum of 239.3 g m$^{-2}$ in 2016 when averaged across treatments (Fig. 2C).
+ANPP was slightly higher in irrigation plots \new{(on average 15\% higher)} and slightly lower in drought plots \new{(on average 25\% lower) relative to control plots} (Fig. 2C), corresponding to observed and estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 \new{VWC in drought plots was 12\% less than in control plots on average, and VWC in irrigation plots was 19\% higher than in control plots on average.}
 Such differences in soil VWC indicate our treatment infrastructure was successful.
 ANPP was highly variable across plots within years, \new{as indicated by the large and overlapping standard deviations} (Fig. 2C).
@@ -293,7 +293,7 @@ Ecosystem functional response was similar among treatments (Table 1; Fig. 3B), b
 This evidence comes from interpreting the posterior distributions of the slope offsets for the treatments.
 \new{From these distributions,} we calculate a \new{91}% one-tailed probability that the estimate is less than zero for the irrigation treatment \new{and a 96\% one-tailed probability that the estimate is less than zero for the drought treatment} (Fig. 3A, right panel).
 
-\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0002; Fig. 3C)}.
+\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0007; Fig. 3C)}.
 
 Community composition was similar among treatments.
 The multidimensional space of community composition overlapped among treatments in all years and was equally dispersed in all years (Table 2; Fig. 4).

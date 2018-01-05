@@ -78,7 +78,7 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   separate(simple_date, c("year","month","day")) %>%
   mutate(year = as.integer(year),
          Treatment = as.character(Treatment)) %>%
-  filter(type=="observed") %>%
+  # filter(type=="predicted") %>%
   ungroup() %>%
   left_join(soilwat, by = c("year","Treatment","julian_date")) %>%
   mutate(VWC_combo = ifelse(is.na(VWC)==TRUE, VWC_raw, VWC),
@@ -86,12 +86,12 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   filter(month %in% c("03","04","05","06"))
 
 
-soilwat_inserts <- soil_moisture %>%
-  filter(is.na(VWC) == TRUE)
+# soilwat_inserts <- soil_moisture %>%
+#   filter(is.na(VWC) == TRUE)
 
 suppressWarnings(# ignore warnings about missing values, we know they are empty
-  soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
-    geom_line(data = soilwat_inserts, size=0.3, linetype=2, aes(x=julian_date, y=VWC_raw, group=Treatment, color=Treatment))+
+  soil_vwc <- ggplot(filter(soil_moisture, type == "observed"), aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
+    geom_line(data = filter(soil_moisture, type == "predicted"), size=0.3, linetype=2, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
     geom_line(size=0.3)+
     scale_color_manual(values = mycols, name="Treatment")+
     ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
@@ -106,10 +106,10 @@ suppressWarnings(# ignore warnings about missing values, we know they are empty
 )
 
 ##  Save VWC for statistical modeling that matches the above figure
-vwc_for_stats <- soil_moisture %>%
-  select(year, month, day, Treatment, VWC_combo, VWC_source) %>%
-  rename(VWC = VWC_combo)
-saveRDS(vwc_for_stats, "../data/soil_moisture_data/vwc_for_stats.RDS")
+# vwc_for_stats <- soil_moisture %>%
+#   select(year, month, day, Treatment, VWC_combo, VWC_source) %>%
+#   rename(VWC = VWC_combo)
+# saveRDS(vwc_for_stats, "../data/soil_moisture_data/vwc_for_stats.RDS")
 
 
 ####
@@ -124,7 +124,6 @@ biomass_year_treatment <- permanent_quad_biomass %>%
   summarise(mean_biomass = mean(biomass_grams_est))
 
 biomass_yr_trt_summ <- permanent_quad_biomass %>%
-  filter(!str_detect(quadname, 'P1|P7')) %>%
   group_by(Treatment,year) %>%
   summarise(mean_biomass = mean(biomass_grams_est),
             sd_biomass = sd(biomass_grams_est)) %>%
@@ -166,7 +165,7 @@ ggsave("../figures/data_panels.png", gout, width=3.3, height=8, units="in", dpi=
 ####  GET MEAN PPT AND TEMPERATURES FROM 2011-2015 -----------------------------
 ####
 weather <- read.csv("../data/weather/monthlyClimate.csv") %>%
-  filter(year > 2010 & year < 2016)
+  filter(year > 2010 & year < 2017)
 
 mar <- weather %>%
   group_by(year) %>%

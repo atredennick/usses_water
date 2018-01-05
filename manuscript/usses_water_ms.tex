@@ -232,8 +232,8 @@ sea level. The plant community is dominated by the shrub
 perennial bunchgrasses, \emph{Pseudoroegneria spicata},
 \emph{Poa secunda}, and \emph{Hesperostipa comata}
 \new{(see Appendix 1 for rank abundance curves)}. During the period of
-our experiment (2011 -- 2015), average mean annual precipitation was 265
-mm year\(\phantom{}^{-1}\) and mean monthly temperature ranged from
+our experiment (2011 -- 2016), mean annual precipitation was 250 mm
+year\(\phantom{}^{-1}\) and mean monthly temperature ranged from
 -5.2\(^{\circ}\)C in January to 21.8\(^{\circ}\)C in July. Between 1926
 and 1932, range scientists at the USSES established 26 permanent 1
 m\(^2\) quadrats to track vegetation change over time. In 2007, we
@@ -498,13 +498,13 @@ We also include annotated Stan code in our model description in Appendix
 
 Ambient precipitation was variable over the five years of the study
 (Fig. 2A), meaning our experiment captured a range of environmental
-conditions. ANPP varied from a minimum of 74.5 g m\(^{-2}\) in 2014 to a
-maximum of 237.1 g m\(^{-2}\) in 2016 when averaged across treatments
+conditions. ANPP varied from a minimum of 77.4 g m\(^{-2}\) in 2014 to a
+maximum of 239.3 g m\(^{-2}\) in 2016 when averaged across treatments
 (Fig. 2C). ANPP was slightly higher in irrigation plots
-\new{(on average 17\% higher)} and slightly lower in drought plots
-\new{(on average 23\% lower) relative to control plots} (Fig. 2C),
-corresponding to estimated soil volumetric water content (VWC)
-differences among treatments (Fig. 2B).
+\new{(on average 15\% higher)} and slightly lower in drought plots
+\new{(on average 25\% lower) relative to control plots} (Fig. 2C),
+corresponding to observed and estimated soil volumetric water content
+(VWC) differences among treatments (Fig. 2B).
 \new{VWC in drought plots was 12\% less than in control plots on average, and VWC in irrigation plots was 19\% higher than in control plots on average.}
 Such differences in soil VWC indicate our treatment infrastructure was
 successful. ANPP was highly variable across plots within years,
@@ -530,7 +530,7 @@ irrigation treatment
 \new{and a 96\% one-tailed probability that the estimate is less than zero for the drought treatment}
 (Fig. 3A, right panel).
 
-\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0002; Fig. 3C)}.
+\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0007; Fig. 3C)}.
 
 Community composition was similar among treatments. The multidimensional
 space of community composition overlapped among treatments in all years
@@ -727,12 +727,12 @@ DEB-1353078 and DEB-1054040 to PBA.
   \hline
 Coefficient & Treatment & Posterior Mean & Posterior Median & Lower 95\% BCI & Upper 95\% BCI \\ 
   \hline
-Intercept & Control & 0.16 & 0.14 & -1.22 & 1.69 \\ 
-  Intercept & Drought & 0.13 & 0.05 & -1.69 & 2.39 \\ 
-  Intercept & Irrigation & -0.24 & -0.18 & -2.11 & 1.53 \\ 
-  Slope & Control & 0.94 & 0.86 & -0.51 & 2.69 \\ 
-  Slope & Drought & 0.65 & 0.57 & -0.99 & 2.62 \\ 
-  Slope & Irrigation & 0.72 & 0.65 & -0.54 & 2.26 \\ 
+Intercept & Control & 0.14 & 0.14 & -1.24 & 1.50 \\ 
+  Intercept & Drought & 0.67 & 0.65 & -2.01 & 3.36 \\ 
+  Intercept & Irrigation & -0.39 & -0.34 & -3.51 & 2.48 \\ 
+  Slope & Control & 0.53 & 0.52 & -1.44 & 2.66 \\ 
+  Slope & Drought & 1.02 & 1.00 & -1.04 & 3.25 \\ 
+  Slope & Irrigation & 0.56 & 0.55 & -1.43 & 2.71 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -744,18 +744,18 @@ Intercept & Control & 0.16 & 0.14 & -1.22 & 1.69 \\
   \hline
 Year & Test & n & d.f. & \emph{F} & \emph{P} \\ 
   \hline
-2011 & adonis &  30 &   2 & 1.92 & 0.01 \\ 
-  2011 & betadisper &  30 &   2 & 0.64 & 0.53 \\ 
-  2012 & adonis &  30 &   2 & 1.40 & 0.06 \\ 
-  2012 & betadisper &  30 &   2 & 0.30 & 0.75 \\ 
-  2013 & adonis &  30 &   2 & 1.70 & 0.01 \\ 
-  2013 & betadisper &  30 &   2 & 0.59 & 0.56 \\ 
-  2014 & adonis &  30 &   2 & 1.47 & 0.06 \\ 
-  2014 & betadisper &  30 &   2 & 2.23 & 0.13 \\ 
-  2015 & adonis &  30 &   2 & 1.22 & 0.14 \\ 
-  2015 & betadisper &  30 &   2 & 1.78 & 0.19 \\ 
-  2016 & adonis &  30 &   2 & 1.83 & 0.00 \\ 
-  2016 & betadisper &  30 &   2 & 0.24 & 0.79 \\ 
+2011 & adonis &  22 &   2 & 1.04 & 0.41 \\ 
+  2011 & betadisper &  22 &   2 & 2.22 & 0.14 \\ 
+  2012 & adonis &  22 &   2 & 1.09 & 0.32 \\ 
+  2012 & betadisper &  22 &   2 & 0.21 & 0.81 \\ 
+  2013 & adonis &  22 &   2 & 1.26 & 0.14 \\ 
+  2013 & betadisper &  22 &   2 & 0.43 & 0.66 \\ 
+  2014 & adonis &  22 &   2 & 0.96 & 0.52 \\ 
+  2014 & betadisper &  22 &   2 & 0.36 & 0.70 \\ 
+  2015 & adonis &  22 &   2 & 1.08 & 0.31 \\ 
+  2015 & betadisper &  22 &   2 & 1.96 & 0.17 \\ 
+  2016 & adonis &  22 &   2 & 1.12 & 0.27 \\ 
+  2016 & betadisper &  22 &   2 & 0.27 & 0.76 \\ 
    \hline
 \end{tabular}
 \endgroup

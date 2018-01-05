@@ -33,12 +33,12 @@ library(lme4)         # Mixed-effects modeling
 ####
 source("read_format_data.R")
 
-my_df <- anpp_data
-my_df$y <- as.numeric(scale( log( anpp_data$ndvi ) ))
-m1 <- lmer( y ~ Treatment*vwc_scaled + (1|year_id) + (vwc_scaled|quadname), my_df)
-summary(m1)
-
-attr(VarCorr(m1)$quadname, 'correlation')
+# my_df <- anpp_data
+# my_df$y <- as.numeric(scale( log( anpp_data$ndvi ) ))
+# m1 <- lmer( y ~ Treatment*vwc_scaled + (1|year_id) + (vwc_scaled|quadname), my_df)
+# summary(m1)
+# 
+# attr(VarCorr(m1)$quadname, 'correlation')
 
 
 

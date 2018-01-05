@@ -1,12 +1,15 @@
+################################################################################
 ##  anpp_randcoefs_model.R: Script to run GLMM analysis to test for treatment 
-##  effects on the relationship between precipitation and ANPP.
+##  effects on the relationship between soil moisture and ANPP.
 ##
 ##  NOTE: Stan may issue a couple warnings after running the MCMC that, as
 ##  the messages state, can be safely ignored. Just rejects a couple proposals
 ##  that result in ill-formed covariance matrices.
 ##
-##  Author: Andrew Tredennick
+##  ----------------------------------------------------------------------------
+##  Author: Andrew Tredennick and Andrew Kleinhesselink
 ##  Date created: June 2, 2017
+################################################################################
 
 ##  Clear everything
 rm(list = ls(all.names = TRUE))
@@ -17,7 +20,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 
 
 ####
-####  LOAD LIBRARIES ----
+####  LOAD LIBRARIES -----------------------------------------------------------
 ####
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
@@ -29,21 +32,15 @@ library(lme4)         # Mixed-effects modeling
 
 
 ####
-####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ----
+####  READ IN AND EXTRACT EXPERIMENT ANPP DATA ---------------------------------
 ####
 source("read_format_data.R")
 
-my_df <- anpp_data
-my_df$y <- as.numeric(scale( log( anpp_data$anpp ) ))
-m1 <- lmer( y ~ Treatment*vwc_scaled + (1|year_id) + (vwc_scaled|quadname), my_df)
-summary(m1)
-
-attr(VarCorr(m1)$quadname, 'correlation')
 
 
 
 ####
-####  SET UP AND FIT MODEL IN STAN ----
+####  SET UP AND FIT MODEL IN STAN ---------------------------------------------
 ####
 ##  Set up fixed and random design matrices
 lmod <- lm(log(anpp) ~ Treatment*vwc_scaled, anpp_data)
@@ -83,9 +80,8 @@ fit <- sampling(sm, data = anppdat, iter = 10000, chains = 4, thin = 10)
 saveRDS(fit, "../results/randcoefs_alltreatments_fit.RDS")
 
 
-
 ####
-####  OPTIONAL DIAGNOSTICS ----
+####  OPTIONAL DIAGNOSTICS -----------------------------------------------------
 ####
 # fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
 # betas <- as.numeric( summary(fit, 'beta')$summary[,1] )
@@ -117,3 +113,13 @@ saveRDS(fit, "../results/randcoefs_alltreatments_fit.RDS")
 # draws <- as.array(fit, pars = 'beta')
 # mcmc_trace(draws)
 # summary(fit, pars = "beta")
+
+
+
+### OTHER
+# my_df <- anpp_data
+# my_df$y <- as.numeric(scale( log( anpp_data$anpp ) ))
+# m1 <- lmer( y ~ Treatment*vwc_scaled + (1|year_id) + (vwc_scaled|quadname), my_df)
+# summary(m1)
+# 
+# attr(VarCorr(m1)$quadname, 'correlation')

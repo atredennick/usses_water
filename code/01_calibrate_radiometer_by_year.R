@@ -1,9 +1,12 @@
+################################################################################
 ##  calibrate_radiometer_by_year.R: script to fit regressions between biomass
 ##  and NDVI for Idaho plots. Regressions are fit by year, and are then used
 ##  to estimate biomass from NDVI for the permanent plots.
 ##
+##  ----------------------------------------------------------------------------
 ##  Author: Andrew Tredennick
 ##  Email:  atredenn@gmail.com
+################################################################################
 
 ##  Clear everything
 rm(list=ls(all.names = TRUE))
@@ -11,14 +14,14 @@ rm(list=ls(all.names = TRUE))
 ##  Set path to source file location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) # only for RStudio
 
-#### SCALING FACTORS ###########################################################
-# recent years (2014 and beyond), biomass in 0.5m^2 plots (est biomass * 2)
-# earlier years (2013 and earlier), biomass in 0.25m^2 (est biomass * 4)
+### SCALING FACTORS
+# Recent years (2014 and beyond), biomass in 0.5m^2 plots (est biomass * 2)
+# Earlier years (2013 and earlier), biomass in 0.25m^2 (est biomass * 4)
 
 
 
 ####
-####  FILE PATHS, OUTPUT PATHS, ETC. ----
+####  FILE PATHS, OUTPUT PATHS, ETC. -------------------------------------------
 ####
 data_cal_path  <- "../data/radiometer/calibration/"
 data_quad_path <- "../data/radiometer/permanent_plots/"
@@ -27,7 +30,7 @@ out_path       <- "../data/estimated_biomass/"
 
 
 ####
-####  PULL SOME PACKAGES OFF THE SHELF ----
+####  PULL SOME PACKAGES OFF THE SHELF -----------------------------------------
 ####
 library(tidyverse) # all sorts of data wrangling
 library(dplyr)     # data summarizing/wrangling tools
@@ -37,7 +40,7 @@ library(stringr)   # tidy tools for strings
 
 
 ####
-####  FUNCTIONS TO FIT AND OUTPUT CALIBRATION REGRESSSION ----
+####  FUNCTIONS TO FIT AND OUTPUT CALIBRATION REGRESSSION ----------------------
 ####
 # NDVI calculations include "sens_*" scaling factors because we did not
 # use the diffuser on the radiometer. These scaling factors are based on the
@@ -159,7 +162,7 @@ estimate_biomass <- function(regression_params, ndvi_df){
 
 
 ####
-####  LOOP OVER YEARS AND ESTIMATE REGRESSIONS ----
+####  LOOP OVER YEARS AND ESTIMATE REGRESSIONS ---------------------------------
 ####
 all_dirs  <- list.dirs(data_cal_path, full.names = FALSE, recursive = FALSE)
 all_files <- list.files(data_cal_path)                # all files, includes directories
@@ -281,16 +284,18 @@ permanent_quad_biomass[which(permanent_quad_biomass$year > 2013), "biomass_grams
 
 
 ####
-####  SAVE OUTPUT ----
+####  SAVE OUTPUT --------------------------------------------------------------
 ####
 write.csv(all_year_params, paste0(out_path,"ndvi_biomass_regression_parameters.csv"))
 saveRDS(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_biomass.RDS"))
-#write.csv(permanent_quad_biomass, paste0(out_path,"permanent_plots_estimated_biomass.csv"))
 
 
 
+
+
+####     OLD CODE      ####
 ####
-####  INITIAL PLOTS ----
+#  INITIAL PLOTS --
 ####
 # permanent_quad_biomass <- permanent_quad_biomass %>% filter(Treatment %in% c("Control","Drought","Irrigation"))
 # biomass_year_treatment <- permanent_quad_biomass %>%
