@@ -105,19 +105,20 @@ them against precipitation variability.
 \maketitle
 \thispagestyle{empty}
 
-\definecolor{blue}{rgb}{0,0,0.7}\newcommand{\new}{\textcolor{blue}}
+\definecolor{blue}{rgb}{0,0,0.7} \newcommand{\new}{\textcolor{blue}}
 
 \newcommand\blfootnote[1]{%
   \begingroup
   \renewcommand\thefootnote{}\footnote{#1}%
   \addtocounter{footnote}{-1}%
   \endgroup
-}\blfootnote{*Authors contributed equally to this work.}
+}
+
+\blfootnote{*Authors contributed equally to this work.}
 
 \reversemarginpar
 
-\hypertarget{introduction}{%
-\section{INTRODUCTION}\label{introduction}}
+\section{INTRODUCTION}\label{introduction}
 
 \new{Water availability is a major driver of annual net primary productivity (ANPP) in grassland ecosystems}
 \citep{Huxman2004, Hsu2012}.
@@ -218,11 +219,9 @@ among treatments. We also analyzed community composition and
 time, allowing us to place our experimental results within the framework
 our scenarios (Fig. 1).
 
-\hypertarget{methods}{%
-\section{METHODS}\label{methods}}
+\section{METHODS}\label{methods}
 
-\hypertarget{study-area}{%
-\subsection{Study Area}\label{study-area}}
+\subsection{Study Area}\label{study-area}
 
 We conducted our precipitation manipulation experiment in a sagebrush
 steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near
@@ -253,8 +252,7 @@ randomly assigned each plot in a pair to receive a ``drought'' or
 ``irrigation'' treatment.
 \new{Thus, our experiment consisted of $n=14$ control plots, $n=8$ irrigation plots, and $n=8$ irrigation plots, for a total of 30 plots.}
 
-\hypertarget{precipitation-experiment}{%
-\subsection{Precipitation Experiment}\label{precipitation-experiment}}
+\subsection{Precipitation Experiment}\label{precipitation-experiment}
 
 Drought and irrigation treatments were designed to decrease and increase
 the amount of ambient precipitation by 50\%. To achieve this, we used a
@@ -287,30 +285,29 @@ Analyzing the response to experimental treatments was complicated by the
 fact that we did not directly monitor soil moisture in each plot on each
 day of the experiment. Only a subset of plots were equipped with soil
 moisture sensors, and within those plots, one or more of the sensors
-frequently failed to collect data. To remedy these problems, and to
-produce average daily soil moisture values for the ambient, drought, and
-irrigation treatments, we used a statistical model to predict the
-average treatment effects on soil moisture during the course of the
+frequently failed to collect data. To remedy these problems, we used a
+statistical model to produce average daily soil moisture values for the
+ambient, drought, and irrigation treatments during the course of the
 experiment.
 
 \new{We first averaged the observed soil moisture readings for each day ($d$) and plot ($i$), $x_{i,d}$.
-Plots were organized in groups of three, with each group ($g$) containing consisting of a control, a drought, and an irrigation plot.
-Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions in the control plot. Specifically we subtracted the ambient daily soil moisture measured in the control plot from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the control plot $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{control}})/\text{s.d.}(x_{g,d,\text{control}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
+Experimental plots were organized in groups of two, with each group ($g$) containing a drought and irrigated plot. In addition a nearby area outside the drought or irrigated plots was monitored for local ambient soil moisture conditions.
+Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions. Specifically we subtracted the ambient daily soil moisture from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the ambient conditions $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{ambient}})/\text{s.d.}(x_{g,d,\text{ambient}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.}
 
 \new{We then modeled these daily deviations ($\Delta x_{g,d,\text{trt.}}$)}
 from ambient conditions using a linear mixed effects model with
 independent variables for treatment (irrigation or drought), season
 (winter, spring, summer, fall), rainfall, and all two-way interactions.
-Rainy days were defined as any day in which precipitation was recorded
-and average temperature was above 3\(^{\circ}\)C. The day immediately
-following rainfall was also classified as rainy. We fit the model using
-the \texttt{lme4::lmer()} function \citep{Bates2015} in R \citep{R2016},
-with random effects for plot group and date. We weighted observations by
-the number of unique sensors or spot measurements that were taken in
-each plot on that day.
+Using the local daily weather station data, we recorded rainy days as
+any day with measureable precipitation or the day after such a day and
+with average temperatures above 3\(^{\circ}\)C (to exclude days with
+snowfall). We fit the model using the \texttt{lme4::lmer()} function
+\citep{Bates2015} in R \citep{R2016}, with random effects for plot group
+and date. We weighted observations by the number of unique sensors or
+spot measurements that were taken in each plot on that day.
 \new{We then used the model to predict the deviations from ambient conditions produced in the treated plots on each day of the experiment.  
-We added these predicted deviations to the average daily ambient soil moisture to generate predictions for daily soil moisture in all of the treated plots: $\bar{x}_{d, \text{trt.}} = \Delta \bar{x}_{d,\text{trt.}} + \bar{x}_{d,\text{control}}$, where $\bar{x}_{d,\text{trt.}}$ is the average predicted daily soil moisture in the treated plots and $\bar{x}_{d,\text{control}}$ is the daily ambient soil moisture averaged across all control plots.}
+We added these predicted deviations to the average daily ambient soil moisture to generate predictions for daily soil moisture in all of the treated plots: $\bar{x}_{d, \text{trt.}} = \Delta \bar{x}_{d,\text{trt.}} + \bar{x}_{d,\text{ambient}}$, where $\bar{x}_{d,\text{trt.}}$ is the average predicted daily soil moisture in the treated plots and $\bar{x}_{d,\text{ambient}}$ is the daily ambient soil moisture averaged across all control plots.}
 We could only predict soil moisture in the treated plots on days for
 which we took at least one ambient soil moisture measurement. This
 procedure allowed us to predict daily soil moisture conditions for all
@@ -319,8 +316,7 @@ were missing due to malfunction of the sensors or dataloggers. See
 \citet{Kleinhesselink2017b} for more details on our approach to
 estimating soil moisture.
 
-\hypertarget{data-collection}{%
-\subsection{Data Collection}\label{data-collection}}
+\subsection{Data Collection}\label{data-collection}
 
 We estimated aboveground net primary productivity (ANPP) using a
 radiometer to relate ground reflectance to plant biomass \citep[see][
@@ -363,12 +359,10 @@ rare species are weighted equally. Assuming that rare species will
 respond to treatments more than common ones, our approach is biased
 towards detecting compositional changes.
 
-\hypertarget{data-analysis}{%
-\subsection{Data Analysis}\label{data-analysis}}
+\subsection{Data Analysis}\label{data-analysis}
 
-\hypertarget{ecosystem-functional-response}{%
 \subsubsection{Ecosystem functional
-response}\label{ecosystem-functional-response}}
+response}\label{ecosystem-functional-response}
 
 Our main goal was to test whether the relationship between ANPP and soil
 moisture differed among the drought, control, and irrigation treatments.
@@ -453,25 +447,23 @@ inspected to ensure well-mixed chains and convergence. We also made sure
 all scale reduction factors (\(\hat{R}\) values) were less than 1.1
 \citep{Gelman2009}.
 
-\hypertarget{sensitivity-of-anpp-over-time}{%
 \subsubsection{Sensitivity of ANPP over
-time}\label{sensitivity-of-anpp-over-time}}
+time}\label{sensitivity-of-anpp-over-time}
 
-\new{Unfortunately, our data does not allow us to include the effect of time on ecosystem functional response in the model described above. 
+\new{Our data does not allow us to directly test whether the ecosystem functional response to precipitation may have changed over time in each of the treatments. 
 This is because we lack sufficient within-year and within-treatment variation of soil moisture (i.e., within a year and treatment each plot shares the same value of VWC). 
-Therefore, we conducted an independent analysis to determine if the sensitivity of ANPP to treatment changed over time.}
+However, we did use a separate analysis to test whether the the sensitivity of ANPP to treatment changed over time.}
 
-\new{We define `sensitivity' as $\frac{ \text{ANPP}_{\text{control}} - \text{ANPP}_{\text{treatment}} } { \text{VWC}_{\text{control}} - \text{VWC}_{\text{treatment}} }$, following}
+\new{We define `sensitivity' as $\frac{ \text{ANPP}_{\text{control}} - \text{ANPP}_{\text{treatment}} } { \text{VWC}_{\text{ambient}} - \text{VWC}_{\text{treatment}} }$, following}
 \citet{Wilcox2017}.
-\new{This metric of sensitivity measures the response of ANPP standardized by the magnitude of the treatment. 
-Because our treatment and control plots are not paired, we conducted this analysis by comparing each treatment plot to the mean of the control plots in each year. 
-Then, independently for each treatment, we regressed sensitivity against year of treatment using the \texttt{lm()} function in R}
+\new{This metric of sensitivity scales the difference between ANPP in the treated and control plots by the change in soil moisture in the treated plots. 
+Because our treated plots are not directly paired with individual control plots, we compare ANPP in each treated plot to the average ANPP of the control plots in each year.
+After calculating sensitivity for each drought and irrigation plot in each year, we regressed sensitivity against year of treatment using the \texttt{lm()} function in R}
 \citep{R2016}.
 \new{This analysis also allows us to link particularly sensitive treatment years to changes in community composition.}
 
-\hypertarget{community-composition-over-time}{%
 \subsubsection{Community composition over
-time}\label{community-composition-over-time}}
+time}\label{community-composition-over-time}
 
 We used nonmetric multidimensional scaling (NMDS) based on Bray-Curtis
 distances to identify temporal changes in community composition among
@@ -494,8 +486,7 @@ plots were equally dispersed, or not, we used the
 Annual species have shorter life spans, so conducting a separate analysis allowed us to discover if community responses are restricted to short-lived species that might respond more quickly to altered precipitation regimes. 
 Given the dominance of perennial species in our system (Appendix 1), shifts in the annual plant community could be difficult to detect in the analysis of the full community.}
 
-\hypertarget{reproducibility}{%
-\subsubsection{Reproducibility}\label{reproducibility}}
+\subsubsection{Reproducibility}\label{reproducibility}
 
 All R code and data necessary to reproduce our analysis has been
 archived on Figshare (\emph{link here after acceptance}) and released on
@@ -503,8 +494,7 @@ GitHub (\url{https://github.com/atredennick/usses_water/releases/v0.1}).
 We also include annotated Stan code in our model description in Appendix
 3.
 
-\hypertarget{results}{%
-\section{RESULTS}\label{results}}
+\section{RESULTS}\label{results}
 
 Ambient precipitation was variable over the five years of the study
 (Fig. 2A), meaning our experiment captured a range of environmental
@@ -552,8 +542,7 @@ Splitting the analysis apart for annuals led to similar results.
 There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights them equally (Fig. A1-4).
 By definition, thsee rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
 
-\hypertarget{discussion}{%
-\section{DISCUSSION}\label{discussion}}
+\section{DISCUSSION}\label{discussion}
 
 Ecosystem response to a new precipitation regime depends on the
 physiological responses of constituent species and the rate at which
@@ -666,14 +655,10 @@ in the soil profile thanks to a deep root system
 \new{The dominance of our site by the shrub \emph{A. tripartita} (Appendix 1) may explain why our results do not conform to broader patterns of grassland sensitivity to precipitation manipulations}
 \citep[e.g.,][]{Huxman2004, Knapp2015, Wilcox2017}.
 
-\new{We did find that ANPP became more sensitive to drought over time (Fig. 3C).
-The latter years of our experiment were relatively wet, meaning that the drought treatment could have the largest absolute reduction of soil moisture in those years.
-But our metric of sensitivity accounts for differences among years because ANPP differences is standardized by the difference in soil moisture within the year.
-Therefore, it is likely that the increased sensitivity to drought over time is due to the cumulative impact of drought on the dominant species.
-Ecosystem functional response may soon shift if sensitivity continues to increase.}
+\new{We found that ANPP became more sensitive to the drought over time (Fig. 3C).  In other words, relative to the effect of the drought shelters on soil moisture, ANPP was more reduced by the drought conditions later in the experiment than early on in the experiment. 
+We interepret this increase in sensitivity as the effect of cumulative impacts of the drought on dominant species.  Plants may not have shown a large response in terms of ANPP in the first years of the experiment if they could grow from stored carbohydrate reserves or if they abstained from flowering and reproduction. As the drought progressed, these same plants may have have started to reduce in size or die. Given the long lived perennial species at this site, this increase in sensitivity may indicate a larger future change in community composition and ecosystem functional response. }
 
-\hypertarget{conclusions}{%
-\section{CONCLUSIONS}\label{conclusions}}
+\section{CONCLUSIONS}\label{conclusions}
 
 Our results suggest the species in our focal plant community are
 insensitive to to changes in precipitation regime,
@@ -692,8 +677,7 @@ at high rainfall because the current community maintained consistent
 ecosystem functional response at very low water availability.
 \new{However, the increased sensitivity of ANPP to drought conditions suggests a shift in ecosystem functional response may be near, and simply takes more time than we observed here.}
 
-\hypertarget{acknowledgements}{%
-\section{ACKNOWLEDGEMENTS}\label{acknowledgements}}
+\section{ACKNOWLEDGEMENTS}\label{acknowledgements}
 
 We thank the many summer research technicians who collected the data
 reported in this paper and the USDA, U.S. Sheep Experiment Station
@@ -703,8 +687,7 @@ Kevin Wilcox for helpful discussions on analyzing community composition
 data.
 \new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
 
-\hypertarget{funding}{%
-\section{FUNDING}\label{funding}}
+\section{FUNDING}\label{funding}
 
 This research was supported by the Utah Agricultural Experiment Station,
 Utah State University, and approved as journal paper number 9035. The
@@ -713,8 +696,7 @@ a Postdoctoral Research Fellowship in Biology and Mathematics to ATT
 (DBI-1400370), a Graduate Research Fellowship to ARK, and grants
 DEB-1353078 and DEB-1054040 to PBA.
 
-\hypertarget{author-contributions}{%
-\section{AUTHOR CONTRIBUTIONS}\label{author-contributions}}
+\section{AUTHOR CONTRIBUTIONS}\label{author-contributions}
 
 \begin{itemize}
   \item Andrew T. Tredennick collected data, analyzed the data, wrote the paper, prepared figures and/or tables, reviewed drafts of the paper.
@@ -723,8 +705,7 @@ DEB-1353078 and DEB-1054040 to PBA.
   \item Peter B. Adler conceived and designed the experiments, performed the experiments, collected data, analyzed the data, reviewed drafts of the paper.
 \end{itemize}
 
-\hypertarget{supplemental-information}{%
-\section{SUPPLEMENTAL INFORMATION}\label{supplemental-information}}
+\section{SUPPLEMENTAL INFORMATION}\label{supplemental-information}
 
 \begin{description}
 \item [Appendix 1.] \new{Additional information on plant community composition and dynamics, Table A1-1, Table A1-2, Table A1-3, Fig. A1-1, Fig. A1-2, Fig. A1-3, Fig. A1-4, Fig. A1-5, and Fig. A1-6.}
@@ -736,8 +717,7 @@ DEB-1353078 and DEB-1054040 to PBA.
 
 \newpage{}
 
-\hypertarget{tables}{%
-\section{TABLES}\label{tables}}
+\section{TABLES}\label{tables}
 
 \begin{table}[ht]
 \centering
@@ -764,18 +744,18 @@ Intercept & Control & 0.16 & 0.14 & -1.22 & 1.69 \\
   \hline
 Year & Test & n & d.f. & \emph{F} & \emph{P} \\ 
   \hline
-2011 & adonis &  22 &   2 & 1.04 & 0.42 \\ 
-  2011 & betadisper &  22 &   2 & 2.22 & 0.14 \\ 
-  2012 & adonis &  22 &   2 & 1.09 & 0.33 \\ 
-  2012 & betadisper &  22 &   2 & 0.21 & 0.81 \\ 
-  2013 & adonis &  22 &   2 & 1.26 & 0.10 \\ 
-  2013 & betadisper &  22 &   2 & 0.43 & 0.66 \\ 
-  2014 & adonis &  22 &   2 & 0.96 & 0.53 \\ 
-  2014 & betadisper &  22 &   2 & 0.36 & 0.70 \\ 
-  2015 & adonis &  22 &   2 & 1.08 & 0.31 \\ 
-  2015 & betadisper &  22 &   2 & 1.96 & 0.17 \\ 
-  2016 & adonis &  22 &   2 & 1.12 & 0.24 \\ 
-  2016 & betadisper &  22 &   2 & 0.27 & 0.76 \\ 
+2011 & adonis &  30 &   2 & 1.92 & 0.01 \\ 
+  2011 & betadisper &  30 &   2 & 0.64 & 0.53 \\ 
+  2012 & adonis &  30 &   2 & 1.40 & 0.06 \\ 
+  2012 & betadisper &  30 &   2 & 0.30 & 0.75 \\ 
+  2013 & adonis &  30 &   2 & 1.70 & 0.01 \\ 
+  2013 & betadisper &  30 &   2 & 0.59 & 0.56 \\ 
+  2014 & adonis &  30 &   2 & 1.47 & 0.06 \\ 
+  2014 & betadisper &  30 &   2 & 2.23 & 0.13 \\ 
+  2015 & adonis &  30 &   2 & 1.22 & 0.14 \\ 
+  2015 & betadisper &  30 &   2 & 1.78 & 0.19 \\ 
+  2016 & adonis &  30 &   2 & 1.83 & 0.00 \\ 
+  2016 & betadisper &  30 &   2 & 0.24 & 0.79 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -783,8 +763,7 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 
 \newpage{}
 
-\hypertarget{figures}{%
-\section{FIGURES}\label{figures}}
+\section{FIGURES}\label{figures}
 
 \begin{figure}[!ht]
   \centering
@@ -819,7 +798,7 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 \newpage{}
 
 
-\bibliography{/Users/atredenn/Dropbox/Bibliography/usses\_water.bib}
+\bibliography{/Users/atredenn/Dropbox/Bibliography/usses_water.bib}
 
 
 \end{document}

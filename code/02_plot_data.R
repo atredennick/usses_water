@@ -82,15 +82,17 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   ungroup() %>%
   left_join(soilwat, by = c("year","Treatment","julian_date")) %>%
   mutate(VWC_combo = ifelse(is.na(VWC)==TRUE, VWC_raw, VWC),
-         VWC_source = ifelse(is.na(VWC)==TRUE, "soilwat", "observed"))
+         VWC_source = ifelse(is.na(VWC)==TRUE, "soilwat", "observed")) %>%
+  filter(month %in% c("03","04","05","06"))
 
 
-
+soilwat_inserts <- soil_moisture %>%
+  filter(is.na(VWC) == TRUE)
 
 suppressWarnings(# ignore warnings about missing values, we know they are empty
   soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
-    geom_line(size=0.5, linetype=2, aes(x=julian_date, y=VWC_raw, group=Treatment, color=Treatment))+
-    geom_line(size=0.5)+
+    geom_line(data = soilwat_inserts, size=0.3, linetype=2, aes(x=julian_date, y=VWC_raw, group=Treatment, color=Treatment))+
+    geom_line(size=0.3)+
     scale_color_manual(values = mycols, name="Treatment")+
     ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
     xlab("Julian Day")+
@@ -103,6 +105,11 @@ suppressWarnings(# ignore warnings about missing values, we know they are empty
     guides(color=FALSE, linetype = FALSE)
 )
 
+##  Save VWC for statistical modeling that matches the above figure
+vwc_for_stats <- soil_moisture %>%
+  select(year, month, day, Treatment, VWC_combo, VWC_source) %>%
+  rename(VWC = VWC_combo)
+saveRDS(vwc_for_stats, "../data/soil_moisture_data/vwc_for_stats.RDS")
 
 
 ####
