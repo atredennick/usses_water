@@ -32,6 +32,14 @@ library(cowplot)   # For combining ggplot objects
 ####  READ IN WEATHER DATA AND PLOT --------------------------------------------
 ####
 weather <- read.csv("../data/weather/ClimateIPM.csv")
+# weather <- read.csv("../data/weather/dubois_station_weather_01032018.csv") %>%
+#   dplyr::select(DATE, PRCP) %>%
+#   dplyr::rename("date" = DATE, "precip" = PRCP) %>%
+#   separate(date, into = c("year", "month", "day"), sep = "-") %>%
+#   mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
+#   group_by(year) %>%
+#   summarise(annual_precip = sum(precip)) 
+
 trt_data <- weather %>%
   filter(year>2011) %>%
   select(year, ppt1) %>%

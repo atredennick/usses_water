@@ -32,8 +32,6 @@
 *.odt
 
 # data
-*.RDS
-*.rds
 *.dat
 *.sqlite
 *.rda
