@@ -67,14 +67,29 @@ ppt_histogram <- ggplot(weather, aes(x=ppt1))+
 ####  PLOT SOIL WATER BY TREATMENT ---------------------------------------------
 ####
 mycols <- c("#009E73", "#D55E00", "#0072B2")
+
+soilwat <- readRDS("../data/soil_moisture_data/SOILWAT_treatment_years.RDS") %>%
+  select(date, year, Treatment, VWC_raw, doy) %>%
+  rename(julian_date = doy) %>%
+  mutate(julian_date = as.integer(julian_date))
+
 soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
   select(-year) %>%
   separate(simple_date, c("year","month","day")) %>%
+  mutate(year = as.integer(year),
+         Treatment = as.character(Treatment)) %>%
   filter(type=="observed") %>%
-  ungroup()
+  ungroup() %>%
+  left_join(soilwat, by = c("year","Treatment","julian_date")) %>%
+  mutate(VWC_combo = ifelse(is.na(VWC)==TRUE, VWC_raw, VWC),
+         VWC_source = ifelse(is.na(VWC)==TRUE, "soilwat", "observed"))
+
+
+
 
 suppressWarnings(# ignore warnings about missing values, we know they are empty
   soil_vwc <- ggplot(soil_moisture, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
+    geom_line(size=0.5, linetype=2, aes(x=julian_date, y=VWC_raw, group=Treatment, color=Treatment))+
     geom_line(size=0.5)+
     scale_color_manual(values = mycols, name="Treatment")+
     ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
@@ -85,7 +100,7 @@ suppressWarnings(# ignore warnings about missing values, we know they are empty
     theme(panel.grid.minor = element_blank(),
           strip.background = element_blank(), 
           strip.text = element_text(size=6))+
-    guides(color=FALSE)
+    guides(color=FALSE, linetype = FALSE)
 )
 
 
