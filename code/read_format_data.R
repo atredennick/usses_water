@@ -61,7 +61,7 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   mutate(VWC_combo = ifelse(is.na(VWC)==TRUE, VWC_raw, VWC), # fill in NA gaps with SoilWat
          VWC_source = ifelse(is.na(VWC)==TRUE, "soilwat", "predicted")) %>%
   group_by(year, month, Treatment) %>%
-  summarise(avg_vwc = mean(VWC_combo)) %>% # calc the mean by year, month, and treatment
+  summarise(avg_vwc = mean(VWC_raw)) %>% # calc the mean by year, month, and treatment
   mutate(month_year = paste0(year,"-",month)) %>% # make a new col for IDs
   filter(month %in% c("03","04","05","06")) %>% # keep only March-June as growing season
   group_by(year, Treatment) %>%
