@@ -32,32 +32,34 @@ library(cowplot)   # For combining ggplot objects
 ####  READ IN WEATHER DATA AND PLOT --------------------------------------------
 ####
 weather <- read.csv("../data/weather/ClimateIPM.csv")
-# weather <- read.csv("../data/weather/dubois_station_weather_01032018.csv") %>%
-#   dplyr::select(DATE, PRCP) %>%
-#   dplyr::rename("date" = DATE, "precip" = PRCP) %>%
-#   separate(date, into = c("year", "month", "day"), sep = "-") %>%
-#   mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
-#   group_by(year) %>%
-#   summarise(annual_precip = sum(precip)) 
+weather <- read.csv("../data/weather/dubois_station_weather_01092018.csv") %>%
+  dplyr::select(DATE, PRCP) %>%
+  dplyr::rename("date" = DATE, "precip" = PRCP) %>%
+  separate(date, into = c("year", "month", "day"), sep = "-") %>%
+  mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
+  mutate(year = as.numeric(year)) %>%
+  group_by(year) %>%
+  summarise(annual_precip = sum(precip))
 
 trt_data <- weather %>%
-  filter(year>2011) %>%
-  select(year, ppt1) %>%
+  filter(year > 2011) %>%
+  filter(year < 2017) %>%
+  select(year, annual_precip) %>%
   mutate(Treatment = "Control")
 
 ##  Adjust 2012 and 2015 values so they are distinguishable on the plot
-trt_data[which(trt_data$year==2015),"ppt1"] <- trt_data[which(trt_data$year==2015),"ppt1"]+10
-trt_data[which(trt_data$year==2012),"ppt1"] <- trt_data[which(trt_data$year==2012),"ppt1"]-5
+trt_data[which(trt_data$year==2015),"annual_precip"] <- trt_data[which(trt_data$year==2015),"annual_precip"]+8
+trt_data[which(trt_data$year==2014),"annual_precip"] <- trt_data[which(trt_data$year==2014),"annual_precip"]-8
 
-ppt_histogram <- ggplot(weather, aes(x=ppt1))+
+ppt_histogram <- ggplot(weather, aes(x=annual_precip))+
   geom_histogram(bins=20,color="lightblue",fill="lightblue", aes(y=..density..), alpha = 0.5, size=0.00001)+
   geom_line(stat="density", color="blue")+
-  geom_segment(data=trt_data, aes(x=ppt1,xend=ppt1,y=0.00045,yend=0), arrow = arrow(length = unit(0.02, "npc")))+
-  geom_text(data=trt_data, aes(x=ppt1, y=0.0009, label=year), angle=90, size=2.5)+
+  geom_segment(data=trt_data, aes(x=annual_precip,xend=annual_precip,y=0.00045,yend=0), arrow = arrow(length = unit(0.02, "npc")))+
+  geom_text(data=trt_data, aes(x=annual_precip, y=0.0009, label=year), angle=90, size=2.5)+
   scale_x_continuous(expand=c(0,0), limits=c(0,620), breaks=seq(0,600,100))+
   scale_y_continuous(expand=c(0,0), limits=c(0,0.0085))+
   ylab("Density")+
-  xlab("Growing Season Precipitation (mm)")+
+  xlab(expression(paste("Annual Precipitation (mm ", yr^-1,")")))+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
@@ -98,6 +100,7 @@ suppressWarnings(# ignore warnings about missing values, we know they are empty
     ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
     xlab("Julian Day")+
     scale_y_continuous(breaks=seq(0,24,8))+
+    scale_x_continuous(breaks=seq(0,250,20))+
     facet_grid(year~.)+
     theme_bw()+
     theme(panel.grid.minor = element_blank(),
