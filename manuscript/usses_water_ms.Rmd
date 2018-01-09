@@ -171,8 +171,8 @@ See @Kleinhesselink2017b for more details on our approach to estimating soil moi
 
 \new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed take readings.
 Therefore, we used a version of the SOILWAT soil moisture model} [@Sala1992a] \new{that has been specifically designed for semiarid shrublands and grasslands} [@Bradford2014].
-\new{The model was parameterized sing generic sagebrush stepped parameters and local soil texture, soil bulk density, and precipitation data} [@Kleinhesselink2017b].
-\new{We used the locally parameterized SOILWAT model generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. Sx).}
+\new{The model was parameterized using generic sagebrush steppe parameters and local soil texture, soil bulk density, and precipitation data} [@Kleinhesselink2017b].
+\new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B).}
 
 
 ## Data Collection
