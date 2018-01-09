@@ -457,7 +457,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/data_panels.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) \new{Estimated daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
+  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) \new{Observed (solid line), estimated (dashed lines), and SOILWAT-generated (dotted lines) daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. \new{We used the estimates from our statistical model, with gaps filled in by SOILWAT predictions, to calculate cumulative VWC as used in our analysis of treatment effects on ecosystem functional response.} (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
 \end{figure}
 
 

@@ -92,6 +92,7 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
 suppressWarnings(# ignore warnings about missing values, we know they are empty
   soil_vwc <- ggplot(filter(soil_moisture, type == "observed"), aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
     geom_line(data = filter(soil_moisture, type == "predicted"), size=0.3, linetype=2, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
+    geom_line(data = filter(soil_moisture, VWC_source == "soilwat"), size=0.3, linetype=3, aes(x=julian_date, y=VWC_combo, group=Treatment, color=Treatment))+
     geom_line(size=0.3)+
     scale_color_manual(values = mycols, name="Treatment")+
     ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
