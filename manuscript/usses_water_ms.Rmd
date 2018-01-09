@@ -337,8 +337,8 @@ We first discuss the potential limitations of our study, and then discuss the bi
 First, it could be that our precipitation manipulations were not large enough to induce a response.
 That is, a 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
 We cannot definitively rule out this possibility, but we have reason to believe our treatments \emph{should} have been large enough.
-Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of mean growing season precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A5-1).
-The 1\% quantile of precipitation at our site is 110 mm, a 47% reduction from the mean, and the 99\% quantile is 414 mm, a 77\% increase from mean growing season precipitation (Appendix 5).
+Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of annual precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A5-1).
+The 1\% quantile of precipitation at our site is 151 mm, a 50% reduction from the mean, and the 99\% quantile is 532 mm, a 77\% increase from mean growing season precipitation (Appendix 5).
 Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
 The irrigation treatment may not qualify as extreme, yet that is the treatment where we did observe an effect (Fig. 3A).
 
