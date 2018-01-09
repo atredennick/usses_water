@@ -35,7 +35,7 @@ header-includes: >
   \usepackage{sectsty}
   \usepackage{bm,mathrsfs}
   \usepackage{lipsum}
-bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
+bibliography: usses_water.bib
 output: 
   rticles::peerj_article:
     number_sections: false
@@ -168,6 +168,11 @@ We added these predicted deviations to the average daily ambient soil moisture t
 We could only predict soil moisture in the treated plots on days for which we took at least one ambient soil moisture measurement.
 This procedure allowed us to predict daily soil moisture conditions for all plots, even on those days when some of our direct treatment measurements were missing due to malfunction of the sensors or dataloggers. 
 See @Kleinhesselink2017b for more details on our approach to estimating soil moisture.
+
+\new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed take readings.
+Therefore, we used a version of the SOILWAT soil moisture model} [@Sala1992a] \new{that has been specifically designed for semiarid shrublands and grasslands} [@Bradford2014].
+\new{The model was parameterized sing generic sagebrush stepped parameters and local soil texture, soil bulk density, and precipitation data} [@Kleinhesselink2017b].
+\new{We used the locally parameterized SOILWAT model generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. Sx).}
 
 
 ## Data Collection
@@ -374,6 +379,7 @@ Our results suggest compositional shifts would have the largest impact at high r
 
 We thank the many summer research technicians who collected the data reported in this paper and the USDA, U.S. Sheep Experiment Station (Dubois, ID) for facilitating work on their property.
 We also thank Susan Durham for clarifying our thinking on the statistical analyses and Kevin Wilcox for helpful discussions on analyzing community composition data.
+John Bradford and Caitlin Andrews generously provided SOILWAT model output,
 \new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
 
 # FUNDING
@@ -477,4 +483,4 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 
 \newpage{}
 
-# REFERENCES
+# References

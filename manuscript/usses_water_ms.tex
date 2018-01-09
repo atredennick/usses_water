@@ -318,6 +318,15 @@ were missing due to malfunction of the sensors or dataloggers. See
 \citet{Kleinhesselink2017b} for more details on our approach to
 estimating soil moisture.
 
+\new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed take readings.
+Therefore, we used a version of the SOILWAT soil moisture model}
+\citep{Sala1992a}
+\new{that has been specifically designed for semiarid shrublands and grasslands}
+\citep{Bradford2014}.
+\new{The model was parameterized sing generic sagebrush stepped parameters and local soil texture, soil bulk density, and precipitation data}
+\citep{Kleinhesselink2017b}.
+\new{We used the locally parameterized SOILWAT model generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. Sx).}
+
 \hypertarget{data-collection}{%
 \subsection{Data Collection}\label{data-collection}}
 
@@ -696,7 +705,8 @@ reported in this paper and the USDA, U.S. Sheep Experiment Station
 (Dubois, ID) for facilitating work on their property. We also thank
 Susan Durham for clarifying our thinking on the statistical analyses and
 Kevin Wilcox for helpful discussions on analyzing community composition
-data.
+data. John Bradford and Caitlin Andrews generously provided SOILWAT
+model output,
 \new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
 
 \hypertarget{funding}{%
@@ -815,7 +825,7 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 \newpage{}
 
 
-\bibliography{/Users/atredenn/Dropbox/Bibliography/usses\_water.bib}
+\bibliography{usses\_water.bib}
 
 
 \end{document}
