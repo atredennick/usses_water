@@ -35,7 +35,7 @@ header-includes: >
   \usepackage{sectsty}
   \usepackage{bm,mathrsfs}
   \usepackage{lipsum}
-bibliography: usses_water.bib
+bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
 output: 
   rticles::peerj_article:
     number_sections: false
@@ -483,4 +483,4 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 
 \newpage{}
 
-# References
+# REFERENCES
