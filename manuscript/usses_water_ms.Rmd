@@ -172,7 +172,7 @@ See @Kleinhesselink2017b for more details on our approach to estimating soil moi
 \new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed take readings.
 Therefore, we used a version of the SOILWAT soil moisture model} [@Sala1992a] \new{that has been specifically designed for semiarid shrublands and grasslands} [@Bradford2014].
 \new{The model was parameterized using generic sagebrush steppe parameters and local soil texture, soil bulk density, and precipitation data} [@Kleinhesselink2017b].
-\new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B).}
+\new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B and Appendix X).}
 
 
 ## Data Collection
@@ -337,10 +337,10 @@ We first discuss the potential limitations of our study, and then discuss the bi
 First, it could be that our precipitation manipulations were not large enough to induce a response.
 That is, a 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
 We cannot definitively rule out this possibility, but we have reason to believe our treatments \emph{should} have been large enough.
-Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of annual precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A5-1).
-The 1\% quantile of precipitation at our site is 151 mm, a 50% reduction from the mean, and the 99\% quantile is 532 mm, a 77\% increase from mean growing season precipitation (Appendix 5).
-Thus, our drought treatment represented extreme precipitation amounts, especially in years where ambient precipitation was below average (Fig. 2A).
-The irrigation treatment may not qualify as extreme, yet that is the treatment where we did observe an effect (Fig. 3A).
+Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of \new{water-year} precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A5-1).
+\new{The 1\% quantile of water-year precipitation at our site is 78 mm, a 26% reduction from the mean, and the 99\% quantile is 545 mm, a 84\% increase from mean growing season precipitation (Appendix 5).
+Thus, our drought treatment represented extreme precipitation amounts, and that is the treatment where we observed a small effect on the slope between soil moisture and ANPP (Fig. 3A).
+The irrigation treatment may not have been extreme enough to induce a response.}
 
 Second, ANPP at our site may be influenced by additional factors, not only the cumulative March-June soil moisture covariate we included in our statistical model.
 \new{For example,} @LaPierre2016 \new{found that site-scale ANPP is better predicted by abiotic factors such as nutrient availability than precipitation.}
@@ -457,7 +457,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/data_panels.png}
-  \caption{(A) Probability density of historical precipitation from 1926-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) \new{Observed (solid line), estimated (dashed lines), and SOILWAT-generated (dotted lines) daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. \new{We used the estimates from our statistical model, with gaps filled in by SOILWAT predictions, to calculate cumulative VWC as used in our analysis of treatment effects on ecosystem functional response.} (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
+  \caption{(A) Probability density of historical water-year (Oct.--Sept.) precipitation from 1927-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) \new{Satistically estimated (solid lines) and SOILWAT-generated (dashed lines) daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. \new{We used the estimates from our statistical model, with gaps filled in by SOILWAT predictions, to calculate cumulative March--June VWC as used in our analysis of treatment effects on ecosystem functional response.} (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
 \end{figure}
 
 

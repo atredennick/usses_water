@@ -31,15 +31,21 @@ library(cowplot)   # For combining ggplot objects
 ####
 ####  READ IN WEATHER DATA AND PLOT --------------------------------------------
 ####
-weather <- read.csv("../data/weather/ClimateIPM.csv")
+##  Water year defined as precip in Oct-Dec in year t and Jan-Sept in year t+1
+##  following USGS.
+first_water_months <- c("10","11","12") # first months in water year, to be promoted a year
+# weather <- read.csv("../data/weather/ClimateIPM.csv")
 weather <- read.csv("../data/weather/dubois_station_weather_01092018.csv") %>%
   dplyr::select(DATE, PRCP) %>%
   dplyr::rename("date" = DATE, "precip" = PRCP) %>%
   separate(date, into = c("year", "month", "day"), sep = "-") %>%
   mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
   mutate(year = as.numeric(year)) %>%
-  group_by(year) %>%
-  summarise(annual_precip = sum(precip))
+  mutate(water_year = ifelse(month %in% first_water_months, year+1, year)) %>% # create water years, based on USGS defintion
+  filter(year != 1925) %>% # remove first year because don't have first water-year months
+  group_by(water_year) %>%
+  summarise(annual_precip = sum(precip)) %>%
+  rename(year = water_year)
 
 trt_data <- weather %>%
   filter(year > 2011) %>%
@@ -48,8 +54,8 @@ trt_data <- weather %>%
   mutate(Treatment = "Control")
 
 ##  Adjust 2012 and 2015 values so they are distinguishable on the plot
-trt_data[which(trt_data$year==2015),"annual_precip"] <- trt_data[which(trt_data$year==2015),"annual_precip"]+8
-trt_data[which(trt_data$year==2014),"annual_precip"] <- trt_data[which(trt_data$year==2014),"annual_precip"]-8
+trt_data[which(trt_data$year==2015),"annual_precip"] <- trt_data[which(trt_data$year==2015),"annual_precip"]-1
+trt_data[which(trt_data$year==2014),"annual_precip"] <- trt_data[which(trt_data$year==2014),"annual_precip"]+1
 
 ppt_histogram <- ggplot(weather, aes(x=annual_precip))+
   geom_histogram(bins=20,color="lightblue",fill="lightblue", aes(y=..density..), alpha = 0.5, size=0.00001)+
@@ -57,7 +63,7 @@ ppt_histogram <- ggplot(weather, aes(x=annual_precip))+
   geom_segment(data=trt_data, aes(x=annual_precip,xend=annual_precip,y=0.00045,yend=0), arrow = arrow(length = unit(0.02, "npc")))+
   geom_text(data=trt_data, aes(x=annual_precip, y=0.0009, label=year), angle=90, size=2.5)+
   scale_x_continuous(expand=c(0,0), limits=c(0,620), breaks=seq(0,600,100))+
-  scale_y_continuous(expand=c(0,0), limits=c(0,0.0085))+
+  scale_y_continuous(expand=c(0,0), limits=c(0,0.0065))+
   ylab("Density")+
   xlab(expression(paste("Annual Precipitation (mm ", yr^-1,")")))+
   theme_bw()+
@@ -88,9 +94,12 @@ soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_mois
   filter(month %in% c("03","04","05","06"))
 
 suppressWarnings(# ignore warnings about missing values, we know they are empty
-  soil_vwc <- ggplot(filter(soil_moisture, type == "predicted"), aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
+  soil_vwc <- ggplot(filter(soil_moisture, type == "predicted"), 
+                     aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
     # geom_line(data = filter(soil_moisture, type == "predicted"), size=0.3, linetype=2, aes(x=julian_date, y=VWC, group=Treatment, color=Treatment))+
-    geom_line(data = filter(soil_moisture, VWC_source == "soilwat"), size=0.3, linetype=2, aes(x=julian_date, y=VWC_combo, group=Treatment, color=Treatment))+
+    geom_line(data = filter(soil_moisture, VWC_source == "soilwat"), 
+              aes(x=julian_date, y=VWC_combo, group=Treatment, color=Treatment),
+              size=0.3, linetype=2)+
     geom_line(size=0.3)+
     scale_color_manual(values = mycols, name="Treatment")+
     ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
