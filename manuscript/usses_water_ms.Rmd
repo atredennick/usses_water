@@ -188,12 +188,14 @@ We then predicted ANPP using the best regression equation for each year (Appendi
 \new{Our analysis, described below, can be done using NDVI directly, but we focus on ANPP to more easily relate our findings to previous work and because our results do not change if we analyze NDVI directly (Appendix 4).}
 
 Species composition data came from two sources: yearly census maps for each plot made using a pantograph [@Hill1920] and yearly counts of annual species in each plot.
-\new{Mapping was done for plots within one of the permanent exclosures, which included six of the control plots and all of the treatment plots, for a total of 22 plots.}
 From these sources, we determined the density of all annuals and perennials forbs, the basal cover of perennial grasses, and the canopy cover of shrubs.
 We made a large plot-treatment-year by species matrix, where columns were filled with either basal cover or density, depending on the measurement made for the particular species.
 We standardized the values in each column so we could directly compare species quantified with different metrics (density, basal cover, and canopy cover).
 This puts all abundance values on the same scale, meaning that common and rare species are weighted equally.
 Assuming that rare species will respond to treatments more than common ones, our approach is biased towards detecting compositional changes.
+\new{We limited our community level data to observations from the permanent exclosure with our drought and irrigation treatments for the community composition analyses described below (\textbf{Community composition over time}).
+This exclosure included six of the control plots and all of the treatment plots, for a total of 22 plots.
+The other eight control plots are in other pastures, which would add a spatial bias to our community analysis focused on temporal dynamics.}
 
 ## Data Analysis
 
