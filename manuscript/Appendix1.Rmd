@@ -83,7 +83,18 @@ figure_path  <- "../figures/"
 
 # Read in data
 plot_biomass <- readRDS(paste0(biomass_path,"permanent_plots_estimated_biomass.RDS"))
-weather_data <- read.csv(paste0(weather_path,"ClimateIPM.csv"))
+first_water_months <- c("10","11","12") # first months in water year, to be promoted a year
+weather_data <- read.csv("../data/weather/dubois_station_weather_01092018.csv") %>%
+  dplyr::select(DATE, PRCP) %>%
+  dplyr::rename("date" = DATE, "precip" = PRCP) %>%
+  separate(date, into = c("year", "month", "day"), sep = "-") %>%
+  mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
+  mutate(year = as.numeric(year)) %>%
+  mutate(water_year = ifelse(month %in% first_water_months, year+1, year)) %>% # create water years, based on USGS defintion
+  filter(year != 1925) %>% # remove first year because don't have first water-year months
+  group_by(water_year) %>%
+  summarise(annual_precip = sum(precip)) %>%
+  rename(year = water_year)
 plot_info    <- read.csv("../data/estimated_biomass/quad_info.csv")
 
 suppressWarnings( # ignore factor to character warning. It's OK.
@@ -177,18 +188,18 @@ dom_annuals <- annual_data %>%
   left_join(weather_data, by = "year")
 ```
 
-Table A1-1: Statistical results from linear model relating density of Allysum desertorum to precipitation.
-```{r report_models, echo = FALSE}
-summary(lm(mean_density~ppt1*Treatment, data = filter(dom_annuals, species == "Allyssum desertorum")))
-```
+<!-- Table A1-1: Statistical results from linear model relating density of Allysum desertorum to precipitation. -->
+<!-- ```{r report_models, echo = FALSE} -->
+<!-- summary(lm(mean_density~annual_precip*Treatment, data = filter(dom_annuals, species == "Allyssum desertorum"))) -->
+<!-- ``` -->
 
-\newpage{}
-Table A1-2: Statistical results from linear model relating density of Bromus tectorum to precipitation.
-```{r report_models2, echo = FALSE}
-summary(lm(mean_density~ppt1*Treatment, data = filter(dom_annuals, species == "Bromus tectorum")))
-```
+<!-- \newpage{} -->
+<!-- Table A1-2: Statistical results from linear model relating density of Bromus tectorum to precipitation. -->
+<!-- ```{r report_models2, echo = FALSE} -->
+<!-- summary(lm(mean_density~annual_precip*Treatment, data = filter(dom_annuals, species == "Bromus tectorum"))) -->
+<!-- ``` -->
 
-\newpage{}
+<!-- \newpage{} -->
 
 ```{r annual_nmds, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
 ####
@@ -250,7 +261,7 @@ print(xtable(dplyr::select(out_stats, -Sums, -Means), caption = inyear_caption, 
 
 # Figures
 
-```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Basal area of individuals was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment.", fig.pos="h",fig.align="center"}
+```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Basal area (grasses) or canopy cover (shrubs and forbs) of individuals was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment.", fig.pos="h",fig.align="center"}
 ####
 ####  EXTRACT COVER OF MOST DOMINANT SPECIES ----
 ####
@@ -275,7 +286,7 @@ ggplot(cover_data, aes(x = mean_rank, y = mean_area))+
             hjust = -0.05, nudge_x = 0.2, angle = 45, size = 2)+
   scale_y_continuous(limits = c(0,0.25))+
   xlab("Species rank")+
-  ylab(expression(paste("Mean basal area (",m^2,")")))+
+  ylab(expression(paste("Mean area (",m^2,")")))+
   facet_wrap(~Treatment, ncol = 3)
 
 cover_doms <- cover_data %>%
@@ -312,7 +323,7 @@ ggplot(annual_data, aes(x = mean_rank, y = mean_density))+
   facet_wrap(~Treatment, ncol = 3)
 ```
 
-```{r time_perr_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=6, fig.cap="Time series of rank abundance curves for perennial species in each treatment. Values of mean area were averaged over plots. The four most dominant species are labelled in each panel."}
+```{r time_perr_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=6, fig.cap="Time series of rank abundance curves for perennial species in each treatment. Values of mean area were averaged over plots. The four most dominant species are labelled in each panel. Area is measured as basal area for grasses and canopy cover for shrubs and forbs."}
 cover_data <- {}
 for(dotrt in unique(cover_community_matrix$Treatment)){
   for(doyr in unique(cover_community_matrix$year)){
@@ -334,7 +345,7 @@ ggplot(cover_data, aes(x = mean_rank, y = mean_area))+
             hjust = -0.05, nudge_x = 0.2, angle = 45, size = 2)+
   scale_y_continuous(limits = c(0,0.25))+
   xlab("Species rank")+
-  ylab(expression(paste("Mean basal area (",m^2,")")))+
+  ylab(expression(paste("Mean area (",m^2,")")))+
   facet_grid(Treatment~year)
 ```
 
@@ -369,18 +380,18 @@ ggplot(annual_data, aes(x = mean_rank, y = mean_density))+
 
 \newpage{}
 
-```{r annual_weather, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Relationship between precipitation and abundance of dominant annuals."}
-dom_annuals <- annual_data %>%
-  filter(species %in% c("Allyssum desertorum","Bromus tectorum")) %>%
-  select(-mean_rank) %>%
-  rename(Species = species) %>%
-  left_join(weather_data, by = "year")
+<!-- ```{r annual_weather, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Relationship between precipitation and abundance of dominant annuals."} -->
+<!-- dom_annuals <- annual_data %>% -->
+<!--   filter(species %in% c("Allyssum desertorum","Bromus tectorum")) %>% -->
+<!--   select(-mean_rank) %>% -->
+<!--   rename(Species = species) %>% -->
+<!--   left_join(weather_data, by = "year") -->
 
-ggplot(dom_annuals, aes(x = ppt1, y = mean_density, color = Species))+
-  geom_point()+
-  xlab("Precipitation (mm)")+
-  ylab("Abundance")
-```
+<!-- ggplot(dom_annuals, aes(x = annual_precip, y = mean_density, color = Species))+ -->
+<!--   geom_point()+ -->
+<!--   xlab("Precipitation (mm)")+ -->
+<!--   ylab("Abundance") -->
+<!-- ``` -->
 
 
 ```{r annual_nmds2, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Nonmetric multidimensional scaling scores representing annual plant communities in each plot, colored by treatment."}

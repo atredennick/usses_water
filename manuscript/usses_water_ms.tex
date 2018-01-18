@@ -122,9 +122,7 @@ them against precipitation variability.
 
 \new{Water availability is a major driver of annual net primary productivity (ANPP) in grassland ecosystems}
 \citep{Huxman2004, Hsu2012}.
-\new{Therefore, projected changes in precipitation regimes, associated with global climate change, will impact grassland ecosystem functioning.
-Increases in precipitation variability will result in prolonged periods of extremely wet or dry years, and predicting the consequences of such chronic resource alterations requires understanding how ecosystems respond to above and below average precipitation levels.}
-
+\new{Therefore, projected changes in precipitation regimes, associated with global climate change, will impact grassland ecosystem functioning.}
 At any given site, the relationship between ANPP and water availability
 (e.g., soil moisture) can be characterized by regressing historical
 observations of ANPP on observations of soil moisture. Fitted functional
@@ -322,7 +320,7 @@ To fill in these gaps, we used a version of the SOILWAT soil moisture model}
 \citep{Bradford2014}.
 \new{The model was parameterized using generic sagebrush steppe parameters and local soil texture, soil bulk density, and precipitation data}
 \citep{Kleinhesselink2017b}.
-\new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B and Appendix X).
+\new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B and Appendix 2).
 SOILWAT predicted daily soil moisture under ambient conditions similar to our control plots.
 We applied the same statistical model and procedure described above to estimate soil moisture in drought and irrigation plots based on control plot conditions.}
 
@@ -350,8 +348,8 @@ weight from the ten calibration plots to convert the greenness index to
 ANPP. We fit regressions to a MODIS-based index and an AVHRR-based index
 for each year and retained the regression with the better fit based on
 \(R^2\) values. We then predicted ANPP using the best regression
-equation for each year (Appendix 2).
-\new{Our analysis, described below, can be done using NDVI directly, but we focus on ANPP to more easily relate our findings to previous work and because our results do not change if we analyze NDVI directly (Appendix 4).}
+equation for each year (Appendix 3).
+\new{Our analysis, described below, can be done using NDVI directly, but we focus on ANPP to more easily relate our findings to previous work and because our results do not change if we analyze NDVI directly (Appendix 5).}
 
 Species composition data came from two sources: yearly census maps for
 each plot made using a pantograph \citep{Hill1920} and yearly counts of
@@ -446,7 +444,7 @@ prior with mean 0 and standard deviation \(\sigma_{\text{year}}\), which
 was drawn from a half-Cauchy distribution.
 \new{We used a vague prior distribution for each $\beta$: $\boldsymbol{\beta} \sim \text{Normal}(0,5)$.}
 A full description of our model and associated R \citep{R2016} code is
-in Appendix 3.
+in Appendix 4.
 
 We fit the model using a Bayesian approach and obtained posterior
 estimates of all unknowns via the No-U-Turn Hamiltonian Monte Carlo
@@ -504,7 +502,7 @@ All R code and data necessary to reproduce our analysis has been
 archived on Figshare (\emph{link here after acceptance}) and released on
 GitHub (\url{https://github.com/atredennick/usses_water/releases/v0.1}).
 We also include annotated Stan code in our model description in Appendix
-3.
+4.
 
 \section{RESULTS}\label{results}
 
@@ -609,7 +607,7 @@ enough. Using the methods described by \citet{Lemoine2016}, we
 calculated the percent reduction and increase of \new{water-year}
 precipitation necessary to reach the 1\% and 99\% extremes of the
 historical precipitation regime at our site (Fig. A5-1).
-\new{The 1\% quantile of water-year precipitation at our site is 78 mm, a 26% reduction from the mean, and the 99\% quantile is 545 mm, a 84\% increase from mean growing season precipitation (Appendix 5).
+\new{The 1\% quantile of water-year precipitation at our site is 78 mm, a 26% reduction from the mean, and the 99\% quantile is 545 mm, a 84\% increase from mean growing season precipitation (Appendix 6).
 Thus, our drought treatment represented extreme precipitation amounts, and that is the treatment where we observed a small effect on the slope between soil moisture and ANPP (Fig. 3A).
 The irrigation treatment may not have been extreme enough to induce a response.}
 
@@ -716,10 +714,11 @@ DEB-1353078 and DEB-1054040 to PBA.
 
 \begin{description}
 \item [Appendix 1.] \new{Additional information on plant community composition and dynamics, Table A1-1, Table A1-2, Table A1-3, Fig. A1-1, Fig. A1-2, Fig. A1-3, Fig. A1-4, Fig. A1-5, and Fig. A1-6.}
-\item [Appendix 2.] Additional methods and information on estimating aboveground net primary productivity, Table A2-1, and Table A2-2.
-\item [Appendix 3.] Details of the hierarchical Bayesian model, Fig. A2-1, Fig. A2-2, and Fig. A2-3.
-\item [Appendix 4.] \new{Results from analysis of NDVI without conversion to ANPP, Fig. A3-1.}
-\item [Appendix 5.] Details on analysis of precipitation historical range of variability and Fig. A4-1.
+\item [Appendix 2.] \new{Additional details on soil moisture modeling with SOILWAT and Fig. A2-1.}
+\item [Appendix 3.] Additional methods and information on estimating aboveground net primary productivity, Table A3-1, and Table A3-2.
+\item [Appendix 4.] Details of the hierarchical Bayesian model, Fig. A4-1, Fig. A4-2, and Fig. A4-3.
+\item [Appendix 5.] \new{Results from analysis of NDVI without conversion to ANPP, Fig. A5-1.}
+\item [Appendix 6.] Details on analysis of precipitation historical range of variability and Fig. A6-1.
 \end{description}
 
 \newpage{}
