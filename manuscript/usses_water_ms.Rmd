@@ -296,11 +296,12 @@ ANPP was highly variable across plots within years, \new{as indicated by the lar
 Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3B).
 The effect of soil moisture for each treatment is associated with high uncertainty, however, with 95\% Bayesian credible intervals that \new{broadly} overlap zero (Table 1).
 Although the parameter estimates for the effect of soil moisture overlap zero, the posterior distributions of the slopes all shrank and shifted to more positive values relative to the prior distributions (Fig. A3-2), which indicates the data did influence parameter estimates beyond the information from the uninformative priors.
-Ecosystem functional response was similar among treatments (Table 1; Fig. 3B), but there is evidence that the \new{slopes for the drought and} irrigation treatments are less than the slope for the control treatment.
+Ecosystem functional response was similar among treatments (Table 1; Fig. 3B), but there is evidence that the \new{slope for the drought treatment is greater than the slope for the control treatment.}
 This evidence comes from interpreting the posterior distributions of the slope offsets for the treatments.
-\new{From these distributions,} we calculate a \new{91}% one-tailed probability that the estimate is less than zero for the irrigation treatment \new{and a 96\% one-tailed probability that the estimate is less than zero for the drought treatment} (Fig. 3A, right panel).
+\new{From these distributions,} we calculate a \new{58}% one-tailed probability that the estimate is greater than zero for the irrigation treatment \new{and a 100\% one-tailed probability that the estimate is greater than zero for the drought treatment} (Fig. 3A, right panel).
 
-\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0007; Fig. 3C)}.
+\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). 
+Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0007; Fig. 3C)}.
 
 Community composition was similar among treatments.
 The multidimensional space of community composition overlapped among treatments in all years and was equally dispersed in all years (Table 2; Fig. 4).
@@ -319,12 +320,11 @@ A lingering question is how the time scales of ecosystem response and community 
 Precipitation manipulation experiments can help answer this question, especially if they push water availability outside the historical range of variability for long periods. 
 
 The results of our five year experiment in a sagebrush steppe \new{conforms to one} of our four predictions.
-Ecosystem functional response under chronic \new{drought and irrigation} was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1.
-The decrease in the slope of the VWC $\times$ productivity relationship in the irrigated plots is consistent with a weaker response of productivity to additional water in this ecosystem.
-This suggests that if average soil moisture were pushed consistently higher than currently observed ambient conditions, there would be a weaker relationship between precipitation and productivity in this system.
+Ecosystem functional response under chronic \new{drought} was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1.
+\new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots is consistent with a stronger response of productivity to additional water in this ecosystem.
+This suggests that if average soil moisture were pushed consistently lower than currently observed ambient conditions, there would be a stronger relationship between precipitation and productivity in this system.}
 
-\new{The decrease in the slope of the VWC $\times$ productivity relationship in the droughted plots is puzzling because it is counter to our expectation that the slope would be higher than the control plots.
-However, we believe the significance of the slope offsets has more to do with noise than signal.
+\new{However, we believe the significance of the drought slope offset has more to do with noise than signal.
 This is because the full distributions of} the slopes of the VWC $\times$ productivity relationship, \new{not just the offsets}, were similar among treatments (Table 1).
 We therefore conclude that ecosystem functional response is consistent (\new{similar values}) and weak (\new{all broadly overlapping zero}) across all precipitation treatments.
 
