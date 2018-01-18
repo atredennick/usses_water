@@ -240,7 +240,7 @@ m\(^2\) quadrats to track vegetation change over time. In 2007, we
 relocated 14 of the original quadrats in permenanent livestock
 exclosures, \new{which we used} as control plots (i.e.~ambient
 precipitation) in the experiment described below.
-\new{We used the relocated plots as our controls because collecting demographic data is difficult and it is already being collected in these plots for other ongoing studies.}
+\new{We used the relocated plots as our controls because collecting demographic data is time consuming and it was already being collected in these plots for other studies.}
 
 In spring 2011, we established 16 new 1 m\(^2\) plots located in the
 \new{largest exclosure at USSES, which also contained} six of our
@@ -285,10 +285,9 @@ Analyzing the response to experimental treatments was complicated by the
 fact that we did not directly monitor soil moisture in each plot on each
 day of the experiment. Only a subset of plots were equipped with soil
 moisture sensors, and within those plots, one or more of the sensors
-frequently failed to collect data. To remedy these problems, we used a
-statistical model to produce average daily soil moisture values for the
-ambient, drought, and irrigation treatments during the course of the
-experiment.
+frequently failed to collect data. Therefore, we used a statistical
+model to estimate average daily soil moisture values for the ambient,
+drought, and irrigation treatments during the course of the experiment.
 
 \new{We first averaged the observed soil moisture readings for each day ($d$) and plot ($i$), $x_{i,d}$.
 Experimental plots were organized in groups of two, with each group ($g$) containing a drought and irrigated plot. In addition a nearby area outside the drought or irrigated plots was monitored for local ambient soil moisture conditions.
@@ -461,7 +460,7 @@ all scale reduction factors (\(\hat{R}\) values) were less than 1.1
 \subsubsection{Sensitivity of ANPP over
 time}\label{sensitivity-of-anpp-over-time}
 
-\new{Our data does not allow us to directly test whether the ecosystem functional response to precipitation may have changed over time in each of the treatments. 
+\new{Our data do not allow us to directly test whether the ecosystem functional response to precipitation may have changed over time since the start of the experiment in each of the treatments. 
 This is because we lack sufficient within-year and within-treatment variation of soil moisture (i.e., within a year and treatment each plot shares the same value of VWC). 
 However, we did use a separate analysis to test whether the the sensitivity of ANPP to treatment changed over time.}
 
@@ -516,7 +515,7 @@ maximum of 239.3 g m\(^{-2}\) in 2016 when averaged across treatments
 \new{(on average 25\% lower) relative to control plots} (Fig. 2C),
 corresponding to observed and estimated soil volumetric water content
 (VWC) differences among treatments (Fig. 2B).
-\new{VWC in drought plots was 12\% less than in control plots on average, and VWC in irrigation plots was 19\% higher than in control plots on average.}
+\new{March-June VWC in drought plots was 12\% less than in control plots on average, and March-June VWC in irrigation plots was 19\% higher than in control plots on average across the years of the experiment.}
 Such differences in soil VWC indicate our treatment infrastructure was
 successful. ANPP was highly variable across plots within years,
 \new{as indicated by the large and overlapping standard deviations}
@@ -532,16 +531,17 @@ positive values relative to the prior distributions (Fig. A3-2), which
 indicates the data did influence parameter estimates beyond the
 information from the uninformative priors. Ecosystem functional response
 was similar among treatments (Table 1; Fig. 3B), but there is evidence
-that the \new{slopes for the drought and} irrigation treatments are less
-than the slope for the control treatment. This evidence comes from
-interpreting the posterior distributions of the slope offsets for the
-treatments. \new{From these distributions,} we calculate a \new{91}\%
-one-tailed probability that the estimate is less than zero for the
-irrigation treatment
-\new{and a 96\% one-tailed probability that the estimate is less than zero for the drought treatment}
+that the
+\new{slope for the drought treatment is greater than the slope for the control treatment.}
+This evidence comes from interpreting the posterior distributions of the
+slope offsets for the treatments. \new{From these distributions,} we
+calculate a \new{58}\% one-tailed probability that the estimate is
+greater than zero for the irrigation treatment
+\new{and a 100\% one-tailed probability that the estimate is greater than zero for the drought treatment}
 (Fig. 3A, right panel).
 
-\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0007; Fig. 3C)}.
+\new{Sensitivity of ANPP to irrigation was constant over the course of our experiment (Fig. 3C). 
+Sensivitity of ANPP to drought, however, grew over time (\emph{P} = 0.0007; Fig. 3C)}.
 
 Community composition was similar among treatments. The multidimensional
 space of community composition overlapped among treatments in all years
@@ -549,8 +549,8 @@ and was equally dispersed in all years (Table 2; Fig. 4). Community
 composition was also remarkably stable over time, with no evidence of
 divergence among treatments (Table 2; Fig. 4).
 \new{There were also no changes in the dominant species over time in any treatment (Appendix 1).
-Splitting the analysis apart for annuals led to similar results.
-There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights them equally (Fig. A1-4).
+Analyzing annual species on their own produced similar results.
+There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights common and rare species equally (Fig. A1-4).
 By definition, thsee rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
 
 \section{DISCUSSION}\label{discussion}
@@ -569,24 +569,18 @@ historical range of variability for long periods.
 
 The results of our five year experiment in a sagebrush steppe
 \new{conforms to one} of our four predictions. Ecosystem functional
-response under chronic \new{drought and irrigation} was different from
-the control treatment, but community composition remained unchanged
-(Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1. The
-decrease in the slope of the VWC \(\times\) productivity relationship in
-the irrigated plots is consistent with a weaker response of productivity
-to additional water in this ecosystem. This suggests that if average
-soil moisture were pushed consistently higher than currently observed
-ambient conditions, there would be a weaker relationship between
-precipitation and productivity in this system.
+response under chronic \new{drought} was different from the control
+treatment, but community composition remained unchanged (Fig. 3A, Fig.
+4), representing the top right scenario in Fig. 1.
+\new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots is consistent with a stronger response of productivity to additional water in this ecosystem.
+This suggests that if average soil moisture were pushed consistently lower than currently observed ambient conditions, there would be a stronger relationship between precipitation and productivity in this system.}
 
-\new{The decrease in the slope of the VWC $\times$ productivity relationship in the droughted plots is puzzling because it is counter to our expectation that the slope would be higher than the control plots.
-However, we believe the significance of the slope offsets has more to do with noise than signal.
-This is because the full distributions of} the slopes of the VWC
-\(\times\) productivity relationship, \new{not just the offsets}, were
-similar among treatments (Table 1). We therefore conclude that ecosystem
-functional response is consistent (\new{similar values}) and weak
-(\new{all broadly overlapping zero}) across all precipitation
-treatments.
+\new{However, we do not want to over-interpret the significance of the slope offsets given that the full distributions of}
+the slopes of the VWC \(\times\) productivity relationship,
+\new{not just the offsets}, were similar among treatments (Table 1). We
+therefore conclude that ecosystem functional response is consistent
+(\new{similar values}) and weak (\new{all broadly overlapping zero})
+across all precipitation treatments.
 
 The similarity of ecosystem functional response (Fig. 3) and community
 composition (Fig. 4) among treatments is surprising because grasslands
@@ -663,7 +657,10 @@ in the soil profile thanks to a deep root system
 \citep[e.g.,][]{Huxman2004, Knapp2015, Wilcox2017}.
 
 \new{We found that ANPP became more sensitive to the drought over time (Fig. 3C).  In other words, relative to the effect of the drought shelters on soil moisture, ANPP was more reduced by the drought conditions later in the experiment than early on in the experiment. 
-We interepret this increase in sensitivity as the effect of cumulative impacts of the drought on dominant species.  Plants may not have shown a large response in terms of ANPP in the first years of the experiment if they could grow from stored carbohydrate reserves or if they abstained from flowering and reproduction. As the drought progressed, these same plants may have have started to reduce in size or die. Given the long lived perennial species at this site, this increase in sensitivity may indicate a larger future change in community composition and ecosystem functional response. }
+We interepret this increase in sensitivity as the effect of cumulative impacts of the drought on dominant species.
+Plants may not have shown a large response in terms of ANPP in the first years of the experiment if they could grow from stored carbohydrate reserves or if they abstained from flowering and reproduction.
+As the drought progressed, these same plants may have have started to reduce in size or die. 
+Given the long lived perennial species at this site, this increase in sensitivity may indicate a larger future change in community composition and ecosystem functional response. }
 
 \section{CONCLUSIONS}\label{conclusions}
 
@@ -678,7 +675,7 @@ not observe \citep[e.g.,][]{Wilcox2016},
 Likewise, a long-term increase in water availability could allow species
 that do not bet hedge to gain prominence and dominate the ecosystem
 functional response.
-\new{Time \emph{per se} may be especially relevant in our focal ecosystem where the perennial species are long-lived, meaning compositional turnover may take many more years than we report on here.}
+\new{The length of the perturbation may be especially relevant in our focal ecosystem where the perennial species are long-lived, meaning compositional turnover may take many more years than we report on here.}
 Our results suggest compositional shifts would have the largest impact
 at high rainfall because the current community maintained consistent
 ecosystem functional response at very low water availability.
