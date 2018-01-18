@@ -49,7 +49,7 @@ Therefore, we also assessed ecosystem functional response across treatments usin
 The model essentially the same as the ANPP model, except we use a Beta likelihood for NDVI since its values range from 0 to 1, not including true 0s or 1s (see Stan code, below).
 
 Our NDVI-model results are very similar to the ANPP-model results (Figure A5-1).
-As with our ANPP-model results, the positive offset for the drought treatment does not result in a significantly different slope once applied to the control slope.
+As with our ANPP-model results, the positive offset for the drought treatment does not result in a significantly different slope once applied to the control slope (Table A5-1).
 
 
 ```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the NDVI-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
@@ -132,6 +132,40 @@ ggplot(treat_slopes)+
         panel.spacing    = unit(1, units = "cm"))
 ```
 
+```{r effect_table, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis', echo=FALSE}
+library(xtable)
+treat_effects <- data.frame(extract(all_fit, pars = 'beta')) %>% 
+  mutate(iteration = row_number()) %>% 
+  gather(param_name, estimate, starts_with('beta')) %>%
+  mutate(param_name = factor(param_name, labels = param_labels)) %>% 
+  spread(param_name, estimate) %>% 
+  mutate(`Drought::Intercept` = `Drought::Intercept` + `Control::Intercept`, 
+         `Irrigation::Intercept` = `Irrigation::Intercept` + `Control::Intercept`,  
+         `Drought::Slope` = `Drought::Slope` + `Control::Slope`, 
+         `Irrigation::Slope` = `Irrigation::Slope` + `Control::Slope`) %>%
+  gather(param_name, estimate, -iteration) 
+
+effect_summary <- treat_effects %>%
+  group_by(param_name) %>%
+  summarise(mean_estimate = round(mean(estimate), 2),
+            median_estimate = round(median(estimate), 2),
+            lower_95_ci = round(quantile(estimate, probs = c(0.025)), 2),
+            upper_95_ci = round(quantile(estimate, probs = c(0.975)), 2)) %>%
+  separate(param_name, into = c("Treatment", "Coefficient"), sep = "::") %>%
+  arrange(Coefficient, Treatment) %>%
+  select(Coefficient, everything())
+
+colnames(effect_summary) <- c("Coefficient", "Treatment", "Posterior Mean", "Posterior Median",
+                              "Lower 95\\% BCI", "Upper 95\\% BCI")
+coef_caption <- "Summary statistics from the posterior distributions of coefficients for each treatment ($\\beta$ coefficients in equation 1). The `Intercept' and `Slope' summaries reported here for drought and irrigation are from the posterior distributions of the intercept and slope for the control treatment plus the offsets for each treatment. Posterior distributions of the offsets are in Figure A5-1."
+print(xtable(effect_summary, caption = coef_caption, digits = 2),
+      caption.placement="top",
+      include.rownames = F,
+      sanitize.colnames.function = identity,
+      comment = FALSE,
+      size = "normalsize")
+```
+
 \newpage{}
 
 \subsection{Stan Code}
@@ -203,6 +237,5 @@ generated quantities{
   corr_matrix[Npreds2] R = multiply_lower_tri_self_transpose(L_u);
   cov_matrix[Npreds2] V = quad_form_diag(R,sigma_u);
 }
-
 ```
 
