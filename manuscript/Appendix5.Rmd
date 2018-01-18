@@ -36,51 +36,173 @@ urlcolor: black
 
 \begin{center}
 \textbf{\Large{Appendix 5}} \\
-A.T. Tredennick, A.R. Kleinhesselink, J.B. Taylor \& P.B. Adler \\
+A.T. Tredennick, A.R. Kleinhesselink, B. Taylor \& P.B. Adler \\
 ``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe'' \\
 \emph{PeerJ}
 \end{center}
 
-\section{Characterizing Extreme Precipitation Amounts}
+\section{Conducting our analysis with NDVI}
 
-Following the proposed methods of @Lemoine2016, we calculated quantiles from the empirical distribution of growing season precipitation at Dubios, ID.
-We chose the 1\% quantile to be indicative of extreme dry conditions (drought) and the 99\% quantile to be indicative of extreme wet conditions (irrigation).
-The data consist of 91 yearly records, which we assume are approximately normally distributed for these purposes.
-The R code below shows our procedure, and Fig. A5-1 shows the results.
+The first step of our analysis is to convert NDVI from field-based radiometric measurements to aboveground net primary productivity.
+However, this conversion is not perfect and the associated uncertainty is sometimes high (Table A1-2).
+Therefore, we also assessed ecosystem functional response across treatments using NDVI as the response variable rather than ANPP.
+The model essentially the same as the ANPP model, except we use a Beta likelihood for NDVI since its values range from 0 to 1, not including true 0s or 1s (see Stan code, below).
 
-```{r hrv, fig.cap="Density of the empirical distribution of growing season precipitation at Dubois, ID. Dashed vertical lines show the 1% and 99% quantiles, assuming a normal distribution.", message=FALSE}
-library(tidyverse)
-library(dplyr)
+Our NDVI-model results are very similar to the ANPP-model results (Figure A5-1).
+As with our ANPP-model results, the positive offset for the drought treatment does not result in a significantly different slope once applied to the control slope.
 
-##  Water year defined as precip in Oct-Dec in year t and Jan-Sept in year t+1
-##  following USGS.
-first_water_months <- c("10","11","12") # first months in water year, to be promoted a year
-weather <- read.csv("../data/weather/dubois_station_weather_01092018.csv") %>%
-  dplyr::select(DATE, PRCP) %>%
-  dplyr::rename("date" = DATE, "precip" = PRCP) %>%
-  separate(date, into = c("year", "month", "day"), sep = "-") %>%
-  mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
-  mutate(year = as.numeric(year)) %>%
-  mutate(water_year = ifelse(month %in% first_water_months, year+1, year)) %>% # create water years, based on USGS defintion
-  filter(year != 1925) %>% # remove first year because don't have first water-year months
-  group_by(water_year) %>%
-  summarise(annual_precip = sum(precip)) %>%
-  rename(year = water_year)
 
-mean_ppt   <- mean(weather$annual_precip)
-quants_ppt <- quantile(weather$annual_precip,probs = c(0.01,0.99))
-quants_ppt[1]/mean_ppt*100 # percent of mean ppt for drought
-quants_ppt[2]/mean_ppt*100 # percent of mean ppt for irrigation
+```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the NDVI-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 
-ggplot(weather, aes(x=annual_precip))+
-  geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
-  geom_line(stat="density", color="blue")+
-  geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
-  geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
-  ylab("Density")+
-  xlab("Growing Season Precipitation (mm)")+
+library(tidyverse)    # Data munging
+library(dplyr)        # Data summarizing
+library(ggthemes)     # Pleasing ggplot themes
+library(ggjoy)        # Joy plots!
+library(stringr)      # Working with strings
+library(rstan)        # For MCMC and Stan objects
+library(gridExtra)    # For combining ggplot objects
+library(viridis)      # Pleasing color palette
+library(RColorBrewer) # More color palettes
+library(cowplot)      # For combining ggplots
+
+all_fit <- readRDS("../results/randcoefs_alltreatments_NDVIfit.RDS")
+
+
+
+####
+####  FUNCTION TO CALCULATE MAX(Pr(effect) > 0, Pr(effect) < 0) ----
+####
+get_one_tailed <- function(values){
+  above <- 1 - ecdf(values)(0)
+  below <- ecdf(values)(0)
+  max(above,below)
+}
+
+
+
+####
+####  PLOT TREATMENT-LEVEL POSTERIOR DISTRIBUTIONS ----
+####
+mycols <- c("#009E73", "#D55E00", "#0072B2")
+param_labels <- c("Control::Intercept",
+                  "Drought::Intercept", 
+                  "Irrigation::Intercept",
+                  "Control::Slope", 
+                  "Drought::Slope", 
+                  "Irrigation::Slope")
+
+betas <- data.frame(extract(all_fit, pars = 'beta')) %>% 
+  mutate(iteration = row_number()) %>% 
+  gather(param_name, estimate, starts_with('beta')) %>%
+  mutate(param_name = factor(param_name, labels = param_labels)) %>%
+  separate(param_name, c("Treatment", "Type"), "::")
+
+treat_slopes <- betas %>%
+  filter(Treatment != "Control") %>%
+  mutate(Type = paste(Type,"Offset"))
+
+slope_probs <- treat_slopes %>%
+  group_by(Treatment, Type) %>%
+  summarise(probs = round(get_one_tailed(estimate),2)) %>%
+  mutate(prob_text = paste("Pr < 0 =", probs))
+slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch direction of drought intercpet since greater than 0
+slope_probs$xpos <- c(-2.8, -0.6, -2.6, -0.6)
+slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
+
+treat_cols <- mycols[2:3]
+
+ggplot(treat_slopes)+
+  geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
+  geom_joy(stat="density", adjust=3, alpha=0.8, aes(x=estimate, y=Treatment, fill=Treatment, color=Treatment, height = ..density..))+
+  geom_text(data = slope_probs, aes(x=xpos, y=ypos, label = prob_text), size = 3)+
+  facet_wrap(~Type, scales = "free")+
+  scale_y_discrete(labels = c("Drought","Irrigation"))+
+  scale_fill_manual(values = treat_cols)+
+  scale_color_manual(values = treat_cols)+
+  guides(fill=FALSE, color=FALSE)+
+  xlab("Coefficient Value")+
+  ylab(NULL)+
   theme_bw()+
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank(),
+        panel.border     = element_blank(), 
+        axis.line        = element_blank(),
+        axis.ticks       = element_blank(),
+        strip.background = element_blank(),
+        strip.text       = element_text(face="bold"),
+        panel.spacing    = unit(1, units = "cm"))
 ```
 
-# References
+\newpage{}
+
+\subsection{Stan Code}
+```{r stan1, echo=T, eval=F}
+data {
+  int<lower=0> Npreds;         # number of covariates, including intercept
+  int<lower=0> Npreds2;        # number of random effect covariates
+  int<lower=0> Nplots;         # number of plots
+  int<lower=0> Ntreats;        # number of treatments
+  int<lower=0> Nobs;           # number of observations
+  int<lower=0> Nyears;         # number of years
+  vector[Nobs] y;              # vector of observations
+  row_vector[Npreds] x[Nobs];	 # design matrix for fixed effects
+  row_vector[Npreds2] z[Nobs]; # simple design matrix for random effects 
+  int plot_id[Nobs];           # vector of plot ids
+  int treat_id[Nobs];          # vector of treatment ids
+  int year_id[Nobs];           # vector of year ids
+}
+
+parameters {
+	vector[Npreds] beta;	             # overall coefficients
+	vector[Nyears] year_off;           # vector of year effects
+	cholesky_factor_corr[Npreds2] L_u; # cholesky factor of plot random effect corr matrix
+  vector[Npreds2] beta_plot[Nplots]; # plot level random effects
+	vector<lower=0>[Npreds2] sigma_u;  # plot random effect std. dev.
+	real<lower=0> sd_y;                # treatment-level observation std. dev.
+	real<lower=0> sigma_year;          # year std. dev. hyperprior
+	real<lower=0> phi;                 # dispersion parameter
+}
+
+transformed parameters {
+  vector[Nobs] A;             # parameter for beta distn
+  vector[Nobs] B;             # parameter for beta distn
+  vector[Nobs] yhat;               # vector of expected values
+  vector[Npreds2] u[Nplots];       # transformed plot random effects
+  matrix[Npreds2,Npreds2] Sigma_u; # plot ranef cov matrix
+  
+  Sigma_u = diag_pre_multiply(sigma_u, L_u); # cholesky factor for plot-level covariance matrix 
+  for(j in 1:Nplots)
+    u[j] = Sigma_u * beta_plot[j]; # plot random intercepts and slopes
+  
+  # regression model for expected values (one for each plot-year)
+  for (i in 1:Nobs)
+    yhat[i] = inv_logit(x[i]*beta + z[i]*u[plot_id[i]] + year_off[year_id[i]]); 
+  
+  A = yhat * phi;
+  B = (1.0 - yhat) * phi;
+}
+
+model {
+  ####  PRIORS
+  phi ~ cauchy(0, 5); 
+  sigma_year ~ cauchy(0,2.5);
+  sd_y ~ cauchy(0,2.5);
+  year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
+  beta ~ normal(0,5);	             # priors on treatment coefficients
+  L_u ~ lkj_corr_cholesky(2.0);      # prior on the cholesky factor which controls the 
+                                    # correlation between plot level treatment effects
+  sigma_u ~ cauchy(0,2.5);
+  
+  for(i in 1:Nplots)
+		beta_plot[i] ~ normal(0,1); # plot-level coefficients for intercept and slope
+	
+	####  LIKELIHOOD
+  y ~ beta(A, B); # observations vary according to beta distribution
+}
+
+generated quantities{
+  corr_matrix[Npreds2] R = multiply_lower_tri_self_transpose(L_u);
+  cov_matrix[Npreds2] V = quad_form_diag(R,sigma_u);
+}
+
+```
+

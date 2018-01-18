@@ -1,0 +1,86 @@
+---
+layout: 11pt
+header-includes:
+  - \usepackage{lineno}
+  - \linenumbers
+  - \usepackage{setspace}
+  - \usepackage{todonotes}
+  - \onehalfspacing
+  - \usepackage{rotating}
+  - \usepackage{color, soul}
+  - \usepackage[font={small},labelfont={bf},labelsep=quad]{caption}
+  - \usepackage{tikz}
+  - \usepackage{bm,mathrsfs}
+  - \usepackage[sc]{mathpazo}
+bibliography: ~/Dropbox/Bibliography/usses_water.bib
+csl: components/ecology.csl
+
+## rmarkdown render options
+output:
+  pdf_document:
+    fig_caption: true
+    keep_tex: false
+    number_sections: true
+fontsize: 11pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+---
+
+\newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
+\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+\renewcommand\thefigure{A6-\arabic{figure}}
+\renewcommand\theequation{A6.\arabic{equation}}
+\renewcommand\thetable{A6-\arabic{table}}  
+\renewcommand\thesection{Section A6.\arabic{section}}
+
+\begin{center}
+\textbf{\Large{Appendix 6}} \\
+A.T. Tredennick, A.R. Kleinhesselink, J.B. Taylor \& P.B. Adler \\
+``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe'' \\
+\emph{PeerJ}
+\end{center}
+
+\section{Characterizing Extreme Precipitation Amounts}
+
+Following the proposed methods of @Lemoine2016, we calculated quantiles from the empirical distribution of growing season precipitation at Dubios, ID.
+We chose the 1\% quantile to be indicative of extreme dry conditions (drought) and the 99\% quantile to be indicative of extreme wet conditions (irrigation).
+The data consist of 91 yearly records, which we assume are approximately normally distributed for these purposes.
+The R code below shows our procedure, and Fig. A6-1 shows the results.
+
+```{r hrv, fig.cap="Density of the empirical distribution of growing season precipitation at Dubois, ID. Dashed vertical lines show the 1% and 99% quantiles, assuming a normal distribution.", message=FALSE}
+library(tidyverse)
+library(dplyr)
+
+##  Water year defined as precip in Oct-Dec in year t and Jan-Sept in year t+1
+##  following USGS.
+first_water_months <- c("10","11","12") # first months in water year, to be promoted a year
+weather <- read.csv("../data/weather/dubois_station_weather_01092018.csv") %>%
+  dplyr::select(DATE, PRCP) %>%
+  dplyr::rename("date" = DATE, "precip" = PRCP) %>%
+  separate(date, into = c("year", "month", "day"), sep = "-") %>%
+  mutate(precip = ifelse(is.na(precip), 0, precip)) %>% # set missing station data to 0
+  mutate(year = as.numeric(year)) %>%
+  mutate(water_year = ifelse(month %in% first_water_months, year+1, year)) %>% # create water years, based on USGS defintion
+  filter(year != 1925) %>% # remove first year because don't have first water-year months
+  group_by(water_year) %>%
+  summarise(annual_precip = sum(precip)) %>%
+  rename(year = water_year)
+
+mean_ppt   <- mean(weather$annual_precip)
+quants_ppt <- quantile(weather$annual_precip,probs = c(0.01,0.99))
+quants_ppt[1]/mean_ppt*100 # percent of mean ppt for drought
+quants_ppt[2]/mean_ppt*100 # percent of mean ppt for irrigation
+
+ggplot(weather, aes(x=annual_precip))+
+  geom_histogram(bins=20, color="dodgerblue", fill="dodgerblue", aes(y=..density..))+
+  geom_line(stat="density", color="blue")+
+  geom_vline(aes(xintercept=quants_ppt[1]), linetype=2)+
+  geom_vline(aes(xintercept=quants_ppt[2]), linetype=2)+
+  ylab("Density")+
+  xlab("Growing Season Precipitation (mm)")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+```
+
+# References

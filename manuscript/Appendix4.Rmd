@@ -36,25 +36,27 @@ urlcolor: black
 
 \begin{center}
 \textbf{\Large{Appendix 4}} \\
-A.T. Tredennick, A.R. Kleinhesselink, B. Taylor \& P.B. Adler \\
+A.T. Tredennick, A.R. Kleinhesselink, J.B. Taylor \& P.B. Adler \\
 ``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe'' \\
 \emph{PeerJ}
 \end{center}
 
-\section{Conducting our analysis with NDVI}
+\section{Random Slopes, Random Intercepts Model}
+\subsection{Model Description}
+Our hierarchical Bayesian model allows us to test for differences among treatments in the relationship between ANPP and soil moisture, and allowed us to account for the non-independence of observations through time within a plot.
+Treatment differences are modeled as fixed effects, which are modified by plot-level random effects.
+In what follows, $\textbf{X}$ is the fixed effects design matrix including:
 
-The first step of our analysis is to convert NDVI from field-based radiometric measurements to aboveground net primary productivity.
-However, this conversion is not perfect and the associated uncertainty is sometimes high (Table A1-2).
-Therefore, we also assessed ecosystem functional response across treatments using NDVI as the response variable rather than ANPP.
-The model essentially the same as the ANPP model, except we use a Beta likelihood for NDVI since its values range from 0 to 1, not including true 0s or 1s (see Stan code, below).
+1. a column of 1s for intercepts
+2. a column of continuous values for the scaled volumetric water content for each observation
+3. a column of 0s or 1s indicating whether the observation is from a drought treatment 
+4. a column of 0s or 1s indicating whether the observation is from an irrigation treatment
+5. a column of continuous values for the interaction between scaled volumetric water content and the drought treatment indicator (column 2)
+6. a column of continuous values for the interaction between scaled volumetric water content and the irrigation treatment indicator (column 3)
 
-Our NDVI-model results are very similar to the ANPP-model results (Figure A4-1).
-The only difference is there is a higher probability that the drought slope offset is less than 1 (90\% probability).
-However, these negative offsets do not result in significantly different slopes once applied to the control slope, just as in the ANPP-model.
+The first seven rows of the fixed effects design matrix (six control plots and one drought plot) is as follows:
 
-
-```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the NDVI-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
-
+```{r fixed_design, echo=F, eval=T, message=F, warning=F}
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes
@@ -65,73 +67,70 @@ library(gridExtra)    # For combining ggplot objects
 library(viridis)      # Pleasing color palette
 library(RColorBrewer) # More color palettes
 library(cowplot)      # For combining ggplots
-
-all_fit <- readRDS("../results/randcoefs_alltreatments_NDVIfit.RDS")
-
-
-
-####
-####  FUNCTION TO CALCULATE MAX(Pr(effect) > 0, Pr(effect) < 0) ----
-####
-get_one_tailed <- function(values){
-  above <- 1 - ecdf(values)(0)
-  below <- ecdf(values)(0)
-  max(above,below)
-}
-
-
-
-####
-####  PLOT TREATMENT-LEVEL POSTERIOR DISTRIBUTIONS ----
-####
-mycols <- c("#009E73", "#D55E00", "#0072B2")
-param_labels <- c("Control::Intercept",
-                  "Drought::Intercept", 
-                  "Irrigation::Intercept",
-                  "Control::Slope", 
-                  "Drought::Slope", 
-                  "Irrigation::Slope")
-
-betas <- data.frame(extract(all_fit, pars = 'beta')) %>% 
-  mutate(iteration = row_number()) %>% 
-  gather(param_name, estimate, starts_with('beta')) %>%
-  mutate(param_name = factor(param_name, labels = param_labels)) %>%
-  separate(param_name, c("Treatment", "Type"), "::")
-
-treat_slopes <- betas %>%
-  filter(Treatment != "Control") %>%
-  mutate(Type = paste(Type,"Offset"))
-
-slope_probs <- treat_slopes %>%
-  group_by(Treatment, Type) %>%
-  summarise(probs = round(get_one_tailed(estimate),2)) %>%
-  mutate(prob_text = paste("Pr < 0 =", probs))
-slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch direction of drought intercpet since greater than 0
-slope_probs$xpos <- c(-2.8, -0.6, -2.6, -0.6)
-slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
-
-treat_cols <- mycols[2:3]
-
-ggplot(treat_slopes)+
-  geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
-  geom_joy(stat="density", adjust=3, alpha=0.8, aes(x=estimate, y=Treatment, fill=Treatment, color=Treatment, height = ..density..))+
-  geom_text(data = slope_probs, aes(x=xpos, y=ypos, label = prob_text), size = 3)+
-  facet_wrap(~Type, scales = "free")+
-  scale_y_discrete(labels = c("Drought","Irrigation"))+
-  scale_fill_manual(values = treat_cols)+
-  scale_color_manual(values = treat_cols)+
-  guides(fill=FALSE, color=FALSE)+
-  xlab("Coefficient Value")+
-  ylab(NULL)+
-  theme_bw()+
-  theme(panel.grid.minor = element_blank(),
-        panel.border     = element_blank(), 
-        axis.line        = element_blank(),
-        axis.ticks       = element_blank(),
-        strip.background = element_blank(),
-        strip.text       = element_text(face="bold"),
-        panel.spacing    = unit(1, units = "cm"))
+source("../code/read_format_data.R") # load data
+lmod <- lm(log(anpp) ~ vwc_scaled*Treatment, anpp_data)
+x    <- model.matrix(lmod) 
+colnames(x) <- c("Int", "VWC", "Drought", "Irrig", "Drought:VWC", "Irrig:VWC")
+head(x, 7)
 ```
+
+\noindent{}Note that within a year, all plots within a treatment share the same value of volumetric water content. This is because we could not monitor soil moisture in each plot, and instead used sparse observations to model average soil moisture in each treatment in each year (see main text). Using this design matrix, we can estimate six fixed effects ($\boldsymbol{\beta}$s):
+
+1. the intercept of the soil moisture-ANPP relationship for control plots
+2. the slope of the soil moisture-ANPP relationship for control plots
+3. the intercept offset for drought plots
+4. the intercept offset for irrigation plots
+5. the slope offset for drought plots
+6. the slope offset for irrigation plots
+
+\noindent{}We are particularly interested in the slope offsets, because these allow us to test whether the slopes for drought or irrigation are different from the control slope. If the slope offset is different from zero, this indicates the slopes are different. We assess whether the slope offsets are different from zero by calculating the probability that the posterior distribution is less or greater than zero (one-tailed tests). If the probability is greater than 0.95, then there is strong evidence that the slope offset is different from zero, and thus different from the control treatment slope.
+
+To account for the fact that observations within plots through time are not independent, we include random effects that modify the fixed effects in each plot. We model these random effects ($\boldsymbol{\gamma}$s) as offsets drawn from a multivariate normal distribution with mean 0 and a variance-covariance matrix ($\Sigma$) that includes a covariance between the intercept and slope offsets. We implement this random effects structure by including a random effects design matrix ($\textbf{Z}$) with a column of 1s for intercept offsets and a column of continuous values for the volumetric water content for each observation.
+
+Lastly, to account for unkown variation across years, we include random year effects. These year effects ($\boldsymbol{\eta}$s) act as offsets on the intercept.
+
+Putting it all together, our model is defined mathematically as follows, where *i* denotes observation, *j* denotes plot, and *t* denotes year.
+We assume the observations are conditionally Gaussian,
+
+\vspace{-2em}
+
+\begin{align}
+\textbf{y} &\sim \text{Normal} \left(\boldsymbol{\mu}, \sigma^2 \right),
+\end{align}
+
+\noindent{}where $\boldsymbol{\mu}$ is the determinstic expectation from the regression model,
+
+\vspace{-2em}
+
+\begin{align}
+\mu_{i} &= \boldsymbol{\beta}\textbf{x}_i + \boldsymbol{\gamma}_{j(i)}\textbf{z}_i + \eta_t.
+\end{align}
+
+\noindent{}All fixed effect $\beta$s were drawn from normally distributed priors with mean 0 and standard deviation 5: $\boldsymbol{\beta} \sim \text{Normal}(0,5)$. $\gamma$ random effects were drawn from a multivariate prior centered on zero with a shared variance covariance matrix:
+
+\vspace{-2em}
+
+\begin{align}
+\boldsymbol{\gamma} \sim \text{MVN} \left( 0, \Sigma \right), \\
+\Sigma = \sigma_{plt}^2 \textbf{R}, \\
+\sigma_{plt} \sim \text{Cauchy}(0,2.5), \\
+\textbf{R} \sim \text{LKJ}(2.0)
+\end{align}
+
+\noindent{}The random year effects ($\boldsymbol{\eta}$) are modeled as intercept offsets centered on zero with a shared variance ($\sigma_{yr}$): $\boldsymbol{\gamma} \sim \text{Normal} \left( 0, \sigma_{yr}  \right)$.
+
+The Bayesian posterior distribution of our model can be expressed as:
+
+\vspace{-2em}
+
+\begin{align}
+\left[ \boldsymbol{\beta}, \boldsymbol{\gamma}, \boldsymbol{\eta}, \sigma_{yr}, \sigma_{plt}, \textbf{R}, \sigma \right | \textbf{y}] &\propto \left( \prod_{i=1}^{n} \left[ y_i | \boldsymbol{\beta}, \boldsymbol{\gamma}, \boldsymbol{\eta}, \sigma \right] \right) \left( \prod_{j=1}^{J} \left[ \gamma_j | \sigma_{plt}, \textbf{R} \right] \right) \\
+&\times \left( \prod_{t=1}^{T} \left[ \eta_t | \sigma_{yr} \right] \right)  [\boldsymbol{\beta}] [\sigma_{plt}] [\textbf{R}] [\sigma_{yr}] [\sigma]
+\end{align}
+
+We fit the model using MCMC as implemented in the software Stan [@stan2016].
+Our Stan code is below.
+All code necessary to reproduce our results has been archived on Figshare (*link here*) and released on GitHub (https://github.com/atredennick/usses_water/releases/v0.1).
 
 \newpage{}
 
@@ -160,50 +159,192 @@ parameters {
 	vector<lower=0>[Npreds2] sigma_u;  # plot random effect std. dev.
 	real<lower=0> sd_y;                # treatment-level observation std. dev.
 	real<lower=0> sigma_year;          # year std. dev. hyperprior
-	real<lower=0> phi;                 # dispersion parameter
 }
 
 transformed parameters {
-  vector[Nobs] A;             # parameter for beta distn
-  vector[Nobs] B;             # parameter for beta distn
   vector[Nobs] yhat;               # vector of expected values
   vector[Npreds2] u[Nplots];       # transformed plot random effects
   matrix[Npreds2,Npreds2] Sigma_u; # plot ranef cov matrix
   
-  Sigma_u = diag_pre_multiply(sigma_u, L_u); # cholesky factor for plot-level covariance matrix 
+  Sigma_u = diag_pre_multiply(sigma_u, L_u); # plot-level covariance matrix 
   for(j in 1:Nplots)
     u[j] = Sigma_u * beta_plot[j]; # plot random intercepts and slopes
   
   # regression model for expected values (one for each plot-year)
   for (i in 1:Nobs)
-    yhat[i] = inv_logit(x[i]*beta + z[i]*u[plot_id[i]] + year_off[year_id[i]]); 
-  
-  A = yhat * phi;
-  B = (1.0 - yhat) * phi;
+    yhat[i] = x[i]*beta + z[i]*u[plot_id[i]] + year_off[year_id[i]]; 
 }
 
 model {
   ####  PRIORS
-  phi ~ cauchy(0, 5); 
-  sigma_year ~ cauchy(0,2.5);
-  sd_y ~ cauchy(0,2.5);
+  sigma_u ~ cauchy(0,2.5)
+  sigma_year ~ cauchy(0,2.5)
   year_off ~ normal(0,sigma_year); # priors on year effects, shared variance
   beta ~ normal(0,5);	             # priors on treatment coefficients
   L_u ~ lkj_corr_cholesky(2.0);      # prior on the cholesky factor which controls the 
-                                    # correlation between plot level treatment effects
-  sigma_u ~ cauchy(0,2.5);
+                                   # correlation between plot level treatment effects
   
   for(i in 1:Nplots)
 		beta_plot[i] ~ normal(0,1); # plot-level coefficients for intercept and slope
 	
 	####  LIKELIHOOD
-  y ~ beta(A, B); # observations vary according to beta distribution
+  for(i in 1:Nobs)
+    y[i] ~ normal(yhat[i], sd_y); # observations vary normally around expected values
 }
 
 generated quantities{
   corr_matrix[Npreds2] R = multiply_lower_tri_self_transpose(L_u);
   cov_matrix[Npreds2] V = quad_form_diag(R,sigma_u);
 }
+```
+
+\newpage{}
+
+# Figures
+
+```{r scatterplot, fig.cap="Scatterplot, on the arithmetic scale, of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines).", echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)    # Data munging
+library(dplyr)        # Data summarizing
+library(ggthemes)     # Pleasing ggplot themes
+library(ggjoy)        # Joy plots!
+library(stringr)      # Working with strings
+library(rstan)        # For MCMC and Stan objects
+library(gridExtra)    # For combining ggplot objects
+library(viridis)      # Pleasing color palette
+library(RColorBrewer) # More color palettes
+library(cowplot)      # For combining ggplots
+
+source("../code/read_format_data.R") # load data
+all_fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
+
+param_labels <- c("Control::Intercept",
+                  "Drought::Intercept", 
+                  "Irrigation::Intercept",
+                  "Control::Slope", 
+                  "Drought::Slope", 
+                  "Irrigation::Slope")
+
+treat_effects <- data.frame(extract(all_fit, pars = 'beta')) %>% 
+  mutate(iteration = row_number()) %>% 
+  gather(param_name, estimate, starts_with('beta')) %>%
+  mutate(param_name = factor(param_name, labels = param_labels)) %>% 
+  spread(param_name, estimate) %>% 
+  mutate(`Drought::Intercept` = `Drought::Intercept` + `Control::Intercept`, 
+         `Irrigation::Intercept` = `Irrigation::Intercept` + `Control::Intercept`,  
+         `Drought::Slope` = `Drought::Slope` + `Control::Slope`, 
+         `Irrigation::Slope` = `Irrigation::Slope` + `Control::Slope`) %>%
+  gather(param_name, estimate, -iteration) 
+
+mean_effects <- treat_effects %>%
+  group_by(param_name) %>%
+  summarise(mean_estimate = mean(estimate))
+
+regression <- mean_effects %>%
+  separate(param_name, into = c("Treatment","Coefficient"), sep = "::") %>%
+  spread(Coefficient, mean_estimate)
+
+lmod <- lm(log(anpp) ~ vwc_scaled, anpp_data)
+x    <- model.matrix(lmod) 
+newx <- data.frame(x = seq(min(x[,2]), max(x[,2]), length.out = 50)) %>%
+  mutate(id = paste("x",1:50,sep = "::")) %>%
+  spread(id, x)
+newx <- rbind(rbind(newx,newx),newx)
+newx$Treatment <- regression$Treatment
+
+regression <- regression %>%
+  left_join(newx, by="Treatment") %>%
+  gather(xid, newx, -Treatment, -Intercept, -Slope)
+regression$estimate <- with(regression, Intercept+Slope*newx)
+
+mean_log_anpp <- mean(log(anpp_data$anpp))
+sd_log_anpp <- sd(log(anpp_data$anpp))
+mean_vwc <- mean(anpp_data$total_seasonal_vwc)
+sd_vwc <- sd(anpp_data$total_seasonal_vwc)
+
+regression <- regression %>%
+  mutate(backtrans_estimate = estimate*sd_log_anpp+mean_log_anpp,
+         backtrans_vwc = newx*sd_vwc+mean_vwc)
+
+regression_limited <- {}
+for(dotrt in unique(regression$Treatment)){
+  tmpdat <- filter(regression, Treatment == dotrt)
+  tmprange <- range(anpp_data[which(anpp_data$Treatment==dotrt),"total_seasonal_vwc"])
+  tmpdat$backtrans_vwc[tmpdat$backtrans_vwc < tmprange[1] | tmpdat$backtrans_vwc > tmprange[2]] <- NA
+  regression_limited <- rbind(regression_limited, tmpdat)
+}
+
+ggplot(anpp_data, aes(x=total_seasonal_vwc,y=anpp))+
+  geom_point(shape=21,color="grey25",alpha=0.8,aes(fill=Treatment))+
+  geom_line(data=regression_limited, aes(x=backtrans_vwc, y=exp(backtrans_estimate), color=Treatment), size=1)+
+  scale_fill_brewer(palette = "Set2")+
+  scale_color_brewer(palette = "Set2")+
+  xlab("March-June Cumulative VWC")+
+  ylab(expression(paste("ANPP (g ",m^2,")")))+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
 
 ```
 
+\newpage{}
+
+```{r posteriors, fig.cap="Prior (dashed lines) and posterior (solid line) distributions of intercepts and slopes for each treatment. The slope represents the main effect of soil moisture on log(ANPP). The red line marks 0. Shrinkage of the posterior distribution and/or changes in the mean indicate the data informed model parameters beyond the information contained in the prior for all coefficients.",echo=FALSE, message=FALSE, warning=FALSE}
+posteriors <- treat_effects %>%
+  separate(param_name, into = c("Treatment", "Coefficient")) %>%
+  mutate(prior = rnorm(n = nrow(treat_effects), 0, 5)) %>%
+  gather(Distribution, Value, -iteration, -Treatment, -Coefficient)
+
+ggplot(posteriors, aes(x=Value, linetype=Distribution))+
+    geom_line(stat = "density")+
+    geom_vline(aes(xintercept=0), color="red", size=0.2)+
+    scale_x_continuous(limits=c(-5,5))+
+    scale_linetype_discrete(labels = c("Posterior","Prior"), name = NULL)+
+    facet_grid(Coefficient~Treatment)+
+    ylab("Density")+
+    theme_few()+
+    theme(axis.text = element_text(size=7))
+```
+
+\newpage{}
+
+```{r year_effects, fig.cap="Posterior distributions of random year effects (intercept offsets). Kernel bandwidths of posterior densities were adjusted by a factor of 5 to smooth the density curves for visual clarity.", echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)    # Data munging
+library(dplyr)        # Data summarizing
+library(ggthemes)     # Pleasing ggplot themes
+library(ggjoy)        # Joy plots!
+library(stringr)      # Working with strings
+library(rstan)        # For MCMC and Stan objects
+library(gridExtra)    # For combining ggplot objects
+library(viridis)      # Pleasing color palette
+library(RColorBrewer) # More color palettes
+library(cowplot)      # For combining ggplots
+
+
+all_fit <- readRDS("../results/randcoefs_alltreatments_fit.RDS")
+
+year_id_names <- data.frame(year_id = c(1:5),
+                            year_name = c(1:5))
+betas <- reshape2::melt(rstan::extract(all_fit, pars="year_off")) %>%
+  rename(iteration = iterations, year_id = Var2, estimate = value, stan_name = L1) %>%
+  left_join(year_id_names, by="year_id")
+
+ggplot(betas, aes(x=estimate, y=as.factor(year_id), fill=as.factor(year_id), color=as.factor(year_id), height = ..density..))+
+  geom_vline(aes(xintercept=0), linetype=2, color="grey45")+
+  geom_joy(stat="density", adjust=3, alpha=0.9)+
+  scale_x_continuous(breaks=seq(-3,3,0.5), limits=c(-3,3))+
+  scale_y_discrete(labels = c("2012","2013","2014","2015","2016"))+
+  scale_fill_viridis(end=0.8,discrete=T)+
+  scale_color_viridis(end=0.8,discrete=T)+
+  guides(fill=FALSE, color=FALSE)+
+  xlab("Parameter Value")+
+  ylab("Year")+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank(),
+        panel.border     = element_blank(),
+        axis.line        = element_blank(),
+        axis.ticks       = element_blank())
+
+```
+
+\newpage{}
+
+# References

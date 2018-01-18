@@ -2,18 +2,18 @@
 layout: 11pt
 header-includes:
   - \usepackage{lineno}
+  - \linenumbers
   - \usepackage{setspace}
   - \usepackage{todonotes}
-  - \linespread{1.25}
+  - \onehalfspacing
   - \usepackage{rotating}
   - \usepackage{color, soul}
   - \usepackage[font={small},labelfont={bf},labelsep=quad]{caption}
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
-  - \usepackage{mathtools}
-bibliography: ~/Dropbox/Bibliography/CoexistStability.bib
-csl: components/ecology_letters.csl
+bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
+csl: components/ecology.csl
 
 ## rmarkdown render options
 output:
@@ -27,70 +27,87 @@ linkcolor: black
 urlcolor: black
 ---
 
+\newcommand{\tikzcircle}[2][red,fill=red]{\tikz[baseline=-0.5ex]\draw[#1,radius=#2] (0,0) circle ;}
 \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
-\renewcommand\thefigure{A2-\arabic{figure}}  
+\renewcommand\thefigure{A2-\arabic{figure}}
+\renewcommand\theequation{A2.\arabic{equation}}
 \renewcommand\thetable{A2-\arabic{table}}  
 \renewcommand\thesection{Section A2.\arabic{section}}
 
 \begin{center}
 \textbf{\Large{Appendix 2}} \\
 A.T. Tredennick, A.R. Kleinhesselink, J.B. Taylor \& P.B. Adler \\
-``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe''  \\
+``Consistent ecosystem functional response across precipitation extremes in a sagebrush steppe'' \\
 \emph{PeerJ}
 \end{center}
 
-\linenumbers
+\section{Details on SOILWAT predictions}
 
-\section{Estimating ANPP}
-We used a radiometer to nondestructively estimate aboveground net primary productivity.
-Our approach relies on relating greenness in a plot to aboveground biomass.
-In each year we recorded ground reflectances at four bands, two associated with the red spectrum and two associated with the near-infrared spectrum (Table A2-1).
-We took four readings per plot that were averaged for each band.
-Bands 1 and 3 correspond to wavelengths collected by the MODIS satellite and bands 2 and 4 correspond to wavelengths collected by the AVHRR satellite.
+We used a version of the SOILWAT soil moisture model [@Sala1992a] that has been developed specifically for use in semi-arid shrubland ecosystems [@Bradford2014].
+SOILWAT uses daily weather data, ecosystem specific vegetation data, and site specific soil properties to estimate water balance processes.
+Specifically, SOILWAT uses daily rainfall data to estimate rainfall interception by plants, evaporation of intercepted water, snow melt and redistribution, infiltration into the soil, percolation through the soil, evaporation from bare soil, transpiration from each soil layer, and drainage.
+We parameterized SOILWAT using the generic sagebrush steppe parameters and local soil data [@Kleinhesselink2017b].
+SOILWAT was forced by weather data collected at the US Sheep Experimental Station over the course of our experiment.
 
-| Band number | Spectrum name | Center wavelength | Corresponding satellite |
-| ----------- | ------------- | ----------------- | ----------------------- |
-| 1 | red | 626 nm | AVHRR |
-| 2 | red | 652 nm | MODIS |
-| 3 | near-infrared | 875 nm | AVHRR |
-| 4 | near-infrared | 859 nm | MODIS |
+SOILWAT generates soil moisture predictions at several soil depths.
+We averaged the daily predictions from the upper 40 cm of soil.
+These predictions represent ambient conditions, similar to our control plots.
+To generate soil moisture data for our treatment plots, we applied the statistical model described in the main text, which was also used to estimate treatment conditions from control conditions.
+The time series of those predictions, along with our observations and statistical estimates, is shown in Figure A2-1.
 
-Table: Radiometer specifications.
 
-Using the RED and NIR reflectance values, we calculate the normalized difference vegetation index (NDVI) for each plot based on both AVHRR- and MODIS-based wavelengths.
-We calculated NDVI as:
-\vspace{-2em}
-\begin{align}
-\text{NDVI}_{\text{AVHRR}} &= \frac{b_3 - b_1}{b_3 + b_1} \\[10pt]
-\text{NDVI}_{\text{MODIS}} &= \frac{b_4 - b_2}{b_4 + b_2}
-\end{align}
+```{r vwc, fig.cap="Time series of volumetric water content from March to June in each year from the observed measurements (solid lines), statistical estimates (dashed line), and SOILWAT (dotted line).", message=FALSE, echo=FALSE, comment=FALSE, warning=FALSE}
 
-\noindent{} where $b_x$ refers to band *x* (*x* = 1,2,3,4) in Table A1-1.
+####
+####  LOAD LIBRARIES -----------------------------------------------------------
+####
+library(tidyverse) # Data science packages
+library(dplyr)     # Data summarizing and manipulating
+library(stringr)   # Working with strings
+library(ggthemes)  # Pleasing themes for ggplot
 
-To convert plot NDVI to biomass, we regressed known biomass values from calibration plots against NDVI calculate for those plots.
-Calibration plots were located near our experiment plots, and each year we located a new set of 10 plots in which we clipped all aboveground biomass, dried it to a constant weight at 60$^\circ$ C, and the weighed.
-We used these biomass values to estimate regression parameters for both AVHRR- and MODIS-based NDVI.
-We assessed model fit using $R^2$ and, for each year, we used the regression parameters associated with the best fit model to estimate biomass in the experimental plots based on their NDVI values (Table A2-2).
-R code for this procedure is in the file "01_calibrate_radiometer_by_year.R" in the code set.
 
-```{r ndvi_table, include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
-library(xtable)
-library(tidyverse)
-library(dplyr)
-tab_dat <- read.csv("../data/estimated_biomass/ndvi_biomass_regression_parameters.csv", row.names = 1) %>%
-  filter(year > 2011 & year < 2017)
-colnames(tab_dat) <- c("Year", "Intercept", "NDVI Slope", "$R^2$", "Min(biomass)", "Max(biomass)", "\\emph{N}", "Algorithm")
 
-my_caption <- "Details of regression models used to estimate biomass each year."
-print(xtable(tab_dat, caption = my_caption, digits = 2),
-      caption.placement="top",
-      include.rownames = F,
-      sanitize.colnames.function = identity,
-      comment = FALSE,
-      size = "normalsize")
+####
+####  PLOT SOIL WATER BY TREATMENT ---------------------------------------------
+####
+mycols <- c("#009E73", "#D55E00", "#0072B2")
+
+soilwat <- readRDS("../data/soil_moisture_data/SOILWAT_treatment_years.RDS") %>%
+  select(date, year, Treatment, VWC_raw, doy) %>%
+  rename(julian_date = doy) %>%
+  mutate(julian_date = as.integer(julian_date))
+
+soil_moisture <- read.csv("../data/soil_moisture_data/average_seasonal_soil_moisture.csv") %>%
+  select(-year) %>%
+  separate(simple_date, c("year","month","day")) %>%
+  mutate(year = as.integer(year),
+         Treatment = as.character(Treatment)) %>%
+  ungroup() %>%
+  left_join(soilwat, by = c("year","Treatment","julian_date")) %>%
+  mutate(VWC_combo = ifelse(is.na(VWC)==TRUE, VWC_raw, VWC),
+         VWC_source = ifelse(is.na(VWC)==TRUE, "soilwat", "observed")) %>%
+  filter(month %in% c("03","04","05","06"))
+
+ggplot(filter(soil_moisture, type == "observed"), aes(julian_date, VWC, group=Treatment, color=Treatment))+
+  geom_line(data = soil_moisture, 
+            aes(x=julian_date, y=VWC_raw, group=Treatment, color=Treatment),
+            size=0.3, linetype=3)+
+   geom_line(data = filter(soil_moisture, type == "predicted"), 
+            aes(x=julian_date, y=VWC, group=Treatment, color=Treatment),
+            size=0.3, linetype=2)+
+  geom_line(size=0.3)+
+  scale_color_manual(values = mycols, name="Treatment")+
+  ylab(expression(paste("Daily Soil VWC (ml ", ml^-1,")")))+
+  xlab("Julian Day")+
+  scale_y_continuous(breaks=seq(0,24,8))+
+  scale_x_continuous(breaks=seq(0,250,20))+
+  facet_grid(year~.)+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank(),
+        strip.background = element_blank(), 
+        strip.text = element_text(size=6))
+
 ```
 
-
-
-
-
+# References

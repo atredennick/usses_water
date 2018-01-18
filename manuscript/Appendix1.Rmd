@@ -87,7 +87,7 @@ weather_data <- read.csv(paste0(weather_path,"ClimateIPM.csv"))
 plot_info    <- read.csv("../data/estimated_biomass/quad_info.csv")
 
 suppressWarnings( # ignore factor to character warning. It's OK.
-  cover_species <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
+  cover_species <- read.csv("../data/vital_rates/allrecords_cover.csv") %>%
     group_by(quad, year, species) %>%
     summarise(total_area = sum(area)) %>%
     left_join(plot_info, by = "quad") %>%
@@ -106,7 +106,7 @@ suppressWarnings( # ignore factor to character warning. It's OK.
 ####  USING STANDARDIZED ABUNDANCES FROM COVER AND DENSITY
 ####
 suppressWarnings( # ignore factor to character warning. It's OK.
-  cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover_v24.csv") %>%
+  cover_community_matrix <- read.csv("../data/vital_rates/allrecords_cover.csv") %>%
     group_by(quad, year, species) %>%
     summarise(total_area = sum(area)) %>%
     left_join(plot_info, by = "quad") %>%
@@ -119,7 +119,7 @@ suppressWarnings( # ignore factor to character warning. It's OK.
 )
 
 suppressWarnings( # ignore factor to character warning. It's OK.
-  density_community_matrix <- read.csv("../data/vital_rates/allrecords_density_v24.csv") %>%
+  density_community_matrix <- read.csv("../data/vital_rates/allrecords_density.csv") %>%
     mutate(ind_num = 1) %>%
     group_by(year, quad, species) %>%
     summarise(total_inds = sum(ind_num)) %>%
