@@ -261,7 +261,7 @@ print(xtable(dplyr::select(out_stats, -Sums, -Means), caption = inyear_caption, 
 
 # Figures
 
-```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Basal area (grasses) or canopy cover (shrubs and forbs) of individuals was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment.", fig.pos="h",fig.align="center"}
+```{r rac_plots, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=3, fig.cap="Rank abundance curves for perennial species. Area of individuals (either canopy or basal area cover, depending on life form) was summed withnin years and plots, and then the total area values were averaged across years and plots for each treatment.", fig.pos="h",fig.align="center"}
 ####
 ####  EXTRACT COVER OF MOST DOMINANT SPECIES ----
 ####
@@ -323,7 +323,7 @@ ggplot(annual_data, aes(x = mean_rank, y = mean_density))+
   facet_wrap(~Treatment, ncol = 3)
 ```
 
-```{r time_perr_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=6, fig.cap="Time series of rank abundance curves for perennial species in each treatment. Values of mean area were averaged over plots. The four most dominant species are labelled in each panel. Area is measured as basal area for grasses and canopy cover for shrubs and forbs."}
+```{r time_perr_racs, echo=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.height=6, fig.cap="Time series of rank abundance curves for perennial species in each treatment. Values of mean area were averaged over plots. The four most dominant species are labelled in each panel. Area is measured as either basal area or canopy cover area, depending on life form."}
 cover_data <- {}
 for(dotrt in unique(cover_community_matrix$Treatment)){
   for(doyr in unique(cover_community_matrix$year)){

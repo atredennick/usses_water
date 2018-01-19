@@ -24,9 +24,9 @@ abstract: |
   
   **Methods.** We conducted a five year precipitation manipulation experiment in a sagebrush steppe ecosystem in Idaho, United States. We used drought and irrigation treatments (approximately 50% decrease/increase) to investigate whether ecosystem functional response remains consistent under sustained high or low precipitation. We recorded data on aboveground net primary productivity (ANPP), species abundance, and soil moisture. We fit a generalized linear mixed effects model to determine if the relationship between ANPP and soil moisture differed among treatments. We used nonmetric multidimensional scaling to quantify community composition over the five years.
   
-  **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among drought and control treatments, but the irrigation treatment had a lower slope than the control treatment. However, all estimates for the effect of soil moisture on ANPP overlapped zero, indicating the relationship is weak and uncertain regardless of treatment. There was also large spatial variation in ANPP within-years, which contributes to the uncertainty of the soil moisture effect. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
+  **Results.** Ecosystem functional response, defined as the relationship between soil moisture and ANPP was similar among irrigation and control treatments, but the drought treatment had a greater slope than the control treatment. However, all estimates for the effect of soil moisture on ANPP overlapped zero, indicating the relationship is weak and uncertain regardless of treatment. There was also large spatial variation in ANPP within-years, which contributes to the uncertainty of the soil moisture effect. Plant community composition was remarkably stable over the course of the experiment and did not differ among treatments.
   
-  **Discussion.** Despite some evidence that ecosystem functional response became less sensitive under sustained wet conditions, the response of ANPP to soil moisture was consistently weak and community composition was stable. The similarity of ecosystem functional responses across treatments was not related to compensatory shifts at the plant community level, but instead may reflect the insensitivity of the dominant species to soil moisture. These species may be successful precisely because they have evolved life history strategies which buffer them against precipitation variability.
+  **Discussion.** Despite some evidence that ecosystem functional response became more sensitive under sustained drought conditions, the response of ANPP to soil moisture was consistently weak and community composition was stable. The similarity of ecosystem functional responses across treatments was not related to compensatory shifts at the plant community level, but instead may reflect the insensitivity of the dominant species to soil moisture. These species may be successful precisely because they have evolved life history strategies which buffer them against precipitation variability.
 header-includes: >
   \usepackage{setspace}
   \usepackage{todonotes}
@@ -189,7 +189,7 @@ We then predicted ANPP using the best regression equation for each year (Appendi
 
 Species composition data came from two sources: yearly census maps for each plot made using a pantograph [@Hill1920] and yearly counts of annual species in each plot.
 From these sources, we determined the density of all annuals and perennials forbs, the basal cover of perennial grasses, and the canopy cover of shrubs.
-We made a large plot-treatment-year by species matrix, where columns were filled with either basal cover or density, depending on the measurement made for the particular species.
+We made a large plot-treatment-year by species matrix, where columns were filled with either cover or density, depending on the measurement made for the particular species.
 We standardized the values in each column so we could directly compare species quantified with different metrics (density, basal cover, and canopy cover).
 This puts all abundance values on the same scale, meaning that common and rare species are weighted equally.
 Assuming that rare species will respond to treatments more than common ones, our approach is biased towards detecting compositional changes.
@@ -321,7 +321,7 @@ Precipitation manipulation experiments can help answer this question, especially
 
 The results of our five year experiment in a sagebrush steppe \new{conforms to one} of our four predictions.
 Ecosystem functional response under chronic \new{drought} was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1.
-\new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots is consistent with a stronger response of productivity to additional water in this ecosystem.
+\new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots is consistent with a stronger response of productivity to additional water in this ecosystem under chronic drought.
 This suggests that if average soil moisture were pushed consistently lower than currently observed ambient conditions, there would be a stronger relationship between precipitation and productivity in this system.}
 
 \new{However, we do not want to over-interpret the significance of the slope offsets given that the full distributions of} the slopes of the VWC $\times$ productivity relationship, \new{not just the offsets}, were similar among treatments (Table 1).
@@ -339,7 +339,7 @@ First, it could be that our precipitation manipulations were not large enough to
 That is, a 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
 We cannot definitively rule out this possibility, but we have reason to believe our treatments \emph{should} have been large enough.
 Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of \new{water-year} precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A5-1).
-\new{The 1\% quantile of water-year precipitation at our site is 78 mm, a 26% reduction from the mean, and the 99\% quantile is 545 mm, a 84\% increase from mean growing season precipitation (Appendix 6).
+\new{The 1\% quantile of water-year precipitation at our site is 78 mm, a 26\% reduction from the mean, and the 99\% quantile is 545 mm, a 84\% increase from mean growing season precipitation (Appendix 6).
 Thus, our drought treatment represented extreme precipitation amounts, and that is the treatment where we observed a small effect on the slope between soil moisture and ANPP (Fig. 3A).
 The irrigation treatment may not have been extreme enough to induce a response.}
 

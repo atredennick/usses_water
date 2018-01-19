@@ -78,6 +78,10 @@ Please pay close attention to the comments from Reviewer 1 regarding the validit
 
 \response{The sensitivity analysis allows us to examine how the magnitude of the treatment effect changes over time. We found that the response of ANPP to drought grew over time, while the response of ANPP to irrigation is static (new panel C in Figure 3). We think this analysis improves the connection of our results to the Hierarchical Response Framework.} 
 
+\response{In addition to changes in resposne to reviewer comments, we have added more detail in our description of how we estimated soil moisture based on direct observations.
+While doing this, we discovered an error on our part: we use March-June volumetric water content as our covariate in each year, but we did not actually have soil moisture estimates for March 2012 (sensors were not installed until April 2012). Rather than dropping an important month in terms of water availability, we decided to use output from the SOILWAT soil moisture model as parameterized for our site (lines xxx-xxx in the revised manuscript, Figure 2B, and new Appendix 2).
+Importantly, our main results are unchanged: ecosystem functional responses is similar among treatments, though there is now weak evidence that the drought resonse is more steep than the control response.}
+
 \bigskip{}
 
 **Reviewer: 1**
