@@ -47,7 +47,7 @@ We used a version of the SOILWAT soil moisture model [@Sala1992a] that has been 
 SOILWAT uses daily weather data, ecosystem specific vegetation data, and site specific soil properties to estimate water balance processes.
 Specifically, SOILWAT uses daily rainfall data to estimate rainfall interception by plants, evaporation of intercepted water, snow melt and redistribution, infiltration into the soil, percolation through the soil, evaporation from bare soil, transpiration from each soil layer, and drainage.
 We parameterized SOILWAT using the generic sagebrush steppe parameters and local soil data [@Kleinhesselink2017b].
-SOILWAT was forced by weather data collected at the US Sheep Experimental Station over the course of our experiment.
+SOILWAT was forced by daily weather data collected at the USDA-ARS Sheep Experimental Station over the course of our experiment.
 
 SOILWAT generates soil moisture predictions at several soil depths.
 We averaged the daily predictions from the upper 40 cm of soil.

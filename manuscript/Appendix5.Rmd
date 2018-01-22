@@ -12,7 +12,7 @@ header-includes:
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
-bibliography: ~/Dropbox/Bibliography/usses_water.bib
+bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
 ## rmarkdown render options
@@ -52,7 +52,7 @@ Our NDVI-model results are very similar to the ANPP-model results (Figure A5-1).
 As with our ANPP-model results, the positive offset for the drought treatment does not result in a significantly different slope once applied to the control slope (Table A5-1).
 
 
-```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the NDVI-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
+```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the soil moisture-NDVI relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing

@@ -43,7 +43,7 @@ A.T. Tredennick, A.R. Kleinhesselink, J.B. Taylor \& P.B. Adler \\
 \emph{PeerJ}
 \end{center}
 
-# Details on the plant community and dynamics
+# Details on plant community structure
 
 Here we provide more details on the plant community in terms of dominance and rarity.
 Averaging across time, *Artemisia tripartita* and *Balsamorhiza sagittata* are the two most dominant species in each treatment.
@@ -432,7 +432,7 @@ for(doyr in unique(annual_community_matrix_scaled$year)){
                                            tmp_out))
 }
 
-mycols <- c("#009E73", "#0072B2", "#D55E00")
+mycols <- c("#009E73", "#D55E00", "#0072B2")
 ggplot(nmds_df_annuals, aes(x=MDS1, y=MDS2, color=Treatment))+
   geom_point()+
   geom_point(color="grey35",shape=1)+

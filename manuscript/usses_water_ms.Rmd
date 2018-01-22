@@ -73,7 +73,7 @@ Fitted functional responses can then be used to infer how ANPP may change under 
 A problem with this approach is that it requires extrapolation if future precipitation falls outside the historical range of variability [@Smith2011; @Peters2012].
 For example, the soil moisture-ANPP relationship may be linear within the historical range of interannual variation, but could saturate at higher levels of soil moisture. 
 Saturating relationships are actually common [@Hsu2012; @Gherardi2015a], perhaps because other resources, like nitrogen, become more limiting in wet years than dry years.
-Failure to accurately estimate the curvature of the soil moisture-ANPP relationship will lead to over- or underprediction of ANNP under extreme precipitation [@Peters2012].
+Failure to accurately estimate the curvature of the soil moisture-ANPP relationship will lead to over- or underprediction of ANPP under extreme precipitation [@Peters2012].
 
 Another problem with relying on historical ecosystem functional responses to predict impacts of altered precipitation regimes is that these relationships themselves might shift over the long-term.
 Shifts in species identities and/or abundances can alter an ecosystem's functional response to water availability because different species have different physiological thresholds.
@@ -103,22 +103,22 @@ All four outcomes are possible in any given ecosystem, but the time scales at wh
 To determine these time scales, we need to amass information on how quickly ecosystem functional responses change in different ecosystems.
 We also need to understand whether changes at the ecosystem level are driven by community level changes or individual level responses.
 
-To that end, here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe grassland.
+To that end, here we report the results of a five-year precipitation manipulation experiment in a sagebrush steppe.
 We imposed drought and irrigation treatments (approximately $\pm50\%$) and measured ecosystem (ANPP) and community (species composition) responses.
 We focus on how the drought and irrigation treatments affect the relationship between interannual variation in available soil moisture and interannual variation in ANPP, and if community dynamics underlie the ecosystem responses.
 In particular, we are interested in the consistency of the soil moisture-ANPP relationship among treatments.
 Is the relationship steeper under the drought treatment at low soil moisture?
 Does the relationship saturate under the irrigation treatment at high soil moisture?
 To answer these questions we fit a generalized linear mixed effects model to test whether the regressions differed among treatments.
-We also analyzed community composition and \new{the sensitivity of ANPP to drought and irrigation treatments} over time, allowing us to place our experimental results within the framework our scenarios (Fig. 1).
+We also analyzed community composition and \new{the sensitivity of ANPP to drought and irrigation treatments} over time, allowing us to place our experimental results within the framework of our scenarios (Fig. 1).
 
 
 # METHODS
 
 ## Study Area
 
-We conducted our precipitation manipulation experiment in a sagebrush steppe community at the USDA, U.S. Sheep Experiment Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
-The plant community is dominated by the shrub \emph{Artemesia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
+We conducted our precipitation manipulation experiment in a sagebrush steppe community at the USDA-ARS Sheep Experiment Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
+The plant community is dominated by the shrub \emph{Artimesia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
 During the period of our experiment (2011 -- 2016), mean annual precipitation was 250 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
 In 2007, we relocated 14 of the original quadrats in permenanent livestock exclosures, \new{which we used} as control plots (i.e. ambient precipitation) in the experiment described below.
@@ -153,8 +153,10 @@ Only a subset of plots were equipped with soil moisture sensors, and within thos
 Therefore, we used a statistical model to estimate average daily soil moisture values for the ambient, drought, and irrigation treatments during the course of the experiment.
 
 \new{We first averaged the observed soil moisture readings for each day ($d$) and plot ($i$), $x_{i,d}$.
-Experimental plots were organized in groups of two, with each group ($g$) containing a drought and irrigated plot. In addition a nearby area outside the drought or irrigated plots was monitored for local ambient soil moisture conditions.
-Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions. Specifically we subtracted the ambient daily soil moisture from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the ambient conditions $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{ambient}})/\text{s.d.}(x_{g,d,\text{ambient}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $\text{trt.}$.
+Experimental plots were located in pairs, with each group ($g$) containing a drought and irrigated plot. 
+In addition, a nearby area outside the drought or irrigated plots was monitored for local ambient soil moisture conditions.
+Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions. 
+Specifically we subtracted the ambient daily soil moisture from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the ambient conditions $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{ambient}})/\text{s.d.}(x_{g,d,\text{ambient}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $trt.$.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.}
 
 \new{We then modeled these daily deviations ($\Delta x_{g,d,\text{trt.}}$)} from ambient conditions using a linear mixed effects model with independent variables for treatment (irrigation or drought), season (winter, spring, summer, fall), rainfall, and all two-way interactions. 
@@ -167,7 +169,7 @@ We could only predict soil moisture in the treated plots on days for which we to
 This procedure allowed us to predict daily soil moisture conditions for all plots, even on those days when some of our direct treatment measurements were missing due to malfunction of the sensors or dataloggers. 
 See @Kleinhesselink2017b for more details on our approach to estimating soil moisture.
 
-\new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed take readings.
+\new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed to take readings.
 To fill in these gaps, we used a version of the SOILWAT soil moisture model} [@Sala1992a] \new{that has been specifically designed for semiarid shrublands and grasslands} [@Bradford2014].
 \new{The model was parameterized using generic sagebrush steppe parameters and local soil texture, soil bulk density, and precipitation data} [@Kleinhesselink2017b].
 \new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B and Appendix 2).
@@ -176,16 +178,16 @@ We applied the same statistical model and procedure described above to estimate 
 
 
 ## Data Collection
-We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [see @Byrne2011 for a review].
+We estimated aboveground net primary productivity (ANPP) using a radiometer to relate ground reflectance to plant biomass [@Byrne2011].
 We recorded ground reflectance at four wavelengths, two associated with red reflectance (626 nm and 652 nm) and two associated with near-infrared reflectance (875 nm and 859 nm).
 At each plot in each year, we took four readings of ground reflectances at the above wavelengths.
-We also took readings in 12 (2015), 15 (2012, 2013, 2014), or 16 (2016) calibration plots adjacent to the experimental site, in which we harvested all aboveground biomass produced in the current year (we excluded litter and standing dead material), dried it to a constant weight at 60$^{\circ}$C, and weighed it to estimate ANPP. We harvested at peak biomass each year, typically in late June.
+We also took readings in 12 (2015), 15 (2012, 2013, 2014), or 16 (2016) calibration plots adjacent to the experimental site, in which we harvested all aboveground biomass produced in the current year (we excluded litter and standing dead material), dried it to a constant weight at 60$^{\circ}$C, and weighed it to estimate ANPP. We harvested at peak green biomass each year, typically in late June.
 
 For each plot and year, we averaged the four readings for each wavelength and then calculated a greenness index based on the same bands used to calculate NDVI using the MODIS (Moderate Resolution Imaging Spectroradiometer) and AVHRR (Advanced Very High Resolution Radiometer) bands for NDVI.
 We regressed the greenness index against the dry biomass weight from the ten calibration plots to convert the greenness index to ANPP.
 We fit regressions to a MODIS-based index and an AVHRR-based index for each year and retained the regression with the better fit based on $R^2$ values.
 We then predicted ANPP using the best regression equation for each year (Appendix 3).
-\new{Our analysis, described below, can be done using NDVI directly, but we focus on ANPP to more easily relate our findings to previous work and because our results do not change if we analyze NDVI directly (Appendix 5).}
+\new{Our results do not change when we analyze the soil moisture-NDVI relationship instead of the soil moisture-ANPP relationship (Appendix 5).}
 
 Species composition data came from two sources: yearly census maps for each plot made using a pantograph [@Hill1920] and yearly counts of annual species in each plot.
 From these sources, we determined the density of all annuals and perennials forbs, the basal cover of perennial grasses, and the canopy cover of shrubs.
@@ -193,7 +195,7 @@ We made a large plot-treatment-year by species matrix, where columns were filled
 We standardized the values in each column so we could directly compare species quantified with different metrics (density, basal cover, and canopy cover).
 This puts all abundance values on the same scale, meaning that common and rare species are weighted equally.
 Assuming that rare species will respond to treatments more than common ones, our approach is biased towards detecting compositional changes.
-\new{We limited our community level data to observations from the permanent exclosure with our drought and irrigation treatments for the community composition analyses described below (\textbf{Community composition over time}).
+\new{We limited our analysis of community data to observations from the permanent exclosure containing our drought and irrigation treatments (see \textbf{Community composition over time}).
 This exclosure included six of the control plots and all of the treatment plots, for a total of 22 plots.
 The other eight control plots are in other pastures, which would add a spatial bias to our community analysis focused on temporal dynamics.}
 
@@ -205,7 +207,7 @@ Our main goal was to test whether the relationship between ANPP and soil moistur
 Based on our own observations and previous work at our study site [@Blaisdell1958; @Dalgleish2011; @Adler2012], we chose to use cumulative volumetric water content from March through June as our metric of soil moisture (hereafter referred to as `VWC').
 To achieve this goal, we fit a generalized linear mixed effects regression model with log(ANPP) as the response variable and VWC and treatment as fixed effects.
 Plot and year of treatment were included as random effects to account for non-independence of observations, as described below.
-We log-transformed ANPP to account for heteroscedasticity.
+We log-transformed ANPP to reduce heteroscedasticity.
 Both log(ANPP) and VWC were standardized to have mean 0 and unit variance before fitting the model [i.e., $(x_i - \bar{x})/\sigma_x$].
 
 Our model is defined as follows:
@@ -261,7 +263,7 @@ However, we did use a separate analysis to test whether the the sensitivity of A
 \new{This metric of sensitivity scales the difference between ANPP in the treated and control plots by the change in soil moisture in the treated plots. 
 Because our treated plots are not directly paired with individual control plots, we compare ANPP in each treated plot to the average ANPP of the control plots in each year.
 After calculating sensitivity for each drought and irrigation plot in each year, we regressed sensitivity against year of treatment using the \texttt{lm()} function in R} [@R2016].
-\new{This analysis also allows us to link particularly sensitive treatment years to changes in community composition.}
+\new{This analysis also allows us to link particularly sensitive treatment-years to changes in community composition.}
 
 ### Community composition over time
 
@@ -275,7 +277,7 @@ We used the ```vegan::adonis()``` function [@Oksanen2016] to perform permutation
 To test whether treatment plots were equally dispersed, or not, we used the ```vegan::betadisper()``` function [@Oksanen2016].
 
 \new{We conducted the above analysis for all species, and then conducted a separate analysis for annual species only (Appendix 1). 
-Annual species have shorter life spans, so conducting a separate analysis allowed us to discover if community responses are restricted to short-lived species that might respond more quickly to altered precipitation regimes. 
+Annual species have shorter life spans, so conducting a separate analysis allowed us to test whether we might find stronger evidence for community responses to altered precipitation when we focus on short-lived species. 
 Given the dominance of perennial species in our system (Appendix 1), shifts in the annual plant community could be difficult to detect in the analysis of the full community.}
 
 ### Reproducibility
@@ -286,16 +288,16 @@ We also include annotated Stan code in our model description in Appendix 4.
 
 # RESULTS
 
-Ambient precipitation was variable over the five years of the study (Fig. 2A), meaning our experiment captured a range of environmental conditions.
+Ambient precipitation and soil moisture were variable over the five years of the study (Fig. 2A-B).
 ANPP varied from a minimum of 77.4 g m$^{-2}$ in 2014 to a maximum of 239.3 g m$^{-2}$ in 2016 when averaged across treatments (Fig. 2C).
 ANPP was slightly higher in irrigation plots \new{(on average 15\% higher)} and slightly lower in drought plots \new{(on average 25\% lower) relative to control plots} (Fig. 2C), corresponding to observed and estimated soil volumetric water content (VWC) differences among treatments (Fig. 2B).
 \new{March-June VWC in drought plots was 12\% less than in control plots on average, and March-June VWC in irrigation plots was 19\% higher than in control plots on average across the years of the experiment.}
-Such differences in soil VWC indicate our treatment infrastructure was successful.
+The differences in soil VWC indicate our treatment infrastructure was successful.
 ANPP was highly variable across plots within years, \new{as indicated by the large and overlapping standard deviations} (Fig. 2C).
 
 Cumulative March-June soil moisture had a weak positive effect on ANPP (Table 1; Fig. 3B).
 The effect of soil moisture for each treatment is associated with high uncertainty, however, with 95\% Bayesian credible intervals that \new{broadly} overlap zero (Table 1).
-Although the parameter estimates for the effect of soil moisture overlap zero, the posterior distributions of the slopes all shrank and shifted to more positive values relative to the prior distributions (Fig. A3-2), which indicates the data did influence parameter estimates beyond the information from the uninformative priors.
+Although the parameter estimates for the effect of soil moisture overlap zero, the posterior distributions of the slopes all shrank and shifted to more positive values relative to the prior distributions (Fig. A3-2), which indicates the data did influence parameter estimates.
 Ecosystem functional response was similar among treatments (Table 1; Fig. 3B), but there is evidence that the \new{slope for the drought treatment is greater than the slope for the control treatment.}
 This evidence comes from interpreting the posterior distributions of the slope offsets for the treatments.
 \new{From these distributions,} we calculate a \new{58}% one-tailed probability that the estimate is greater than zero for the irrigation treatment \new{and a 100\% one-tailed probability that the estimate is greater than zero for the drought treatment} (Fig. 3A, right panel).
@@ -309,20 +311,20 @@ Community composition was also remarkably stable over time, with no evidence of 
 \new{There were also no changes in the dominant species over time in any treatment (Appendix 1).
 Analyzing annual species on their own produced similar results.
 There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights common and rare species equally (Fig. A1-4).
-By definition, thsee rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
+By definition, these rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
 
 
 # DISCUSSION
 
 Ecosystem response to a new precipitation regime depends on the physiological responses of constituent species and the rate at which community composition shifts to favor species better able to take advantage of, or cope with, new resource levels [@Smith2009].
-Previous work has shown that community compositional shifts can be both rapid, on the order of years [@Hoover2014], and slow, on order of decades [@Knapp2012; @Wilcox2016].
+Previous work has shown that community compositional shifts can be either rapid, on the order of years [@Hoover2014], or slow, on the order of decades [@Knapp2012; @Wilcox2016].
 A lingering question is how the time scales of ecosystem response and community change vary among ecosystems. 
 Precipitation manipulation experiments can help answer this question, especially if they push water availability outside the historical range of variability for long periods. 
 
-The results of our five year experiment in a sagebrush steppe \new{conforms to one} of our four predictions.
+The results of our five year experiment in a sagebrush steppe \new{conform to one} of our four predictions.
 Ecosystem functional response under chronic \new{drought} was different from the control treatment, but community composition remained unchanged (Fig. 3A, Fig. 4), representing the top right scenario in Fig. 1.
-\new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots is consistent with a stronger response of productivity to additional water in this ecosystem under chronic drought.
-This suggests that if average soil moisture were pushed consistently lower than currently observed ambient conditions, there would be a stronger relationship between precipitation and productivity in this system.}
+\new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots indicates increased sensitivity to water availability under chronic drought.
+A strict interpretation of this result implies that if average soil moisture were pushed consistently lower than currently observed ambient conditions, there would be a stronger relationship between precipitation and productivity in this system.}
 
 \new{However, we do not want to over-interpret the significance of the slope offsets given that the full distributions of} the slopes of the VWC $\times$ productivity relationship, \new{not just the offsets}, were similar among treatments (Table 1).
 We therefore conclude that ecosystem functional response is consistent (\new{similar values}) and weak (\new{all broadly overlapping zero}) across all precipitation treatments.
@@ -332,11 +334,10 @@ The similarity of ecosystem functional response (Fig. 3) and community compositi
 \new{Based on these findings}, we expected ecosystem functional response, community composition, or both to change under our treatments.
 Why did our treatments fail to induce ecosystem or community responses?
 We can think of three reasons. 
-Two are limitations of our study, and one is the life history traits of the species in our focal communities.
-We first discuss the potential limitations of our study, and then discuss the biological explanation.
+Two are limitations of our study, and one invokes the life history traits of the species at our study site.
 
-First, it could be that our precipitation manipulations were not large enough to induce a response.
-That is, a 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
+First, our precipitation manipulations may not have been large enough to induce a response.
+A 50\% decrease in any given year may not be abnormal given our site's historical range of variability [@Knapp2017].
 We cannot definitively rule out this possibility, but we have reason to believe our treatments \emph{should} have been large enough.
 Using the methods described by @Lemoine2016, we calculated the percent reduction and increase of \new{water-year} precipitation necessary to reach the 1\% and 99\% extremes of the historical precipitation regime at our site (Fig. A5-1).
 \new{The 1\% quantile of water-year precipitation at our site is 78 mm, a 26\% reduction from the mean, and the 99\% quantile is 545 mm, a 84\% increase from mean growing season precipitation (Appendix 6).
@@ -344,30 +345,29 @@ Thus, our drought treatment represented extreme precipitation amounts, and that 
 The irrigation treatment may not have been extreme enough to induce a response.}
 
 Second, ANPP at our site may be influenced by additional factors, not only the cumulative March-June soil moisture covariate we included in our statistical model.
-\new{For example,} @LaPierre2016 \new{found that site-scale ANPP is better predicted by abiotic factors such as nutrient availability than precipitation.}
+\new{For example,} @LaPierre2016 \new{found that site-scale ANPP is better predicted by nutrient availability than precipitation.}
 Moreover, temperature can impact ANPP directly [@Epstein1997] and by exacerbating the effects of soil moisture [@DeBoeck2011].
 Measurements of soil moisture likely contain a signal of temperature, through its impact on evaporation and infiltration, but the measurements will not capture the direct effect of temperature on metabolic and physiological processes.
 We also did not redistribute snow across our treatments in the winter, and snow melt may spur early spring growth.
 Failure to account for potentially important covariates could explain the within-year spread of ANPP (Fig 2C, Fig. 3B) and the resulting uncertain relationship we observed between soil moisture and ANPP across all treatments (Table 1, Fig. A3-2).
-Unfortunately, we did not collect data on additional factors because our focus was on precipitation.
 
 Third, the life history traits of the dominant species in our study ecosystem may explain the consistently positive, but weak and uncertain, effect of soil moisture on ANPP (Table 1, Fig. 3).
 Species that live in variable environments, such as cold deserts, must have strategies to ensure long-term success as conditions vary.
 One strategy is bet hedging, where species forego short-term gains to reduce the variance of long-term success [@Seger1987].
 In other words, species follow the same conservative strategy every year, designed to minimize response to environmental conditions.
 The dry and variable environment of the sagebrush steppe has likely selected for bet hedging species that can maintain function at low water availability and have weak responses to high water availability.
-In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which corresponds to the weak effect of soil moisture on ANPP (i.e., the Bayesian credible intervals for the slopes overlapping zero; Table 1).
+In so doing, the dominant species in our ecosystem avoid "boom and bust" cycles, which may explain the weak effect of soil moisture on ANPP (i.e., the Bayesian credible intervals for the slopes overlapping zero; Table 1).
 
 Another strategy to deal with variable environmental conditions is avoidance, which would also result in a consistent ecosystem functional response between drought and control treatments.
 For example, many of the perennial grasses in our focal ecosystem avoid drought stress by growing early in the growing season [@Blaisdell1958, A.R. Kleinhesselink, personal observation].
 Furthermore, the dominant shrub in our focal ecosystem, \emph{Artemisia tripartita}, has access to water deep in the soil profile thanks to a deep root system [@Kulmatiski2017a].
 \new{The dominance of our site by the shrub \emph{A. tripartita} (Appendix 1) may explain why our results do not conform to broader patterns of grassland sensitivity to precipitation manipulations} [e.g., @Huxman2004; @Knapp2015; @Wilcox2017].
 
-\new{We found that ANPP became more sensitive to the drought over time (Fig. 3C).  In other words, relative to the effect of the drought shelters on soil moisture, ANPP was more reduced by the drought conditions later in the experiment than early on in the experiment. 
+\new{We found that ANPP became more sensitive to the drought treatment over time (Fig. 3C).
 We interepret this increase in sensitivity as the effect of cumulative impacts of the drought on dominant species.
 Plants may not have shown a large response in terms of ANPP in the first years of the experiment if they could grow from stored carbohydrate reserves or if they abstained from flowering and reproduction.
-As the drought progressed, these same plants may have have started to reduce in size or die. 
-Given the long lived perennial species at this site, this increase in sensitivity may indicate a larger future change in community composition and ecosystem functional response. }
+As the drought progressed, these same plants may have have started to shrink or die. 
+Given the long-lived perennial species at this site, this increase in sensitivity may indicate a larger future change in community composition and ecosystem functional response. }
  
 # CONCLUSIONS
 
@@ -376,12 +376,11 @@ Such insensitivity can buffer species against precipitation variability in this 
 Longer, chronic precipitation alteration might reveal plant community shifts that we did not observe [e.g., @Wilcox2016], \new{and the increased sensitivity of ANPP to drought in the final years of our experiment may portend such a shift.} 
 Likewise, a long-term increase in water availability could allow species that do not bet hedge to gain prominence and dominate the ecosystem functional response.
 \new{The length of the perturbation may be especially relevant in our focal ecosystem where the perennial species are long-lived, meaning compositional turnover may take many more years than we report on here.}
-Our results suggest compositional shifts would have the largest impact at high rainfall because the current community maintained consistent ecosystem functional response at very low water availability.
-\new{However, the increased sensitivity of ANPP to drought conditions suggests a shift in ecosystem functional response may be near, and simply takes more time than we observed here.}
+
 
 # ACKNOWLEDGEMENTS
 
-We thank the many summer research technicians who collected the data reported in this paper and the USDA, U.S. Sheep Experiment Station (Dubois, ID) for facilitating work on their property.
+We thank the many summer research technicians who collected the data reported in this paper and the USDA-ARS Sheep Experiment Station (Dubois, ID) for facilitating work on their property.
 We also thank Susan Durham for clarifying our thinking on the statistical analyses and Kevin Wilcox for helpful discussions on analyzing community composition data.
 John Bradford and Caitlin Andrews generously provided SOILWAT model output,
 \new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
@@ -434,7 +433,7 @@ colnames(sppcomp_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{
 sppcomp_stats$d.f. <- as.integer(sppcomp_stats$d.f.)
 
 # Make the table
-inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis' tests whether treatments form unique clusters in multidimensial space; `betadisper' tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support that the treatments differ."
+inyear_caption <- "Results from statistical tests for clustering and dispersion of community composition among precipitation treatments. `adonis' tests whether treatments form unique clusters in multidimensional space; `betadisper' tests whether treatments have similar dispersion. For both tests, \\emph{P} values greater than 0.05 indicate there is no support for the hypothesis that the treatments differ."
 print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_caption, digits = 2),
        caption.placement="top",
        include.rownames = F,
@@ -462,7 +461,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[height=7in]{../figures/data_panels.png}
-  \caption{(A) Probability density of historical water-year (Oct.--Sept.) precipitation from 1927-2016, with the years of the experiment shown with arrows on the \emph{x}-axis. (B) \new{Satistically estimated (solid lines) and SOILWAT-generated (dashed lines) daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. \new{We used the estimates from our statistical model, with gaps filled in by SOILWAT predictions, to calculate cumulative March--June VWC as used in our analysis of treatment effects on ecosystem functional response.} (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
+  \caption{(A) Probability density of historical water-year (Oct.--Sept.) precipitation from 1927-2016, with the years of the experiment shown by arrows on the \emph{x}-axis. (B) \new{Statistically estimated (solid lines) and SOILWAT-generated (dashed lines) daily} soil volumetric water content (VWC) in each of the three treatments during the course of the experiment. \new{We used the estimates from our statistical model, with gaps filled in by SOILWAT predictions, to calculate cumulative March--June VWC as used in our analysis of treatment effects on ecosystem functional response.} (C) Mean (points) ANPP and its standard deviation (error bars) for each year of the experiment. Colors in panels B and C identify the treatment, as specified in the legend of panel C.}
 \end{figure}
 
 
@@ -472,7 +471,7 @@ print(xtable(dplyr::select(sppcomp_stats, -Sums, -Means), caption = inyear_capti
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
-  \caption{Results from the generalized linear mixed effects model \new{(A-B) and the sensitivity analysis (C)}. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $\lessgtr$ 0 ='') for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1. \new{(C) Regression of sensitivity against time for each treatment. Each point represents the sensitivity of ANPP in a plot relative to the mean of the control plots in that year. Only the significant regression for the drought treatment is plotted (\emph{P} = 0.0007).}}
+  \caption{Results from the generalized linear mixed effects model \new{(A-B) and the sensitivity analysis (C)}. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $</>$ 0 ='') for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1. \new{(C) Regression of sensitivity against time for each treatment. Each point represents the sensitivity of ANPP in a plot relative to the mean of the control plots in that year. Only the significant regression for the drought treatment is plotted (\emph{P} = 0.0007).}}
 \end{figure}
 
 
