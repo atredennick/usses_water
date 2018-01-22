@@ -78,15 +78,15 @@ differed among treatments. We used nonmetric multidimensional scaling to
 quantify community composition over the five years.
 
 \textbf{Results.} Ecosystem functional response, defined as the
-relationship between soil moisture and ANPP was similar among irrigation
-and control treatments, but the drought treatment had a greater slope
-than the control treatment. However, all estimates for the effect of
-soil moisture on ANPP overlapped zero, indicating the relationship is
-weak and uncertain regardless of treatment. There was also large spatial
-variation in ANPP within-years, which contributes to the uncertainty of
-the soil moisture effect. Plant community composition was remarkably
-stable over the course of the experiment and did not differ among
-treatments.
+relationship between soil moisture and ANPP, was similar among
+irrigation and control treatments, but the drought treatment had a
+greater slope than the control treatment. However, all estimates for the
+effect of soil moisture on ANPP overlapped zero, indicating the
+relationship is weak and uncertain regardless of treatment. There was
+also large spatial variation in ANPP within-years, which contributes to
+the uncertainty of the soil moisture effect. Plant community composition
+was remarkably stable over the course of the experiment and did not
+differ among treatments.
 
 \textbf{Discussion.} Despite some evidence that ecosystem functional
 response became more sensitive under sustained drought conditions, the
@@ -293,7 +293,7 @@ drought, and irrigation treatments during the course of the experiment.
 Experimental plots were located in pairs, with each group ($g$) containing a drought and irrigated plot. 
 In addition, a nearby area outside the drought or irrigated plots was monitored for local ambient soil moisture conditions.
 Within each group of plots we standardized the irrigation and drought effects on soil moisture relative to the ambient soil moisture conditions. 
-Specifically we subtracted the ambient daily soil moisture from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the ambient conditions $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{ambient}})/\text{s.d.}(x_{g,d,\text{ambient}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $trt.$.
+Specifically, we subtracted the ambient daily soil moisture from the soil moisture measured within the drought and irrigation plots within each group and then divided by the standard deviation of daily soil moisture values measured in the ambient conditions $\left( \Delta x_{g,d,\text{trt.}} = (x_{g,d,\text{trt.}} - x_{g,d,\text{ambient}})/\text{s.d.}(x_{g,d,\text{ambient}}) \right)$ where $\Delta x$ is the standardized treatment effect and $x_{g,d,\text{trt.}}$ is the raw soil moisture measure for plot group $g$ on day $d$ and treatment $trt$.
 These transformations ensured that the treatment effects in each plot were appropriately scaled by the local ambient conditions within each plot group.}
 
 \new{We then modeled these daily deviations ($\Delta x_{g,d,\text{trt.}}$)}
@@ -546,8 +546,8 @@ there is evidence that the
 \new{slope for the drought treatment is greater than the slope for the control treatment.}
 This evidence comes from interpreting the posterior distributions of the
 slope offsets for the treatments. \new{From these distributions,} we
-calculate a \new{58}\% one-tailed probability that the estimate is
-greater than zero for the irrigation treatment
+calculate a \new{42}\% one-tailed probability that the estimate is less
+than zero for the irrigation treatment
 \new{and a 100\% one-tailed probability that the estimate is greater than zero for the drought treatment}
 (Fig. 3A, right panel).
 
@@ -581,10 +581,10 @@ especially if they push water availability outside the historical range
 of variability for long periods.
 
 The results of our five year experiment in a sagebrush steppe
-\new{conform to one} of our four predictions. Ecosystem functional
-response under chronic \new{drought} was different from the control
-treatment, but community composition remained unchanged (Fig. 3A, Fig.
-4), representing the top right scenario in Fig. 1.
+\new{appear to conform to one} of our four predictions. Ecosystem
+functional response under chronic \new{drought} was different from the
+control treatment, but community composition remained unchanged (Fig.
+3A, Fig. 4), representing the top right scenario in Fig. 1.
 \new{The increase in the slope of the VWC $\times$ productivity relationship in the drought plots indicates increased sensitivity to water availability under chronic drought.
 A strict interpretation of this result implies that if average soil moisture were pushed consistently lower than currently observed ambient conditions, there would be a stronger relationship between precipitation and productivity in this system.}
 
@@ -696,8 +696,8 @@ reported in this paper and the USDA-ARS Sheep Experiment Station
 (Dubois, ID) for facilitating work on their property. We also thank
 Susan Durham for clarifying our thinking on the statistical analyses and
 Kevin Wilcox for helpful discussions on analyzing community composition
-data. John Bradford and Caitlin Andrews generously provided SOILWAT
-model output,
+data.
+\new{John Bradford and Caitlin Andrews generously provided SOILWAT model output.}
 \new{Two anonymous reviewers and Elsie Denton provided thoughtful reviews that improved our paper.}
 
 \hypertarget{funding}{%
@@ -803,7 +803,7 @@ Year & Test & n & d.f. & \emph{F} & \emph{P} \\
 \begin{figure}[!ht]
   \centering
       \includegraphics[width=5in]{../figures/glmm_main_results.png}
-  \caption{Results from the generalized linear mixed effects model \new{(A-B) and the sensitivity analysis (C)}. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $</>$ 0 ='') for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1. \new{(C) Regression of sensitivity against time for each treatment. Each point represents the sensitivity of ANPP in a plot relative to the mean of the control plots in that year. Only the significant regression for the drought treatment is plotted (\emph{P} = 0.0007).}}
+  \caption{Results from the generalized linear mixed effects model \new{(A-B) and the sensitivity analysis (C)}. (A) Posterior distributions for the effects of drought and irrigation on the intercept and slope of the productivity-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (``Pr $</>$ 0 ='') for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on the median of the intercept offset distributions or our specific hypothesis for the slope offsets. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five. (B) Scatterplot of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines). Note that we show log(ANPP) on the \emph{y}-axis of panel B; this same plot can be seen on the arithmetic scale in supporting material Fig. A2-1. \new{(C) Regression of sensitivity against time for each treatment. Each point represents the sensitivity of ANPP in a plot relative to the mean of the control plots in that year. Only the significant regression for the drought treatment is plotted (\emph{P} = 0.0007).}}
 \end{figure}
 
 \newpage{}

@@ -58,9 +58,9 @@ Table: Radiometer specifications.
 
 Using the RED and NIR reflectance values, we calculate the normalized difference vegetation index (NDVI) for each plot based on both AVHRR- and MODIS-based wavelengths.
 We calculated NDVI as:
-\vspace{-2em}
+<!-- \vspace{-2em} -->
 \begin{align}
-\text{NDVI}_{\text{AVHRR}} &= \frac{b_3 - b_1}{b_3 + b_1} \\[10pt]
+\text{NDVI}_{\text{AVHRR}} &= \frac{b_3 - b_1}{b_3 + b_1} \\
 \text{NDVI}_{\text{MODIS}} &= \frac{b_4 - b_2}{b_4 + b_2}
 \end{align}
 

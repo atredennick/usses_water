@@ -13,7 +13,7 @@ header-includes:
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
   - \usepackage{float}
-bibliography: ~/Dropbox/Bibliography/usses_water.bib
+bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
 ## rmarkdown render options
