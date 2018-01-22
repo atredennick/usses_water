@@ -53,7 +53,7 @@ Four to five species dominate the community in general (Figure A1-1), indicating
 We also conducted our community composition analysis with only annual species.
 Annual species are shorter-lived than the perennial species in our community, so they may respond more quickly to alterations of precipitation.
 In general, our results for annual species conform to the results from the full community analysis in the main text.
-Annual plant community composition is relatively stable through time (Fig. A1-6) and in most years there is no evidence that treatment differentiates community composition (Table A1-3).
+Annual plant community composition is relatively stable through time (Fig. A1-5) and in most years there is no evidence that treatment differentiates community composition (Table A1-1).
 Note that in some years the ```vegan::metaMDS()``` returned unreliable estimates of Bray-Curtis distances for the annual community because of lack of sufficient data (i.e., many annual species with 0 abundance). 
 
 \newpage{}
@@ -240,7 +240,7 @@ for(doyr in unique(annual_community_matrix_scaled$year)){
 }
 ```
 
-\setcounter{table}{2}
+<!-- \setcounter{table}{2} -->
 
 ```{r annual_nmds_table, echo = FALSE, include=TRUE, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 colnames(out_stats) <- c("Year", "Test", "n", "d.f.","Sums","Means","\\emph{F}", "\\emph{P}")

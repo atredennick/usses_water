@@ -118,7 +118,7 @@ We also analyzed community composition and \new{the sensitivity of ANPP to droug
 ## Study Area
 
 We conducted our precipitation manipulation experiment in a sagebrush steppe community at the USDA-ARS Sheep Experiment Station (USSES) near Dubois, Idaho (44.2$^{\circ}$ N, 112.1$^{\circ}$ W), 1500 m above sea level.
-The plant community is dominated by the shrub \emph{Artimesia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
+The plant community is dominated by the shrub \emph{Artemisia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
 During the period of our experiment (2011 -- 2016), mean annual precipitation was 250 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
 In 2007, we relocated 14 of the original quadrats in permenanent livestock exclosures, \new{which we used} as control plots (i.e. ambient precipitation) in the experiment described below.
@@ -310,7 +310,7 @@ The multidimensional space of community composition overlapped among treatments 
 Community composition was also remarkably stable over time, with no evidence of divergence among treatments (Table 2; Fig. 4).
 \new{There were also no changes in the dominant species over time in any treatment (Appendix 1).
 Analyzing annual species on their own produced similar results.
-There is some evidence that the annual community changed in response to treatment in two years (Fig. A1-6), but these responses appear to come from very rare species since our analysis weights common and rare species equally (Fig. A1-4).
+There is some evidence that the annual community changed in response to treatment in two years (Table A1-1; Fig. A1-5), but these responses appear to come from very rare species since our analysis weights common and rare species equally (Fig. A1-4).
 By definition, these rare species contribute little to ANPP and thus any compositional changes have little influence on ecosystem functional response.}
 
 
@@ -401,7 +401,7 @@ The research was also supported by the National Science Foundation, through a Po
 # SUPPLEMENTAL INFORMATION
 
 \begin{description}
-\item [Appendix 1.] \new{Additional information on plant community composition and dynamics, Table A1-1, Table A1-2, Table A1-3, Fig. A1-1, Fig. A1-2, Fig. A1-3, Fig. A1-4, Fig. A1-5, and Fig. A1-6.}
+\item [Appendix 1.] \new{Additional information on plant community composition and dynamics, Table A1-1, Fig. A1-1, Fig. A1-2, Fig. A1-3, Fig. A1-4, and Fig. A1-5.}
 \item [Appendix 2.] \new{Additional details on soil moisture modeling with SOILWAT and Fig. A2-1.}
 \item [Appendix 3.] Additional methods and information on estimating aboveground net primary productivity, Table A3-1, and Table A3-2.
 \item [Appendix 4.] Details of the hierarchical Bayesian model, Fig. A4-1, Fig. A4-2, and Fig. A4-3.
