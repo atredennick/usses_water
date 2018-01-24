@@ -65,7 +65,7 @@ ppt_histogram <- ggplot(weather, aes(x=annual_precip))+
   scale_x_continuous(expand=c(0,0), limits=c(0,620), breaks=seq(0,600,100))+
   scale_y_continuous(expand=c(0,0), limits=c(0,0.0065))+
   ylab("Density")+
-  xlab(expression(paste("Annual Precipitation (mm ", yr^-1,")")))+
+  xlab(expression(paste("Water-year Precipitation (mm ", yr^-1,")")))+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 
