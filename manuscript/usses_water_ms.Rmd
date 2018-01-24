@@ -86,6 +86,7 @@ Experimental manipulations of limiting resources, like precipitation, offer a wa
 Altering the amount of precipitation over many years should provide insight into the time scales at which water-limited ecosystems respond to chronic resource alteration.
 We propose four alternative scenarios for the effect of precipitation manipulation on the ecosystem functional response to soil moisture based on the Hierarchical Response Framework (Fig. 1).
 We define 'ecosystem functional response' as the relationship between available soil moisture and ANPP.
+\new{We focus on soil moisture rather than precipitation because soil moisture is more directly related to plant resource requirements.}
 The four scenarios are based on possible outcomes at the community (e.g., community composition) and ecosystem (e.g., soil moisture-ANPP regression) levels.
 
 First, altered precipitation might have no effect on either ecosystem functional response or community composition (Fig. 1, top left).
@@ -350,7 +351,7 @@ Measurements of soil moisture likely contain a signal of temperature, through it
 We also did not redistribute snow across our treatments in the winter, and snow melt may spur early spring growth.
 Failure to account for potentially important covariates could explain the within-year spread of ANPP (Fig 2C, Fig. 3B) and the resulting uncertain relationship we observed between soil moisture and ANPP across all treatments (Table 1, Fig. A3-2).
 
-Third, the life history traits of the dominant species in our study ecosystem may explain the consistently positive, but weak and uncertain, effect of soil moisture on ANPP (Table 1, Fig. 3).
+Third, the life history traits of the dominant species, \new{which largely determine ecosystem function} [@Smith2003], in our study ecosystem may explain the weak and uncertain effect of soil moisture on ANPP (Table 1, Fig. 3).
 Species that live in variable environments, such as cold deserts, must have strategies to ensure long-term success as conditions vary.
 One strategy is bet hedging, where species forego short-term gains to reduce the variance of long-term success [@Seger1987].
 In other words, species follow the same conservative strategy every year, designed to minimize losses during unfavorable periods.
