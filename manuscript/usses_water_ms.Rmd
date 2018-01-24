@@ -120,8 +120,8 @@ We conducted our precipitation manipulation experiment in a sagebrush steppe com
 The plant community is dominated by the shrub \emph{Artemisia tripartita}, \new{the perennial forb \emph{Balsamorhiza sagittata}}, and three perennial bunchgrasses, \emph{Pseudoroegneria spicata}, \emph{Poa secunda}, and \emph{Hesperostipa comata} \new{(see Appendix 1 for rank abundance curves)}.
 During the period of our experiment (2011 -- 2016), mean annual precipitation was 250 mm year$\phantom{}^{-1}$ and mean monthly temperature ranged from -5.2$^{\circ}$C in January to 21.8$^{\circ}$C in July.
 Between 1926 and 1932, range scientists at the USSES established 26 permanent 1 m$^2$ quadrats to track vegetation change over time.
-In 2007, we relocated 14 of the original quadrats in permenanent livestock exclosures, \new{which we used} as control plots (i.e. ambient precipitation) in the experiment described below.
-\new{We used the relocated plots as our controls because collecting demographic data is time consuming and it was already being collected in these plots for other studies.}
+In 2007, we located 14 of the original quadrats in permenanent livestock exclosures, \new{which we used} as control plots (i.e. ambient precipitation) in the experiment described below.
+\new{We used the original plots as our controls because collecting demographic data is time consuming and it was already being collected in these plots for other studies.}
 
 In spring 2011, we established 16 new 1 m$^2$ plots located in the \new{largest exclosure at USSES, which also contained} six of our control plots.
 We avoided areas on steep hill slopes, areas with greater than 20\% cover of bare rock, and areas with greater than 10\% cover of the shrubs \emph{Purshia tridentata} and/or \emph{Amelanchier utahensis}.
@@ -168,7 +168,7 @@ We could only predict soil moisture in the treated plots on days for which we to
 This procedure allowed us to predict daily soil moisture conditions for all plots, even on those days when some of our direct treatment measurements were missing due to malfunction of the sensors or data loggers. 
 See @Kleinhesselink2017b for more details on our approach to estimating soil moisture.
 
-\new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start unitl April) and for a string of days in 2013 during which the soil moisture probes failed to take readings.
+\new{Following the above procedure, we still lacked soil moisture data for March 2012 (observations did not start until April 2012) and for a string of days in 2013 during which the soil moisture probes failed to take readings.
 To fill in these gaps, we used a version of the SOILWAT soil moisture model} [@Sala1992a] \new{that has been specifically designed for semiarid shrublands and grasslands} [@Bradford2014].
 \new{The model was parameterized using generic sagebrush steppe parameters and local soil texture, soil bulk density, and precipitation data} [@Kleinhesselink2017b].
 \new{We used the locally parameterized SOILWAT model to generate daily soil moisture predictions for the duration of the experiment, but only used SOILWAT predictions where there were gaps in our data (Fig. 2B and Appendix 2).
