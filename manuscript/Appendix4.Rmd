@@ -12,7 +12,7 @@ header-includes:
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
-bibliography: ~/Dropbox/Bibliography/usses_water.bib
+bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
 ## rmarkdown render options
@@ -54,7 +54,7 @@ In what follows, $\textbf{X}$ is the fixed effects design matrix including:
 5. a column of continuous values for the interaction between scaled volumetric water content and the drought treatment indicator (column 2)
 6. a column of continuous values for the interaction between scaled volumetric water content and the irrigation treatment indicator (column 3)
 
-The first seven rows of the fixed effects design matrix (six control plots and one drought plot) is as follows:
+An example of six rows of the fixed effects design matrix (three control plots and three drought plots) is as follows:
 
 ```{r fixed_design, echo=F, eval=T, message=F, warning=F}
 library(tidyverse)    # Data munging
@@ -71,7 +71,7 @@ source("../code/read_format_data.R") # load data
 lmod <- lm(log(anpp) ~ vwc_scaled*Treatment, anpp_data)
 x    <- model.matrix(lmod) 
 colnames(x) <- c("Int", "VWC", "Drought", "Irrig", "Drought:VWC", "Irrig:VWC")
-head(x, 7)
+x[12:17,]
 ```
 
 \noindent{}Note that within a year, all plots within a treatment share the same value of volumetric water content. This is because we could not monitor soil moisture in each plot, and instead used sparse observations to model average soil moisture in each treatment in each year (see main text). Using this design matrix, we can estimate six fixed effects ($\boldsymbol{\beta}$s):
@@ -118,6 +118,7 @@ We assume the observations are conditionally Gaussian,
 \end{align}
 
 \noindent{}The random year effects ($\boldsymbol{\eta}$) are modeled as intercept offsets centered on zero with a shared variance ($\sigma_{yr}$): $\boldsymbol{\gamma} \sim \text{Normal} \left( 0, \sigma_{yr}  \right)$.
+$\Sigma$ is the variance-covariance matrix for the intercept and slope offsets for each plot, which is defined as the among plot variance ($\sigma^2_{plt}$) times the matrix $\textbf{R}$ that defines the correlation between intercept and slope offsets.
 
 The Bayesian posterior distribution of our model can be expressed as:
 
@@ -200,9 +201,7 @@ generated quantities{
 
 \newpage{}
 
-# Figures
-
-```{r scatterplot, fig.cap="Scatterplot, on the arithmetic scale, of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines).", echo=FALSE, message=FALSE, warning=FALSE}
+```{r scatterplot, fig.cap="Scatterplot, on the arithmetic scale, of the data and model estimates shown as solid lines. Model estimates come from treatment level coefficients (colored lines).", echo=FALSE, message=FALSE, warning=FALSE, fig.pos="h"}
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
 library(ggthemes)     # Pleasing ggplot themes
@@ -345,6 +344,3 @@ ggplot(betas, aes(x=estimate, y=as.factor(year_id), fill=as.factor(year_id), col
 
 ```
 
-\newpage{}
-
-# References

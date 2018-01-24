@@ -12,7 +12,7 @@ header-includes:
   - \usepackage{tikz}
   - \usepackage{bm,mathrsfs}
   - \usepackage[sc]{mathpazo}
-bibliography: ~/Dropbox/Bibliography/usses_water.bib
+bibliography: /Users/atredenn/Dropbox/Bibliography/usses_water.bib
 csl: components/ecology.csl
 
 ## rmarkdown render options
@@ -52,7 +52,7 @@ Our NDVI-model results are very similar to the ANPP-model results (Figure A5-1).
 As with our ANPP-model results, the positive offset for the drought treatment does not result in a significantly different slope once applied to the control slope (Table A5-1).
 
 
-```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the NDVI-soil moisture relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
+```{r plot_betas, fig.cap="Posterior distributions for the effects of drought and irrigation on the intercept and slope of the soil moisture-NDVI relationship. Treatment effects show the difference between the coefficients estimated in the treated plots and the control plots. Probabilities (Pr </> 0 =) for each coefficient indicate the one-tailed probability that the coefficient is less than or greater than zero, depending on whether the median of the distribution is less than or greater than zero. The posterior densities were smoothed for visual clarity by increasing kernel bandwidth by a factor of five.", include=T, echo=F, comment=FALSE,warning=FALSE,message=FALSE,results='asis'}
 
 library(tidyverse)    # Data munging
 library(dplyr)        # Data summarizing
@@ -106,7 +106,7 @@ slope_probs <- treat_slopes %>%
   summarise(probs = round(get_one_tailed(estimate),2)) %>%
   mutate(prob_text = paste("Pr < 0 =", probs))
 slope_probs$prob_text[1] <- paste("Pr > 0 =", slope_probs$probs[1]) # switch direction of drought intercpet since greater than 0
-slope_probs$xpos <- c(-2.8, -0.6, -2.6, -0.6)
+slope_probs$xpos <- c(-2.8, -0.2, -2.6, -0.2)
 slope_probs$ypos <- c(1.3,1.3,2.55,2.7)
 
 treat_cols <- mycols[2:3]
