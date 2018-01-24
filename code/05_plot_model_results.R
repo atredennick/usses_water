@@ -228,6 +228,7 @@ suppressWarnings( # ignore warnings about NA values
                         rel_heights = c(1, 0.1, 1))
 )
 ggsave("../figures/glmm_main_results.png", plot = gridplot, width = 7, height = 5, units = "in", dpi =120)
+ggsave("../figures/glmm_main_results.pdf", plot = gridplot, width = 7, height = 5, units = "in")
 
 
 

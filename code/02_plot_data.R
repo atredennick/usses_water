@@ -162,6 +162,7 @@ suppressWarnings(# ignore warnings about missing values, we know they are empty
                              ncol=1, labels = c("A)","B)","C)"), hjust = -0.4)
 )
 ggsave("../figures/data_panels.png", gout, width=3.3, height=8, units="in", dpi=120)
+ggsave("../figures/data_panels.pdf", gout, width=3.3, height=8, units="in")
 
 
 

@@ -178,5 +178,6 @@ ggplot(nmds_df, aes(x=MDS1, y=MDS2, fill=Treatment))+
   theme_few()+
   theme(panel.grid.major = element_line(color="grey90"))
 ggsave(paste0(figure_path,"sppcomp_bray_all.png"), width=6, height = 4, units = "in", dpi = 120)
+ggsave(paste0(figure_path,"sppcomp_bray_all.pdf"), width=6, height = 4, units = "in")
 
 
