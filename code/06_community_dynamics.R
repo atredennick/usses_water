@@ -166,6 +166,7 @@ for(doyr in unique(full_community_matrix_scaled$year)){
 saveRDS(object = out_stats, file = "../results/sppcomp_stats.RDS")
 
 mycols <- c("#009E73", "#D55E00", "#0072B2")
+nmds_df$Year <- paste0(rep(LETTERS[1:6],each=22), ") ", nmds_df$Year)
 ggplot(nmds_df, aes(x=MDS1, y=MDS2, fill=Treatment))+
   geom_point(shape = 21, color = "grey35")+
   scale_fill_manual(values=mycols)+
@@ -178,6 +179,6 @@ ggplot(nmds_df, aes(x=MDS1, y=MDS2, fill=Treatment))+
   theme_few()+
   theme(panel.grid.major = element_line(color="grey90"))
 ggsave(paste0(figure_path,"sppcomp_bray_all.png"), width=6, height = 4, units = "in", dpi = 120)
-ggsave(paste0(figure_path,"sppcomp_bray_all.pdf"), width=6, height = 4, units = "in")
+ggsave(paste0(figure_path,"Figure4.pdf"), width=6, height = 4, units = "in")
 
 

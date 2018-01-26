@@ -214,7 +214,7 @@ sens_plot <- ggplot(all_diffs, aes(x = year, y = sensitivity, fill = treatment))
 ##  Version with sensitivity analysis
 suppressWarnings( # ignore warnings about NA values
   bottom_row <- plot_grid(regress_plot, NULL, sens_plot, 
-                          labels = c('B','', 'C'),
+                          labels = c('C','', 'D'),
                           align = 'h', 
                           rel_widths = c(1, 0.1, 1), 
                           nrow = 1)
@@ -228,7 +228,7 @@ suppressWarnings( # ignore warnings about NA values
                         rel_heights = c(1, 0.1, 1))
 )
 ggsave("../figures/glmm_main_results.png", plot = gridplot, width = 7, height = 5, units = "in", dpi =120)
-ggsave("../figures/glmm_main_results.pdf", plot = gridplot, width = 7, height = 5, units = "in")
+ggsave("../figures/Figure3.pdf", plot = gridplot, width = 7, height = 5, units = "in")
 
 
 
