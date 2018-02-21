@@ -17,3 +17,10 @@ Once all packages are installed, the code should run all the way through.
 You must source the script from RStudio, rather than from command line, because we use some Rstudio-specific commands to set working directories.
 
 Please create an [issue](https://github.com/atredennick/usses_water/issues) if you encounter any problems.
+
+##	Citation information
+
+This work has been accepted for publication in [PeerJ](https://peerj.com/).
+It is currently in press, so for now please cite as
+
+>Tredennick, A.T., A.R. Kleinhesselink, J.B. Taylor, and P.B. Adler. (In press). Ecosystem functional response across precipitation extremes in a sagebrush steppe. *PeerJ*.
