@@ -20,9 +20,9 @@ Please create an [issue](https://github.com/atredennick/usses_water/issues) if y
 
 ##	Citation information
 
-This work has been accepted for publication in [PeerJ](https://peerj.com/).
-It is currently in press, so for now please cite as
+This work has been [published in PeerJ](https://peerj.com/articles/4485/).
+Please cite the paper as
 
->Tredennick, A.T., A.R. Kleinhesselink, J.B. Taylor, and P.B. Adler. (In press). Ecosystem functional response across precipitation extremes in a sagebrush steppe. *PeerJ*.
+>Tredennick, A.T., A.R. Kleinhesselink, J.B. Taylor, and P.B. Adler. (2018). Ecosystem functional response across precipitation extremes in a sagebrush steppe. *PeerJ* 6:e4485.
 
 The preprint can be found [here](https://www.biorxiv.org/content/early/2018/01/24/195594).
