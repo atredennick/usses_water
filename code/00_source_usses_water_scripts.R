@@ -32,10 +32,23 @@ packages <- c(
   "lme4"
 )
 
-missing_packages <- packages[ !packages %in% installed.packages() ] 
-if (length(missing_packages) > 0 ){
-  stop(paste("You need to install the", missing_packages), " packages from CRAN.")
+# ipak function: install and load multiple R packages.
+# Check to see if packages are installed.
+# Install them if they are not, then load them into the R session.
+# https://gist.github.com/stevenworthington/3178163
+
+ipak <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg))
+  {
+    install.packages(new.pkg,
+                     dependencies = TRUE,
+                     repos = "https://cloud.r-project.org")
+  }
+  suppressPackageStartupMessages(sapply(pkg, require, character.only = TRUE))
 }
+
+ipak(packages)
 
 ####  2. FIT ANPP-NDVI REGRESSIONS ----
 source("01_calibrate_radiometer_by_year.R")
