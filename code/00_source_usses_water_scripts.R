@@ -28,7 +28,8 @@ packages <- c(
   "vegan",
   "viridis",
   "RColorBrewer",
-  "cowplot"
+  "cowplot",
+  "lme4"
 )
 
 missing_packages <- packages[ !packages %in% installed.packages() ] 
